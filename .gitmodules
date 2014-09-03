@@ -16,9 +16,6 @@
 [submodule "mavlink"]
 	path = mavlink
 	url = git@github.com:lis-epfl/mavlink.git
-[submodule "BumbleBot"]
-	path = BumbleBot
-	url = git@github.com:lis-epfl/BumbleBot.git
 [submodule "MAVRIC_Mechanics"]
 	path = MAVRIC_Mechanics
 	url = git@github.com:lis-epfl/MAVRIC_Mechanics.git
