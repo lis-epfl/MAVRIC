@@ -1,0 +1,5 @@
+<map id="joystick_parsing_button" name="joystick_parsing_button">
+<area shape="rect" id="node2" href="$joystick__parsing_8c.html#acee780f9ad27d5318b3612e7b180dded" title="Do operations when buttons are pressed. " alt="" coords="212,5,411,32"/>
+<area shape="rect" id="node3" href="$joystick__parsing_8h.html#ad107b21d62787495b8aff2924f1b0b4f" title="Parse received mavlink message in structure. " alt="" coords="459,5,645,32"/>
+<area shape="rect" id="node4" href="$joystick__parsing_8h.html#aa6ebb4887929d74e9733c80ebf2f8a5e" title="Initialisation of the joystick parsing module. " alt="" coords="693,5,833,32"/>
+</map>

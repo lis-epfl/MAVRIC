@@ -1,0 +1,4 @@
+<map id="putbuff" name="putbuff">
+<area shape="rect" id="node2" href="$structFIL.html" title="{FIL\n|+ id\l+ flag\l+ err\l+ fptr\l+ fsize\l+ sclust\l+ clust\l+ dsect\l+ dir_sect\l+ dir_ptr\l+ buf\l|}" alt="" coords="15,292,95,516"/>
+<area shape="rect" id="node3" href="$structFATFS.html" title="{FATFS\n|+ fs_type\l+ drv\l+ csize\l+ n_fats\l+ wflag\l+ fsi_flag\l+ id\l+ n_rootdir\l+ last_clust\l+ free_clust\land 8 more...\l|}" alt="" coords="5,5,104,229"/>
+</map>

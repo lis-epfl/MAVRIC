@@ -1,0 +1,4 @@
+<map id="joystick_parsing_button_mask" name="joystick_parsing_button_mask">
+<area shape="rect" id="node2" href="$joystick__parsing_8c.html#ae8ba756c8a00ada61c3447757351d82e" title="Arming/Disarming the motors when button 1 is pressed. " alt="" coords="252,5,425,32"/>
+<area shape="rect" id="node3" href="$joystick__parsing_8c.html#ac5976946680e4b73cc10e93a32169c92" title="Do operations when a button is pressed. " alt="" coords="259,56,418,83"/>
+</map>

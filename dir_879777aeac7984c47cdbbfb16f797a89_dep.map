@@ -1,0 +1,13 @@
+<map id="/run/media/julien/Data/Documents/MAVRIC/MAVRIC_Library" name="/run/media/julien/Data/Documents/MAVRIC/MAVRIC_Library">
+<area shape="rect" id="node2" href="dir_950bc08bca4a2e9561b5a1d14563ad7d.html" title="communication" alt="" coords="699,27,810,75"/>
+<area shape="rect" id="node6" href="dir_230ee4e566ea5164a05bf69f4337147e.html" title="mavlink" alt="" coords="719,123,791,171"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000001_000007.html" title="1" alt="" coords="759,97,767,112"/>
+<area shape="rect" id="node3" href="dir_3d8e25914450d283f4e5f2aa82502774.html" title="control" alt="" coords="603,27,675,75"/>
+<area shape="rect" id="node4" href="dir_dabfa533579a0c829f2413893dc7c3ce.html" title="hal" alt="" coords="507,27,579,75"/>
+<area shape="rect" id="node5" href="dir_08a7114cb339cee9551d010e453c023a.html" title="hal_emu" alt="" coords="411,27,483,75"/>
+<area shape="rect" id="node7" href="dir_a6900b709569ea57bc7130d9038d8813.html" title="runtime" alt="" coords="315,27,387,75"/>
+<area shape="rect" id="node8" href="dir_39785d2bcc610fad0437905913c0f4de.html" title="sensing" alt="" coords="219,27,291,75"/>
+<area shape="rect" id="node9" href="dir_87062a2dede08dab8d32494b42e0da1b.html" title="tests" alt="" coords="123,27,195,75"/>
+<area shape="rect" id="node10" href="dir_605812c6bb469df1d311b48a9a17e71d.html" title="util" alt="" coords="27,27,99,75"/>
+<area shape="rect" id="clust1" href="dir_879777aeac7984c47cdbbfb16f797a89.html" alt="" coords="16,16,967,181"/>
+</map>

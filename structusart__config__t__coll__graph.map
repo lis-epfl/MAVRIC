@@ -1,0 +1,6 @@
+<map id="usart_config_t" name="usart_config_t">
+<area shape="rect" id="node2" href="$structuart__gpio__map__t.html" title="{uart_gpio_map_t\n|+ pin\l+ function\l|}" alt="" coords="5,233,124,325"/>
+<area shape="rect" id="node3" href="$structuart__interface__t.html" title="{uart_interface_t\n|+ uart\l+ IRQ\l|}" alt="" coords="147,233,259,325"/>
+<area shape="rect" id="node4" href="$structbuffer__t.html" title="Buffer structure. " alt="" coords="83,20,185,141"/>
+<area shape="rect" id="node5" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="209,5,333,156"/>
+</map>

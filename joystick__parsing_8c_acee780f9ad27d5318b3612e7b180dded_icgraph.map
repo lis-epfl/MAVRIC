@@ -1,0 +1,4 @@
+<map id="joystick_parsing_button_mask" name="joystick_parsing_button_mask">
+<area shape="rect" id="node2" href="$joystick__parsing_8h.html#ad107b21d62787495b8aff2924f1b0b4f" title="Parse received mavlink message in structure. " alt="" coords="252,5,439,32"/>
+<area shape="rect" id="node3" href="$joystick__parsing_8h.html#aa6ebb4887929d74e9733c80ebf2f8a5e" title="Initialisation of the joystick parsing module. " alt="" coords="487,5,627,32"/>
+</map>
