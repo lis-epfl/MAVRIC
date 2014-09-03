@@ -1,0 +1,66 @@
+\hypertarget{structwaypoint__struct}{\section{waypoint\+\_\+struct Struct Reference}
+\label{structwaypoint__struct}\index{waypoint\+\_\+struct@{waypoint\+\_\+struct}}
+}
+
+
+The mavlink waypoint structure.  
+
+
+
+
+{\ttfamily \#include $<$mavlink\+\_\+waypoint\+\_\+handler.\+h$>$}
+
+
+
+Collaboration diagram for waypoint\+\_\+struct\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{structwaypoint__struct__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structwaypoint__struct_ab68745ce248758f012589770cdda6f4e}{uint8\+\_\+t \hyperlink{structwaypoint__struct_ab68745ce248758f012589770cdda6f4e}{frame}}\label{structwaypoint__struct_ab68745ce248758f012589770cdda6f4e}
+
+\begin{DoxyCompactList}\small\item\em The reference frame of the waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_a49e9e6afb6b32c53442d5d3f1f85bca1}{uint16\+\_\+t \hyperlink{structwaypoint__struct_a49e9e6afb6b32c53442d5d3f1f85bca1}{waypoint\+\_\+id}}\label{structwaypoint__struct_a49e9e6afb6b32c53442d5d3f1f85bca1}
+
+\begin{DoxyCompactList}\small\item\em The M\+A\+V\+\_\+\+C\+M\+D\+\_\+\+N\+A\+V id of the waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_ae2347ccf1efced0c168ec7bdab5b9636}{uint8\+\_\+t \hyperlink{structwaypoint__struct_ae2347ccf1efced0c168ec7bdab5b9636}{current}}\label{structwaypoint__struct_ae2347ccf1efced0c168ec7bdab5b9636}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell whether the waypoint is the current one or not. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_a3b075297126848c55e83f9c60e1a0441}{uint8\+\_\+t \hyperlink{structwaypoint__struct_a3b075297126848c55e83f9c60e1a0441}{autocontinue}}\label{structwaypoint__struct_a3b075297126848c55e83f9c60e1a0441}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell whether the vehicle should auto continue to the next waypoint once it reaches the current waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_a23683fcdc506568d0e775220b2a7e83f}{float \hyperlink{structwaypoint__struct_a23683fcdc506568d0e775220b2a7e83f}{param1}}\label{structwaypoint__struct_a23683fcdc506568d0e775220b2a7e83f}
+
+\begin{DoxyCompactList}\small\item\em Parameter depending on the M\+A\+V\+\_\+\+C\+M\+D\+\_\+\+N\+A\+V id. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_aa2a8489b5dcfd2f8a801a71f5b50abad}{float \hyperlink{structwaypoint__struct_aa2a8489b5dcfd2f8a801a71f5b50abad}{param2}}\label{structwaypoint__struct_aa2a8489b5dcfd2f8a801a71f5b50abad}
+
+\begin{DoxyCompactList}\small\item\em Parameter depending on the M\+A\+V\+\_\+\+C\+M\+D\+\_\+\+N\+A\+V id. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_a847083ffa4611ca72193d694499904ad}{float \hyperlink{structwaypoint__struct_a847083ffa4611ca72193d694499904ad}{param3}}\label{structwaypoint__struct_a847083ffa4611ca72193d694499904ad}
+
+\begin{DoxyCompactList}\small\item\em Parameter depending on the M\+A\+V\+\_\+\+C\+M\+D\+\_\+\+N\+A\+V id. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_a0e83af4fb268da308155aaaf17fe3304}{float \hyperlink{structwaypoint__struct_a0e83af4fb268da308155aaaf17fe3304}{param4}}\label{structwaypoint__struct_a0e83af4fb268da308155aaaf17fe3304}
+
+\begin{DoxyCompactList}\small\item\em Parameter depending on the M\+A\+V\+\_\+\+C\+M\+D\+\_\+\+N\+A\+V id. \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_aac04df2155c3ae716c937607170850f4}{double \hyperlink{structwaypoint__struct_aac04df2155c3ae716c937607170850f4}{x}}\label{structwaypoint__struct_aac04df2155c3ae716c937607170850f4}
+
+\begin{DoxyCompactList}\small\item\em The value on the x axis (depends on the reference frame) \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_ac62018beaeb5a5eaa500c93e4112fc15}{double \hyperlink{structwaypoint__struct_ac62018beaeb5a5eaa500c93e4112fc15}{y}}\label{structwaypoint__struct_ac62018beaeb5a5eaa500c93e4112fc15}
+
+\begin{DoxyCompactList}\small\item\em The value on the y axis (depends on the reference frame) \end{DoxyCompactList}\item 
+\hypertarget{structwaypoint__struct_a065cb53ce912024c2d626c26fb4f5016}{double \hyperlink{structwaypoint__struct_a065cb53ce912024c2d626c26fb4f5016}{z}}\label{structwaypoint__struct_a065cb53ce912024c2d626c26fb4f5016}
+
+\begin{DoxyCompactList}\small\item\em The value on the z axis (depends on the reference frame) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The mavlink waypoint structure. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/communication/mavlink\+\_\+waypoint\+\_\+handler.\+h\end{DoxyCompactItemize}

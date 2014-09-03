@@ -1,0 +1,72 @@
+\hypertarget{structtask__entry__t}{\section{task\+\_\+entry\+\_\+t Struct Reference}
+\label{structtask__entry__t}\index{task\+\_\+entry\+\_\+t@{task\+\_\+entry\+\_\+t}}
+}
+
+
+Task entry.  
+
+
+
+
+{\ttfamily \#include $<$scheduler.\+h$>$}
+
+
+
+Collaboration diagram for task\+\_\+entry\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=187pt]{structtask__entry__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structtask__entry__t_a4e63a0996dcac953b3c7f3a3353e237a}{task\+\_\+function\+\_\+t \hyperlink{structtask__entry__t_a4e63a0996dcac953b3c7f3a3353e237a}{call\+\_\+function}}\label{structtask__entry__t_a4e63a0996dcac953b3c7f3a3353e237a}
+
+\begin{DoxyCompactList}\small\item\em Function to be called. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_a24c4dfb5680c5925579c5b9678fa4d26}{task\+\_\+argument\+\_\+t \hyperlink{structtask__entry__t_a24c4dfb5680c5925579c5b9678fa4d26}{function\+\_\+argument}}\label{structtask__entry__t_a24c4dfb5680c5925579c5b9678fa4d26}
+
+\begin{DoxyCompactList}\small\item\em Argument to be passed to the function. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_af0d5939c15a92cd44d8576c9c0627ef2}{uint32\+\_\+t \hyperlink{structtask__entry__t_af0d5939c15a92cd44d8576c9c0627ef2}{task\+\_\+id}}\label{structtask__entry__t_af0d5939c15a92cd44d8576c9c0627ef2}
+
+\begin{DoxyCompactList}\small\item\em Unique task identifier. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_a36f75f3ef1eaa2f807e93c16dc292c21}{task\+\_\+run\+\_\+mode\+\_\+t \hyperlink{structtask__entry__t_a36f75f3ef1eaa2f807e93c16dc292c21}{run\+\_\+mode}}\label{structtask__entry__t_a36f75f3ef1eaa2f807e93c16dc292c21}
+
+\begin{DoxyCompactList}\small\item\em Run mode. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_adbea42ffe5bad11ae2d06196041923e6}{task\+\_\+timing\+\_\+mode\+\_\+t \hyperlink{structtask__entry__t_adbea42ffe5bad11ae2d06196041923e6}{timing\+\_\+mode}}\label{structtask__entry__t_adbea42ffe5bad11ae2d06196041923e6}
+
+\begin{DoxyCompactList}\small\item\em Timing mode. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_a40794d4ddb385bee8ab1bfe499a1ea19}{task\+\_\+priority\+\_\+t \hyperlink{structtask__entry__t_a40794d4ddb385bee8ab1bfe499a1ea19}{priority}}\label{structtask__entry__t_a40794d4ddb385bee8ab1bfe499a1ea19}
+
+\begin{DoxyCompactList}\small\item\em Priority. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_aa41c24011386954e4dc29ceff2e4ffd1}{uint32\+\_\+t \hyperlink{structtask__entry__t_aa41c24011386954e4dc29ceff2e4ffd1}{repeat\+\_\+period}}\label{structtask__entry__t_aa41c24011386954e4dc29ceff2e4ffd1}
+
+\begin{DoxyCompactList}\small\item\em Period between two calls (us) \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_a1acc4a1314f84326105456166f598d0d}{uint32\+\_\+t \hyperlink{structtask__entry__t_a1acc4a1314f84326105456166f598d0d}{next\+\_\+run}}\label{structtask__entry__t_a1acc4a1314f84326105456166f598d0d}
+
+\begin{DoxyCompactList}\small\item\em Next execution time. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_aa14db6e9d1de92e877694bbeb29d9c4e}{uint32\+\_\+t \hyperlink{structtask__entry__t_aa14db6e9d1de92e877694bbeb29d9c4e}{execution\+\_\+time}}\label{structtask__entry__t_aa14db6e9d1de92e877694bbeb29d9c4e}
+
+\begin{DoxyCompactList}\small\item\em Execution time. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_a43d3e4d84bad48e349debca2f041a473}{uint32\+\_\+t \hyperlink{structtask__entry__t_a43d3e4d84bad48e349debca2f041a473}{delay\+\_\+max}}\label{structtask__entry__t_a43d3e4d84bad48e349debca2f041a473}
+
+\begin{DoxyCompactList}\small\item\em Maximum delay between expected execution and actual execution. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_af86c19fab24a31c936148afc9bb5b52f}{uint32\+\_\+t \hyperlink{structtask__entry__t_af86c19fab24a31c936148afc9bb5b52f}{delay\+\_\+avg}}\label{structtask__entry__t_af86c19fab24a31c936148afc9bb5b52f}
+
+\begin{DoxyCompactList}\small\item\em Average delay between expected execution and actual execution. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_a81b03276224954522a683ead0e036b5c}{uint32\+\_\+t \hyperlink{structtask__entry__t_a81b03276224954522a683ead0e036b5c}{delay\+\_\+var\+\_\+squared}}\label{structtask__entry__t_a81b03276224954522a683ead0e036b5c}
+
+\begin{DoxyCompactList}\small\item\em Standard deviation of the delay. \end{DoxyCompactList}\item 
+\hypertarget{structtask__entry__t_a15de8a27a56420dbe8d6c79c8fe795c3}{uint32\+\_\+t \hyperlink{structtask__entry__t_a15de8a27a56420dbe8d6c79c8fe795c3}{rt\+\_\+violations}}\label{structtask__entry__t_a15de8a27a56420dbe8d6c79c8fe795c3}
+
+\begin{DoxyCompactList}\small\item\em Number of Real-\/time violations, this is incremented each time an execution is skipped. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Task entry. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/runtime/scheduler.\+h\end{DoxyCompactItemize}

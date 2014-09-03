@@ -1,0 +1,99 @@
+\hypertarget{structmavlink__waypoint__handler__t}{\section{mavlink\+\_\+waypoint\+\_\+handler\+\_\+t Struct Reference}
+\label{structmavlink__waypoint__handler__t}\index{mavlink\+\_\+waypoint\+\_\+handler\+\_\+t@{mavlink\+\_\+waypoint\+\_\+handler\+\_\+t}}
+}
+
+
+Collaboration diagram for mavlink\+\_\+waypoint\+\_\+handler\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmavlink__waypoint__handler__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structmavlink__waypoint__handler__t_a045d655b0ec4a27ed7c5b17cbb07ff03}{\hyperlink{structwaypoint__struct}{waypoint\+\_\+struct} \hyperlink{structmavlink__waypoint__handler__t_a045d655b0ec4a27ed7c5b17cbb07ff03}{waypoint\+\_\+list} \mbox{[}M\+A\+X\+\_\+\+W\+A\+Y\+P\+O\+I\+N\+T\+S\mbox{]}}\label{structmavlink__waypoint__handler__t_a045d655b0ec4a27ed7c5b17cbb07ff03}
+
+\begin{DoxyCompactList}\small\item\em The array of all waypoints (max M\+A\+X\+\_\+\+W\+A\+Y\+P\+O\+I\+N\+T\+S) \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_af04df874c5291a9956bf67e5c18c5b26}{\hyperlink{structwaypoint__struct}{waypoint\+\_\+struct} \hyperlink{structmavlink__waypoint__handler__t_af04df874c5291a9956bf67e5c18c5b26}{current\+\_\+waypoint}}\label{structmavlink__waypoint__handler__t_af04df874c5291a9956bf67e5c18c5b26}
+
+\begin{DoxyCompactList}\small\item\em The structure of the current waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a699eaadceecc39cb66764948c59b6d0b}{uint16\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_a699eaadceecc39cb66764948c59b6d0b}{number\+\_\+of\+\_\+waypoints}}\label{structmavlink__waypoint__handler__t_a699eaadceecc39cb66764948c59b6d0b}
+
+\begin{DoxyCompactList}\small\item\em The total number of waypoints. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_ac283fc2ef5799b017674795368a090af}{int8\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_ac283fc2ef5799b017674795368a090af}{current\+\_\+waypoint\+\_\+count}}\label{structmavlink__waypoint__handler__t_ac283fc2ef5799b017674795368a090af}
+
+\begin{DoxyCompactList}\small\item\em The number of the current waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a02ae7f9a7e57047b3e05f7f699a28628}{\hyperlink{structlocal__coordinates__t}{local\+\_\+coordinates\+\_\+t} \hyperlink{structmavlink__waypoint__handler__t_a02ae7f9a7e57047b3e05f7f699a28628}{waypoint\+\_\+coordinates}}\label{structmavlink__waypoint__handler__t_a02ae7f9a7e57047b3e05f7f699a28628}
+
+\begin{DoxyCompactList}\small\item\em The coordinates of the waypoint in G\+P\+S navigation mode (M\+A\+V\+\_\+\+M\+O\+D\+E\+\_\+\+A\+U\+T\+O\+\_\+\+A\+R\+M\+E\+D) \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a7bd97360c41c40fc46d9c651629b28b2}{\hyperlink{structlocal__coordinates__t}{local\+\_\+coordinates\+\_\+t} \hyperlink{structmavlink__waypoint__handler__t_a7bd97360c41c40fc46d9c651629b28b2}{waypoint\+\_\+hold\+\_\+coordinates}}\label{structmavlink__waypoint__handler__t_a7bd97360c41c40fc46d9c651629b28b2}
+
+\begin{DoxyCompactList}\small\item\em The coordinates of the waypoint in position hold mode (M\+A\+V\+\_\+\+M\+O\+D\+E\+\_\+\+G\+U\+I\+D\+E\+D\+\_\+\+A\+R\+M\+E\+D) \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a56476281020bb180ee451c4f3e617e73}{\hyperlink{structlocal__coordinates__t}{local\+\_\+coordinates\+\_\+t} \hyperlink{structmavlink__waypoint__handler__t_a56476281020bb180ee451c4f3e617e73}{waypoint\+\_\+critical\+\_\+coordinates}}\label{structmavlink__waypoint__handler__t_a56476281020bb180ee451c4f3e617e73}
+
+\begin{DoxyCompactList}\small\item\em The coordinates of the waypoint in critical state. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a13011cc2850c2d498aed37e0eb514416}{float \hyperlink{structmavlink__waypoint__handler__t_a13011cc2850c2d498aed37e0eb514416}{dist2wp\+\_\+sqr}}\label{structmavlink__waypoint__handler__t_a13011cc2850c2d498aed37e0eb514416}
+
+\begin{DoxyCompactList}\small\item\em The square of the distance to the waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_aaa15ebced5c311683ed8fa9ef7ffdea2}{bool \hyperlink{structmavlink__waypoint__handler__t_aaa15ebced5c311683ed8fa9ef7ffdea2}{hold\+\_\+waypoint\+\_\+set}}\label{structmavlink__waypoint__handler__t_aaa15ebced5c311683ed8fa9ef7ffdea2}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell if the hold position waypoint is set. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a70fa9d585eae1149d96bf298eaab3375}{bool \hyperlink{structmavlink__waypoint__handler__t_a70fa9d585eae1149d96bf298eaab3375}{critical\+\_\+landing}}\label{structmavlink__waypoint__handler__t_a70fa9d585eae1149d96bf298eaab3375}
+
+\begin{DoxyCompactList}\small\item\em Flag to execute critical landing (switching motors off) \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a703868b5a6dd0476e31449fbe64417eb}{bool \hyperlink{structmavlink__waypoint__handler__t_a703868b5a6dd0476e31449fbe64417eb}{critical\+\_\+next\+\_\+state}}\label{structmavlink__waypoint__handler__t_a703868b5a6dd0476e31449fbe64417eb}
+
+\begin{DoxyCompactList}\small\item\em Flag to change critical state in its dedicated state machine. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a11a6b2d7c7e19e9a886f14d3ef179e3d}{bool \hyperlink{structmavlink__waypoint__handler__t_a11a6b2d7c7e19e9a886f14d3ef179e3d}{automatic\+\_\+landing}}\label{structmavlink__waypoint__handler__t_a11a6b2d7c7e19e9a886f14d3ef179e3d}
+
+\begin{DoxyCompactList}\small\item\em Flag to initiate the auto landing procedure. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a6bc2dc1045f232fe849e47039f14bb63}{bool \hyperlink{structmavlink__waypoint__handler__t_a6bc2dc1045f232fe849e47039f14bb63}{waypoint\+\_\+sending}}\label{structmavlink__waypoint__handler__t_a6bc2dc1045f232fe849e47039f14bb63}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell whether waypoint are being sent. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a98d90b203194ff81839eccde4446c859}{bool \hyperlink{structmavlink__waypoint__handler__t_a98d90b203194ff81839eccde4446c859}{waypoint\+\_\+receiving}}\label{structmavlink__waypoint__handler__t_a98d90b203194ff81839eccde4446c859}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell whether waypoint are being received or not. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a22c1ecfbf8cc65f4ed36e6a07aa7fd28}{critical\+\_\+behavior\+\_\+enum \hyperlink{structmavlink__waypoint__handler__t_a22c1ecfbf8cc65f4ed36e6a07aa7fd28}{critical\+\_\+behavior}}\label{structmavlink__waypoint__handler__t_a22c1ecfbf8cc65f4ed36e6a07aa7fd28}
+
+\begin{DoxyCompactList}\small\item\em The critical behavior enum. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_ae96b7d1462d9a3267e7952fef2e2fd59}{auto\+\_\+landing\+\_\+behavior\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_ae96b7d1462d9a3267e7952fef2e2fd59}{auto\+\_\+landing\+\_\+behavior}}\label{structmavlink__waypoint__handler__t_ae96b7d1462d9a3267e7952fef2e2fd59}
+
+\begin{DoxyCompactList}\small\item\em The autolanding behavior enum. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a5a5830856412717ea245adc03f387cf3}{int32\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_a5a5830856412717ea245adc03f387cf3}{sending\+\_\+waypoint\+\_\+num}}\label{structmavlink__waypoint__handler__t_a5a5830856412717ea245adc03f387cf3}
+
+\begin{DoxyCompactList}\small\item\em The I\+D number of the sending waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_aff6085039add0d1b288b88c6fef4af99}{int32\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_aff6085039add0d1b288b88c6fef4af99}{waypoint\+\_\+request\+\_\+number}}\label{structmavlink__waypoint__handler__t_aff6085039add0d1b288b88c6fef4af99}
+
+\begin{DoxyCompactList}\small\item\em The I\+D number of the requested waypoint. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_ae7eb90ecb6f9cac186e40d61d73dfc11}{uint16\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_ae7eb90ecb6f9cac186e40d61d73dfc11}{num\+\_\+waypoint\+\_\+onboard}}\label{structmavlink__waypoint__handler__t_ae7eb90ecb6f9cac186e40d61d73dfc11}
+
+\begin{DoxyCompactList}\small\item\em The number of waypoint onboard. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_ae1568afa307a14c8e75449cf8c82075b}{uint32\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_ae1568afa307a14c8e75449cf8c82075b}{start\+\_\+timeout}}\label{structmavlink__waypoint__handler__t_ae1568afa307a14c8e75449cf8c82075b}
+
+\begin{DoxyCompactList}\small\item\em The start time for the waypoint timeout. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_ae50eebb69a80d3e666574442832bfa77}{uint32\+\_\+t \hyperlink{structmavlink__waypoint__handler__t_ae50eebb69a80d3e666574442832bfa77}{timeout\+\_\+max\+\_\+waypoint}}\label{structmavlink__waypoint__handler__t_ae50eebb69a80d3e666574442832bfa77}
+
+\begin{DoxyCompactList}\small\item\em The max waiting time for communication. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a1f7eb72e0f85619d7275eb44515d9125}{\hyperlink{structposition__estimator__t}{position\+\_\+estimator\+\_\+t} $\ast$ \hyperlink{structmavlink__waypoint__handler__t_a1f7eb72e0f85619d7275eb44515d9125}{position\+\_\+estimator}}\label{structmavlink__waypoint__handler__t_a1f7eb72e0f85619d7275eb44515d9125}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the position estimation structure. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_ab1daabd6bded0b8ca0a01cb3cd2e6f14}{const \hyperlink{structahrs__t}{ahrs\+\_\+t} $\ast$ \hyperlink{structmavlink__waypoint__handler__t_ab1daabd6bded0b8ca0a01cb3cd2e6f14}{ahrs}}\label{structmavlink__waypoint__handler__t_ab1daabd6bded0b8ca0a01cb3cd2e6f14}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the attitude estimation structure. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a529a5b269acc0439cb3f8a4d4b2eb432}{\hyperlink{structstate__t}{state\+\_\+t} $\ast$ \hyperlink{structmavlink__waypoint__handler__t_a529a5b269acc0439cb3f8a4d4b2eb432}{state}}\label{structmavlink__waypoint__handler__t_a529a5b269acc0439cb3f8a4d4b2eb432}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the state structure. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_a44604118c3958a67d4f2406c754120ec}{\hyperlink{structmavlink__communication__t}{mavlink\+\_\+communication\+\_\+t} $\ast$ \hyperlink{structmavlink__waypoint__handler__t_a44604118c3958a67d4f2406c754120ec}{mavlink\+\_\+communication}}\label{structmavlink__waypoint__handler__t_a44604118c3958a67d4f2406c754120ec}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the mavlink communication structure. \end{DoxyCompactList}\item 
+\hypertarget{structmavlink__waypoint__handler__t_afb339819f643e8f191fbd8a604b191d4}{const \hyperlink{structmavlink__stream__t}{mavlink\+\_\+stream\+\_\+t} $\ast$ \hyperlink{structmavlink__waypoint__handler__t_afb339819f643e8f191fbd8a604b191d4}{mavlink\+\_\+stream}}\label{structmavlink__waypoint__handler__t_afb339819f643e8f191fbd8a604b191d4}
+
+\begin{DoxyCompactList}\small\item\em Pointer to mavlink stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/communication/mavlink\+\_\+waypoint\+\_\+handler.\+h\end{DoxyCompactItemize}

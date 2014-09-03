@@ -1,0 +1,99 @@
+\hypertarget{structposition__estimator__t}{\section{position\+\_\+estimator\+\_\+t Struct Reference}
+\label{structposition__estimator__t}\index{position\+\_\+estimator\+\_\+t@{position\+\_\+estimator\+\_\+t}}
+}
+
+
+The position estimator structure.  
+
+
+
+
+{\ttfamily \#include $<$position\+\_\+estimation.\+h$>$}
+
+
+
+Collaboration diagram for position\+\_\+estimator\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structposition__estimator__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structposition__estimator__t_ad23883e9e58974a278f50986e4fa0f81}{float \hyperlink{structposition__estimator__t_ad23883e9e58974a278f50986e4fa0f81}{kp\+\_\+vel\+\_\+gps} \mbox{[}3\mbox{]}}\label{structposition__estimator__t_ad23883e9e58974a278f50986e4fa0f81}
+
+\begin{DoxyCompactList}\small\item\em The gain to correct the velocity estimation from the G\+P\+S. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a222ab6218c59bec880f29d01440d79b5}{float \hyperlink{structposition__estimator__t_a222ab6218c59bec880f29d01440d79b5}{kp\+\_\+pos\+\_\+gps} \mbox{[}3\mbox{]}}\label{structposition__estimator__t_a222ab6218c59bec880f29d01440d79b5}
+
+\begin{DoxyCompactList}\small\item\em The gain to correct the position estimation from the G\+P\+S. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a02389002f78a066386ff811cfa680e9d}{float \hyperlink{structposition__estimator__t_a02389002f78a066386ff811cfa680e9d}{kp\+\_\+alt\+\_\+baro}}\label{structposition__estimator__t_a02389002f78a066386ff811cfa680e9d}
+
+\begin{DoxyCompactList}\small\item\em The gain to correct the Z position estimation from the barometer. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_aabea5786d2706ac225154cc56955e047}{float \hyperlink{structposition__estimator__t_aabea5786d2706ac225154cc56955e047}{kp\+\_\+vel\+\_\+baro}}\label{structposition__estimator__t_aabea5786d2706ac225154cc56955e047}
+
+\begin{DoxyCompactList}\small\item\em The gain to correct the position estimation from the barometer. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_af881615b518416dacef19c5aa147b641}{uint32\+\_\+t \hyperlink{structposition__estimator__t_af881615b518416dacef19c5aa147b641}{time\+\_\+last\+\_\+gps\+\_\+msg}}\label{structposition__estimator__t_af881615b518416dacef19c5aa147b641}
+
+\begin{DoxyCompactList}\small\item\em The time at which we received the last G\+P\+S message in ms. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a931d4985552cf55692341cb703faacdc}{uint32\+\_\+t \hyperlink{structposition__estimator__t_a931d4985552cf55692341cb703faacdc}{time\+\_\+last\+\_\+barometer\+\_\+msg}}\label{structposition__estimator__t_a931d4985552cf55692341cb703faacdc}
+
+\begin{DoxyCompactList}\small\item\em The time at which we received the last barometer message in ms. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_aad5c5580269e1f7d924815c486b7f35a}{bool \hyperlink{structposition__estimator__t_aad5c5580269e1f7d924815c486b7f35a}{init\+\_\+gps\+\_\+position}}\label{structposition__estimator__t_aad5c5580269e1f7d924815c486b7f35a}
+
+\begin{DoxyCompactList}\small\item\em The boolean flag ensuring that the G\+P\+S was initialized. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a8f53823e1b507ecba9c406fa1f079338}{bool \hyperlink{structposition__estimator__t_a8f53823e1b507ecba9c406fa1f079338}{init\+\_\+barometer}}\label{structposition__estimator__t_a8f53823e1b507ecba9c406fa1f079338}
+
+\begin{DoxyCompactList}\small\item\em The boolean flag ensuring that the barometer was initialized. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a28ede0256abb7b63c2d9ec0bec1e02c6}{float \hyperlink{structposition__estimator__t_a28ede0256abb7b63c2d9ec0bec1e02c6}{vel\+\_\+bf} \mbox{[}3\mbox{]}}\label{structposition__estimator__t_a28ede0256abb7b63c2d9ec0bec1e02c6}
+
+\begin{DoxyCompactList}\small\item\em The 3\+D velocity in body frame. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a6ef7bf29e5d466e719d15b5eb72d4504}{float \hyperlink{structposition__estimator__t_a6ef7bf29e5d466e719d15b5eb72d4504}{vel} \mbox{[}3\mbox{]}}\label{structposition__estimator__t_a6ef7bf29e5d466e719d15b5eb72d4504}
+
+\begin{DoxyCompactList}\small\item\em The 3\+D velocity in global frame. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a5a51c061e0c70772fc6c6e6175b26b90}{float \hyperlink{structposition__estimator__t_a5a51c061e0c70772fc6c6e6175b26b90}{last\+\_\+alt}}\label{structposition__estimator__t_a5a51c061e0c70772fc6c6e6175b26b90}
+
+\begin{DoxyCompactList}\small\item\em The value of the last altitude estimation. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a63cef99b71c76529dd3a342b33e5f158}{float \hyperlink{structposition__estimator__t_a63cef99b71c76529dd3a342b33e5f158}{last\+\_\+vel} \mbox{[}3\mbox{]}}\label{structposition__estimator__t_a63cef99b71c76529dd3a342b33e5f158}
+
+\begin{DoxyCompactList}\small\item\em The last 3\+D velocity. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a2cc2e504529fb8aa2049ebffae073ef8}{\hyperlink{structlocal__coordinates__t}{local\+\_\+coordinates\+\_\+t} \hyperlink{structposition__estimator__t_a2cc2e504529fb8aa2049ebffae073ef8}{local\+\_\+position}}\label{structposition__estimator__t_a2cc2e504529fb8aa2049ebffae073ef8}
+
+\begin{DoxyCompactList}\small\item\em The local position. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_aa1cf1fb655de083a2e299cd4987dfbc7}{\hyperlink{structlocal__coordinates__t}{local\+\_\+coordinates\+\_\+t} \hyperlink{structposition__estimator__t_aa1cf1fb655de083a2e299cd4987dfbc7}{last\+\_\+gps\+\_\+pos}}\label{structposition__estimator__t_aa1cf1fb655de083a2e299cd4987dfbc7}
+
+\begin{DoxyCompactList}\small\item\em The coordinates of the last G\+P\+S position. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_ae5b50577d08003ddacb7c2a7bd279f38}{float {\bfseries gravity}}\label{structposition__estimator__t_ae5b50577d08003ddacb7c2a7bd279f38}
+
+\item 
+\hypertarget{structposition__estimator__t_af86532e8453510307069e4ba168adce4}{\hyperlink{structbarometer__t}{barometer\+\_\+t} $\ast$ \hyperlink{structposition__estimator__t_af86532e8453510307069e4ba168adce4}{barometer}}\label{structposition__estimator__t_af86532e8453510307069e4ba168adce4}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the barometer structure. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a55df961c6b7bed8639edbe3b526be6b0}{const \hyperlink{structgps__t}{gps\+\_\+t} $\ast$ \hyperlink{structposition__estimator__t_a55df961c6b7bed8639edbe3b526be6b0}{gps}}\label{structposition__estimator__t_a55df961c6b7bed8639edbe3b526be6b0}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the G\+P\+S structure. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_abb3215dee1c3fed5531e72319a5aed53}{const \hyperlink{structahrs__t}{ahrs\+\_\+t} $\ast$ \hyperlink{structposition__estimator__t_abb3215dee1c3fed5531e72319a5aed53}{ahrs}}\label{structposition__estimator__t_abb3215dee1c3fed5531e72319a5aed53}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the attitude estimation structure. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a6e969bd6cc5cd39d86d6869211e07987}{const \hyperlink{structimu__t}{imu\+\_\+t} $\ast$ \hyperlink{structposition__estimator__t_a6e969bd6cc5cd39d86d6869211e07987}{imu}}\label{structposition__estimator__t_a6e969bd6cc5cd39d86d6869211e07987}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the I\+M\+U structure. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_af79b8cfb0d9dc2f97c9d21db18fb18f6}{const \hyperlink{structmavlink__stream__t}{mavlink\+\_\+stream\+\_\+t} $\ast$ \hyperlink{structposition__estimator__t_af79b8cfb0d9dc2f97c9d21db18fb18f6}{mavlink\+\_\+stream}}\label{structposition__estimator__t_af79b8cfb0d9dc2f97c9d21db18fb18f6}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the mavlink stream structure. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_a249de53eaa8f8ffdcf04667fc717aa03}{\hyperlink{structstate__t}{state\+\_\+t} $\ast$ \hyperlink{structposition__estimator__t_a249de53eaa8f8ffdcf04667fc717aa03}{state}}\label{structposition__estimator__t_a249de53eaa8f8ffdcf04667fc717aa03}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the state structure. \end{DoxyCompactList}\item 
+\hypertarget{structposition__estimator__t_af26af3a117e3f03866d8cdc9c1688f8b}{bool $\ast$ \hyperlink{structposition__estimator__t_af26af3a117e3f03866d8cdc9c1688f8b}{nav\+\_\+plan\+\_\+active}}\label{structposition__estimator__t_af26af3a117e3f03866d8cdc9c1688f8b}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the waypoint set flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The position estimator structure. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/sensing/position\+\_\+estimation.\+h\end{DoxyCompactItemize}

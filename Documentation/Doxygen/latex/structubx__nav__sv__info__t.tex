@@ -1,0 +1,83 @@
+\hypertarget{structubx__nav__sv__info__t}{\section{ubx\+\_\+nav\+\_\+sv\+\_\+info\+\_\+t Struct Reference}
+\label{structubx__nav__sv__info__t}\index{ubx\+\_\+nav\+\_\+sv\+\_\+info\+\_\+t@{ubx\+\_\+nav\+\_\+sv\+\_\+info\+\_\+t}}
+}
+
+
+The U-\/\+Blox N\+A\+V-\/\+S\+V\+I\+N\+F\+O message structure definition.  
+
+
+
+
+{\ttfamily \#include $<$gps\+\_\+ublox.\+h$>$}
+
+
+
+Collaboration diagram for ubx\+\_\+nav\+\_\+sv\+\_\+info\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{structubx__nav__sv__info__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structubx__nav__sv__info__t_aa76f50b9ca6787f2b1cf565d0a04feb8}{\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_a7dae1bb45adbbefa16987f607d4e81d0}{\>int32\_t \hyperlink{structubx__nav__sv__info__t_a7dae1bb45adbbefa16987f607d4e81d0}{pr\_res}\\
+\>\>{\em Pseudo range in residual in centimeters. }\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_ad5cdb09ec8b021c120f1d7ca1e145fcd}{\>int16\_t \hyperlink{structubx__nav__sv__info__t_ad5cdb09ec8b021c120f1d7ca1e145fcd}{azim}\\
+\>\>{\em Azimuth in integer degrees. }\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_aa876e1007c29e5c102a2c32999cd07a3}{\>int8\_t \hyperlink{structubx__nav__sv__info__t_aa876e1007c29e5c102a2c32999cd07a3}{elev}\\
+\>\>{\em Elevation in integer degrees. }\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_aa3c2469444d6c598f162b38d85f0e499}{\>uint8\_t \hyperlink{structubx__nav__sv__info__t_aa3c2469444d6c598f162b38d85f0e499}{cno}\\
+\>\>{\em Carrier to Noise ratio in dbHz. }\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_a0fef4e602c67237759322c6b191429ea}{\>uint8\_t \hyperlink{structubx__nav__sv__info__t_a0fef4e602c67237759322c6b191429ea}{quality}\\
+\>\>{\em Bitmask, see U-\/Blox 6 documentation. }\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_a9dfe33e2ce907428135fe069c0c9c88b}{\>uint8\_t \hyperlink{structubx__nav__sv__info__t_a9dfe33e2ce907428135fe069c0c9c88b}{flags}\\
+\>\>{\em Bitmask, see U-\/Blox 6 documentation. }\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_a094d5806bd93a9e8fbc718c1c9cf6919}{\>uint8\_t \hyperlink{structubx__nav__sv__info__t_a094d5806bd93a9e8fbc718c1c9cf6919}{svid}\\
+\>\>{\em Satellite ID. }\\
+\hypertarget{structubx__nav__sv__info__t_1_1@7_ae257139a62b3bdc490b05e106eb27eb3}{\>uint8\_t \hyperlink{structubx__nav__sv__info__t_ae257139a62b3bdc490b05e106eb27eb3}{chn}\\
+\>\>{\em GPS msToW. }\\
+\} \hyperlink{structubx__nav__sv__info__t_aa76f50b9ca6787f2b1cf565d0a04feb8}{channel\_data} \mbox{[}16\mbox{]}}\label{structubx__nav__sv__info__t_aa76f50b9ca6787f2b1cf565d0a04feb8}
+\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em The structure definition defining a specific message from a G\+P\+S satellite. \end{DoxyCompactList}\item 
+\hypertarget{structubx__nav__sv__info__t_a960d66cb5f501fa0b484fbb40ffee988}{uint16\+\_\+t \hyperlink{structubx__nav__sv__info__t_a960d66cb5f501fa0b484fbb40ffee988}{reserved}}\label{structubx__nav__sv__info__t_a960d66cb5f501fa0b484fbb40ffee988}
+
+\begin{DoxyCompactList}\small\item\em Reserved slot. \end{DoxyCompactList}\item 
+\hypertarget{structubx__nav__sv__info__t_a4f6be11008e81dcc8c64c9f69681ba11}{uint8\+\_\+t \hyperlink{structubx__nav__sv__info__t_a4f6be11008e81dcc8c64c9f69681ba11}{global\+\_\+flags}}\label{structubx__nav__sv__info__t_a4f6be11008e81dcc8c64c9f69681ba11}
+
+\begin{DoxyCompactList}\small\item\em Bitmask, 0\+:antaris, 1\+:u-\/blox 5, 2\+:u-\/blox 6. \end{DoxyCompactList}\item 
+\hypertarget{structubx__nav__sv__info__t_a59fc3d45ef9667a0b7c8ebcc93d6c9f5}{uint8\+\_\+t \hyperlink{structubx__nav__sv__info__t_a59fc3d45ef9667a0b7c8ebcc93d6c9f5}{num\+\_\+ch}}\label{structubx__nav__sv__info__t_a59fc3d45ef9667a0b7c8ebcc93d6c9f5}
+
+\begin{DoxyCompactList}\small\item\em Number of channels. \end{DoxyCompactList}\item 
+\hypertarget{structubx__nav__sv__info__t_a02a7186f7953c4256db55825de4232b8}{uint32\+\_\+t \hyperlink{structubx__nav__sv__info__t_a02a7186f7953c4256db55825de4232b8}{itow}}\label{structubx__nav__sv__info__t_a02a7186f7953c4256db55825de4232b8}
+
+\begin{DoxyCompactList}\small\item\em G\+P\+S ms\+To\+W. \end{DoxyCompactList}\item 
+\hypertarget{structubx__nav__sv__info__t_a6dc4dc12b837d80ccf8cdb8101ada6ff}{\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_a7dae1bb45adbbefa16987f607d4e81d0}{\>int32\_t {\bfseries pr\_res}\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_ad5cdb09ec8b021c120f1d7ca1e145fcd}{\>int16\_t {\bfseries azim}\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_aa876e1007c29e5c102a2c32999cd07a3}{\>int8\_t {\bfseries elev}\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_aa3c2469444d6c598f162b38d85f0e499}{\>uint8\_t {\bfseries cno}\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_a0fef4e602c67237759322c6b191429ea}{\>uint8\_t {\bfseries quality}\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_a9dfe33e2ce907428135fe069c0c9c88b}{\>uint8\_t {\bfseries flags}\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_a094d5806bd93a9e8fbc718c1c9cf6919}{\>uint8\_t {\bfseries svid}\\
+\hypertarget{structubx__nav__sv__info__t_1_1@20_ae257139a62b3bdc490b05e106eb27eb3}{\>uint8\_t {\bfseries chn}\\
+\} {\bfseries channel\_data} \mbox{[}16\mbox{]}}\label{structubx__nav__sv__info__t_a6dc4dc12b837d80ccf8cdb8101ada6ff}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The U-\/\+Blox N\+A\+V-\/\+S\+V\+I\+N\+F\+O message structure definition. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/hal/gps\+\_\+ublox.\+h\end{DoxyCompactItemize}

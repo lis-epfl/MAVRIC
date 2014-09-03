@@ -1,0 +1,47 @@
+\hypertarget{structscheduler__t}{\section{scheduler\+\_\+t Struct Reference}
+\label{structscheduler__t}\index{scheduler\+\_\+t@{scheduler\+\_\+t}}
+}
+
+
+Scheduler.  
+
+
+
+
+{\ttfamily \#include $<$scheduler.\+h$>$}
+
+
+
+Collaboration diagram for scheduler\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structscheduler__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structscheduler__t_a684057cae59e5faf32118d929ecbd00e}{bool \hyperlink{structscheduler__t_a684057cae59e5faf32118d929ecbd00e}{debug}}\label{structscheduler__t_a684057cae59e5faf32118d929ecbd00e}
+
+\begin{DoxyCompactList}\small\item\em Indicates whether the scheduler should print debug messages. \end{DoxyCompactList}\item 
+\hypertarget{structscheduler__t_ae30f0b746585b662cf594cc02ae0bd52}{schedule\+\_\+strategy\+\_\+t \hyperlink{structscheduler__t_ae30f0b746585b662cf594cc02ae0bd52}{schedule\+\_\+strategy}}\label{structscheduler__t_ae30f0b746585b662cf594cc02ae0bd52}
+
+\begin{DoxyCompactList}\small\item\em Scheduling strategy. \end{DoxyCompactList}\item 
+\hypertarget{structscheduler__t_a3c4b0f5c56e33ac45048b0450f8df85b}{\hyperlink{structtask__set__t}{task\+\_\+set\+\_\+t} $\ast$ \hyperlink{structscheduler__t_a3c4b0f5c56e33ac45048b0450f8df85b}{task\+\_\+set}}\label{structscheduler__t_a3c4b0f5c56e33ac45048b0450f8df85b}
+
+\begin{DoxyCompactList}\small\item\em Pointer to task set, needs memory allocation. \end{DoxyCompactList}\item 
+\hypertarget{structscheduler__t_ad9244de9de07ffa65fbf0f3e1dc1a426}{const \hyperlink{structmavlink__stream__t}{mavlink\+\_\+stream\+\_\+t} $\ast$ \hyperlink{structscheduler__t_ad9244de9de07ffa65fbf0f3e1dc1a426}{mavlink\+\_\+stream}}\label{structscheduler__t_ad9244de9de07ffa65fbf0f3e1dc1a426}
+
+\begin{DoxyCompactList}\small\item\em Pointer to mavlink stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Scheduler. 
+
+task\+\_\+set is implemented as pointer because its memory will be allocated during initialisation 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/runtime/scheduler.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,78 @@
+\hypertarget{structstate__t}{\section{state\+\_\+t Struct Reference}
+\label{structstate__t}\index{state\+\_\+t@{state\+\_\+t}}
+}
+
+
+The state structure.  
+
+
+
+
+{\ttfamily \#include $<$state.\+h$>$}
+
+
+
+Collaboration diagram for state\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{structstate__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structstate__t_ad4bd3cf9cd5fe8d8643a8c3c5701c663}{\hyperlink{unionmav__mode__t}{mav\+\_\+mode\+\_\+t} \hyperlink{structstate__t_ad4bd3cf9cd5fe8d8643a8c3c5701c663}{mav\+\_\+mode}}\label{structstate__t_ad4bd3cf9cd5fe8d8643a8c3c5701c663}
+
+\begin{DoxyCompactList}\small\item\em The value of the M\+A\+V mode. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_a64686341e91c43a48aaf5dbf5e00ac2c}{mav\+\_\+state\+\_\+t \hyperlink{structstate__t_a64686341e91c43a48aaf5dbf5e00ac2c}{mav\+\_\+state}}\label{structstate__t_a64686341e91c43a48aaf5dbf5e00ac2c}
+
+\begin{DoxyCompactList}\small\item\em The value of the M\+A\+V state. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_aebca1fed22021327f22d05d7ca301233}{\hyperlink{unionmav__mode__t}{mav\+\_\+mode\+\_\+t} \hyperlink{structstate__t_aebca1fed22021327f22d05d7ca301233}{mav\+\_\+mode\+\_\+previous}}\label{structstate__t_aebca1fed22021327f22d05d7ca301233}
+
+\begin{DoxyCompactList}\small\item\em The value of the M\+A\+V mode at previous time step. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_ae98adf252bccb57e22a25ce8315391ff}{int32\+\_\+t \hyperlink{structstate__t_ae98adf252bccb57e22a25ce8315391ff}{simulation\+\_\+mode}}\label{structstate__t_ae98adf252bccb57e22a25ce8315391ff}
+
+\begin{DoxyCompactList}\small\item\em The value of the simulation\+\_\+mode (0\+: real, 1\+: simulation) \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_a780dfb1a7d8ceb6e41c7ba13e67a61fa}{uint8\+\_\+t \hyperlink{structstate__t_a780dfb1a7d8ceb6e41c7ba13e67a61fa}{autopilot\+\_\+type}}\label{structstate__t_a780dfb1a7d8ceb6e41c7ba13e67a61fa}
+
+\begin{DoxyCompactList}\small\item\em The type of the autopilot (M\+A\+V\+\_\+\+T\+Y\+P\+E enum in \hyperlink{common_8h}{common.\+h}) \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_aa3d29a99c490c251e4a843436cd1ea08}{uint8\+\_\+t \hyperlink{structstate__t_aa3d29a99c490c251e4a843436cd1ea08}{autopilot\+\_\+name}}\label{structstate__t_aa3d29a99c490c251e4a843436cd1ea08}
+
+\begin{DoxyCompactList}\small\item\em The name of the autopilot (M\+A\+V\+\_\+\+A\+U\+T\+O\+P\+I\+L\+O\+T enum in \hyperlink{common_8h}{common.\+h}) \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_a6c71ae8b67b70320dde99814e0f122ba}{uint16\+\_\+t \hyperlink{structstate__t_a6c71ae8b67b70320dde99814e0f122ba}{sensor\+\_\+present}}\label{structstate__t_a6c71ae8b67b70320dde99814e0f122ba}
+
+\begin{DoxyCompactList}\small\item\em The type of sensors that are present on the autopilot (Value of 0\+: not present. Value of 1\+: present. Indices\+: 0\+: 3\+D gyro, 1\+: 3\+D acc, 2\+: 3\+D mag, 3\+: absolute pressure, 4\+: differential pressure, 5\+: G\+P\+S, 6\+: optical flow, 7\+: computer vision position, 8\+: laser based position, 9\+: external ground-\/truth (Vicon or Leica). Controllers\+: 10\+: 3\+D angular rate control 11\+: attitude stabilization, 12\+: yaw position, 13\+: z/altitude control, 14\+: x/y position control, 15\+: motor outputs / control) \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_a19a1370322b790587fe5d5578cbbbf4d}{uint16\+\_\+t \hyperlink{structstate__t_a19a1370322b790587fe5d5578cbbbf4d}{sensor\+\_\+enabled}}\label{structstate__t_a19a1370322b790587fe5d5578cbbbf4d}
+
+\begin{DoxyCompactList}\small\item\em The sensors enabled on the autopilot (Value of 0\+: not enabled. Value of 1\+: enabled. Indices\+: 0\+: 3\+D gyro, 1\+: 3\+D acc, 2\+: 3\+D mag, 3\+: absolute pressure, 4\+: differential pressure, 5\+: G\+P\+S, 6\+: optical flow, 7\+: computer vision position, 8\+: laser based position, 9\+: external ground-\/truth (Vicon or Leica). Controllers\+: 10\+: 3\+D angular rate control 11\+: attitude stabilization, 12\+: yaw position, 13\+: z/altitude control, 14\+: x/y position control, 15\+: motor outputs / control) \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_a381851f2b0efdd6c4f5588ac10794232}{uint16\+\_\+t \hyperlink{structstate__t_a381851f2b0efdd6c4f5588ac10794232}{sensor\+\_\+health}}\label{structstate__t_a381851f2b0efdd6c4f5588ac10794232}
+
+\begin{DoxyCompactList}\small\item\em The health of sensors present on the autopilot (Value of 0\+: not enabled. Value of 1\+: enabled. Indices\+: 0\+: 3\+D gyro, 1\+: 3\+D acc, 2\+: 3\+D mag, 3\+: absolute pressure, 4\+: differential pressure, 5\+: G\+P\+S, 6\+: optical flow, 7\+: computer vision position, 8\+: laser based position, 9\+: external ground-\/truth (Vicon or Leica). Controllers\+: 10\+: 3\+D angular rate control 11\+: attitude stabilization, 12\+: yaw position, 13\+: z/altitude control, 14\+: x/y position control, 15\+: motor outputs / control) \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_ab3c8bee79461cad9d174575f0772b760}{bool \hyperlink{structstate__t_ab3c8bee79461cad9d174575f0772b760}{nav\+\_\+plan\+\_\+active}}\label{structstate__t_ab3c8bee79461cad9d174575f0772b760}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell that a flight plan (min 1 waypoint) is active. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_ab5003598108643ca340fa8577ae7972d}{bool \hyperlink{structstate__t_ab5003598108643ca340fa8577ae7972d}{in\+\_\+the\+\_\+air}}\label{structstate__t_ab5003598108643ca340fa8577ae7972d}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell whether the vehicle is airborne or not. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_ae900c25359dc1a2536d772ecaa2d507b}{bool \hyperlink{structstate__t_ae900c25359dc1a2536d772ecaa2d507b}{reset\+\_\+position}}\label{structstate__t_ae900c25359dc1a2536d772ecaa2d507b}
+
+\begin{DoxyCompactList}\small\item\em Flag to enable the reset of the position estimation. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_a57817e74c67b7b95d321e2759e3d34f2}{uint32\+\_\+t \hyperlink{structstate__t_a57817e74c67b7b95d321e2759e3d34f2}{remote\+\_\+active}}\label{structstate__t_a57817e74c67b7b95d321e2759e3d34f2}
+
+\begin{DoxyCompactList}\small\item\em Flag to tell whether the remote is active or not. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_a212c3db931148c14342ac288c5c90fcb}{const \hyperlink{structanalog__monitor__t}{analog\+\_\+monitor\+\_\+t} $\ast$ \hyperlink{structstate__t_a212c3db931148c14342ac288c5c90fcb}{analog\+\_\+monitor}}\label{structstate__t_a212c3db931148c14342ac288c5c90fcb}
+
+\begin{DoxyCompactList}\small\item\em The pointer to the analog monitor structure. \end{DoxyCompactList}\item 
+\hypertarget{structstate__t_aecc68b1c179959dabe7499670504b4b7}{const \hyperlink{structmavlink__stream__t}{mavlink\+\_\+stream\+\_\+t} $\ast$ \hyperlink{structstate__t_aecc68b1c179959dabe7499670504b4b7}{mavlink\+\_\+stream}}\label{structstate__t_aecc68b1c179959dabe7499670504b4b7}
+
+\begin{DoxyCompactList}\small\item\em Pointer to the mavlin kstream structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The state structure. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/communication/state.\+h\end{DoxyCompactItemize}

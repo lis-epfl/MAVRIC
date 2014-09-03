@@ -1,0 +1,87 @@
+\hypertarget{structsimulation__config__t}{\section{simulation\+\_\+config\+\_\+t Struct Reference}
+\label{structsimulation__config__t}\index{simulation\+\_\+config\+\_\+t@{simulation\+\_\+config\+\_\+t}}
+}
+
+
+The vehicle simulation model structure definition.  
+
+
+
+
+{\ttfamily \#include $<$simulation.\+h$>$}
+
+
+
+Collaboration diagram for simulation\+\_\+config\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{structsimulation__config__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structsimulation__config__t_aba47dad91ec77ce427c54a73c106771e}{float \hyperlink{structsimulation__config__t_aba47dad91ec77ce427c54a73c106771e}{rotor\+\_\+lpf}}\label{structsimulation__config__t_aba47dad91ec77ce427c54a73c106771e}
+
+\begin{DoxyCompactList}\small\item\em The low-\/pass filtered response of the rotors to simulate inertia and lag. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_ac71918adff9123575aad0830dd419bc3}{float \hyperlink{structsimulation__config__t_ac71918adff9123575aad0830dd419bc3}{rotor\+\_\+rpm\+\_\+gain}}\label{structsimulation__config__t_ac71918adff9123575aad0830dd419bc3}
+
+\begin{DoxyCompactList}\small\item\em The gain linking the command to rpm. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a615309f20c97fd40409f53cf34c944ba}{float \hyperlink{structsimulation__config__t_a615309f20c97fd40409f53cf34c944ba}{rotor\+\_\+rpm\+\_\+offset}}\label{structsimulation__config__t_a615309f20c97fd40409f53cf34c944ba}
+
+\begin{DoxyCompactList}\small\item\em The offset to convert servo commands to rpm. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_ac5ba4966b140c6863e049372d65fc3bd}{float \hyperlink{structsimulation__config__t_ac5ba4966b140c6863e049372d65fc3bd}{rotor\+\_\+cd}}\label{structsimulation__config__t_ac5ba4966b140c6863e049372d65fc3bd}
+
+\begin{DoxyCompactList}\small\item\em The rotor drag coefficient. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a4b38a7abb11ae49d4f5f9a85354aada9}{float \hyperlink{structsimulation__config__t_a4b38a7abb11ae49d4f5f9a85354aada9}{rotor\+\_\+cl}}\label{structsimulation__config__t_a4b38a7abb11ae49d4f5f9a85354aada9}
+
+\begin{DoxyCompactList}\small\item\em The rotor lift coefficient. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a87350e39f7b65e066358e3dfd7233c34}{float \hyperlink{structsimulation__config__t_a87350e39f7b65e066358e3dfd7233c34}{rotor\+\_\+diameter}}\label{structsimulation__config__t_a87350e39f7b65e066358e3dfd7233c34}
+
+\begin{DoxyCompactList}\small\item\em The mean rotor diameter in m. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a0c50d9eb67c076e682f29170652fd08b}{float \hyperlink{structsimulation__config__t_a0c50d9eb67c076e682f29170652fd08b}{rotor\+\_\+foil\+\_\+area}}\label{structsimulation__config__t_a0c50d9eb67c076e682f29170652fd08b}
+
+\begin{DoxyCompactList}\small\item\em The rotor foil area. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a5734e1ba7836bb350be1ea7fdd18ce93}{float \hyperlink{structsimulation__config__t_a5734e1ba7836bb350be1ea7fdd18ce93}{rotor\+\_\+pitch}}\label{structsimulation__config__t_a5734e1ba7836bb350be1ea7fdd18ce93}
+
+\begin{DoxyCompactList}\small\item\em The rotor pitch. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a824a5e6007286ae995bfccf8924a4dad}{float \hyperlink{structsimulation__config__t_a824a5e6007286ae995bfccf8924a4dad}{total\+\_\+mass}}\label{structsimulation__config__t_a824a5e6007286ae995bfccf8924a4dad}
+
+\begin{DoxyCompactList}\small\item\em The vehicle mass in kg. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_ae325c8403575cd0369122ff5816be66d}{float \hyperlink{structsimulation__config__t_ae325c8403575cd0369122ff5816be66d}{vehicle\+\_\+drag}}\label{structsimulation__config__t_ae325c8403575cd0369122ff5816be66d}
+
+\begin{DoxyCompactList}\small\item\em The coefficient of drag of the whole vehicle. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a666171a79a3d43e610d5be93335c186c}{float \hyperlink{structsimulation__config__t_a666171a79a3d43e610d5be93335c186c}{roll\+\_\+pitch\+\_\+momentum}}\label{structsimulation__config__t_a666171a79a3d43e610d5be93335c186c}
+
+\begin{DoxyCompactList}\small\item\em The roll and pitch angular momentum of the vehicle. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a8d06cda5afaeff442594e751b2e4dab8}{float \hyperlink{structsimulation__config__t_a8d06cda5afaeff442594e751b2e4dab8}{yaw\+\_\+momentum}}\label{structsimulation__config__t_a8d06cda5afaeff442594e751b2e4dab8}
+
+\begin{DoxyCompactList}\small\item\em The yaw angular momentum constants (assumed to be independent) \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_aea8763d6cedd90cc8324174d5323d62a}{float \hyperlink{structsimulation__config__t_aea8763d6cedd90cc8324174d5323d62a}{rotor\+\_\+momentum}}\label{structsimulation__config__t_aea8763d6cedd90cc8324174d5323d62a}
+
+\begin{DoxyCompactList}\small\item\em The angular momentum of the rotor (for rotor inertia) \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_af70d0a2fe71c9ea252307a24095e8038}{float \hyperlink{structsimulation__config__t_af70d0a2fe71c9ea252307a24095e8038}{rotor\+\_\+arm\+\_\+length}}\label{structsimulation__config__t_af70d0a2fe71c9ea252307a24095e8038}
+
+\begin{DoxyCompactList}\small\item\em The distance between Co\+G and motor (in meter) \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a333dbbf8b88602f3d9aab584c5398a80}{float \hyperlink{structsimulation__config__t_a333dbbf8b88602f3d9aab584c5398a80}{wind\+\_\+x}}\label{structsimulation__config__t_a333dbbf8b88602f3d9aab584c5398a80}
+
+\begin{DoxyCompactList}\small\item\em The x component of wind in global frame in m/s. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a4b8c1987d11c6e2f1988d16e020cd728}{float \hyperlink{structsimulation__config__t_a4b8c1987d11c6e2f1988d16e020cd728}{wind\+\_\+y}}\label{structsimulation__config__t_a4b8c1987d11c6e2f1988d16e020cd728}
+
+\begin{DoxyCompactList}\small\item\em The y component of wind in global frame in m/s. \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a58f77298c921579ec55585f6cd51da2e}{float \hyperlink{structsimulation__config__t_a58f77298c921579ec55585f6cd51da2e}{home\+\_\+coordinates} \mbox{[}3\mbox{]}}\label{structsimulation__config__t_a58f77298c921579ec55585f6cd51da2e}
+
+\begin{DoxyCompactList}\small\item\em The home coordinates in global frame (G\+P\+S, latitude, longitude, altitude in degrees and meters) \end{DoxyCompactList}\item 
+\hypertarget{structsimulation__config__t_a88fab754ca4266e8745790dd39c82ba9}{float \hyperlink{structsimulation__config__t_a88fab754ca4266e8745790dd39c82ba9}{sim\+\_\+gravity}}\label{structsimulation__config__t_a88fab754ca4266e8745790dd39c82ba9}
+
+\begin{DoxyCompactList}\small\item\em The value of gravity for the simulated forces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The vehicle simulation model structure definition. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/sensing/simulation.\+h\end{DoxyCompactItemize}

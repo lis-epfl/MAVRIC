@@ -1,0 +1,96 @@
+\hypertarget{struct____mavlink__gps__raw__int__t}{\section{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t Struct Reference}
+\label{struct____mavlink__gps__raw__int__t}\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+}
+
+
+Collaboration diagram for \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{struct____mavlink__gps__raw__int__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct____mavlink__gps__raw__int__t_a39d30393d02f2b1882040e3fa063f6ea}{uint64\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_a39d30393d02f2b1882040e3fa063f6ea}{time\+\_\+usec}}\label{struct____mavlink__gps__raw__int__t_a39d30393d02f2b1882040e3fa063f6ea}
+
+\begin{DoxyCompactList}\small\item\em Timestamp (microseconds since U\+N\+I\+X epoch or microseconds since system boot) \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_aefd27d0b2d23c58a59b218aa151220d3}{lat}
+\begin{DoxyCompactList}\small\item\em Latitude in 1\+E7 degrees. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_a025fd2dd700ff7180af5a26c2a3497f4}{lon}
+\begin{DoxyCompactList}\small\item\em Longitude in 1\+E7 degrees. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_a00fe92144cfdaf8440a841493e5b6e99}{alt}
+\begin{DoxyCompactList}\small\item\em Altitude in 1\+E3 meters (millimeters) above M\+S\+L. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_ad7ec0749ffe37d3ada65b701be2cd305}{eph}
+\begin{DoxyCompactList}\small\item\em G\+P\+S H\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_a0d50bc6cc0e56d9f49885e3e550ec944}{epv}
+\begin{DoxyCompactList}\small\item\em G\+P\+S V\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_a77e8cbdbf554637e4fbbdaaabd562eaf}{vel}
+\begin{DoxyCompactList}\small\item\em G\+P\+S ground speed (m/s $\ast$ 100). If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_adbe4dfbea17d1fd08a0841ce29e32637}{cog}
+\begin{DoxyCompactList}\small\item\em Course over ground (N\+O\+T heading, but direction of movement) in degrees $\ast$ 100, 0.\+0..359.\+99 degrees. If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__gps__raw__int__t_ae014afb6eea2b6033ebde37c79e120f2}{uint8\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_ae014afb6eea2b6033ebde37c79e120f2}{fix\+\_\+type}}\label{struct____mavlink__gps__raw__int__t_ae014afb6eea2b6033ebde37c79e120f2}
+
+\begin{DoxyCompactList}\small\item\em 0-\/1\+: no fix, 2\+: 2\+D fix, 3\+: 3\+D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__gps__raw__int__t_af1481a191aa3ffbf832dc3a4c35cbf09}{uint8\+\_\+t \hyperlink{struct____mavlink__gps__raw__int__t_af1481a191aa3ffbf832dc3a4c35cbf09}{satellites\+\_\+visible}}\label{struct____mavlink__gps__raw__int__t_af1481a191aa3ffbf832dc3a4c35cbf09}
+
+\begin{DoxyCompactList}\small\item\em Number of satellites visible. If unknown, set to 255. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{struct____mavlink__gps__raw__int__t_a00fe92144cfdaf8440a841493e5b6e99}{\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}!alt@{alt}}
+\index{alt@{alt}!\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+\subsubsection[{alt}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+::alt}}\label{struct____mavlink__gps__raw__int__t_a00fe92144cfdaf8440a841493e5b6e99}
+
+
+Altitude in 1\+E3 meters (millimeters) above M\+S\+L. 
+
+Altitude (W\+G\+S84), in meters $\ast$ 1000 (positive for up) \hypertarget{struct____mavlink__gps__raw__int__t_adbe4dfbea17d1fd08a0841ce29e32637}{\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}!cog@{cog}}
+\index{cog@{cog}!\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+\subsubsection[{cog}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+::cog}}\label{struct____mavlink__gps__raw__int__t_adbe4dfbea17d1fd08a0841ce29e32637}
+
+
+Course over ground (N\+O\+T heading, but direction of movement) in degrees $\ast$ 100, 0.\+0..359.\+99 degrees. If unknown, set to\+: 65535. 
+
+Course over ground (N\+O\+T heading, but direction of movement) in degrees $\ast$ 100, 0.\+0..359.\+99 degrees. If unknown, set to\+: U\+I\+N\+T16\+\_\+\+M\+A\+X. \hypertarget{struct____mavlink__gps__raw__int__t_ad7ec0749ffe37d3ada65b701be2cd305}{\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}!eph@{eph}}
+\index{eph@{eph}!\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+\subsubsection[{eph}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+::eph}}\label{struct____mavlink__gps__raw__int__t_ad7ec0749ffe37d3ada65b701be2cd305}
+
+
+G\+P\+S H\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: 65535. 
+
+G\+P\+S H\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: U\+I\+N\+T16\+\_\+\+M\+A\+X. \hypertarget{struct____mavlink__gps__raw__int__t_a0d50bc6cc0e56d9f49885e3e550ec944}{\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}!epv@{epv}}
+\index{epv@{epv}!\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+\subsubsection[{epv}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+::epv}}\label{struct____mavlink__gps__raw__int__t_a0d50bc6cc0e56d9f49885e3e550ec944}
+
+
+G\+P\+S V\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: 65535. 
+
+G\+P\+S V\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: U\+I\+N\+T16\+\_\+\+M\+A\+X. \hypertarget{struct____mavlink__gps__raw__int__t_aefd27d0b2d23c58a59b218aa151220d3}{\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}!lat@{lat}}
+\index{lat@{lat}!\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+\subsubsection[{lat}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+::lat}}\label{struct____mavlink__gps__raw__int__t_aefd27d0b2d23c58a59b218aa151220d3}
+
+
+Latitude in 1\+E7 degrees. 
+
+Latitude (W\+G\+S84), in degrees $\ast$ 1\+E7. \hypertarget{struct____mavlink__gps__raw__int__t_a025fd2dd700ff7180af5a26c2a3497f4}{\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}!lon@{lon}}
+\index{lon@{lon}!\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+\subsubsection[{lon}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+::lon}}\label{struct____mavlink__gps__raw__int__t_a025fd2dd700ff7180af5a26c2a3497f4}
+
+
+Longitude in 1\+E7 degrees. 
+
+Longitude (W\+G\+S84), in degrees $\ast$ 1\+E7. \hypertarget{struct____mavlink__gps__raw__int__t_a77e8cbdbf554637e4fbbdaaabd562eaf}{\index{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}!vel@{vel}}
+\index{vel@{vel}!\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t}}
+\subsubsection[{vel}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t \+\_\+\+\_\+mavlink\+\_\+gps\+\_\+raw\+\_\+int\+\_\+t\+::vel}}\label{struct____mavlink__gps__raw__int__t_a77e8cbdbf554637e4fbbdaaabd562eaf}
+
+
+G\+P\+S ground speed (m/s $\ast$ 100). If unknown, set to\+: 65535. 
+
+G\+P\+S ground speed (m/s $\ast$ 100). If unknown, set to\+: U\+I\+N\+T16\+\_\+\+M\+A\+X. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/mavlink/include/common/mavlink\+\_\+msg\+\_\+gps\+\_\+raw\+\_\+int.\+h\end{DoxyCompactItemize}

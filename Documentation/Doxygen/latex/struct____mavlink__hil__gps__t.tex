@@ -1,0 +1,60 @@
+\hypertarget{struct____mavlink__hil__gps__t}{\section{\+\_\+\+\_\+mavlink\+\_\+hil\+\_\+gps\+\_\+t Struct Reference}
+\label{struct____mavlink__hil__gps__t}\index{\+\_\+\+\_\+mavlink\+\_\+hil\+\_\+gps\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+hil\+\_\+gps\+\_\+t}}
+}
+
+
+Collaboration diagram for \+\_\+\+\_\+mavlink\+\_\+hil\+\_\+gps\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{struct____mavlink__hil__gps__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct____mavlink__hil__gps__t_a06069c8971366092665b51a939e9abb3}{uint64\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a06069c8971366092665b51a939e9abb3}{time\+\_\+usec}}\label{struct____mavlink__hil__gps__t_a06069c8971366092665b51a939e9abb3}
+
+\begin{DoxyCompactList}\small\item\em Timestamp (microseconds since U\+N\+I\+X epoch or microseconds since system boot) \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_a5adc957f66ccbd23fe9bfabd056c03c5}{int32\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a5adc957f66ccbd23fe9bfabd056c03c5}{lat}}\label{struct____mavlink__hil__gps__t_a5adc957f66ccbd23fe9bfabd056c03c5}
+
+\begin{DoxyCompactList}\small\item\em Latitude (W\+G\+S84), in degrees $\ast$ 1\+E7. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_abfec6d143d48f5b7e5e37cd8c98d6f82}{int32\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_abfec6d143d48f5b7e5e37cd8c98d6f82}{lon}}\label{struct____mavlink__hil__gps__t_abfec6d143d48f5b7e5e37cd8c98d6f82}
+
+\begin{DoxyCompactList}\small\item\em Longitude (W\+G\+S84), in degrees $\ast$ 1\+E7. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_a9d9f5ccc1ded23c02b7a7ed760c66a73}{int32\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a9d9f5ccc1ded23c02b7a7ed760c66a73}{alt}}\label{struct____mavlink__hil__gps__t_a9d9f5ccc1ded23c02b7a7ed760c66a73}
+
+\begin{DoxyCompactList}\small\item\em Altitude (W\+G\+S84), in meters $\ast$ 1000 (positive for up) \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_a1886825c99c4312c1c5f5e2e42c8ebc2}{uint16\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a1886825c99c4312c1c5f5e2e42c8ebc2}{eph}}\label{struct____mavlink__hil__gps__t_a1886825c99c4312c1c5f5e2e42c8ebc2}
+
+\begin{DoxyCompactList}\small\item\em G\+P\+S H\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_aaf9040cabae429efd2901d51ee3a4969}{uint16\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_aaf9040cabae429efd2901d51ee3a4969}{epv}}\label{struct____mavlink__hil__gps__t_aaf9040cabae429efd2901d51ee3a4969}
+
+\begin{DoxyCompactList}\small\item\em G\+P\+S V\+D\+O\+P horizontal dilution of position in cm (m$\ast$100). If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_ac586576e58891b09ca979d421465ac81}{uint16\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_ac586576e58891b09ca979d421465ac81}{vel}}\label{struct____mavlink__hil__gps__t_ac586576e58891b09ca979d421465ac81}
+
+\begin{DoxyCompactList}\small\item\em G\+P\+S ground speed (m/s $\ast$ 100). If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_aff2b255f76bb2f80ccc690d70c11195b}{int16\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_aff2b255f76bb2f80ccc690d70c11195b}{vn}}\label{struct____mavlink__hil__gps__t_aff2b255f76bb2f80ccc690d70c11195b}
+
+\begin{DoxyCompactList}\small\item\em G\+P\+S velocity in cm/s in N\+O\+R\+T\+H direction in earth-\/fixed N\+E\+D frame. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_a7c3f8d60cff9df9d2d03b3ac84bbfb15}{int16\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a7c3f8d60cff9df9d2d03b3ac84bbfb15}{ve}}\label{struct____mavlink__hil__gps__t_a7c3f8d60cff9df9d2d03b3ac84bbfb15}
+
+\begin{DoxyCompactList}\small\item\em G\+P\+S velocity in cm/s in E\+A\+S\+T direction in earth-\/fixed N\+E\+D frame. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_a3d764d688357582b0aba5da4992579b5}{int16\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a3d764d688357582b0aba5da4992579b5}{vd}}\label{struct____mavlink__hil__gps__t_a3d764d688357582b0aba5da4992579b5}
+
+\begin{DoxyCompactList}\small\item\em G\+P\+S velocity in cm/s in D\+O\+W\+N direction in earth-\/fixed N\+E\+D frame. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_a7a0d3eba01b2e7cb3fb52d10192a7881}{uint16\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a7a0d3eba01b2e7cb3fb52d10192a7881}{cog}}\label{struct____mavlink__hil__gps__t_a7a0d3eba01b2e7cb3fb52d10192a7881}
+
+\begin{DoxyCompactList}\small\item\em Course over ground (N\+O\+T heading, but direction of movement) in degrees $\ast$ 100, 0.\+0..359.\+99 degrees. If unknown, set to\+: 65535. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_ab823793fa4f3c3f56b1879faedc8776e}{uint8\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_ab823793fa4f3c3f56b1879faedc8776e}{fix\+\_\+type}}\label{struct____mavlink__hil__gps__t_ab823793fa4f3c3f56b1879faedc8776e}
+
+\begin{DoxyCompactList}\small\item\em 0-\/1\+: no fix, 2\+: 2\+D fix, 3\+: 3\+D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__hil__gps__t_a9128f6bd8c708d5990adbfce55365577}{uint8\+\_\+t \hyperlink{struct____mavlink__hil__gps__t_a9128f6bd8c708d5990adbfce55365577}{satellites\+\_\+visible}}\label{struct____mavlink__hil__gps__t_a9128f6bd8c708d5990adbfce55365577}
+
+\begin{DoxyCompactList}\small\item\em Number of satellites visible. If unknown, set to 255. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/mavlink/include/maveric/mavlink\+\_\+msg\+\_\+hil\+\_\+gps.\+h\end{DoxyCompactItemize}

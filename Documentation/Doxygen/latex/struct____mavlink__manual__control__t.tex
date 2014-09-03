@@ -1,0 +1,39 @@
+\hypertarget{struct____mavlink__manual__control__t}{\section{\+\_\+\+\_\+mavlink\+\_\+manual\+\_\+control\+\_\+t Struct Reference}
+\label{struct____mavlink__manual__control__t}\index{\+\_\+\+\_\+mavlink\+\_\+manual\+\_\+control\+\_\+t@{\+\_\+\+\_\+mavlink\+\_\+manual\+\_\+control\+\_\+t}}
+}
+
+
+Collaboration diagram for \+\_\+\+\_\+mavlink\+\_\+manual\+\_\+control\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{struct____mavlink__manual__control__t__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct____mavlink__manual__control__t_add34b2bd0b54651701e7d8b2912868a6}{int16\+\_\+t \hyperlink{struct____mavlink__manual__control__t_add34b2bd0b54651701e7d8b2912868a6}{x}}\label{struct____mavlink__manual__control__t_add34b2bd0b54651701e7d8b2912868a6}
+
+\begin{DoxyCompactList}\small\item\em X-\/axis, normalized to the range \mbox{[}-\/1000,1000\mbox{]}. A value of I\+N\+T16\+\_\+\+M\+A\+X indicates that this axis is invalid. Generally corresponds to forward(1000)-\/backward(-\/1000) movement on a joystick and the pitch of a vehicle. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__manual__control__t_a5f705735ffdbe9c373151fe73c0abedb}{int16\+\_\+t \hyperlink{struct____mavlink__manual__control__t_a5f705735ffdbe9c373151fe73c0abedb}{y}}\label{struct____mavlink__manual__control__t_a5f705735ffdbe9c373151fe73c0abedb}
+
+\begin{DoxyCompactList}\small\item\em Y-\/axis, normalized to the range \mbox{[}-\/1000,1000\mbox{]}. A value of I\+N\+T16\+\_\+\+M\+A\+X indicates that this axis is invalid. Generally corresponds to left(-\/1000)-\/right(1000) movement on a joystick and the roll of a vehicle. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__manual__control__t_a9e3fd9d9bcd622e31cca4d44f66343c1}{int16\+\_\+t \hyperlink{struct____mavlink__manual__control__t_a9e3fd9d9bcd622e31cca4d44f66343c1}{z}}\label{struct____mavlink__manual__control__t_a9e3fd9d9bcd622e31cca4d44f66343c1}
+
+\begin{DoxyCompactList}\small\item\em Z-\/axis, normalized to the range \mbox{[}-\/1000,1000\mbox{]}. A value of I\+N\+T16\+\_\+\+M\+A\+X indicates that this axis is invalid. Generally corresponds to a separate slider movement with maximum being 1000 and minimum being -\/1000 on a joystick and the thrust of a vehicle. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__manual__control__t_a7311c5d986a66ba78c8f3c62e6163d8b}{int16\+\_\+t \hyperlink{struct____mavlink__manual__control__t_a7311c5d986a66ba78c8f3c62e6163d8b}{r}}\label{struct____mavlink__manual__control__t_a7311c5d986a66ba78c8f3c62e6163d8b}
+
+\begin{DoxyCompactList}\small\item\em R-\/axis, normalized to the range \mbox{[}-\/1000,1000\mbox{]}. A value of I\+N\+T16\+\_\+\+M\+A\+X indicates that this axis is invalid. Generally corresponds to a twisting of the joystick, with counter-\/clockwise being 1000 and clockwise being -\/1000, and the yaw of a vehicle. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__manual__control__t_addf991277abf6fad36b842fdba36fd89}{uint16\+\_\+t \hyperlink{struct____mavlink__manual__control__t_addf991277abf6fad36b842fdba36fd89}{buttons}}\label{struct____mavlink__manual__control__t_addf991277abf6fad36b842fdba36fd89}
+
+\begin{DoxyCompactList}\small\item\em A bitfield corresponding to the joystick buttons' current state, 1 for pressed, 0 for released. The lowest bit corresponds to Button 1. \end{DoxyCompactList}\item 
+\hypertarget{struct____mavlink__manual__control__t_ac69f96effc87ea6377989b2350a2a4eb}{uint8\+\_\+t \hyperlink{struct____mavlink__manual__control__t_ac69f96effc87ea6377989b2350a2a4eb}{target}}\label{struct____mavlink__manual__control__t_ac69f96effc87ea6377989b2350a2a4eb}
+
+\begin{DoxyCompactList}\small\item\em The system to be controlled. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/mavlink/include/common/mavlink\+\_\+msg\+\_\+manual\+\_\+control.\+h\end{DoxyCompactItemize}

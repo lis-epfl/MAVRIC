@@ -10,3 +10,6 @@
 [submodule "Documentation/wiki"]
 	path = Documentation/wiki
 	url = git@github.com:lis-epfl/MAVRIC.wiki.git
+[submodule "Documentation/Doxygen/html"]
+	path = Documentation/Doxygen/html
+	url = git@github.com:lis-epfl/MAVRIC.git

@@ -1,0 +1,281 @@
+\hypertarget{joystick__parsing_8c}{\section{/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/control/joystick\+\_\+parsing.c File Reference}
+\label{joystick__parsing_8c}\index{/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/control/joystick\+\_\+parsing.\+c@{/run/media/julien/\+Data/\+Documents/\+M\+A\+V\+R\+I\+C/\+M\+A\+V\+R\+I\+C\+\_\+\+Library/control/joystick\+\_\+parsing.\+c}}
+}
+{\ttfamily \#include \char`\"{}joystick\+\_\+parsing.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}print\+\_\+util.\+h\char`\"{}}\\*
+Include dependency graph for joystick\+\_\+parsing.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{joystick__parsing_8c_acee780f9ad27d5318b3612e7b180dded}{joystick\+\_\+parsing\+\_\+button\+\_\+mask} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing, uint16\+\_\+t buttons)
+\begin{DoxyCompactList}\small\item\em Do operations when buttons are pressed. \end{DoxyCompactList}\item 
+void \hyperlink{joystick__parsing_8c_ae8ba756c8a00ada61c3447757351d82e}{joystick\+\_\+parsing\+\_\+button\+\_\+1} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing, button\+\_\+pressed\+\_\+t button\+\_\+1)
+\begin{DoxyCompactList}\small\item\em Arming/\+Disarming the motors when button 1 is pressed. \end{DoxyCompactList}\item 
+void \hyperlink{joystick__parsing_8c_ac5976946680e4b73cc10e93a32169c92}{joystick\+\_\+parsing\+\_\+button} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing, button\+\_\+pressed\+\_\+t button, mav\+\_\+mode\+\_\+predefined\+\_\+t mode\+\_\+predefined)
+\begin{DoxyCompactList}\small\item\em Do operations when a button is pressed. \end{DoxyCompactList}\item 
+void \hyperlink{joystick__parsing_8c_aa6ebb4887929d74e9733c80ebf2f8a5e}{joystick\+\_\+parsing\+\_\+init} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing, \hyperlink{structcontrol__command__t}{control\+\_\+command\+\_\+t} $\ast$controls, \hyperlink{structstate__t}{state\+\_\+t} $\ast$state, \hyperlink{structmavlink__communication__t}{mavlink\+\_\+communication\+\_\+t} $\ast$mavlink\+\_\+communication)
+\begin{DoxyCompactList}\small\item\em Initialisation of the joystick parsing module. \end{DoxyCompactList}\item 
+void \hyperlink{joystick__parsing_8c_ad107b21d62787495b8aff2924f1b0b4f}{joystick\+\_\+parsing\+\_\+parse\+\_\+msg} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing, \hyperlink{structmavlink__received__t}{mavlink\+\_\+received\+\_\+t} $\ast$rec)
+\begin{DoxyCompactList}\small\item\em Parse received mavlink message in structure. \end{DoxyCompactList}\item 
+void \hyperlink{joystick__parsing_8c_a64a74a8e2b4b62a140b733d2e1be14a3}{joystick\+\_\+parsing\+\_\+get\+\_\+velocity\+\_\+vector\+\_\+from\+\_\+joystick} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing, \hyperlink{structcontrol__command__t}{control\+\_\+command\+\_\+t} $\ast$controls)
+\begin{DoxyCompactList}\small\item\em Parse joystick to velocity vector command. \end{DoxyCompactList}\item 
+void \hyperlink{joystick__parsing_8c_a99a2d1ff9d0840c7b5d5f3db636b8c04}{joystick\+\_\+parsing\+\_\+get\+\_\+attitude\+\_\+command\+\_\+from\+\_\+joystick} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing, \hyperlink{structcontrol__command__t}{control\+\_\+command\+\_\+t} $\ast$controls)
+\begin{DoxyCompactList}\small\item\em Parse joystick to attitude command. \end{DoxyCompactList}\item 
+task\+\_\+return\+\_\+t \hyperlink{joystick__parsing_8c_a823cd910f32b555846ae6606db2dab3b}{joystick\+\_\+parsing\+\_\+send\+\_\+manual\+\_\+ctrl\+\_\+msg} (\hyperlink{structjoystick__parsing__t}{joystick\+\_\+parsing\+\_\+t} $\ast$joystick\+\_\+parsing)
+\begin{DoxyCompactList}\small\item\em Parse received mavlink message in structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file is to decode the set manual command message from mavlink 
+
+\subsection{Function Documentation}
+\hypertarget{joystick__parsing_8c_ac5976946680e4b73cc10e93a32169c92}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+button@{joystick\+\_\+parsing\+\_\+button}}
+\index{joystick\+\_\+parsing\+\_\+button@{joystick\+\_\+parsing\+\_\+button}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+button}]{\setlength{\rightskip}{0pt plus 5cm}void joystick\+\_\+parsing\+\_\+button (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing, }
+\item[{button\+\_\+pressed\+\_\+t}]{button, }
+\item[{mav\+\_\+mode\+\_\+predefined\+\_\+t}]{mode\+\_\+predefined}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_ac5976946680e4b73cc10e93a32169c92}
+
+
+Do operations when a button is pressed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure \\
+\hline
+{\em button} & The value of the button pressed \\
+\hline
+{\em mode\+\_\+predefined} & The predefined mode to be set \\
+\hline
+\end{DoxyParams}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c_ac5976946680e4b73cc10e93a32169c92_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{joystick__parsing_8c_ae8ba756c8a00ada61c3447757351d82e}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+button\+\_\+1@{joystick\+\_\+parsing\+\_\+button\+\_\+1}}
+\index{joystick\+\_\+parsing\+\_\+button\+\_\+1@{joystick\+\_\+parsing\+\_\+button\+\_\+1}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+button\+\_\+1}]{\setlength{\rightskip}{0pt plus 5cm}void joystick\+\_\+parsing\+\_\+button\+\_\+1 (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing, }
+\item[{button\+\_\+pressed\+\_\+t}]{button\+\_\+1}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_ae8ba756c8a00ada61c3447757351d82e}
+
+
+Arming/\+Disarming the motors when button 1 is pressed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure \\
+\hline
+{\em button\+\_\+1} & The button 1 value \\
+\hline
+\end{DoxyParams}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c_ae8ba756c8a00ada61c3447757351d82e_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{joystick__parsing_8c_acee780f9ad27d5318b3612e7b180dded}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+button\+\_\+mask@{joystick\+\_\+parsing\+\_\+button\+\_\+mask}}
+\index{joystick\+\_\+parsing\+\_\+button\+\_\+mask@{joystick\+\_\+parsing\+\_\+button\+\_\+mask}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+button\+\_\+mask}]{\setlength{\rightskip}{0pt plus 5cm}void joystick\+\_\+parsing\+\_\+button\+\_\+mask (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing, }
+\item[{uint16\+\_\+t}]{buttons}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_acee780f9ad27d5318b3612e7b180dded}
+
+
+Do operations when buttons are pressed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure \\
+\hline
+{\em buttons} & The bit mask of the buttons \\
+\hline
+\end{DoxyParams}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c_acee780f9ad27d5318b3612e7b180dded_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c_acee780f9ad27d5318b3612e7b180dded_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{joystick__parsing_8c_a99a2d1ff9d0840c7b5d5f3db636b8c04}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+get\+\_\+attitude\+\_\+command\+\_\+from\+\_\+joystick@{joystick\+\_\+parsing\+\_\+get\+\_\+attitude\+\_\+command\+\_\+from\+\_\+joystick}}
+\index{joystick\+\_\+parsing\+\_\+get\+\_\+attitude\+\_\+command\+\_\+from\+\_\+joystick@{joystick\+\_\+parsing\+\_\+get\+\_\+attitude\+\_\+command\+\_\+from\+\_\+joystick}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+get\+\_\+attitude\+\_\+command\+\_\+from\+\_\+joystick}]{\setlength{\rightskip}{0pt plus 5cm}void joystick\+\_\+parsing\+\_\+get\+\_\+attitude\+\_\+command\+\_\+from\+\_\+joystick (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing, }
+\item[{{\bf control\+\_\+command\+\_\+t} $\ast$}]{controls}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_a99a2d1ff9d0840c7b5d5f3db636b8c04}
+
+
+Parse joystick to attitude command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure \\
+\hline
+{\em controls} & The pointer to the control structure \\
+\hline
+\end{DoxyParams}
+\hypertarget{joystick__parsing_8c_a64a74a8e2b4b62a140b733d2e1be14a3}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+get\+\_\+velocity\+\_\+vector\+\_\+from\+\_\+joystick@{joystick\+\_\+parsing\+\_\+get\+\_\+velocity\+\_\+vector\+\_\+from\+\_\+joystick}}
+\index{joystick\+\_\+parsing\+\_\+get\+\_\+velocity\+\_\+vector\+\_\+from\+\_\+joystick@{joystick\+\_\+parsing\+\_\+get\+\_\+velocity\+\_\+vector\+\_\+from\+\_\+joystick}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+get\+\_\+velocity\+\_\+vector\+\_\+from\+\_\+joystick}]{\setlength{\rightskip}{0pt plus 5cm}void joystick\+\_\+parsing\+\_\+get\+\_\+velocity\+\_\+vector\+\_\+from\+\_\+joystick (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing, }
+\item[{{\bf control\+\_\+command\+\_\+t} $\ast$}]{controls}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_a64a74a8e2b4b62a140b733d2e1be14a3}
+
+
+Parse joystick to velocity vector command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure \\
+\hline
+{\em controls} & The pointer to the control structure \\
+\hline
+\end{DoxyParams}
+\hypertarget{joystick__parsing_8c_aa6ebb4887929d74e9733c80ebf2f8a5e}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+init@{joystick\+\_\+parsing\+\_\+init}}
+\index{joystick\+\_\+parsing\+\_\+init@{joystick\+\_\+parsing\+\_\+init}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void joystick\+\_\+parsing\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing, }
+\item[{{\bf control\+\_\+command\+\_\+t} $\ast$}]{controls, }
+\item[{{\bf state\+\_\+t} $\ast$}]{state, }
+\item[{{\bf mavlink\+\_\+communication\+\_\+t} $\ast$}]{mavlink\+\_\+communication}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_aa6ebb4887929d74e9733c80ebf2f8a5e}
+
+
+Initialisation of the joystick parsing module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure \\
+\hline
+{\em controls} & The pointer to the control structure \\
+\hline
+{\em mavlink\+\_\+communication} & The pointer to the mavlink communication structure \\
+\hline
+\end{DoxyParams}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c_aa6ebb4887929d74e9733c80ebf2f8a5e_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{joystick__parsing_8c_ad107b21d62787495b8aff2924f1b0b4f}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+parse\+\_\+msg@{joystick\+\_\+parsing\+\_\+parse\+\_\+msg}}
+\index{joystick\+\_\+parsing\+\_\+parse\+\_\+msg@{joystick\+\_\+parsing\+\_\+parse\+\_\+msg}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+parse\+\_\+msg}]{\setlength{\rightskip}{0pt plus 5cm}void joystick\+\_\+parsing\+\_\+parse\+\_\+msg (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing, }
+\item[{{\bf mavlink\+\_\+received\+\_\+t} $\ast$}]{rec}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_ad107b21d62787495b8aff2924f1b0b4f}
+
+
+Parse received mavlink message in structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure \\
+\hline
+{\em rec} & The pointer to the mavlink message received \\
+\hline
+\end{DoxyParams}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c_ad107b21d62787495b8aff2924f1b0b4f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{joystick__parsing_8c_ad107b21d62787495b8aff2924f1b0b4f_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{joystick__parsing_8c_a823cd910f32b555846ae6606db2dab3b}{\index{joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}!joystick\+\_\+parsing\+\_\+send\+\_\+manual\+\_\+ctrl\+\_\+msg@{joystick\+\_\+parsing\+\_\+send\+\_\+manual\+\_\+ctrl\+\_\+msg}}
+\index{joystick\+\_\+parsing\+\_\+send\+\_\+manual\+\_\+ctrl\+\_\+msg@{joystick\+\_\+parsing\+\_\+send\+\_\+manual\+\_\+ctrl\+\_\+msg}!joystick\+\_\+parsing.\+c@{joystick\+\_\+parsing.\+c}}
+\subsubsection[{joystick\+\_\+parsing\+\_\+send\+\_\+manual\+\_\+ctrl\+\_\+msg}]{\setlength{\rightskip}{0pt plus 5cm}task\+\_\+return\+\_\+t joystick\+\_\+parsing\+\_\+send\+\_\+manual\+\_\+ctrl\+\_\+msg (
+\begin{DoxyParamCaption}
+\item[{{\bf joystick\+\_\+parsing\+\_\+t} $\ast$}]{joystick\+\_\+parsing}
+\end{DoxyParamCaption}
+)}}\label{joystick__parsing_8c_a823cd910f32b555846ae6606db2dab3b}
+
+
+Parse received mavlink message in structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+parsing} & The pointer to the joystick parsing structure\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of the task execution 
+\end{DoxyReturn}
