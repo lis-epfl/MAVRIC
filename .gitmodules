@@ -1,21 +1,12 @@
 [submodule "MAVRIC_Library"]
 	path = MAVRIC_Library
 	url = git@github.com:lis-epfl/MAVRIC_Library.git
-[submodule "MAVRIC_Electronics"]
-	path = MAVRIC_Electronics
-	url = git@github.com:lis-epfl/MAVRIC_Electronics.git
-[submodule "MAVRIC_Documentation"]
-	path = MAVRIC_Documentation
-	url = git@github.com:lis-epfl/MAVRIC_Documentation.git
-[submodule "MAVRIC_Utilities"]
-	path = MAVRIC_Utilities
-	url = git@github.com:lis-epfl/MAVRIC_Utilities.git
 [submodule "qgroundcontrol"]
 	path = qgroundcontrol
 	url = git@github.com:lis-epfl/qgroundcontrol.git
 [submodule "mavlink"]
 	path = mavlink
 	url = git@github.com:lis-epfl/mavlink.git
-[submodule "MAVRIC_Mechanics"]
-	path = MAVRIC_Mechanics
-	url = git@github.com:lis-epfl/MAVRIC_Mechanics.git
+[submodule "Documentation/wiki"]
+	path = Documentation/wiki
+	url = git@github.com:lis-epfl/MAVRIC.wiki.git
