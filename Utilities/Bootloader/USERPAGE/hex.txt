@@ -1,0 +1,29 @@
+Check Sum of .hex files
+Last line:
+1001F000FFFFFFFFFFFFFFFF = 16+01+240+00+255+255+255+255+255+255+255+255 = 2297 = 0x8F9
+the rest: 		929E0E62E11EFFD792 = 1287 = 0x507
+TOTAL: 			3584 = 0xE00
+
+Calculation example:
+the new rest:	929E1236E11EFFD792: 12 + 36 - 0E - 62 = -28(-40) => 92(146) + 28(40) = BA
+So it gives:	929E1236E11EFFD7BA
+
+Calculate ADC12 active high
+Original:		929E0E62E11EFFD792
+the new rest:	929E172DE11EFFD792: 17 + 2D - 0E - 62 = -2C => 92 + 2C = BE
+So it gives:	929E172DE11EFFD7BE
+
+Calculate ADC12 active low
+Original:		929E0E62E11EFFD792
+the new rest:	929F1738E11EFFD792: F + 17 + 38 - E - 0E - 62 = -20 => 92 + 20 = B2
+So it gives:	929F1738E11EFFD7B2
+
+Calculate SDA1 active high
+Original:		929E0E62E11EFFD792
+the new rest:	929E4493E11EFFD792: 44 + 93 - 0E - 62 = 67 => 92 - 67 = 2B
+So it gives:	929E4493E11EFFD72B
+
+Calculate SDA1 active high NO FORCE
+Original:		929E0E62E11EFFD792
+the new rest:	929E4493E11EFDD992: 44 + 93 + FD + D9 - 0E - 62 - FF - D7 = 67 => 92 - 67 = 2B
+So it gives:	929E4493E11EFDD92B
