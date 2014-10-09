@@ -9,7 +9,7 @@ import sys, getopt
 # functions
 ###
 def calibrate(x, y, z):
-    H = np.array([x, y, z, -y**2, -z**2, np.ones([len(x), 1])])
+    H = np.array([x, y, z, -y**2, -z**2, np.ones(len(x))])
     H = np.transpose(H)
     w = x**2
 
