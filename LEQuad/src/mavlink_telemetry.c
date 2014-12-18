@@ -110,11 +110,7 @@ void mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 
 	// Simulation mode
 	onboard_parameters_add_parameter_int32    ( onboard_parameters , ( int32_t*)&central_data->state.simulation_mode              , "Sim_mode"         );
-	
-	onboard_parameters_add_parameter_int32    ( onboard_parameters , (int32_t*)&central_data->gumstix.enableFlag,	"Gum_enableFlag");
-	onboard_parameters_add_parameter_int32    ( onboard_parameters , (int32_t*)&central_data->gumstix.trigger,		"Gum_trigger");
-	onboard_parameters_add_parameter_int32    ( onboard_parameters , (int32_t*)&central_data->gumstix.play_cmd,		"Gum_playSound");
-	
+		
 	// Test attitude controller gains
 	//onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->attitude_controller.p_gain_angle[ROLL]  , "gainA_Roll"     );
 	//onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->attitude_controller.p_gain_angle[PITCH] , "gainA_Pitch"     );

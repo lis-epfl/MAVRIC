@@ -10,7 +10,7 @@
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AvrGccProjectExtensions />
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
-    <Name>Maveric_myCopter</Name>
+    <Name>Maveric_LEQuad</Name>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <OutputType>Executable</OutputType>
     <Language>CPP</Language>
@@ -1560,42 +1560,6 @@
     <Compile Include="src\config\MAVcalib\MAV205_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\gumstix\advanced_gapi.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\gapi.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\gumstix.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\gumstix.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\gumstix_api.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\gumstix_api.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\sensor_hub.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\sensor_hub.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\sipp.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\sipp.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\uart_hub.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\gumstix\uart_hub.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\mavlink_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
@@ -2110,7 +2074,6 @@
     <Folder Include="src\asf\common\utils\stdio\stdio_usb\" />
     <Folder Include="src\config\" />
     <Folder Include="src\config\MAVcalib" />
-    <Folder Include="src\gumstix" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\AvrGCC32.targets" />
 </Project>

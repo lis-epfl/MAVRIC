@@ -126,16 +126,6 @@ task_return_t adc_update(void* arg);
  */
 task_return_t tasks_led_toggle(void* arg);
 
-/**
- * \brief            Run the gumstix communication update
- */
-task_return_t tasks_gumstix_update(void* arg);
-
-/**
- * \brief            Run the gumstix navigation update
- */
-task_return_t tasks_gumstix_nav_update(void* arg);
-
 #ifdef __cplusplus
 }
 #endif

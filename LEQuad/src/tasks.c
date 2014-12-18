@@ -60,8 +60,6 @@
 #include "remote.h"
 #include "attitude_controller_p2.h"
 
-#include "gumstix.h"
-
 central_data_t* central_data;
 
 
@@ -272,48 +270,6 @@ task_return_t tasks_led_toggle(void* arg)
 	return TASK_RUN_SUCCESS;
 }
 
-task_return_t tasks_gumstix_update(void* arg) 
-{
-	//set channel 7 of the remote with FULL AIL switch
-	//play sound
-	central_data->servos.servo[4].value = -central_data->remote.channels[6];
-	
-	gumstix_update(&central_data->gumstix);	
-	
-	return TASK_RUN_SUCCESS;
-}
-
-task_return_t tasks_gumstix_nav_update(void* arg)
-{
-	bool hold_position_mode = (central_data->state.mav_mode.AUTO == AUTO_OFF) & (central_data->state.mav_mode.GUIDED == GUIDED_ON);
-	uint8_t custom_mode = mav_modes_is_custom(central_data->state.mav_mode);
-	
-	if (hold_position_mode && custom_mode && (central_data->gumstix.Gwpt.latitude != 0))
-	{
-		central_data->waypoint_handler.current_waypoint.x = central_data->gumstix.Gwpt.latitude;
-		central_data->waypoint_handler.current_waypoint.y = central_data->gumstix.Gwpt.longitude;
-		//navigation->waypoint_handler->current_waypoint.z = navigation->gumstix->Gwpt.altitude;
-		central_data->waypoint_handler.waypoint_hold_coordinates = waypoint_handler_set_waypoint_from_frame(&(central_data->waypoint_handler.current_waypoint), central_data->position_estimation.local_position.origin);
-		//central_data->waypoint_handler.waypoint_coordinates.heading = central_data->position_estimation.local_position.heading;
-		
-		//update wpt to be able to show in QGC the updated wpt
-		central_data->waypoint_handler.waypoint_list[0].x = central_data->gumstix.Gwpt.latitude;
-		central_data->waypoint_handler.waypoint_list[0].y = central_data->gumstix.Gwpt.longitude;
-		//navigation->waypoint_handler->waypoint_list[0].z = navigation->gumstix->Gwpt.altitude;
-		
-		central_data->gumstix.prev_mode = CUSTOM_ON;
-	}
-	else if (hold_position_mode && (central_data->gumstix.prev_mode == CUSTOM_ON)) //from gumstix to normal, do once
-	{
-		navigation_waypoint_hold_init(&central_data->waypoint_handler, central_data->position_estimation.local_position);
-		central_data->gumstix.prev_mode = CUSTOM_OFF;
-	}
-	
-	navigation_update(&central_data->navigation);
-	
-	return TASK_RUN_SUCCESS;
-}
-
 
 void tasks_create_tasks() 
 {	
@@ -321,14 +277,14 @@ void tasks_create_tasks()
 	
 	scheduler_t* scheduler = &central_data->scheduler;
 
-	scheduler_add_task(scheduler, 4000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation                                          , 0                                                    , 0);
+	scheduler_add_task(scheduler, 4000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation												, 0                                                    , 0);
 	// scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation_quaternion                               , 0 													, 0);
 
 	//scheduler_add_task(scheduler, 20000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , (task_function_t)&remote_update                                   , 0 													, 1);
 	
 	scheduler_add_task(scheduler, 15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , &tasks_run_barometer_update                                       , 0 													, 2);
 	scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , &tasks_run_gps_update                                             , 0 													, 3);
-	scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&tasks_gumstix_nav_update                        , 0 													, 4);
+	scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&navigation_update								, (task_argument_t)&central_data->navigation			, 4);
 	
 	scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
 
@@ -340,9 +296,7 @@ void tasks_create_tasks()
 	
 	scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
-	//scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, &tasks_gumstix_update												, 0														, 12);
-
-	scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update							, (task_argument_t)&central_data->audio_data			, 12);
+	//scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 12);
 
 	scheduler_sort_tasks(scheduler);
 }

@@ -100,20 +100,17 @@ void boardsupport_init(central_data_t *central_data)
 	// Init UART 0 for XBEE communication
 	xbee_init(UART0,usart_default_config_xbee);
 	
-	//Init UART 2 for gumstix communication
-	//gumstix_init(UART2,&central_data->gumstix);
-	
 	//Init UART 2 for audio communication
-	acoustic_init(	&central_data->audio_data,
-					UART2,
-					&central_data->ahrs,
-					&central_data->position_estimation,
-					&central_data->remote,
-					&central_data->navigation,
-					&central_data->stabilisation_copter,
-					&central_data->controls_nav,
-					&central_data->waypoint_handler,
-					xbee_get_out_stream());//central_data->telemetry_down_stream);
+	//acoustic_init(	&central_data->audio_data,
+					//UART2,
+					//&central_data->ahrs,
+					//&central_data->position_estimation,
+					//&central_data->remote,
+					//&central_data->navigation,
+					//&central_data->stabilisation_copter,
+					//&central_data->controls_nav,
+					//&central_data->waypoint_handler,
+					//xbee_get_out_stream());//central_data->telemetry_down_stream);
 				
 	// Init UART 3 for GPS communication
 	gps_ublox_init(&(central_data->gps), UART3, usart_default_config_gps);
