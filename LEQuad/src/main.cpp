@@ -59,14 +59,15 @@ void initialisation()
 	central_data = central_data_get_pointer_to_struct();
 	init_success &= boardsupport_init(central_data);
 	init_success &= central_data_init();
+	
+	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
 
-	//onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
-	/*bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
+	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
 
 	if (read_from_flash_result)
 	{
 		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
-	}*/
+	}
 
 	init_success &= mavlink_telemetry_init();
 

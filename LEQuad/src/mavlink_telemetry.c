@@ -73,15 +73,6 @@ central_data_t *central_data;
 //------------------------------------------------------------------------------
 
 /**
- * \brief   Add all onboard parameters to the parameter list
- *
- * \param	onboard_parameters		The pointer to the onboard parameters structure
- *
- * \return	The initialization status of the module, succeed == true
- */
-bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters);
-
-/**
  * \brief	Add onboard logging parameters
  *
  * \param	data_logging			The pointer to the data logging structure
@@ -103,6 +94,75 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data);
 // PRIVATE FUNCTIONS IMPLEMENTATION
 //------------------------------------------------------------------------------
 
+
+bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
+{
+	bool init_success = true;
+	
+	// if _USE_LFN == 0: Name: max 8 characters + 3 for extension; if _USE_LFN != 0: Name: max 255 characters + more flexible extension type
+	init_success &= data_logging_create_new_log_file(data_logging, "NewFile", central_data->mavlink_communication.mavlink_stream.sysid);
+	
+	// Add your logging parameters here, name length max = MAVLINK_MSG_PARAM_SET_FIELD_PARAM_ID_LEN = 16
+	// Supported type: all numeric types included in mavlink_message_type_t (i.e. all except MAVLINK_TYPE_CHAR)
+	
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x");
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y");
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z");
+	
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude");
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude");
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude");
+	
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x");
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y");
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z");
+	
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude");
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude");
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude");
+	
+	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
+	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
+	
+	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_state, "mav_state");
+	init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
+	
+	return init_success;
+};
+
+bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
+{
+	bool init_success = true;
+	
+	init_success &= state_telemetry_init(   &central_data->state,
+	&central_data->mavlink_communication.message_handler);
+
+	init_success &= imu_telemetry_init( &central_data->imu,
+	&central_data->mavlink_communication.message_handler);
+
+	init_success &= remote_telemetry_init(  &central_data->remote,
+	&central_data->mavlink_communication.message_handler);
+
+	init_success &= joystick_parsing_telemetry_init(&central_data->joystick_parsing,
+	&central_data->mavlink_communication.message_handler);
+
+	init_success &= simulation_telemetry_init(  &central_data->sim_model,
+	&central_data->mavlink_communication.message_handler);
+	
+	init_success &= position_estimation_telemetry_init(	&central_data->position_estimation,
+	&central_data->mavlink_communication.message_handler);
+	
+	init_success &= data_logging_telemetry_init(	&central_data->data_logging,
+	&central_data->mavlink_communication.message_handler);
+	
+	return init_success;
+}
+
+//------------------------------------------------------------------------------
+// PUBLIC FUNCTIONS IMPLEMENTATION
+//------------------------------------------------------------------------------
+
+
 bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters)
 {
 	bool init_success = true;
@@ -112,12 +172,12 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.velocity_stabiliser;
 	//stabiliser_t* position_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.position_stabiliser;
 	
-	// System ID	
+	// System ID
 	init_success &= onboard_parameters_add_parameter_int32    ( onboard_parameters , (int32_t*)&central_data->mavlink_communication.mavlink_stream.sysid              , "ID_SYSID"         );
 
 	// Simulation mode
 	init_success &= onboard_parameters_add_parameter_int32    ( onboard_parameters , ( int32_t*)&central_data->state.simulation_mode              , "Sim_mode"         );
-		
+	
 	// Test attitude controller gains
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->attitude_controller.p_gain_angle[ROLL]  , "gainA_Roll"     );
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->attitude_controller.p_gain_angle[PITCH] , "gainA_Pitch"     );
@@ -286,69 +346,6 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	return init_success;
 }
 
-bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
-{
-	bool init_success = true;
-	
-	// if _USE_LFN == 0: Name: max 8 characters + 3 for extension; if _USE_LFN != 0: Name: max 255 characters + more flexible extension type
-	init_success &= data_logging_create_new_log_file(data_logging, "NewFile", central_data->mavlink_communication.mavlink_stream.sysid);
-	
-	// Add your logging parameters here, name length max = MAVLINK_MSG_PARAM_SET_FIELD_PARAM_ID_LEN = 16
-	// Supported type: all numeric types included in mavlink_message_type_t (i.e. all except MAVLINK_TYPE_CHAR)
-	
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x");
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y");
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z");
-	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude");
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude");
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude");
-	
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x");
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y");
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z");
-	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude");
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude");
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude");
-	
-	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
-	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
-	
-	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_state, "mav_state");
-	init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
-	
-	return init_success;
-};
-
-bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
-{
-	bool init_success = true;
-	
-	init_success &= state_telemetry_init(   &central_data->state,
-	&central_data->mavlink_communication.message_handler);
-
-	init_success &= imu_telemetry_init( &central_data->imu,
-	&central_data->mavlink_communication.message_handler);
-
-	init_success &= remote_telemetry_init(  &central_data->remote,
-	&central_data->mavlink_communication.message_handler);
-
-	init_success &= joystick_parsing_telemetry_init(&central_data->joystick_parsing,
-	&central_data->mavlink_communication.message_handler);
-
-	init_success &= simulation_telemetry_init(  &central_data->sim_model,
-	&central_data->mavlink_communication.message_handler);
-	
-	init_success &= data_logging_telemetry_init(	&central_data->data_logging,
-	&central_data->mavlink_communication.message_handler);
-	
-	return init_success;
-}
-
-//------------------------------------------------------------------------------
-// PUBLIC FUNCTIONS IMPLEMENTATION
-//------------------------------------------------------------------------------
 
 bool mavlink_telemetry_init(void)
 {
@@ -356,8 +353,6 @@ bool mavlink_telemetry_init(void)
 	
 	central_data = central_data_get_pointer_to_struct();
 	
-	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
-
 	init_success &= mavlink_telemetry_add_data_logging_parameters(&central_data->data_logging);
 
 	init_success &= mavlink_telemetry_init_communication_module(central_data);

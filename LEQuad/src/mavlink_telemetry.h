@@ -43,6 +43,7 @@
 #define MAVLINK_TELEMETRY_H_
 
 #include "mavlink_stream.h"
+#include "onboard_parameters.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,6 +55,15 @@ extern "C" {
  * \return	The initialization status of the module, suceed == true
  */
 bool mavlink_telemetry_init(void);
+
+/**
+ * \brief   Add all onboard parameters to the parameter list
+ *
+ * \param	onboard_parameters		The pointer to the onboard parameters structure
+ *
+ * \return	The initialization status of the module, succeed == true
+ */
+bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters);
 
 #ifdef __cplusplus
 }
