@@ -157,8 +157,10 @@ typedef struct  {
 
 /**
  * \brief	Initialization of the central data structure
+ *
+ * \return	The initialization status, succeed == true, failure == false
  */
-void central_data_init(void);
+bool central_data_init(void);
 
 
 /**

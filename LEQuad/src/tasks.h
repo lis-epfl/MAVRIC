@@ -52,8 +52,10 @@ extern "C" {
 
 /**
  * \brief 			Initialises all the tasks
+ *
+ * \return	The initialization status, succeed == true
  */	
-void tasks_create_tasks(void);
+bool tasks_create_tasks(void);
 
 
 /**

@@ -75,8 +75,10 @@
 #include "uart_default_config.h"
 #include "usb_default_config.h"
 
-void boardsupport_init(central_data_t *central_data) 
+bool boardsupport_init(central_data_t *central_data) 
 {
+	bool init_success = true;
+	
 	irq_initialize_vectors();
 	cpu_irq_enable();
 	Disable_global_interrupt();
@@ -160,4 +162,6 @@ void boardsupport_init(central_data_t *central_data)
 	piezo_speaker_init_binary();
 	
 	print_util_dbg_print("Board initialised\r\n");
+	
+	return init_success;
 }

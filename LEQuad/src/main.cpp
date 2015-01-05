@@ -54,9 +54,11 @@ central_data_t *central_data;
 
 void initialisation() 
 {	
+	bool init_success = true;
+	
 	central_data = central_data_get_pointer_to_struct();
-	boardsupport_init(central_data);
-	central_data_init();
+	init_success &= boardsupport_init(central_data);
+	init_success &= central_data_init();
 
 	//onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
 	/*bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
@@ -66,15 +68,24 @@ void initialisation()
 		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
 	}*/
 
-	mavlink_telemetry_init();
+	init_success &= mavlink_telemetry_init();
 
 	central_data->state.mav_state = MAV_STATE_STANDBY;	
-	central_data->imu.calibration_level = OFF;	
-
-	piezo_speaker_quick_startup();
+	central_data->imu.calibration_level = OFF;
 	
-	// Switch off red LED
-	LED_Off(LED2);
+	init_success &= tasks_create_tasks();	
+
+	if (init_success)
+	{
+		piezo_speaker_quick_startup();
+		
+		// Switch off red LED
+		LED_Off(LED2);
+	}
+	else
+	{
+		piezo_speaker_critical_error_melody();
+	}
 
 	print_util_dbg_print("OK. Starting up.\r\n");
 }
@@ -82,7 +93,6 @@ void initialisation()
 int main (void)
 {
 	initialisation();
-	tasks_create_tasks();
 	
 	while (1 == 1) 
 	{

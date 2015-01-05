@@ -55,8 +55,10 @@ extern "C" {
  * \brief	Initialize the hardware related elements (communication lines, sensors devices, etc)
  *
  * \param	central_data		The pointer to the structure where all central data is stored
+ *
+ * \return	The initialization status of each module, succeed == true
  */
-void boardsupport_init(central_data_t* central_data);
+bool boardsupport_init(central_data_t* central_data);
 
 #ifdef __cplusplus
 }

@@ -50,8 +50,10 @@ extern "C" {
 
 /**
  * \brief     Initialise all the mavlink streams and call the onboard parameters register
+ *
+ * \return	The initialization status of the module, suceed == true
  */
-void mavlink_telemetry_init(void);
+bool mavlink_telemetry_init(void);
 
 #ifdef __cplusplus
 }
