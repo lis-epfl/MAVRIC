@@ -144,7 +144,7 @@ bool central_data_init()
 									&central_data.waypoint_handler,
 									&central_data.position_estimation,
 									&central_data.state,
-									&central_data.controls_joystick,
+									&central_data.joystick_parsing,
 									&central_data.remote,
 									&central_data.mavlink_communication);
 	
@@ -201,7 +201,6 @@ bool central_data_init()
 	delay_ms(100);
 	
 	init_success &= joystick_parsing_init(	&central_data.joystick_parsing,
-											&central_data.controls_joystick,
 											&central_data.state);
 	delay_ms(100);
 	
