@@ -1,0 +1,8 @@
+<map id="stabilisation_copter_conf_t" name="stabilisation_copter_conf_t">
+<area shape="rect" id="node2" href="$structstabiliser__stack__copter__t.html" title="Structure containing the stacked controller. " alt="" coords="40,631,224,708"/>
+<area shape="rect" id="node3" href="$structstabiliser__t.html" title="The structure used to control the vehicle with 4 PIDs. " alt="" coords="89,447,175,524"/>
+<area shape="rect" id="node4" href="$structcontrol__command__t.html" title="The control command typedef. " alt="" coords="5,204,141,355"/>
+<area shape="rect" id="node5" href="$structpid__controller__t.html" title="PID controller. " alt="" coords="166,189,293,369"/>
+<area shape="rect" id="node6" href="$structdifferentiator__t.html" title="Derivative part of PID. " alt="" coords="114,5,217,127"/>
+<area shape="rect" id="node7" href="$structintegrator__t.html" title="Integrator part of PID. " alt="" coords="241,5,346,127"/>
+</map>

@@ -1,0 +1,51 @@
+<map id="audio_t" name="audio_t">
+<area shape="rect" id="node2" href="$structnavigation__t.html" title="The navigation structure. " alt="" coords="2245,2353,2372,2577"/>
+<area shape="rect" id="node3" href="$structremote__t.html" title="The configuration structure of the remote. " alt="" coords="2093,2096,2207,2261"/>
+<area shape="rect" id="node4" href="$structremote__mode__t.html" title="The structure of the remote mode. " alt="" coords="1867,1128,2041,1337"/>
+<area shape="rect" id="node5" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="2251,505,2350,729"/>
+<area shape="rect" id="node15" href="$structstate__t.html" title="The state structure. " alt="" coords="2479,851,2653,1104"/>
+<area shape="rect" id="node6" href="$structsatellite__t.html" title="Structure containing the satellite receiver&#39;s data. " alt="" coords="1676,1758,1821,1894"/>
+<area shape="rect" id="node7" href="$structusart__config__t.html" title="UART configuration structure. " alt="" coords="1635,1442,1737,1534"/>
+<area shape="rect" id="node8" href="$structuart__gpio__map__t.html" title="UART GPIO map structure. " alt="" coords="1705,931,1824,1023"/>
+<area shape="rect" id="node9" href="$structuart__interface__t.html" title="UART interface structure. " alt="" coords="1571,931,1681,1023"/>
+<area shape="rect" id="node10" href="$structbuffer__t.html" title="Buffer structure. " alt="" coords="1755,557,1855,678"/>
+<area shape="rect" id="node13" href="$structgps__t.html" title="Type definition for GPS data. " alt="" coords="2339,865,2455,1089"/>
+<area shape="rect" id="node11" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="1337,270,1459,421"/>
+<area shape="rect" id="node27" href="$structmavlink__stream__t.html" title="Main structure for the MAVLink stream module. " alt="" coords="1018,557,1141,678"/>
+<area shape="rect" id="node12" href="$structposition__estimation__t.html" title="The position estimator structure. " alt="" coords="2474,1692,2658,1960"/>
+<area shape="rect" id="node33" href="$structmavlink__waypoint__handler__t.html" title="{mavlink_waypoint_handler_t\n|+ number_of_waypoints\l+ current_waypoint_count\l+ dist2wp_sqr\l+ hold_waypoint_set\l+ waypoint_sending\l+ waypoint_receiving\l+ sending_waypoint_num\l+ waypoint_request_number\l+ num_waypoint_onboard\l+ start_timeout\l+ timeout_max_waypoint\l|}" alt="" coords="1777,2067,1963,2291"/>
+<area shape="rect" id="node46" href="$structstabilisation__copter__t.html" title="Structure containing the pointers to the data needed in this module. " alt="" coords="2888,2419,3033,2511"/>
+<area shape="rect" id="node14" href="$structbarometer__t.html" title="Define the barometer structure. " alt="" coords="2632,1361,2769,1615"/>
+<area shape="rect" id="node21" href="$structimu__t.html" title="The IMU structure. " alt="" coords="3095,1435,3221,1541"/>
+<area shape="rect" id="node16" href="$structanalog__monitor__t.html" title="Analog monitor structure. " alt="" coords="2565,557,2687,678"/>
+<area shape="rect" id="node17" href="$structahrs__t.html" title="Structure containing the Attitude and Heading Reference System. " alt="" coords="1929,1420,2048,1556"/>
+<area shape="rect" id="node18" href="$structquat__t.html" title="Unit quaternion. " alt="" coords="2059,931,2118,1023"/>
+<area shape="rect" id="node19" href="$structlocal__coordinates__t.html" title="Local coordinates structure. " alt="" coords="2124,1435,2259,1541"/>
+<area shape="rect" id="node20" href="$structglobal__position__t.html" title="Global position structure. " alt="" coords="2143,909,2263,1045"/>
+<area shape="rect" id="node22" href="$structsensor__calib__t.html" title="Structure containing the accelero, gyro and magnetometer sensors&#39; gains. " alt="" coords="2933,895,3087,1060"/>
+<area shape="rect" id="node23" href="$structgyroscope__t.html" title="The gyroscope structure. " alt="" coords="3112,909,3215,1045"/>
+<area shape="rect" id="node24" href="$structmagnetometer__t.html" title="The magnetometer structure. " alt="" coords="3239,909,3355,1045"/>
+<area shape="rect" id="node25" href="$structaccelerometer__t.html" title="Accelerometer structure. " alt="" coords="3382,924,3497,1031"/>
+<area shape="rect" id="node26" href="$structcontrol__command__t.html" title="The control command typedef. " alt="" coords="3245,1413,3381,1563"/>
+<area shape="rect" id="node48" href="$structstabiliser__t.html" title="The structure used to control the vehicle with 4 PIDs. " alt="" coords="3093,1787,3178,1865"/>
+<area shape="rect" id="node34" href="$structmavlink__communication__t.html" title="Main MAVLink Communication structure. " alt="" coords="1082,1787,1253,1865"/>
+<area shape="rect" id="node36" href="$structmavlink__send__msg__handler__t.html" title="MAVLink message handler structure. " alt="" coords="1303,939,1495,1016"/>
+<area shape="rect" id="node37" href="$structonboard__parameters__t.html" title="Main structure of the module onboard parameters. " alt="" coords="813,939,964,1016"/>
+<area shape="rect" id="node42" href="$structmavlink__message__handler__t.html" title="Main message handler structure. " alt="" coords="437,939,623,1016"/>
+<area shape="rect" id="node28" href="$structmavlink__received__t.html" title="Mavlink structures for the receive message and its status. " alt="" coords="1014,307,1145,384"/>
+<area shape="rect" id="node29" href="$struct____mavlink__status.html" title="{__mavlink_status\n|+ msg_received\l+ buffer_overrun\l+ parse_error\l+ parse_state\l+ packet_idx\l+ current_rx_seq\l+ current_tx_seq\l+ packet_rx_success_count\l+ packet_rx_drop_count\l|}" alt="" coords="986,5,1173,200"/>
+<area shape="rect" id="node30" href="$structpid__controller__t.html" title="PID controller. " alt="" coords="2793,1398,2920,1578"/>
+<area shape="rect" id="node31" href="$structdifferentiator__t.html" title="Derivative part of PID. " alt="" coords="2677,917,2780,1038"/>
+<area shape="rect" id="node32" href="$structintegrator__t.html" title="Integrator part of PID. " alt="" coords="2804,917,2909,1038"/>
+<area shape="rect" id="node35" href="$structmavlink__send__msg__handler__set__t.html" title="MAVLink message handler setting structure. " alt="" coords="1332,1435,1515,1541"/>
+<area shape="rect" id="node38" href="$structonboard__parameters__set__t.html" title="Set of onboard parameters. " alt="" coords="657,564,798,671"/>
+<area shape="rect" id="node39" href="$structonboard__parameters__entry__t.html" title="Structure of onboard parameter. " alt="" coords="5,263,193,428"/>
+<area shape="rect" id="node40" href="$structscheduler__t.html" title="Scheduler. " alt="" coords="1168,1442,1308,1534"/>
+<area shape="rect" id="node41" href="$structtask__set__t.html" title="Task set. " alt="" coords="1117,924,1279,1031"/>
+<area shape="rect" id="node43" href="$structmavlink__message__handler__msg__callback__set__t.html" title="Set of message callbacks. " alt="" coords="235,564,409,671"/>
+<area shape="rect" id="node44" href="$structmavlink__message__handler__cmd__callback__set__t.html" title="Set of command callbacks. " alt="" coords="433,564,608,671"/>
+<area shape="rect" id="node45" href="$structwaypoint__struct__t.html" title="The MAVLink waypoint structure. " alt="" coords="1476,1714,1600,1938"/>
+<area shape="rect" id="node47" href="$structstabiliser__stack__copter__t.html" title="Structure containing the stacked controller. " alt="" coords="3041,2140,3225,2217"/>
+<area shape="rect" id="node49" href="$structservos__t.html" title="Define the servos structure. " alt="" coords="2905,2140,3016,2217"/>
+<area shape="rect" id="node50" href="$structservo__entry__t.html" title="Define the servos entry structure. " alt="" coords="2970,1751,3069,1901"/>
+</map>

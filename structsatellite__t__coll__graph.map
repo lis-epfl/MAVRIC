@@ -1,0 +1,7 @@
+<map id="satellite_t" name="satellite_t">
+<area shape="rect" id="node2" href="$structusart__config__t.html" title="UART configuration structure. " alt="" coords="146,403,249,495"/>
+<area shape="rect" id="node3" href="$structuart__gpio__map__t.html" title="UART GPIO map structure. " alt="" coords="146,233,265,325"/>
+<area shape="rect" id="node4" href="$structuart__interface__t.html" title="UART interface structure. " alt="" coords="11,233,122,325"/>
+<area shape="rect" id="node5" href="$structbuffer__t.html" title="Buffer structure. " alt="" coords="206,20,306,141"/>
+<area shape="rect" id="node6" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="5,5,128,156"/>
+</map>

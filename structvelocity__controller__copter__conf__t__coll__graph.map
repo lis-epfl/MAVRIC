@@ -1,0 +1,5 @@
+<map id="velocity_controller_copter_conf_t" name="velocity_controller_copter_conf_t">
+<area shape="rect" id="node2" href="$structpid__controller__conf__t.html" title="Configuration for PID controller. " alt="" coords="50,189,191,311"/>
+<area shape="rect" id="node3" href="$structdifferentiator__t.html" title="Derivative part of PID. " alt="" coords="5,5,108,127"/>
+<area shape="rect" id="node4" href="$structintegrator__t.html" title="Integrator part of PID. " alt="" coords="132,5,237,127"/>
+</map>

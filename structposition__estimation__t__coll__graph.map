@@ -1,0 +1,18 @@
+<map id="position_estimation_t" name="position_estimation_t">
+<area shape="rect" id="node2" href="$structgps__t.html" title="Type definition for GPS data. " alt="" coords="133,652,249,876"/>
+<area shape="rect" id="node3" href="$structbuffer__t.html" title="Buffer structure. " alt="" coords="5,358,105,479"/>
+<area shape="rect" id="node4" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="130,343,253,494"/>
+<area shape="rect" id="node5" href="$structbarometer__t.html" title="Define the barometer structure. " alt="" coords="556,637,693,891"/>
+<area shape="rect" id="node6" href="$structstate__t.html" title="The state structure. " alt="" coords="874,292,1047,545"/>
+<area shape="rect" id="node13" href="$structimu__t.html" title="The IMU structure. " alt="" coords="718,711,843,817"/>
+<area shape="rect" id="node7" href="$structanalog__monitor__t.html" title="Analog monitor structure. " alt="" coords="833,57,955,178"/>
+<area shape="rect" id="node8" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="979,5,1078,229"/>
+<area shape="rect" id="node9" href="$structahrs__t.html" title="Structure containing the Attitude and Heading Reference System. " alt="" coords="1053,696,1172,832"/>
+<area shape="rect" id="node10" href="$structquat__t.html" title="Unit quaternion. " alt="" coords="1083,373,1142,465"/>
+<area shape="rect" id="node11" href="$structlocal__coordinates__t.html" title="Local coordinates structure. " alt="" coords="1196,711,1331,817"/>
+<area shape="rect" id="node12" href="$structglobal__position__t.html" title="Global position structure. " alt="" coords="1203,351,1323,487"/>
+<area shape="rect" id="node14" href="$structsensor__calib__t.html" title="Structure containing the accelero, gyro and magnetometer sensors&#39; gains. " alt="" coords="277,336,431,501"/>
+<area shape="rect" id="node15" href="$structgyroscope__t.html" title="The gyroscope structure. " alt="" coords="456,351,559,487"/>
+<area shape="rect" id="node16" href="$structmagnetometer__t.html" title="The magnetometer structure. " alt="" coords="583,351,699,487"/>
+<area shape="rect" id="node17" href="$structaccelerometer__t.html" title="Accelerometer structure. " alt="" coords="723,365,838,472"/>
+</map>

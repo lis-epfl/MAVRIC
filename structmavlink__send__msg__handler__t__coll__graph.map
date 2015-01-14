@@ -1,0 +1,6 @@
+<map id="mavlink_send_msg_handler_t" name="mavlink_send_msg_handler_t">
+<area shape="rect" id="node2" href="$structmavlink__stream__t.html" title="Main structure for the MAVLink stream module. " alt="" coords="149,491,272,612"/>
+<area shape="rect" id="node3" href="$structmavlink__received__t.html" title="Mavlink structures for the receive message and its status. " alt="" coords="33,299,164,377"/>
+<area shape="rect" id="node4" href="$struct____mavlink__status.html" title="{__mavlink_status\n|+ msg_received\l+ buffer_overrun\l+ parse_error\l+ parse_state\l+ packet_idx\l+ current_rx_seq\l+ current_tx_seq\l+ packet_rx_success_count\l+ packet_rx_drop_count\l|}" alt="" coords="5,5,192,200"/>
+<area shape="rect" id="node5" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="188,263,311,413"/>
+</map>

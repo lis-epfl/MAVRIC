@@ -1,0 +1,11 @@
+<map id="attitude_controller_t" name="attitude_controller_t">
+<area shape="rect" id="node2" href="$structrate__command__t.html" title="Rate command structure. " alt="" coords="5,517,124,594"/>
+<area shape="rect" id="node3" href="$structattitude__error__estimator__t.html" title="Quaternion attitude error estimator data structure. " alt="" coords="149,517,319,594"/>
+<area shape="rect" id="node4" href="$structquat__t.html" title="Unit quaternion. " alt="" coords="339,5,398,97"/>
+<area shape="rect" id="node5" href="$structahrs__t.html" title="Structure containing the Attitude and Heading Reference System. " alt="" coords="311,189,429,325"/>
+<area shape="rect" id="node7" href="$structattitude__command__t.html" title="Attitude command structure. " alt="" coords="395,349,535,441"/>
+<area shape="rect" id="node6" href="$structtorque__command__t.html" title="Torque command structure. " alt="" coords="601,517,734,594"/>
+<area shape="rect" id="node8" href="$structpid__controller__t.html" title="PID controller. " alt="" coords="759,465,885,645"/>
+<area shape="rect" id="node9" href="$structdifferentiator__t.html" title="Derivative part of PID. " alt="" coords="707,197,809,318"/>
+<area shape="rect" id="node10" href="$structintegrator__t.html" title="Integrator part of PID. " alt="" coords="833,197,939,318"/>
+</map>

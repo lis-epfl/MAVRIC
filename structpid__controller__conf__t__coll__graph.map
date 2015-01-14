@@ -1,0 +1,4 @@
+<map id="pid_controller_conf_t" name="pid_controller_conf_t">
+<area shape="rect" id="node2" href="$structdifferentiator__t.html" title="Derivative part of PID. " alt="" coords="5,5,108,127"/>
+<area shape="rect" id="node3" href="$structintegrator__t.html" title="Integrator part of PID. " alt="" coords="132,5,237,127"/>
+</map>
