@@ -1,6 +1,10 @@
 var searchData=
 [
   ['observation_5fmodel',['observation_model',['../structkalman__filter__2D__t.html#a8d12c0ffb8d64f8f93a60432a20a2650',1,'kalman_filter_2D_t']]],
+  ['of_5fazimuth',['of_azimuth',['../struct____mavlink__spherical__optic__flow__t.html#aeb27e1b0a65fcbbe49177b74928e725a',1,'__mavlink_spherical_optic_flow_t']]],
+  ['of_5felevation',['of_elevation',['../struct____mavlink__spherical__optic__flow__t.html#a9f63f890605190a222be9319e7aa6ac6',1,'__mavlink_spherical_optic_flow_t']]],
+  ['of_5finfo',['of_info',['../struct____mavlink__spherical__optic__flow__t.html#a18e4db041ecf05e0594811538b34689f',1,'__mavlink_spherical_optic_flow_t']]],
+  ['ofs',['ofs',['../struct____mavlink__log__data__t.html#a1a0610442e473dbbe22b2f4543cf4932',1,'__mavlink_log_data_t::ofs()'],['../struct____mavlink__log__request__data__t.html#a05e11a328deb8bf97856e613f23ad732',1,'__mavlink_log_request_data_t::ofs()']]],
   ['on_5foff',['on_off',['../struct____mavlink__data__stream__t.html#ae0ec7bd3a3fd38496e2a6aaa3b39daca',1,'__mavlink_data_stream_t']]],
   ['onboard_5fcontrol_5fsensors_5fenabled',['onboard_control_sensors_enabled',['../struct____mavlink__sys__status__t.html#ac7217643b5de2bd8fe861b0c9ff7277c',1,'__mavlink_sys_status_t']]],
   ['onboard_5fcontrol_5fsensors_5fhealth',['onboard_control_sensors_health',['../struct____mavlink__sys__status__t.html#a8527d9f9e9517ee5a9dc7aba0235ace9',1,'__mavlink_sys_status_t']]],
@@ -11,10 +15,11 @@ var searchData=
   ['onboard_5fparameters_5fentry_5ft',['onboard_parameters_entry_t',['../structonboard__parameters__entry__t.html',1,'']]],
   ['onboard_5fparameters_5fset_5ft',['onboard_parameters_set_t',['../structonboard__parameters__set__t.html',1,'']]],
   ['onboard_5fparameters_5ft',['onboard_parameters_t',['../structonboard__parameters__t.html',1,'']]],
-  ['orientation',['orientation',['../structsensor__calib__t.html#a456ea90e8604fde25fdcd6313f18df87',1,'sensor_calib_t']]],
+  ['options',['options',['../structusart__config__t.html#a15823e7e6a47b593c504d386c71a71d9',1,'usart_config_t']]],
+  ['orientation',['orientation',['../structcurvace__t.html#a5ecffdd9f761ddb86eaa81512911f9b3',1,'curvace_t::orientation()'],['../structsonar__t.html#afbbd62dba73bab626ac8e237c44b6fbb',1,'sonar_t::orientation()'],['../struct____mavlink__distance__sensor__t.html#af074a52389ea13cb4e410a59b1867303',1,'__mavlink_distance_sensor_t::orientation()'],['../structsensor__calib__t.html#a456ea90e8604fde25fdcd6313f18df87',1,'sensor_calib_t::orientation()'],['../structsensor__config__t.html#a021fadb05706dc4266a592190dcfa535',1,'sensor_config_t::orientation()']]],
   ['oriented_5faccelero',['oriented_accelero',['../structimu__t.html#a52e4abe6da7a20d77af88141c87fbcbc',1,'imu_t']]],
   ['oriented_5fcompass',['oriented_compass',['../structimu__t.html#a353a44a2dc082798e1fb4f924a06d59f',1,'imu_t']]],
   ['oriented_5fgyro',['oriented_gyro',['../structimu__t.html#a41b25013a077e227bf06f39a4fb713ce',1,'imu_t']]],
-  ['origin',['origin',['../structlocal__coordinates__t.html#afaeed5cd4f014ff99e31b826fc1f25d1',1,'local_coordinates_t']]],
+  ['origin',['origin',['../structposition__estimation__conf__t.html#ad33aef8b864b02c34d25016fd845e99b',1,'position_estimation_conf_t::origin()'],['../structlocal__coordinates__t.html#afaeed5cd4f014ff99e31b826fc1f25d1',1,'local_coordinates_t::origin()']]],
   ['output',['output',['../structpid__controller__t.html#a4182e2bb4ba081c05f33e3205615420b',1,'pid_controller_t::output()'],['../structstabiliser__t.html#a418cfe8be6eb5a4c622079b1d5274332',1,'stabiliser_t::output()']]]
 ];

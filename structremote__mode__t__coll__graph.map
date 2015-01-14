@@ -1,3 +1,3 @@
 <map id="remote_mode_t" name="remote_mode_t">
-<area shape="rect" id="node2" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="41,5,144,229"/>
+<area shape="rect" id="node2" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="43,5,141,229"/>
 </map>

@@ -1,12 +1,7 @@
 <map id="joystick_parsing_t" name="joystick_parsing_t">
-<area shape="rect" id="node2" href="$unionbutton__t.html" title="The union structure for the bit mask of the joystick buttons. " alt="" coords="37,792,146,1016"/>
-<area shape="rect" id="node3" href="$structcontrol__command__t.html" title="The control command typedef. " alt="" coords="362,829,498,979"/>
-<area shape="rect" id="node4" href="$structmavlink__stream__t.html" title="Main structure for the mavlink stream module. " alt="" coords="367,542,493,663"/>
-<area shape="rect" id="node9" href="$structstate__t.html" title="The state structure. " alt="" coords="171,792,303,1016"/>
-<area shape="rect" id="node5" href="$structmavlink__received__t.html" title="Mavlink structures for the receive message and its status. " alt="" coords="263,299,397,377"/>
-<area shape="rect" id="node6" href="$struct____mavlink__message.html" title="{__mavlink_message\n|+ checksum\l+ magic\l+ len\l+ seq\l+ sysid\l+ compid\l+ msgid\l+ payload64\l|}" alt="" coords="166,13,307,193"/>
-<area shape="rect" id="node7" href="$struct____mavlink__status.html" title="{__mavlink_status\n|+ msg_received\l+ buffer_overrun\l+ parse_error\l+ parse_state\l+ packet_idx\l+ current_rx_seq\l+ current_tx_seq\l+ packet_rx_success_count\l+ packet_rx_drop_count\l|}" alt="" coords="331,5,518,200"/>
-<area shape="rect" id="node8" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="421,263,545,413"/>
-<area shape="rect" id="node10" href="$structanalog__monitor__t.html" title="{analog_monitor_t\n|+ enable\l+ buffer\l+ avg\l|}" alt="" coords="5,549,127,656"/>
-<area shape="rect" id="node11" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="151,491,253,715"/>
+<area shape="rect" id="node2" href="$structstate__t.html" title="The state structure. " alt="" coords="46,292,219,545"/>
+<area shape="rect" id="node3" href="$structanalog__monitor__t.html" title="Analog monitor structure. " alt="" coords="5,57,127,178"/>
+<area shape="rect" id="node4" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="151,5,250,229"/>
+<area shape="rect" id="node5" href="$structjoystick__channels__t.html" title="Joystick Channels. " alt="" coords="244,358,381,479"/>
+<area shape="rect" id="node6" href="$unionjoystick__button__t.html" title="The union structure for the bit mask of the joystick buttons. " alt="" coords="405,307,527,531"/>
 </map>

@@ -1,8 +1,9 @@
 <map id="command_t" name="command_t">
 <area shape="rect" id="node2" href="$structthrust__command__t.html" title="Thrust command type. " alt="" coords="5,167,136,245"/>
 <area shape="rect" id="node3" href="$structrate__command__t.html" title="Rate command structure. " alt="" coords="159,167,278,245"/>
-<area shape="rect" id="node4" href="$structtorque__command__t.html" title="Torque command structure. " alt="" coords="303,167,436,245"/>
-<area shape="rect" id="node5" href="$structattitude__command__t.html" title="Attitude command structure. " alt="" coords="461,160,601,252"/>
-<area shape="rect" id="node6" href="$structquat__t.html" title="Unit quaternion. " alt="" coords="501,5,560,97"/>
-<area shape="rect" id="node7" href="$structvelocity__command__t.html" title="Attitude command structure. " alt="" coords="625,160,767,252"/>
+<area shape="rect" id="node4" href="$structposition__command__t.html" title="Position command structure. " alt="" coords="302,160,445,252"/>
+<area shape="rect" id="node5" href="$structtorque__command__t.html" title="Torque command structure. " alt="" coords="469,167,603,245"/>
+<area shape="rect" id="node6" href="$structattitude__command__t.html" title="Attitude command structure. " alt="" coords="627,160,767,252"/>
+<area shape="rect" id="node7" href="$structquat__t.html" title="Unit quaternion. " alt="" coords="668,5,727,97"/>
+<area shape="rect" id="node8" href="$structvelocity__command__t.html" title="Velocity command structure. " alt="" coords="791,160,931,252"/>
 </map>

@@ -1,4 +1,51 @@
 <map id="/run/media/julien/Data/Documents/MAVRIC/MAVRIC_Library/mavlink/include/common/common.h" name="/run/media/julien/Data/Documents/MAVRIC/MAVRIC_Library/mavlink/include/common/common.h">
-<area shape="rect" id="node2" href="$common_2mavlink_8h.html" title="MAVLink comm protocol built from common.xml. " alt="" coords="5,124,212,195"/>
-<area shape="rect" id="node3" href="$mavlink__protobuf__manager_8hpp_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/mavlink/include\l/mavlink_protobuf_manager.hpp" alt="" coords="5,243,212,313"/>
+<area shape="rect" id="node2" href="$common_2mavlink_8h.html" title="MAVLink comm protocol built from common.xml. " alt="" coords="2733,124,2933,195"/>
+<area shape="rect" id="node4" href="$mavric_8h.html" title="MAVLink comm protocol generated from mavric.xml. " alt="" coords="2957,124,3157,195"/>
+<area shape="rect" id="node3" href="$mavlink__protobuf__manager_8hpp_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/mavlink/include\l/mavlink_protobuf_manager.hpp" alt="" coords="2730,243,2934,313"/>
+<area shape="rect" id="node5" href="$mavric_2mavlink_8h.html" title="MAVLink comm protocol built from mavric.xml. " alt="" coords="2959,243,3159,313"/>
+<area shape="rect" id="node6" href="$mavlink__stream_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/mavlink\l_stream.h" alt="" coords="2955,361,3162,432"/>
+<area shape="rect" id="node7" href="$mav__modes_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/mav\l_modes.h" alt="" coords="1344,480,1544,551"/>
+<area shape="rect" id="node10" href="$acoustic__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/acoustic\l_telemetry.h" alt="" coords="2749,1311,2963,1381"/>
+<area shape="rect" id="node12" href="$remote__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/remote\l_telemetry.h" alt="" coords="1851,717,2055,788"/>
+<area shape="rect" id="node15" href="$mavlink__waypoint__handler_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/mavlink\l_waypoint_handler.h" alt="" coords="947,955,1154,1025"/>
+<area shape="rect" id="node19" href="$central__data_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/tests/config/central_data.h" alt="" coords="269,1199,494,1255"/>
+<area shape="rect" id="node25" href="$state__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/state\l_telemetry.h" alt="" coords="1627,717,1827,788"/>
+<area shape="rect" id="node27" href="$joystick__parsing__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/control/joystick\l_parsing_telemetry.h" alt="" coords="2344,836,2544,907"/>
+<area shape="rect" id="node30" href="$imu__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/sensing/imu_telemetry.h" alt="" coords="1577,843,1791,899"/>
+<area shape="rect" id="node32" href="$position__estimation__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/sensing/position\l_estimation_telemetry.h" alt="" coords="2619,955,2819,1025"/>
+<area shape="rect" id="node34" href="$simulation__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/sensing/simulation\l_telemetry.h" alt="" coords="2481,1073,2681,1144"/>
+<area shape="rect" id="node35" href="$mavlink__message__handler_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/mavlink\l_message_handler.h" alt="" coords="2422,599,2629,669"/>
+<area shape="rect" id="node36" href="$mavlink__communication_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/mavlink\l_communication.h" alt="" coords="2113,836,2319,907"/>
+<area shape="rect" id="node38" href="$onboard__parameters_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/onboard\l_parameters.h" alt="" coords="2080,717,2291,788"/>
+<area shape="rect" id="node39" href="$data__logging__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/data\l_logging_telemetry.h" alt="" coords="2720,717,2920,788"/>
+<area shape="rect" id="node40" href="$stabilisation__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/control/stabilisation\l_telemetry.h" alt="" coords="3147,480,3347,551"/>
+<area shape="rect" id="node41" href="$analog__monitor__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/hal/analog_monitor\l_telemetry.h" alt="" coords="3371,480,3571,551"/>
+<area shape="rect" id="node42" href="$bmp085__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/hal/bmp085_telemetry.h" alt="" coords="3595,487,3805,543"/>
+<area shape="rect" id="node43" href="$curvace_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/hal/curvace.h" alt="" coords="3829,487,4029,543"/>
+<area shape="rect" id="node44" href="$gps__ublox__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/hal/gps_ublox_telemetry.h" alt="" coords="4053,487,4277,543"/>
+<area shape="rect" id="node45" href="$radar__module__driver_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/hal/radar_module\l_driver.h" alt="" coords="4301,480,4501,551"/>
+<area shape="rect" id="node46" href="$servos__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/hal/servos_telemetry.h" alt="" coords="4525,487,4728,543"/>
+<area shape="rect" id="node47" href="$sonar__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/hal/sonar_telemetry.h" alt="" coords="4752,487,4952,543"/>
+<area shape="rect" id="node48" href="$scheduler__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/runtime/scheduler\l_telemetry.h" alt="" coords="4976,480,5176,551"/>
+<area shape="rect" id="node49" href="$ahrs__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/sensing/ahrs_telemetry.h" alt="" coords="5200,487,5419,543"/>
+<area shape="rect" id="node50" href="$mavlink__actions_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/tests/config/mavlink\l_actions.h" alt="" coords="5443,480,5643,551"/>
+<area shape="rect" id="node8" href="$remote_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/remote.h" alt="" coords="1337,606,1551,662"/>
+<area shape="rect" id="node14" href="$state_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/state.h" alt="" coords="695,606,899,662"/>
+<area shape="rect" id="node9" href="$acoustic_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/acoustic.h" alt="" coords="1064,1199,1288,1255"/>
+<area shape="rect" id="node11" href="$remote__default__config_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/remote\l_default_config.h" alt="" coords="1246,717,1450,788"/>
+<area shape="rect" id="node13" href="$navigation_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/control/navigation.h" alt="" coords="1120,1081,1320,1137"/>
+<area shape="rect" id="node16" href="$state__machine_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/state\l_machine.h" alt="" coords="93,1073,293,1144"/>
+<area shape="rect" id="node24" href="$state__default__config_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/state\l_default_config.h" alt="" coords="747,717,947,788"/>
+<area shape="rect" id="node26" href="$joystick__parsing_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/control/joystick\l_parsing.h" alt="" coords="1021,717,1221,788"/>
+<area shape="rect" id="node28" href="$imu_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/sensing/imu.h" alt="" coords="371,725,571,781"/>
+<area shape="rect" id="node31" href="$position__estimation_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/sensing/position\l_estimation.h" alt="" coords="559,836,759,907"/>
+<area shape="rect" id="node33" href="$simulation_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/sensing/simulation.h" alt="" coords="144,962,344,1018"/>
+<area shape="rect" id="node17" href="$stabilisation__copter_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/control/stabilisation\l_copter.h" alt="" coords="571,1073,771,1144"/>
+<area shape="rect" id="node23" href="$vector__field__waypoint_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/control/vector\l_field_waypoint.h" alt="" coords="845,1073,1045,1144"/>
+<area shape="rect" id="node18" href="$stabilisation__copter__default__config_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/control/stabilisation\l_copter_default_config.h" alt="" coords="768,1192,968,1263"/>
+<area shape="rect" id="node22" href="$conf__stabilisation__copter_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/tests/config/conf\l_stabilisation_copter.h" alt="" coords="544,1192,744,1263"/>
+<area shape="rect" id="node20" href="$boardsupport_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/tests/config/boardsupport.h" alt="" coords="191,1318,420,1374"/>
+<area shape="rect" id="node21" href="$main_8c.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/tests/main.c" alt="" coords="281,1429,481,1485"/>
+<area shape="rect" id="node29" href="$hud__telemetry_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/hud\l_telemetry.h" alt="" coords="469,955,669,1025"/>
+<area shape="rect" id="node37" href="$mavlink__communication__default__config_8h_source.html" title="/run/media/julien/Data\l/Documents/MAVRIC/MAVRIC\l_Library/communication/mavlink\l_communication_default_config.h" alt="" coords="2109,955,2323,1025"/>
 </map>

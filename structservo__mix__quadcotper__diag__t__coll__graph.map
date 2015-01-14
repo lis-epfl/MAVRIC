@@ -1,11 +1,6 @@
 <map id="servo_mix_quadcotper_diag_t" name="servo_mix_quadcotper_diag_t">
-<area shape="rect" id="node2" href="$structthrust__command__t.html" title="Thrust command type. " alt="" coords="5,719,136,796"/>
-<area shape="rect" id="node3" href="$structtorque__command__t.html" title="Torque command structure. " alt="" coords="160,719,293,796"/>
-<area shape="rect" id="node4" href="$structservos__t.html" title="{servos_t\n|+ servos_count\l|}" alt="" coords="317,719,429,796"/>
-<area shape="rect" id="node5" href="$structservo__entry__t.html" title="{servo_entry_t\n|+ value\l+ trim\l+ min\l+ max\l+ failsafe\l+ repeat_freq\l+ type\l|}" alt="" coords="269,491,371,656"/>
-<area shape="rect" id="node6" href="$structmavlink__stream__t.html" title="Main structure for the mavlink stream module. " alt="" coords="395,513,520,634"/>
-<area shape="rect" id="node7" href="$structmavlink__received__t.html" title="Mavlink structures for the receive message and its status. " alt="" coords="290,299,425,377"/>
-<area shape="rect" id="node8" href="$struct____mavlink__message.html" title="{__mavlink_message\n|+ checksum\l+ magic\l+ len\l+ seq\l+ sysid\l+ compid\l+ msgid\l+ payload64\l|}" alt="" coords="193,13,335,193"/>
-<area shape="rect" id="node9" href="$struct____mavlink__status.html" title="{__mavlink_status\n|+ msg_received\l+ buffer_overrun\l+ parse_error\l+ parse_state\l+ packet_idx\l+ current_rx_seq\l+ current_tx_seq\l+ packet_rx_success_count\l+ packet_rx_drop_count\l|}" alt="" coords="359,5,545,200"/>
-<area shape="rect" id="node10" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="449,263,573,413"/>
+<area shape="rect" id="node2" href="$structthrust__command__t.html" title="Thrust command type. " alt="" coords="5,219,136,296"/>
+<area shape="rect" id="node3" href="$structtorque__command__t.html" title="Torque command structure. " alt="" coords="160,219,293,296"/>
+<area shape="rect" id="node4" href="$structservos__t.html" title="Define the servos structure. " alt="" coords="318,219,429,296"/>
+<area shape="rect" id="node5" href="$structservo__entry__t.html" title="Define the servos entry structure. " alt="" coords="324,5,423,156"/>
 </map>

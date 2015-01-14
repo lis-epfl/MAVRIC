@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main',['main',['../main_8c.html#af19ddca125f05a2090dd132045573ee4',1,'main.c']]]
+  ['profile_5fquick_5ftrig',['profile_quick_trig',['../test__quick__trig_8c.html#a9bb63804820df5df883d660569a32e19',1,'test_quick_trig.c']]]
 ];

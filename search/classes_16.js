@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['waypoint_5fstruct',['waypoint_struct',['../structwaypoint__struct.html',1,'']]]
+  ['waypoint_5fstruct_5ft',['waypoint_struct_t',['../structwaypoint__struct__t.html',1,'']]]
 ];

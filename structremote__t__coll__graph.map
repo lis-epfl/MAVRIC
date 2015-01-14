@@ -1,11 +1,10 @@
 <map id="remote_t" name="remote_t">
-<area shape="rect" id="node2" href="$structremote__mode__t.html" title="{remote_mode_t\n|+ safety_channel\l+ mode_switch_channel\l+ use_custom_switch\l+ custom_switch_channel\l+ use_test_switch\l+ test_switch_channel\l+ use_disable_remote\l_mode_switch\l+ disable_remote_mode\l_channel\l|}" alt="" coords="5,608,180,817"/>
-<area shape="rect" id="node3" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="41,263,144,487"/>
-<area shape="rect" id="node4" href="$structspektrum__satellite__t.html" title="Structure containing the Spektrum receiver&#39;s data. " alt="" coords="204,645,352,781"/>
-<area shape="rect" id="node5" href="$structbuffer__t.html" title="Buffer structure. " alt="" coords="227,314,329,435"/>
-<area shape="rect" id="node6" href="$structmavlink__stream__t.html" title="Main structure for the mavlink stream module. " alt="" coords="377,652,502,773"/>
-<area shape="rect" id="node7" href="$structmavlink__received__t.html" title="Mavlink structures for the receive message and its status. " alt="" coords="363,336,497,413"/>
-<area shape="rect" id="node8" href="$struct____mavlink__message.html" title="{__mavlink_message\n|+ checksum\l+ magic\l+ len\l+ seq\l+ sysid\l+ compid\l+ msgid\l+ payload64\l|}" alt="" coords="265,13,406,193"/>
-<area shape="rect" id="node9" href="$struct____mavlink__status.html" title="{__mavlink_status\n|+ msg_received\l+ buffer_overrun\l+ parse_error\l+ parse_state\l+ packet_idx\l+ current_rx_seq\l+ current_tx_seq\l+ packet_rx_success_count\l+ packet_rx_drop_count\l|}" alt="" coords="430,5,617,200"/>
-<area shape="rect" id="node10" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="521,299,645,450"/>
+<area shape="rect" id="node2" href="$structremote__mode__t.html" title="The structure of the remote mode. " alt="" coords="5,748,179,957"/>
+<area shape="rect" id="node3" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="43,403,141,627"/>
+<area shape="rect" id="node4" href="$structsatellite__t.html" title="Structure containing the satellite receiver&#39;s data. " alt="" coords="203,785,349,921"/>
+<area shape="rect" id="node5" href="$structusart__config__t.html" title="UART configuration structure. " alt="" coords="305,469,407,561"/>
+<area shape="rect" id="node6" href="$structuart__gpio__map__t.html" title="UART GPIO map structure. " alt="" coords="435,233,554,325"/>
+<area shape="rect" id="node7" href="$structuart__interface__t.html" title="UART interface structure. " alt="" coords="301,233,411,325"/>
+<area shape="rect" id="node8" href="$structbuffer__t.html" title="Buffer structure. " alt="" coords="229,20,329,141"/>
+<area shape="rect" id="node9" href="$structbyte__stream__t.html" title="Byte stream. " alt="" coords="369,5,492,156"/>
 </map>

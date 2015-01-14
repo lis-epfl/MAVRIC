@@ -1,6 +1,9 @@
 <map id="data_logging_t" name="data_logging_t">
-<area shape="rect" id="node2" href="$structFATFS.html" title="{FATFS\n|+ fs_type\l+ drv\l+ csize\l+ n_fats\l+ wflag\l+ fsi_flag\l+ id\l+ n_rootdir\l+ last_clust\l+ free_clust\land 8 more...\l|}" alt="" coords="5,5,104,229"/>
-<area shape="rect" id="node5" href="$structFIL.html" title="{FIL\n|+ id\l+ flag\l+ err\l+ fptr\l+ fsize\l+ sclust\l+ clust\l+ dsect\l+ dir_sect\l+ dir_ptr\l+ buf\l|}" alt="" coords="69,292,149,516"/>
-<area shape="rect" id="node3" href="$structdata__logging__set__t.html" title="Set of data logging parameters. " alt="" coords="173,358,352,450"/>
-<area shape="rect" id="node4" href="$structdata__logging__entry__t.html" title="Structure of data logging parameter. " alt="" coords="191,57,334,178"/>
+<area shape="rect" id="node2" href="$structFATFS.html" title="File system object structure (FATFS) " alt="" coords="5,5,104,229"/>
+<area shape="rect" id="node5" href="$structFIL.html" title="File object structure (FIL) " alt="" coords="68,307,148,531"/>
+<area shape="rect" id="node3" href="$structdata__logging__set__t.html" title="Set of data logging parameters. " alt="" coords="172,358,351,479"/>
+<area shape="rect" id="node4" href="$structdata__logging__entry__t.html" title="Structure of data logging parameter. " alt="" coords="190,57,333,178"/>
+<area shape="rect" id="node6" href="$structstate__t.html" title="The state structure. " alt="" coords="375,292,548,545"/>
+<area shape="rect" id="node7" href="$structanalog__monitor__t.html" title="Analog monitor structure. " alt="" coords="378,57,499,178"/>
+<area shape="rect" id="node8" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="524,5,623,229"/>
 </map>

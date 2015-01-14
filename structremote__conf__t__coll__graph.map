@@ -1,4 +1,4 @@
 <map id="remote_conf_t" name="remote_conf_t">
-<area shape="rect" id="node2" href="$structremote__mode__conf__t.html" title="{remote_mode_conf_t\n|+ safety_channel\l+ mode_switch_channel\l+ use_custom_switch\l+ custom_switch_channel\l+ use_test_switch\l+ test_switch_channel\l+ use_disable_remote\l_mode_switch\l+ disable_remote_mode\l_channel\l|}" alt="" coords="5,336,180,545"/>
-<area shape="rect" id="node3" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="41,5,144,229"/>
+<area shape="rect" id="node2" href="$structremote__mode__conf__t.html" title="The configuration structure of the remote mode. " alt="" coords="5,336,179,545"/>
+<area shape="rect" id="node3" href="$unionmav__mode__t.html" title="{mav_mode_t\n|+ byte\l+ ARMED\l+ MANUAL\l+ HIL\l+ STABILISE\l+ GUIDED\l+ AUTO\l+ TEST\l+ CUSTOM\l+ @1\l+ flags\l|}" alt="" coords="43,5,141,229"/>
 </map>

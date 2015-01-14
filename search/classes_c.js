@@ -18,6 +18,8 @@ var searchData=
   ['mavlink_5fmessage_5fhandler_5fmsg_5fcallback_5ft',['mavlink_message_handler_msg_callback_t',['../structmavlink__message__handler__msg__callback__t.html',1,'']]],
   ['mavlink_5fmessage_5fhandler_5ft',['mavlink_message_handler_t',['../structmavlink__message__handler__t.html',1,'']]],
   ['mavlink_5freceived_5ft',['mavlink_received_t',['../structmavlink__received__t.html',1,'']]],
+  ['mavlink_5fsend_5fmsg_5fhandler_5fset_5ft',['mavlink_send_msg_handler_set_t',['../structmavlink__send__msg__handler__set__t.html',1,'']]],
+  ['mavlink_5fsend_5fmsg_5fhandler_5ft',['mavlink_send_msg_handler_t',['../structmavlink__send__msg__handler__t.html',1,'']]],
   ['mavlink_5fstream_5fconf_5ft',['mavlink_stream_conf_t',['../structmavlink__stream__conf__t.html',1,'']]],
   ['mavlink_5fstream_5ft',['mavlink_stream_t',['../structmavlink__stream__t.html',1,'']]],
   ['mavlink_5fwaypoint_5fhandler_5ft',['mavlink_waypoint_handler_t',['../structmavlink__waypoint__handler__t.html',1,'']]]
