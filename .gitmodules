@@ -4,9 +4,6 @@
 [submodule "qgroundcontrol"]
 	path = qgroundcontrol
 	url = git@github.com:lis-epfl/qgroundcontrol.git
-[submodule "mavlink"]
-	path = mavlink
-	url = git@github.com:lis-epfl/mavlink.git
 [submodule "Documentation/wiki"]
 	path = Documentation/wiki
 	url = git@github.com:lis-epfl/MAVRIC.wiki.git
