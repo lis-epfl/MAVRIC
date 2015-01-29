@@ -101,7 +101,8 @@ bool central_data_init()
 										&central_data.state,
 										&central_data.waypoint_handler,
 										&central_data.sim_model,
-										&central_data.remote);
+										&central_data.remote,
+										&central_data.navigation);
 	delay_ms(100);
 
 	// Init imu
@@ -146,7 +147,8 @@ bool central_data_init()
 									&central_data.state,
 									&central_data.joystick_parsing,
 									&central_data.remote,
-									&central_data.mavlink_communication);
+									&central_data.mavlink_communication);/*,
+									&central_data.sonar_i2cxl);*/
 	
 	delay_ms(100);
 
@@ -205,7 +207,7 @@ bool central_data_init()
 	delay_ms(100);
 	
 	// Init sonar
-	// init_success &= i2cxl_sonar_init(&central_data.i2cxl_sonar);
+	sonar_i2cxl_init(&central_data.sonar_i2cxl);
 
 	// Init P^2 attitude controller
 	attitude_controller_p2_init( 	&central_data.attitude_controller,

@@ -330,15 +330,16 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	
 
 
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.dist2vel_gain                            , "vel_dist2Vel"     );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.cruise_speed                            , "vel_cruiseSpeed"  );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.max_climb_rate                          , "vel_climbRate"    );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.soft_zone_size							  , "vel_softZone"     );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.hovering_controller.p_gain				  , "vel_hover_Pgain"     );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.hovering_controller.differentiator.gain	  , "vel_hover_Dgain"     );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.wpt_nav_controller.p_gain				  , "vel_wpt_Pgain"     );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.wpt_nav_controller.differentiator.gain	  , "vel_wpt_Dgain"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.dist2vel_gain								, "vel_dist2Vel"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.cruise_speed									, "vel_cruiseSpeed"  );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.max_climb_rate								, "vel_climbRate"    );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.soft_zone_size								, "vel_softZone"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.hovering_controller.p_gain					, "vel_hover_Pgain"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.hovering_controller.differentiator.gain		, "vel_hover_Dgain"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.wpt_nav_controller.p_gain					, "vel_wpt_Pgain"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.wpt_nav_controller.differentiator.gain		, "vel_wpt_Dgain"     );
 	
+	init_success &= onboard_parameters_add_parameter_int32    ( onboard_parameters , ( int32_t*)&central_data->state_machine.low_battery_counter			, "safe_count"     );
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.remote_active,"Remote_Active");
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.use_mode_from_remote, "Remote_Use_Mode");
@@ -382,7 +383,7 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&hud_telemetry_send_message,									&central_data->hud_structure, 			MAVLINK_MSG_ID_VFR_HUD				);// ID 74
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_state,								&central_data->sim_model, 				MAVLINK_MSG_ID_HIL_STATE			);// ID 90
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,	 RUN_NEVER,	   PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_quaternions,							&central_data->sim_model,				MAVLINK_MSG_ID_HIL_STATE_QUATERNION	);// ID 115
-	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,										&central_data->sonar_i2cxl, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 119
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,											&central_data->sonar_i2cxl.data, 		MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 119
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
 	
