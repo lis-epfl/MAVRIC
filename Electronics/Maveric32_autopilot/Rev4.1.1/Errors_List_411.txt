@@ -1,0 +1,6 @@
+Errors on boards 4.1.1
+- Inversion of TX and RX on GPS connector. Currently solved: TX and RX cables must be swap in when connecting GPS cables to the connector.
+- 3 signals not connected through copper routes (Currently solved by wires soldered):
+	- +3V3: Connection between diode D3 and 10 pins' connector ANA(below the XBee) on Top side
+	- GND: Connection between C7 capacitor and U2 ground pin on Bottom side
+	- GND: Connection between C26 capacitor and power connector's ground pin on Bottom side

@@ -21,3 +21,11 @@
 
 # Python
 *.pyc
+
+# Codelite
+*.mk
+*mavric.map
+*-DBOARD*
+*.codelite
+*Debug_Linux
+*Release_Linux

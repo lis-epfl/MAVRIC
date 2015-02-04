@@ -69,6 +69,7 @@
 #include "pwm_servos.h"
 #include "spektrum_satellite.h"
 #include "conf_platform.h"
+#include "sonar_i2cxl.h"
 
 #include "analog_monitor_default_config.h"
 #include "twim_default_config.h"
@@ -150,7 +151,7 @@ bool boardsupport_init(central_data_t *central_data)
 	bmp085_init(&central_data->pressure);
 	
 	// Init I2C for ultrasound
-	//i2c_driver_init(I2C1, twim_default_config);
+	i2c_driver_init(I2C1, twim_default_config);
 	
 	// init 6V enable
 	gpio_enable_gpio_pin(AVR32_PIN_PA04);
