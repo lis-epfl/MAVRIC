@@ -101,8 +101,7 @@ bool central_data_init()
 										&central_data.state,
 										&central_data.waypoint_handler,
 										&central_data.sim_model,
-										&central_data.remote,
-										&central_data.navigation);
+										&central_data.remote);
 	delay_ms(100);
 
 	// Init imu
