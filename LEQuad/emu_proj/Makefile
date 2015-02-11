@@ -19,16 +19,17 @@ SRCS += $(MAVRIC_LIB)/util/print_util.c
 SRCS += $(MAVRIC_LIB)/util/quick_trig.c
 
 SRCS += $(MAVRIC_LIB)/hal/emu/adxl345_driver.c
-SRCS += $(MAVRIC_LIB)/hal/emu/bmp085.c
-SRCS += $(MAVRIC_LIB)/hal/emu/itg3200.c
-SRCS += $(MAVRIC_LIB)/hal/emu/lsm330dlc.c
-SRCS += $(MAVRIC_LIB)/hal/emu/radar_module_driver.c
-SRCS += $(MAVRIC_LIB)/hal/emu/time_keeper.c
 SRCS += $(MAVRIC_LIB)/hal/emu/analog_monitor.c
+SRCS += $(MAVRIC_LIB)/hal/emu/bmp085.c
 SRCS += $(MAVRIC_LIB)/hal/emu/hmc5883l.c
-SRCS += $(MAVRIC_LIB)/hal/emu/spektrum_satellite.c
+SRCS += $(MAVRIC_LIB)/hal/emu/itg3200.c
 SRCS += $(MAVRIC_LIB)/hal/emu/led.c
+SRCS += $(MAVRIC_LIB)/hal/emu/lsm330dlc.c
 SRCS += $(MAVRIC_LIB)/hal/emu/piezo_speaker.c
+SRCS += $(MAVRIC_LIB)/hal/emu/radar_module_driver.c
+SRCS += $(MAVRIC_LIB)/hal/emu/pwm_servos.c
+SRCS += $(MAVRIC_LIB)/hal/emu/spektrum_satellite.c
+SRCS += $(MAVRIC_LIB)/hal/emu/time_keeper.c
 SRCS += $(MAVRIC_LIB)/hal/emu/udp_stream.c
 
 # SRCS += $(MAVRIC_SRC)/main.cpp
