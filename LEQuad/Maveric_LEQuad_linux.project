@@ -431,6 +431,10 @@
         <File Name="Library/hal/avr32/dac_dma.c"/>
         <File Name="Library/hal/avr32/airspeed_analog.c"/>
         <File Name="Library/hal/avr32/adxl345_driver.c"/>
+        <VirtualDirectory Name="include">
+          <File Name="Library/hal/avr32/include/uart_default_config.h"/>
+          <File Name="Library/hal/avr32/include/uart_int.h"/>
+        </VirtualDirectory>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="runtime">
@@ -776,6 +780,7 @@
         <IncludePath Value="../MAVRIC_Library/tests"/>
         <IncludePath Value="../MAVRIC_Library/sensing"/>
         <IncludePath Value="../MAVRIC_Library/hal/include"/>
+        <IncludePath Value="../MAVRIC_Library/hal/avr32/include"/>
         <IncludePath Value="../MAVRIC_Library/control"/>
         <IncludePath Value="../MAVRIC_Library/communication"/>
         <IncludePath Value="../MAVRIC_Library/libs"/>

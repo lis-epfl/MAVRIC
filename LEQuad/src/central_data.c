@@ -71,13 +71,13 @@ bool central_data_init()
 	servos_set_value_failsafe( &central_data.servos );
 	pwm_servos_write_to_hardware( &central_data.servos );
 
-	delay_ms(100);	
+	time_keeper_delay_ms(100);	
 
 
 	// Init main sheduler
 	init_success &= scheduler_init(&central_data.scheduler, &scheduler_default_config);
 	
-	delay_ms(100); 
+	time_keeper_delay_ms(100); 
 
 	// Init mavlink communication
 	mavlink_communication_conf_t mavlink_communication_config = mavlink_communication_default_config;
@@ -87,14 +87,14 @@ bool central_data_init()
 												central_data.telemetry_up_stream, 
 												central_data.telemetry_down_stream);
 	
-	delay_ms(100); 
+	time_keeper_delay_ms(100); 
 
 	// Init state structure
 	init_success &= state_init(	&central_data.state,
 								&state_default_config,
 								&central_data.analog_monitor); 
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	//Init state_machine	
 	init_success &= state_machine_init( &central_data.state_machine,
@@ -102,19 +102,19 @@ bool central_data_init()
 										&central_data.waypoint_handler,
 										&central_data.sim_model,
 										&central_data.remote);
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	// Init imu
 	init_success &= imu_init(   &central_data.imu,
 								&imu_config,
 								&central_data.state);
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	// Init ahrs
 	init_success &= ahrs_init(	&central_data.ahrs, &ahrs_default_config);
 
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	
 	// Init qfilter
@@ -123,7 +123,7 @@ bool central_data_init()
 									&central_data.imu,
 									&central_data.ahrs);
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 	
 	// Init position_estimation_init
 	init_success &= position_estimation_init(   	&central_data.position_estimation,
@@ -134,7 +134,7 @@ bool central_data_init()
 													&central_data.ahrs,
 													&central_data.imu);
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	// Init navigation
 	init_success &= navigation_init(&central_data.navigation,
@@ -149,7 +149,7 @@ bool central_data_init()
 									&central_data.mavlink_communication);/*,
 									&central_data.sonar_i2cxl);*/
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	// Init waypont handler
 	init_success &= waypoint_handler_init(  &central_data.waypoint_handler,
@@ -161,7 +161,7 @@ bool central_data_init()
 	waypoint_handler_init_homing_waypoint(&central_data.waypoint_handler);
 	waypoint_handler_nav_plan_init(&central_data.waypoint_handler);
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	
 	// Init stabilisers
@@ -173,11 +173,11 @@ bool central_data_init()
 												&central_data.position_estimation,
 												&central_data.servos);
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	init_success &= stabilisation_init( &central_data.controls);
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 
 	// Init simulation (should be done after position_estimation)
 	init_success &= simulation_init(&central_data.sim_model,
@@ -191,7 +191,7 @@ bool central_data_init()
 									&central_data.servos,
 									&central_data.state.nav_plan_active);
 
-	delay_ms(100);//add delay to be able to print on console init message for the following module
+	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
 	// Init hud	
 	init_success &= hud_telemetry_init(	&central_data.hud_structure, 
@@ -199,11 +199,11 @@ bool central_data_init()
 										&central_data.controls,
 										&central_data.ahrs);
 	
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 	
 	init_success &= joystick_parsing_init(	&central_data.joystick_parsing,
 											&central_data.state);
-	delay_ms(100);
+	time_keeper_delay_ms(100);
 	
 	// Init sonar
 	sonar_i2cxl_init(&central_data.sonar_i2cxl);
