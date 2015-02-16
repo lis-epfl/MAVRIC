@@ -264,10 +264,8 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 
 	// Thrust velocity PID
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.p_gain                        , "ThrVPid_P_G"      );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.postgain           , "ThrVPid_I_PstG"   );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.pregain            , "ThrVPid_I_PreG"   );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.clip_pre            , "ThrVPid_I_PreG"   );
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.differentiator.gain           , "ThrVPid_D_Gain"   );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.differentiator.LPF            , "ThrVPid_D_LPF"    );
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.soft_zone_width               , "ThrVPid_soft"     );
 
 	// Roll position PID
@@ -339,10 +337,9 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.wpt_nav_controller.p_gain					, "vel_wpt_Pgain"     );
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.wpt_nav_controller.differentiator.gain		, "vel_wpt_Dgain"     );
 	
-	init_success &= onboard_parameters_add_parameter_int32    ( onboard_parameters , ( int32_t*)&central_data->state_machine.low_battery_counter			, "safe_count"     );
+//	init_success &= onboard_parameters_add_parameter_int32    ( onboard_parameters , ( int32_t*)&central_data->state_machine.low_battery_counter			, "safe_count"     );
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.remote_active,"Remote_Active");
-	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.use_mode_from_remote, "Remote_Use_Mode");
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters,(int32_t*)&central_data->data_logging.log_data, "Log_continue");
 	

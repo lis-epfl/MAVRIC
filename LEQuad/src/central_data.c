@@ -102,7 +102,7 @@ bool central_data_init()
 										&central_data.waypoint_handler,
 										&central_data.sim_model,
 										&central_data.remote,
-										&central_data.navigation);
+										&central_data.joystick_parsing);
 	delay_ms(100);
 
 	// Init imu
