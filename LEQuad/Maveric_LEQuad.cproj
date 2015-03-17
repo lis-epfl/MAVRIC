@@ -798,6 +798,12 @@
     <Compile Include="Library\hal\barometer.h">
       <SubType>compile</SubType>
     </Compile>
+	<Compile Include="Library\hal\battery.c">
+      <SubType>compile</SubType>
+    </Compile>
+	<Compile Include="Library\hal\battery.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\hal\analog_monitor.h">
       <SubType>compile</SubType>
     </Compile>
