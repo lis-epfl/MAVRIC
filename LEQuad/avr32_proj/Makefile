@@ -203,6 +203,7 @@ LIB_SRCS += hal/avr32/adxl345_driver.c
 LIB_SRCS += hal/avr32/airspeed_analog.c           
 LIB_SRCS += hal/avr32/analog_monitor.c            
 LIB_SRCS += hal/avr32/analog_monitor_telemetry.c  
+LIB_SRCS += hal/avr32/battery.c                    
 LIB_SRCS += hal/avr32/bmp085.c                    
 LIB_SRCS += hal/avr32/bmp085_telemetry.c          
 LIB_SRCS += hal/avr32/curvace.c                   
