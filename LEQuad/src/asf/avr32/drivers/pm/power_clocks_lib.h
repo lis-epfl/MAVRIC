@@ -1,53 +1,62 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief High-level library abstracting features such as oscillators/pll/dfll
  *        configuration, clock configuration, System-sensible parameters
  *        configuration, buses clocks configuration, sleep mode, reset.
  *
+ * Copyright (c) 2014-2015 Atmel Corporation. All rights reserved.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices.
- * - AppNote:
+ * \asf_license_start
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #ifndef _POWER_CLOCKS_LIB_H_
 #define _POWER_CLOCKS_LIB_H_
+
+/**
+ * \defgroup group_avr32_drivers_pm_power_clocks_lib Power Clocks Library
+ * \ingroup group_avr32_drivers_pm
+ *
+ * \{
+ */
 
 #ifdef __cplusplus
 extern "C" {
@@ -61,7 +70,7 @@ extern "C" {
   #include "pm.h"
 #else
 //! Device-specific data
-#if UC3L 
+#if UC3L
   #include "pm_uc3l.h"
   #include "scif_uc3l.h"
   #include "flashcdw.h"
@@ -143,7 +152,7 @@ typedef struct
 
   //! DFLL target frequency (input/output argument) (NOTE: the bigger, the most stable the frequency)
   unsigned long dfll_f;
-  
+
   //! Other parameters that might be necessary depending on the device (implementation-dependent).
   // For the UC3L DFLL setup, this parameter should be pointing to a structure of
   // type (scif_gclk_opt_t *).
@@ -300,7 +309,7 @@ extern long int pcl_configure_clocks_dfll0(pcl_freq_param_t *param);
  *
  * \return Status.
  *   \retval 0  Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long int pcl_switch_to_osc(pcl_osc_t osc, unsigned int fcrystal, unsigned int startup);
 
@@ -313,7 +322,7 @@ extern long int pcl_switch_to_osc(pcl_osc_t osc, unsigned int fcrystal, unsigned
  *
  * \return Status.
  *   \retval 0  Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 #ifndef AVR32_PM_VERSION_RESETVALUE
 // Implementation for UC3A, UC3A3, UC3B parts.
@@ -332,7 +341,7 @@ extern long int pcl_switch_to_osc(pcl_osc_t osc, unsigned int fcrystal, unsigned
  *
  * \return Status.
  *   \retval 0  Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 #ifndef AVR32_PM_VERSION_RESETVALUE
 // Implementation for UC3A, UC3A3, UC3B parts.
@@ -344,10 +353,9 @@ extern long int pcl_switch_to_osc(pcl_osc_t osc, unsigned int fcrystal, unsigned
 
 /*! \brief Configure the USB Clock
  *
- *
  * \return Status.
  *   \retval 0  Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long int pcl_configure_usb_clock(void);
 
@@ -377,5 +385,9 @@ extern void pcl_write_gplp(unsigned long gplp, unsigned long value);
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * \}
+ */
 
 #endif  // _POWER_CLOCKS_LIB_H_

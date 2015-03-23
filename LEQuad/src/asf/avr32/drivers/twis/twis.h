@@ -1,19 +1,16 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief TWIS driver for AVR32 UC3.
  *
  * This file defines a useful set of functions for TWIS on AVR32 devices.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with a TWIS module can be used.
- * - AppNote:
- *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
  *****************************************************************************/
-/** Copyright (C) 2010 Atmel Corporation. All rights reserved.
+/**
+ * Copyright (c) 2010-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -21,34 +18,52 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 
 #ifndef _TWIS_H_
 #define _TWIS_H_
 
+/**
+ * \defgroup group_avr32_drivers_twis TWI - Two-Wire Slave Interface
+ *
+ * Driver for the TWIS (Two-Wire Slave Interface).
+ * This driver provides access to the main features of the TWIS controller.
+ * The TWIS interconnects a TWI slave on a unique two-wire bus.
+ * The TWIS is programmable as a slave with sequential or single-byte access.
+ * Internal Address access and Ten bit addressing mode is supported.
+ *
+ * \{
+ */
+ 
 #include <avr32/io.h>
 #include <stdint.h>
 #include "compiler.h"
@@ -61,9 +76,9 @@
  * to UC3 devices with TWIM module
  * @{
  */
-//#define avr32_twi_t avr32_twis_t
-//#define twi_options_t twis_options_t
-//#define twi_package_t twis_package_t
+#define avr32_twi_t avr32_twis_t
+#define twi_options_t twis_options_t
+#define twi_package_t twis_package_t
 #define twi_slave_fct_t twis_slave_fct_t
 #define twi_slave_init twis_slave_init
 //! @}
@@ -118,15 +133,16 @@ typedef struct
 }
 twis_slave_fct_t;
 
-/**
- * \brief Initialize the TWI Slave Module
- *
- * \param twis         Base address of the TWI (i.e. &AVR32_TWI).
- * \param *opt        Options for initializing the TWI module
- *                    (see \ref twis_options_t)
- * \param *slave_fct  Pointer on application functions
- */
+// Function Declarations
+
 status_code_t twis_slave_init (volatile avr32_twis_t *twis,
 		const twis_options_t *opt, const twis_slave_fct_t *slave_fct);
 
+void twis_send_data_ack(volatile avr32_twis_t *twis);
+
+void twis_send_data_nack(volatile avr32_twis_t *twis, bool stop_callback);
+
+/**
+ * \}
+ */
 #endif // _TWIS_H_

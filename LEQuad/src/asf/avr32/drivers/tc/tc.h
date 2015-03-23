@@ -1,52 +1,65 @@
-/*This file is prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief Timer/Counter driver for AVR32 UC3.
  *
  * AVR32 Timer/Counter driver module.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with a TC module can be used.
- * - AppNote:
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
+ * \asf_license_start
  *
- ******************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ ******************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #ifndef _TC_H_
 #define _TC_H_
+
+/**
+ * \defgroup group_avr32_drivers_tc TC - Timer/Counter
+ *
+ * Driver for the TC (Timer/Counter). The TC includes three identical 16-bit Timer/Counter channels.
+ * Each channel can be independently programmed to perform a wide range of functions including frequency measurement,
+ * event counting, interval measurement, pulse generation, delay timing and pulse width modulation.
+ *
+ * \{
+ */
 
 #include <avr32/io.h>
 
@@ -117,6 +130,9 @@
 //! @}
 
 /*! \name External Event Selection
+ *
+ * \attention See \ref tc_attention_eevt "this note" for important details about
+ * this setting.
  */
 //! @{
 #define TC_EXT_EVENT_SEL_TIOB_INPUT             AVR32_TC_EEVT_TIOB_INPUT
@@ -352,6 +368,8 @@ typedef struct
   //!   - \ref TC_EXT_EVENT_SEL_XC0_OUTPUT;\n
   //!   - \ref TC_EXT_EVENT_SEL_XC1_OUTPUT;\n
   //!   - \ref TC_EXT_EVENT_SEL_XC2_OUTPUT.
+  //! \attention See \ref tc_attention_eevt "this note" for important details
+  //! about this setting.
   unsigned int eevt            : 2;
 
   //! External event edge selection:\n
@@ -457,6 +475,15 @@ extern int tc_init_capture(volatile avr32_tc_t *tc, const tc_capture_opt_t *opt)
  *
  * \retval 0 Success.
  * \retval TC_INVALID_ARGUMENT Invalid argument(s).
+ *
+ * \anchor tc_attention_eevt
+ * \attention If the external event selection, \ref tc_waveform_opt_t::eevt
+ * "EEVT", is set to \ref TC_EXT_EVENT_SEL_TIOB_INPUT or the equivalent value 0,
+ * TIOB becomes an input even if external event triggers
+ * are \e not enabled (\ref tc_waveform_opt_t::enetrg "ENETRG").\n
+ * Therefore, unless it is the intention to use TIOB as an external event trigger,
+ * \ref tc_waveform_opt_t::eevt "EEVT" should be set to any other value than
+ * \ref TC_EXT_EVENT_SEL_TIOB_INPUT to allow normal operation of TIOB.
  */
 extern int tc_init_waveform(volatile avr32_tc_t *tc, const tc_waveform_opt_t *opt);
 
@@ -585,5 +612,8 @@ extern int tc_write_rb(volatile avr32_tc_t *tc, unsigned int channel, unsigned s
  */
 extern int tc_write_rc(volatile avr32_tc_t *tc, unsigned int channel, unsigned short value);
 
+/**
+ * \}
+ */
 
 #endif  // _TC_H_

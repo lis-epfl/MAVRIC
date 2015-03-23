@@ -3,7 +3,9 @@
  *
  * \brief Global interrupt management for 32-bit AVR
  *
- * Copyright (C) 2010 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2010-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -11,29 +13,35 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #ifndef UTILS_INTERRUPT_INTERRUPT_H
 #define UTILS_INTERRUPT_INTERRUPT_H
@@ -62,7 +70,7 @@ typedef void (__interrupt *__int_handler)(void);
 #if defined(__GNUC__) || defined(__DOXYGEN__)
 
 /**
- * \brief Define service routine
+ * \brief Macro to declare an interrupt service routine
  *
  * With GCC, this macro only causes the function to be defined as an interrupt
  * service routine, i.e., it does not add any initialization code. A valid
@@ -78,12 +86,12 @@ typedef void (__interrupt *__int_handler)(void);
  *
  * Usage:
  * \code
- * ISR(foo_irq_handler, AVR32_xxx_IRQ_GROUP, n)
- * {
- *      // Function definition
- *      ...
- * }
- * \endcode
+	ISR(foo_irq_handler, AVR32_xxx_IRQ_GROUP, n)
+	{
+	     // Function definition
+	     ...
+	}
+\endcode
  *
  * \param func Name for the function, needed by \ref irq_register_handler.
  * \param int_grp Interrupt group to define service routine for.
@@ -99,11 +107,15 @@ typedef void (__interrupt *__int_handler)(void);
 #  define ISR(func, int_grp, int_lvl)    \
 	__attribute__((__interrupt__)) static void func (void)
 
+#elif defined(__ICCAVR32__) && defined(CONFIG_INTERRUPT_FORCE_INTC)
+#  define ISR(func, int_grp, int_lvl) \
+		__interrupt static void func (void)
+
 #elif defined(__ICCAVR32__)
 #  define ISR0(...) _Pragma(#__VA_ARGS__)
 #  define ISR(func, int_grp, int_lvl)                                          \
 		ISR0(handler=int_grp, int_lvl)                                 \
-		  __interrupt static void func (void)
+		__interrupt static void func (void)
 #endif
 
 #if defined(__GNUC__) || defined(__DOXYGEN__) || defined(CONFIG_INTERRUPT_FORCE_INTC)
@@ -142,9 +154,9 @@ typedef void (__interrupt *__int_handler)(void);
  *
  * Usage:
  * \code
- * irq_initialize_vectors();
- * irq_register_handler(foo_irq_handler, AVR32_xxx_IRQ, n);
- * \endcode
+	irq_initialize_vectors();
+	irq_register_handler(foo_irq_handler, AVR32_xxx_IRQ, n);
+\endcode
  *
  * \note The function \a func must be defined with the \ref ISR macro.
  * \note The interrupt line number can be found in the device header files for
@@ -210,15 +222,12 @@ static inline bool cpu_irq_is_enabled_flags(irqflags_t flags)
 static inline void cpu_irq_restore(irqflags_t flags)
 {
 	barrier();
-#if defined(__ICCAVR32__)
-   // Barrier " __asm__ __volatile__ ("")"
-   // Don't work with sysreg_write(AVR32_SR, flags)
-   if( cpu_irq_is_enabled_flags(flags) ) {
+
+   /* Restore the global IRQ mask status flag if it was previously set */
+   if ( cpu_irq_is_enabled_flags(flags) ) {
       cpu_irq_enable();
    }
-#else
-	sysreg_write(AVR32_SR, flags);
-#endif
+
 	barrier();
 }
 

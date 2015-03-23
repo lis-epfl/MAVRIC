@@ -1,53 +1,65 @@
-/*This file is prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief USART driver for AVR32 UC3.
  *
  * This file contains basic functions for the AVR32 USART, with support for all
  * modes, settings and clock speeds.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with a USART module can be used.
- * - AppNote:
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
+ * \asf_license_start
  *
- ******************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ ******************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #ifndef _USART_H_
 #define _USART_H_
+
+/**
+ * \defgroup group_avr32_drivers_usart USART - Univ. Sync/Async Serial Rec/Trans
+ *
+ * Driver for the USART (Universal Synchronous Asynchronous Receiver Transmitter).
+ * The driver supports the following  modes: RS232, RS485, SPI, LIN and ISO7816.
+ *
+ * \{
+ */
 
 #include <avr32/io.h>
 #include "compiler.h"
@@ -108,7 +120,7 @@
 //! @{
 #define USART_LIN_PUBLISH_ACTION      AVR32_USART_LINMR_NACT_PUBLISH    //!< The USART transmits the response.
 #define USART_LIN_SUBSCRIBE_ACTION    AVR32_USART_LINMR_NACT_SUBSCRIBE  //!< The USART receives the response.
-#define USART_LIN_IGNORE_ACTION       AVR32_USART_LINMR_NACT_IGNORE     //!< The USART does not transmit and does not receive the reponse.
+#define USART_LIN_IGNORE_ACTION       AVR32_USART_LINMR_NACT_IGNORE     //!< The USART does not transmit and does not receive the response.
 //! @}
 
 /*! \name LIN Checksum Types
@@ -170,7 +182,7 @@ typedef struct
   //! Disable successive NACKs.
   //! Successive parity errors are counted up to the value in the \ref max_iterations field.
   //! These parity errors generate a NACK on the ISO line. As soon as this value is reached,
-  //! no addititional NACK is sent on the ISO line. The ITERATION flag is asserted.
+  //! no additional NACK is sent on the ISO line. The ITERATION flag is asserted.
   int dis_suc_nack;
 
   //! Max number of repetitions (0 to 7).
@@ -399,10 +411,7 @@ extern int usart_init_spi_slave(volatile avr32_usart_t *usart, const usart_spi_o
  *
  * \param usart   Base address of the USART instance.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_reset_status(volatile avr32_usart_t *usart)
+__always_inline static void usart_reset_status(volatile avr32_usart_t *usart)
 {
   usart->cr = AVR32_USART_CR_RSTSTA_MASK;
 }
@@ -413,10 +422,7 @@ static inline void usart_reset_status(volatile avr32_usart_t *usart)
  *
  * \return \c 1 if a parity error has been detected, otherwise \c 0.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_parity_error(volatile avr32_usart_t *usart)
+__always_inline static int usart_parity_error(volatile avr32_usart_t *usart)
 {
   return (usart->csr & AVR32_USART_CSR_PARE_MASK) != 0;
 }
@@ -427,10 +433,7 @@ static inline int usart_parity_error(volatile avr32_usart_t *usart)
  *
  * \return \c 1 if a framing error has been detected, otherwise \c 0.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_framing_error(volatile avr32_usart_t *usart)
+__always_inline static int usart_framing_error(volatile avr32_usart_t *usart)
 {
   return (usart->csr & AVR32_USART_CSR_FRAME_MASK) != 0;
 }
@@ -441,10 +444,7 @@ static inline int usart_framing_error(volatile avr32_usart_t *usart)
  *
  * \return \c 1 if a overrun error has been detected, otherwise \c 0.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_overrun_error(volatile avr32_usart_t *usart)
+__always_inline static int usart_overrun_error(volatile avr32_usart_t *usart)
 {
   return (usart->csr & AVR32_USART_CSR_OVRE_MASK) != 0;
 }
@@ -461,10 +461,7 @@ static inline int usart_overrun_error(volatile avr32_usart_t *usart)
  *
  * \retval The binary value of the error field.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_lin_get_error(volatile avr32_usart_t *usart)
+__always_inline static int usart_lin_get_error(volatile avr32_usart_t *usart)
 {
   return (usart->csr & (AVR32_USART_CSR_LINSNRE_MASK |
                         AVR32_USART_CSR_LINCE_MASK |
@@ -489,10 +486,7 @@ static inline int usart_lin_get_error(volatile avr32_usart_t *usart)
  *
  * \param usart   Base address of the USART instance.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_iso7816_enable_receiver(volatile avr32_usart_t *usart)
+__always_inline static void usart_iso7816_enable_receiver(volatile avr32_usart_t *usart)
 {
   usart->cr = AVR32_USART_CR_TXDIS_MASK | AVR32_USART_CR_RXEN_MASK;
 }
@@ -503,10 +497,7 @@ static inline void usart_iso7816_enable_receiver(volatile avr32_usart_t *usart)
  *
  * \param usart   Base address of the USART instance.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_iso7816_enable_transmitter(volatile avr32_usart_t *usart)
+__always_inline static void usart_iso7816_enable_transmitter(volatile avr32_usart_t *usart)
 {
   usart->cr = AVR32_USART_CR_RXDIS_MASK | AVR32_USART_CR_TXEN_MASK;
 }
@@ -532,10 +523,7 @@ static inline void usart_iso7816_enable_transmitter(volatile avr32_usart_t *usar
  *                \ref USART_LIN_SUBSCRIBE_ACTION or
  *                \ref USART_LIN_IGNORE_ACTION.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_set_node_action(volatile avr32_usart_t *usart, unsigned char action)
+__always_inline static void usart_lin_set_node_action(volatile avr32_usart_t *usart, unsigned char action)
 {
   usart->linmr = (usart->linmr & ~AVR32_USART_LINMR_NACT_MASK) |
                  action << AVR32_USART_LINMR_NACT_OFFSET;
@@ -546,10 +534,7 @@ static inline void usart_lin_set_node_action(volatile avr32_usart_t *usart, unsi
  * \param usart   Base address of the USART instance.
  * \param parity  Whether to enable the Identifier parity: \c true or \c false.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_enable_parity(volatile avr32_usart_t *usart, unsigned char parity)
+__always_inline static void usart_lin_enable_parity(volatile avr32_usart_t *usart, unsigned char parity)
 {
   usart->linmr = (usart->linmr & ~AVR32_USART_LINMR_PARDIS_MASK) |
                  !parity << AVR32_USART_LINMR_PARDIS_OFFSET;
@@ -560,10 +545,7 @@ static inline void usart_lin_enable_parity(volatile avr32_usart_t *usart, unsign
  * \param usart   Base address of the USART instance.
  * \param parity  Whether to enable the checksum: \c true or \c false.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_enable_checksum(volatile avr32_usart_t *usart, unsigned char checksum)
+__always_inline static void usart_lin_enable_checksum(volatile avr32_usart_t *usart, unsigned char checksum)
 {
   usart->linmr = (usart->linmr & ~AVR32_USART_LINMR_CHKDIS_MASK) |
                  !checksum << AVR32_USART_LINMR_CHKDIS_OFFSET;
@@ -575,10 +557,7 @@ static inline void usart_lin_enable_checksum(volatile avr32_usart_t *usart, unsi
  * \param chktyp  The checksum type: \ref USART_LIN_ENHANCED_CHEKSUM or
  *                \ref USART_LIN_CLASSIC_CHECKSUM.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_set_checksum(volatile avr32_usart_t *usart, unsigned char chktyp)
+__always_inline static void usart_lin_set_checksum(volatile avr32_usart_t *usart, unsigned char chktyp)
 {
   usart->linmr = (usart->linmr & ~AVR32_USART_LINMR_CHKTYP_MASK) |
                  chktyp << AVR32_USART_LINMR_CHKTYP_OFFSET;
@@ -590,10 +569,7 @@ static inline void usart_lin_set_checksum(volatile avr32_usart_t *usart, unsigne
  *
  * \return The response data length.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned char usart_lin_get_data_length(volatile avr32_usart_t *usart)
+__always_inline static unsigned char usart_lin_get_data_length(volatile avr32_usart_t *usart)
 {
   if (usart->linmr & AVR32_USART_LINMR_DLM_MASK)
   {
@@ -610,10 +586,7 @@ static inline unsigned char usart_lin_get_data_length(volatile avr32_usart_t *us
  *
  * \param usart   Base address of the USART instance.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_set_data_length_lin1x(volatile avr32_usart_t *usart)
+__always_inline static void usart_lin_set_data_length_lin1x(volatile avr32_usart_t *usart)
 {
   usart->linmr |= AVR32_USART_LINMR_DLM_MASK;
 }
@@ -623,10 +596,7 @@ static inline void usart_lin_set_data_length_lin1x(volatile avr32_usart_t *usart
  * \param usart         Base address of the USART instance.
  * \param data_length   The response data length.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_set_data_length_lin2x(volatile avr32_usart_t *usart, unsigned char data_length)
+__always_inline static void usart_lin_set_data_length_lin2x(volatile avr32_usart_t *usart, unsigned char data_length)
 {
   usart->linmr = (usart->linmr & ~(AVR32_USART_LINMR_DLC_MASK |
                                    AVR32_USART_LINMR_DLM_MASK)) |
@@ -639,10 +609,7 @@ static inline void usart_lin_set_data_length_lin2x(volatile avr32_usart_t *usart
  * \param frameslot   Whether to enable the frame slot mode: \c true or
  *                    \c false.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_enable_frameslot(volatile avr32_usart_t *usart, unsigned char frameslot)
+__always_inline static void usart_lin_enable_frameslot(volatile avr32_usart_t *usart, unsigned char frameslot)
 {
   usart->linmr = (usart->linmr & ~AVR32_USART_LINMR_FSDIS_MASK) |
                  !frameslot << AVR32_USART_LINMR_FSDIS_OFFSET;
@@ -654,10 +621,7 @@ static inline void usart_lin_enable_frameslot(volatile avr32_usart_t *usart, uns
  *
  * \return The Identifier character.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned char usart_lin_get_id_char(volatile avr32_usart_t *usart)
+__always_inline static unsigned char usart_lin_get_id_char(volatile avr32_usart_t *usart)
 {
   return (usart->linir & AVR32_USART_LINIR_IDCHR_MASK) >> AVR32_USART_LINIR_IDCHR_OFFSET;
 }
@@ -667,10 +631,7 @@ static inline unsigned char usart_lin_get_id_char(volatile avr32_usart_t *usart)
  * \param usart     Base address of the USART instance.
  * \param id_char   The Identifier character.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_set_id_char(volatile avr32_usart_t *usart, unsigned char id_char)
+__always_inline static void usart_lin_set_id_char(volatile avr32_usart_t *usart, unsigned char id_char)
 {
   usart->linir = (usart->linir & ~AVR32_USART_LINIR_IDCHR_MASK) |
                  id_char << AVR32_USART_LINIR_IDCHR_OFFSET;
@@ -740,10 +701,7 @@ extern int usart_send_address(volatile avr32_usart_t *usart, int address);
  *
  * \return \c 1 if the USART Transmit Holding Register is free, otherwise \c 0.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_tx_ready(volatile avr32_usart_t *usart)
+__always_inline static int usart_tx_ready(volatile avr32_usart_t *usart)
 {
   return (usart->csr & AVR32_USART_CSR_TXRDY_MASK) != 0;
 }
@@ -763,10 +721,7 @@ extern int usart_write_char(volatile avr32_usart_t *usart, int c);
  * \param usart   Base address of the USART instance.
  * \param c       The character (up to 9 bits) to transmit.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_bw_write_char(volatile avr32_usart_t *usart, int c)
+__always_inline static void usart_bw_write_char(volatile avr32_usart_t *usart, int c)
 {
   while (usart_write_char(usart, c) != USART_SUCCESS);
 }
@@ -788,10 +743,7 @@ extern int usart_putchar(volatile avr32_usart_t *usart, int c);
  * \return \c 1 if the USART Transmit Shift Register and the USART Transmit
  *         Holding Register are free, otherwise \c 0.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_tx_empty(volatile avr32_usart_t *usart)
+__always_inline static int usart_tx_empty(volatile avr32_usart_t *usart)
 {
   return (usart->csr & AVR32_USART_CSR_TXEMPTY_MASK) != 0;
 }
@@ -802,10 +754,7 @@ static inline int usart_tx_empty(volatile avr32_usart_t *usart)
  *
  * \return \c 1 if the USART Receive Holding Register is full, otherwise \c 0.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_test_hit(volatile avr32_usart_t *usart)
+__always_inline static int usart_test_hit(volatile avr32_usart_t *usart)
 {
   return (usart->csr & AVR32_USART_CSR_RXRDY_MASK) != 0;
 }
@@ -819,7 +768,7 @@ static inline int usart_test_hit(volatile avr32_usart_t *usart)
  *
  * \retval USART_SUCCESS  The character was read successfully.
  * \retval USART_RX_EMPTY The RX buffer was empty.
- * \retval USART_RX_ERROR An error was deteceted.
+ * \retval USART_RX_ERROR An error was detected.
  */
 extern int usart_read_char(volatile avr32_usart_t *usart, int *c);
 
@@ -857,10 +806,7 @@ extern int usart_get_echo_line(volatile avr32_usart_t *usart);
  *
  * \param usart   Base address of the USART instance.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void usart_lin_abort(volatile avr32_usart_t *usart)
+__always_inline static void usart_lin_abort(volatile avr32_usart_t *usart)
 {
   usart->cr = AVR32_USART_LINABT_MASK;
 }
@@ -871,10 +817,7 @@ static inline void usart_lin_abort(volatile avr32_usart_t *usart)
  *
  * \return \c 1 if a LIN transfer has been completed, otherwise \c 0.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline int usart_lin_transfer_completed(volatile avr32_usart_t *usart)
+__always_inline static int usart_lin_transfer_completed(volatile avr32_usart_t *usart)
 {
   return (usart->csr & AVR32_USART_CSR_LINTC_MASK) != 0;
 }
@@ -883,5 +826,8 @@ static inline int usart_lin_transfer_completed(volatile avr32_usart_t *usart)
 
 //! @}
 
+/**
+ * \}
+ */
 
 #endif  // _USART_H_

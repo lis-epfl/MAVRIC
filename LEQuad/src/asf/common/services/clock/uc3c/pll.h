@@ -3,7 +3,9 @@
  *
  * \brief Chip-specific PLL definitions
  *
- * Copyright (C) 2010 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2010-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -11,32 +13,40 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #ifndef CHIP_PLL_H_INCLUDED
 #define CHIP_PLL_H_INCLUDED
+
+#include <osc.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -197,24 +207,68 @@ static inline bool pll_is_locked(unsigned int pll_id)
 	return !!(AVR32_SCIF.pclksr & (1U << (AVR32_SCIF_PLL0_LOCK + pll_id)));
 }
 
-static inline void pll_enable_source_sync(enum pll_source src)
+static inline void pll_enable_source(enum pll_source src)
 {
 	switch (src) {
-	case PLL_SRC_OSC0: /* Fall through */
+	case PLL_SRC_OSC0:
+		if (!osc_is_ready(OSC_ID_OSC0)) {
+			osc_enable(OSC_ID_OSC0);
+			osc_wait_ready(OSC_ID_OSC0);
+		}
+		break;
+
 	case PLL_SRC_OSC1:
-		osc_enable(src);
-		osc_wait_ready(src);
+		if (!osc_is_ready(OSC_ID_OSC1)) {
+			osc_enable(OSC_ID_OSC1);
+			osc_wait_ready(OSC_ID_OSC1);
+		}
 		break;
 
 	case PLL_SRC_RC8M:
-		osc_enable(OSC_ID_RC8M);
-		osc_wait_ready(OSC_ID_RC8M);
+		if (!osc_is_ready(OSC_ID_RC8M)) {
+			osc_enable(OSC_ID_RC8M);
+			osc_wait_ready(OSC_ID_RC8M);
+		}
 		break;
 
 	default:
-		// unhandled_case(src);
+		Assert(false);
 		break;
 	}
+}
+
+static inline void pll_enable_config_defaults(unsigned int pll_id)
+{
+	struct pll_config pllcfg;
+
+	if (pll_is_locked(pll_id)) {
+		return; // Pll already running
+	}
+	switch (pll_id) {
+#ifdef CONFIG_PLL0_SOURCE
+	case 0:
+		pll_enable_source(CONFIG_PLL0_SOURCE);
+		pll_config_init(&pllcfg,
+				CONFIG_PLL0_SOURCE,
+				CONFIG_PLL0_DIV,
+				CONFIG_PLL0_MUL);
+		break;
+#endif
+#ifdef CONFIG_PLL1_SOURCE
+	case 1:
+		pll_enable_source(CONFIG_PLL1_SOURCE);
+		pll_config_init(&pllcfg,
+				CONFIG_PLL1_SOURCE,
+				CONFIG_PLL1_DIV,
+				CONFIG_PLL1_MUL);
+		break;
+#endif
+	default:
+		Assert(false);
+		break;
+	}
+	pll_enable(&pllcfg, pll_id);
+	while (!pll_is_locked(pll_id));
 }
 
 #endif /* __ASSEMBLY__ */

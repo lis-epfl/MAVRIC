@@ -1,20 +1,17 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief TWIM driver for AVR32 UC3.
  *
  * This file defines a useful set of functions for TWIM on AVR32 devices.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with a TWIM module can be used.
- * - AppNote:
- *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
  *****************************************************************************/
 
-/* Copyright (C) 2010 Atmel Corporation. All rights reserved.
+/**
+ * Copyright (c) 2010-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -22,34 +19,52 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 
 
 #ifndef _TWIM_H_
 #define _TWIM_H_
+
+/**
+ * \defgroup group_avr32_drivers_twim TWI - Two-Wire Master Interface
+ *
+ * Driver for the TWIM (Two-Wire Master Interface).
+ * This driver provides access to the main features of the TWIM controller.
+ * The TWIM interconnects components on a unique two-wire bus.
+ * The TWIM is programmable as a master with sequential or single-byte access.
+ * Multiple master capability is supported.
+ *
+ * \{
+ */
 
 #include <avr32/io.h>
 #include <stdint.h>
@@ -80,7 +95,7 @@
 #define AVR32_TWIM_SR_STD_MASK  (AVR32_TWIM_SR_NAK_MASK  \
 		| AVR32_TWIM_SR_ARBLST_MASK)
 
-/** 
+/**
  * \name TWI Driver Compatibility
  * Codes for UC3 devices using TWI modules can easily be ported
  * to UC3 devices with TWIM module
@@ -99,7 +114,7 @@
  */
 enum twim_transfer_status{
 	TWI_SUCCESS = 0,            //!< \brief TWI Transaction Success
-	TWI_INVALID_ARGUMENT = -1,  //!< \brief Invalid Argument Passed 
+	TWI_INVALID_ARGUMENT = -1,  //!< \brief Invalid Argument Passed
 	TWI_ARBITRATION_LOST = -2,  //!< \brief Bus Arbitration Lost
 	TWI_NO_CHIP_FOUND = -3,     //!< \brief Slave Not Found
 	TWI_RECEIVE_NACK = -4,      //!< \brief Data No Acknowledgement Received
@@ -134,13 +149,15 @@ typedef struct
 	//! TWI chip address to communicate with.
 	uint32_t chip;
 	//! TWI address/commands to issue to the other chip (node).
-	uint32_t addr;
+	uint8_t addr[3];
 	//! Length of the TWI data address segment (1-3 bytes).
 	uint8_t addr_length;
 	//! Where to find the data to be written.
 	void *buffer;
 	//! How many bytes do we want to write.
 	uint32_t length;
+	//! Whether to wait if bus is busy (false) or return immediately (true)
+	bool no_wait;
 }
 twim_package_t;
 
@@ -160,7 +177,7 @@ typedef struct
 }
 twim_transfer_t;
 
-/** 
+/**
  * \brief Enable Master Mode of the TWI.
  *
  * \param twim   Base address of the TWI instance.
@@ -190,11 +207,11 @@ static inline void twim_master_disable (volatile avr32_twim_t *twim)
  * \retval ERR_INVALID_ARG  Invalid arg resulting in wrong CWGR Exponential
  * \retval ERR_IO_ERROR     NACK is received or Bus Arbitration lost
  */
-extern status_code_t twim_master_init (volatile avr32_twim_t *twim, 
+extern status_code_t twim_master_init (volatile avr32_twim_t *twim,
 		const twim_options_t *opt);
 
 /**
- * \brief Set the twim bus speed in cojunction with the clock frequency
+ * \brief Set the twim bus speed in conjunction with the clock frequency
  *
  * \param twim              Base address of the TWIM (i.e. &AVR32_TWIM).
  * \param speed             The desired twim bus speed
@@ -213,7 +230,7 @@ extern status_code_t twim_set_speed (volatile avr32_twim_t *twim,
  * \retval STATUS_OK      Slave Found
  * \retval ERR_IO_ERROR   ANAK received or Bus Arbitration lost
  */
-extern status_code_t twim_probe (volatile avr32_twim_t *twim, 
+extern status_code_t twim_probe (volatile avr32_twim_t *twim,
 		uint32_t chip_addr);
 
 /**
@@ -286,14 +303,14 @@ extern status_code_t twim_chained_transfer (volatile avr32_twim_t *twim,
 		bool tenbit);
 
 /**
- * \brief Compatibilty with TWI Module driver for read operation
+ * \brief Compatibility with TWI Module driver for read operation
  *
  * \param twim         Base address of the TWIM (i.e. &AVR32_TWIM).
  * \param package      Package information and data
  *                     (see \ref twim_package_t)
- * \return STATUS_OK   If all bytes were read, error code otherwhise
+ * \return STATUS_OK   If all bytes were read, error code otherwise
  */
-static inline status_code_t twi_master_read (volatile avr32_twi_t *twim, 
+static inline status_code_t twi_master_read (volatile avr32_twi_t *twim,
 		const twi_package_t *package)
 {
 	return (twim_read_packet (twim, package));
@@ -305,7 +322,7 @@ static inline status_code_t twi_master_read (volatile avr32_twi_t *twim,
  * \param twim         Base address of the TWIM (i.e. &AVR32_TWI).
  * \param *package     Package information and data
  *                     (see \ref twim_package_t)
- * \return STATUS_OK   if all bytes were written, error code otherwhise
+ * \return STATUS_OK   if all bytes were written, error code otherwise
  */
 static inline status_code_t twi_master_write (volatile avr32_twi_t *twim,
 		const twi_package_t *package)
@@ -324,4 +341,9 @@ extern void twim_disable_interrupt (volatile avr32_twim_t *twim);
  * \brief Information about the current status of the TWI Bus
  */
 extern uint8_t twim_status ( void );
+
+/**
+ * \}
+ */
+
 #endif // _TWI_H_

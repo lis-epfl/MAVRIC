@@ -3,7 +3,9 @@
  *
  * \brief USB Communication Device Class (CDC) protocol definitions
  *
- * Copyright (C) 2009 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -11,32 +13,40 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #ifndef _USB_PROTOCOL_CDC_H_
 #define _USB_PROTOCOL_CDC_H_
+
+#include "compiler.h"
 
 /**
  * \ingroup usb_protocol_group
@@ -45,7 +55,7 @@
  */
 
 /**
- * \name Possible values of class 
+ * \name Possible values of class
  */
 //@{
 #define  CDC_CLASS_DEVICE     0x02	//!< USB Communication Device Class
@@ -151,7 +161,7 @@
  * Need to pack structures tightly, or the compiler might insert padding
  * and violate the spec-mandated layout.
  */
-COMPILER_PACK_SET(1);
+COMPILER_PACK_SET(1)
 
 //! \name USB CDC Descriptors
 //@{
@@ -202,10 +212,10 @@ typedef struct {
 
 //! \name USB CDC ACM Capabilities
 //@{
-//! Device supports the request combination of 
+//! Device supports the request combination of
 //! Set_Comm_Feature, Clear_Comm_Feature, and Get_Comm_Feature.
 #define  CDC_ACM_SUPPORT_FEATURE_REQUESTS    (1 << 0)
-//! Device supports the request combination of 
+//! Device supports the request combination of
 //! Set_Line_Coding, Set_Control_Line_State, Get_Line_Coding,
 //! and the notification Serial_State.
 #define  CDC_ACM_SUPPORT_LINE_REQUESTS       (1 << 1)
@@ -257,7 +267,7 @@ typedef struct {
 //@{
 //! Carrier control for half duplex modems.
 //! This signal corresponds to V.24 signal 105 and RS-232 signal RTS.
-//! The device ignores the value of this bit 
+//! The device ignores the value of this bit
 //! when operating in full duplex mode.
 #define  CDC_CTRL_SIGNAL_ACTIVATE_CARRIER    (1 << 1)
 //! Indicates to DCE if DTE is present or not.
@@ -301,7 +311,7 @@ typedef struct {
 
 //! @}
 
-COMPILER_PACK_RESET();
+COMPILER_PACK_RESET()
 
 //! @}
 

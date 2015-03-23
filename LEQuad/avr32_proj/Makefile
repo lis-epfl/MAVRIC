@@ -97,10 +97,11 @@ SRCS_INC += -I${MAVRIC_SRC}/asf/avr32/drivers/dacifb
 SRCS_INC += -I${MAVRIC_SRC}/asf/avr32/drivers/pwm
 SRCS_INC += -I${MAVRIC_SRC}/asf/avr32/drivers/flashc
 SRCS_INC += -I${MAVRIC_SRC}/asf/avr32/drivers/gpio
-SRCS_INC += -I${MAVRIC_SRC}/asf/avr32/drivers/twis
+# SRCS_INC += -I${MAVRIC_SRC}/asf/avr32/drivers/twis
 SRCS_INC += -I${MAVRIC_SRC}/asf/avr32/drivers/scif
 SRCS_INC += -I${MAVRIC_SRC}/asf/common
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services
+SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/delay
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/usb
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/usb/udc
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/usb/class
@@ -110,6 +111,7 @@ SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/clock
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/clock/uc3c
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/serial
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/serial/uc3_usart
+SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/serial/uc3_usart/module_config
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/spi
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/spi/uc3_spi
 SRCS_INC += -I${MAVRIC_SRC}/asf/common/services/twi
@@ -153,7 +155,6 @@ SRCS += asf/avr32/drivers/tc/tc.c
 SRCS += asf/avr32/drivers/twim/twim.c
 SRCS += asf/avr32/drivers/usart/usart.c
 SRCS += asf/avr32/drivers/usbc/usbc_device.c
-SRCS += asf/avr32/services/delay/delay.c
 SRCS += asf/avr32/utils/startup/startup_uc3.S
 SRCS += asf/common/boards/user_board/init.c
 SRCS += asf/common/services/clock/uc3c/osc.c
@@ -198,7 +199,7 @@ LIB_SRCS += util/print_util.c
 LIB_SRCS += util/quick_trig.c
 
 LIB_SRCS += hal/avr32/adc_int.c                   
-LIB_SRCS += hal/avr32/ads1274.c                   
+# LIB_SRCS += hal/avr32/ads1274.c                   
 LIB_SRCS += hal/avr32/adxl345_driver.c                   
 LIB_SRCS += hal/avr32/airspeed_analog.c           
 LIB_SRCS += hal/avr32/analog_monitor.c            
@@ -302,7 +303,8 @@ PREPROC_OPT += -DUDD_ENABLE
 # ASSEMBLY COMPILER OPTIONS
 # ------------------------------------------------------------------------------
 AS = avr32-gcc
-ASFLAGS = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax 
+ASFLAGS  = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax 
+ASFLAGS += ${PREPROC_OPT}
 
 # Include files from MAVRIC library and source folder
 ASFLAGS += -I.
@@ -352,6 +354,7 @@ OBJCOPYFLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 LDFLAGS  = -nostartfiles -Wl,-Map="mavric.map" -Wl,--start-group -lm  
 LDGLAGS += -Wl,--end-group -L"src/asf/avr32/utils/libs/dsplib/at32ucr3fp/gcc"  
 LDFLAGS += -Wl,--gc-sections -mpart=uc3c1512c -Wl,--relax -Wl,-e,_trampoline
+LDFLAGS += ${PREPROC_OPT}
 
 # Include files from MAVRIC library and source folder
 LDFLAGS += -I.
@@ -404,7 +407,7 @@ proj: $(PROJ_NAME).elf
 # Linking
 ${PROJ_NAME}.elf: ${OBJS}
 	@echo Linking...
-	$(CXX) $(LDFLAGS) $^ -o $@  
+	@$(CXX) $(LDFLAGS) $^ -o $@  
 	@$(OBJCOPY) -O ihex ${OBJCOPYFLAGS} $(PROJ_NAME).elf $(PROJ_NAME).hex
 	@$(OBJCOPY) -O binary $(PROJ_NAME).elf $(PROJ_NAME).bin
 	@$(BUILD_CMD)
@@ -412,7 +415,7 @@ ${PROJ_NAME}.elf: ${OBJS}
 # Assembly files in Library
 ${BUILD_DIR}/%.o: ${MAVRIC_LIB}/%.S
 	@mkdir -p $(dir $@)
-	@$(AS) -c $< -o $@ $(ASFLAGS)
+	@$(AS) $(ASFLAGS) -c $< -o $@
 	@$(BUILD_CMD)
 	
 # C files in Library
@@ -430,7 +433,7 @@ ${BUILD_DIR}/%.o: ${MAVRIC_LIB}/%.cpp
 # Assembly files in source folder
 ${BUILD_DIR}/%.o: ${MAVRIC_SRC}/%.S
 	@mkdir -p $(dir $@)
-	@$(AS) -c $< -o $@ $(ASFLAGS)
+	@$(AS) $(ASFLAGS) -c $< -o $@
 	@$(BUILD_CMD)
 
 # C files in source folder

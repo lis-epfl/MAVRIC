@@ -1,52 +1,64 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief PEVC software driver header for AVR32 UC3.
  *
  * This file defines a useful set of functions for the PEVC on AVR32 devices.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with a PEVC can be used.
- * - AppNote:
+ * Copyright (c) 2014-2015 Atmel Corporation. All rights reserved.
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
+ * \asf_license_start
  *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #ifndef _PEVC_H_
 #define _PEVC_H_
+
+/**
+ * \defgroup group_avr32_drivers_pevc Peripheral Event Controller (PEVC) Driver
+ *
+ * The Peripheral EVent Controller (PEVC) offers a set of features that allows peripherals to interact
+ * without intervention from the CPU. The PEVC connects Event Generators to Event Users.
+ *
+ * \{
+ */
 
 #include <avr32/io.h>
 #include "compiler.h"
@@ -88,7 +100,7 @@ typedef struct
 {
   //! Input Glitch Filter Divider, range[0,0xF]
   unsigned char igfdr;
-  
+
   //! Input Glitch filter on/off:\n
   //!   - \ref PEVC_EVS_IGF_ON;\n
   //!   - \ref PEVC_EVS_IGF_OFF.
@@ -125,7 +137,7 @@ typedef struct
  * \return bool      PASS if the channel was successfully configured
  *                   FAIL if the channel configuration failed due to incorrect parameters
  */
-extern bool pevc_channel_configure( volatile avr32_pevc_t *pevc, unsigned short int chan_id, 
+extern bool pevc_channel_configure( volatile avr32_pevc_t *pevc, unsigned short int chan_id,
                                     unsigned short int gen_id, const pevc_evs_opt_t *pevs );
 
 
@@ -382,5 +394,9 @@ extern bool pevc_channel_is_overrun_interrupt_raised( volatile avr32_pevc_t *pev
  */
 extern void pevc_channel_clear_overrun_interrupt( volatile avr32_pevc_t *pevc, unsigned short int chan_id);
 //! @}
+
+/**
+ * \}
+ */
 
 #endif  // _PEVC_H_

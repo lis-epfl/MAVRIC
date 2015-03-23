@@ -1,59 +1,70 @@
-/*This file is prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief EIC driver for AVR32 UC3.
  *
  * AVR32 External Interrupt Controller driver module.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with an EIC module can be used.
- * - AppNote:
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
+ * \asf_license_start
  *
- ******************************************************************************/
-
-/* Copyright (C) 2009 - 2011 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ ******************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #ifndef _EIC_H_
 #define _EIC_H_
+
+/**
+ * \defgroup group_avr32_drivers_eic MEMORY - EIC - External Interrupt Controller
+ *
+ * EIC allows pins to be configured as external interrupts.
+ *
+ * \{
+ */
 
 #include "compiler.h"
 
 /*! \name External Interrupt lines
  */
 //! @{
-#if (UC3A || UC3B)  
+#if (UC3A || UC3B)
 #define EXT_INT0    AVR32_EIC_INT0 //!< Line 0
 #define EXT_INT1    AVR32_EIC_INT1 //!< Line 1
 #define EXT_INT2    AVR32_EIC_INT2 //!< Line 2
@@ -226,7 +237,7 @@ extern bool eic_is_interrupt_line_enabled(volatile avr32_eic_t *eic, uint32_t li
 
 /*! \brief Clear the interrupt flag.
  *         Call this function once you've handled the interrupt.
- * 
+ *
  * \param eic Base address of the EIC (i.e. &AVR32_EIC).
  * \param mask_lines Mask for current selected lines
  */
@@ -234,7 +245,7 @@ extern void eic_clear_interrupt_lines(volatile avr32_eic_t *eic, uint32_t mask_l
 
 /*! \brief Clear the interrupt flag.
  *         Call this function once you've handled the interrupt.
- * 
+ *
  * \param eic Base address of the EIC (i.e. &AVR32_EIC).
  * \param line_number Line number to clear
  */
@@ -270,5 +281,8 @@ extern uint32_t eic_get_interrupt_pad_scan(volatile avr32_eic_t *eic);
 
 //! @}
 
+/**
+ * \}
+ */
 
 #endif  // _EIC_H_

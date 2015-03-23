@@ -1,50 +1,61 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief Cycle counter driver.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32UC devices.
- * - AppNote:
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
+ * \asf_license_start
  *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #ifndef _CYCLE_COUNTER_H_
 #define _CYCLE_COUNTER_H_
+
+/**
+ * \defgroup group_avr32_drivers_cpu_cycle_counter CPU - Cycle Counter
+ *
+ * CPU Cycle Counter provides an interface to the COUNT and COMPARE registers.
+ *
+ * \{
+ */
 
 #include "compiler.h"
 
@@ -53,13 +64,13 @@
 //! cpu_set_timeout() function.
 typedef struct
 {
-  //! The cycle count at the begining of the timeout.
+  //! The cycle count at the beginning of the timeout.
   unsigned long delay_start_cycle;
 
   //! The cycle count at the end of the timeout.
   unsigned long delay_end_cycle;
 
-  //! Enable/disable the timout detection
+  //! Enable/disable the timeout detection
   unsigned char timer_state;
   #define CPU_TIMER_STATE_STARTED 0
   #define CPU_TIMER_STATE_REACHED 1
@@ -75,10 +86,7 @@ typedef struct
  *
  * \return the converted number of CPU cycles.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline uint32_t cpu_ms_2_cy(unsigned long ms, unsigned long fcpu_hz)
+__always_inline static uint32_t cpu_ms_2_cy(unsigned long ms, unsigned long fcpu_hz)
 {
   return ((unsigned long long)ms * fcpu_hz + 999) / 1000;
 }
@@ -92,10 +100,7 @@ static inline uint32_t cpu_ms_2_cy(unsigned long ms, unsigned long fcpu_hz)
  *
  * \return the converted number of CPU cycles.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline uint32_t cpu_us_2_cy(unsigned long us, unsigned long fcpu_hz)
+__always_inline static uint32_t cpu_us_2_cy(unsigned long us, unsigned long fcpu_hz)
 {
   return ((unsigned long long)us * fcpu_hz + 999999) / 1000000;
 }
@@ -109,10 +114,7 @@ static inline uint32_t cpu_us_2_cy(unsigned long us, unsigned long fcpu_hz)
  *
  * \return the converted number of milli-second.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline uint32_t cpu_cy_2_ms(unsigned long cy, unsigned long fcpu_hz)
+__always_inline static uint32_t cpu_cy_2_ms(unsigned long cy, unsigned long fcpu_hz)
 {
   return ((unsigned long long)cy * 1000 + fcpu_hz-1) / fcpu_hz;
 }
@@ -126,10 +128,7 @@ static inline uint32_t cpu_cy_2_ms(unsigned long cy, unsigned long fcpu_hz)
  *
  * \return the converted number of micro-second.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline uint32_t cpu_cy_2_us(unsigned long cy, unsigned long fcpu_hz)
+__always_inline static uint32_t cpu_cy_2_us(unsigned long cy, unsigned long fcpu_hz)
 {
   return ((unsigned long long)cy * 1000000 + fcpu_hz-1) / fcpu_hz;
 }
@@ -147,10 +146,7 @@ static inline uint32_t cpu_cy_2_us(unsigned long cy, unsigned long fcpu_hz)
  * \param  delay:   (input) delay in CPU cycles before timeout.
  * \param  cpu_time: (output) internal information used by the timer API.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
+__always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
@@ -172,19 +168,16 @@ static inline void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
  *
  * \param  cpu_time:   (input) internal information used by the timer API.
  *
- * \return true if timeout occured, otherwise false.
+ * \return true if timeout occurred, otherwise false.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
 {
   unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
 
   if( cpu_time->timer_state==CPU_TIMER_STATE_STOPPED )
     return false;
 
-  // Test if the timeout as already occured.
+  // Test if the timeout as already occurred.
   else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
     return true;
 
@@ -221,10 +214,7 @@ static inline unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
  *
  * \param  cpu_time:   (input) internal information used by the timer API.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void cpu_stop_timeout(t_cpu_time *cpu_time)
+__always_inline static void cpu_stop_timeout(t_cpu_time *cpu_time)
 {
   cpu_time->timer_state = CPU_TIMER_STATE_STOPPED;
 }
@@ -237,10 +227,7 @@ static inline void cpu_stop_timeout(t_cpu_time *cpu_time)
  *
  * \return true if timer is stopped, otherwise false.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long cpu_is_timer_stopped(t_cpu_time *cpu_time)
+__always_inline static unsigned long cpu_is_timer_stopped(t_cpu_time *cpu_time)
 {
 
   if( cpu_time->timer_state==CPU_TIMER_STATE_STOPPED )
@@ -256,10 +243,7 @@ static inline unsigned long cpu_is_timer_stopped(t_cpu_time *cpu_time)
  * \param  delay:   Number of millisecond to wait.
  * \param  fcpu_hz: CPU frequency in Hz.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void cpu_delay_ms(unsigned long delay, unsigned long fcpu_hz)
+__always_inline static void cpu_delay_ms(unsigned long delay, unsigned long fcpu_hz)
 {
   t_cpu_time timer;
   cpu_set_timeout( cpu_ms_2_cy(delay, fcpu_hz), &timer);
@@ -272,10 +256,7 @@ static inline void cpu_delay_ms(unsigned long delay, unsigned long fcpu_hz)
  * \param  delay:   Number of microsecond to wait.
  * \param  fcpu_hz: CPU frequency in Hz.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void cpu_delay_us(unsigned long delay, unsigned long fcpu_hz)
+__always_inline static void cpu_delay_us(unsigned long delay, unsigned long fcpu_hz)
 {
   t_cpu_time timer;
   cpu_set_timeout( cpu_us_2_cy(delay, fcpu_hz), &timer);
@@ -287,10 +268,7 @@ static inline void cpu_delay_us(unsigned long delay, unsigned long fcpu_hz)
  *
  * \param  delay:   Number of CPU cycles to wait.
  */
-#if (defined __GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void cpu_delay_cy(unsigned long delay)
+__always_inline static void cpu_delay_cy(unsigned long delay)
 {
   t_cpu_time timer;
   cpu_set_timeout( delay, &timer);
@@ -303,5 +281,8 @@ static inline void cpu_delay_cy(unsigned long delay)
 #define Get_sys_compare()   ( Get_system_register(AVR32_COMPARE)      )
 #define Set_sys_compare(x)  ( Set_system_register(AVR32_COMPARE, (x)) )
 
+/**
+ * \}
+ */
 
 #endif // _CYCLE_COUNTER_H_

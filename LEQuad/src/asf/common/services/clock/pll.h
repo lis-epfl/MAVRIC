@@ -3,7 +3,9 @@
  *
  * \brief PLL management
  *
- * Copyright (C) 2010 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2010-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -11,37 +13,67 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #ifndef CLK_PLL_H_INCLUDED
 #define CLK_PLL_H_INCLUDED
 
-#include <parts.h>
+#include "parts.h"
 #include "conf_clock.h"
 
-#if (UC3A0 || UC3A1)
+#if SAM3S
+# include "sam3s/pll.h"
+#elif SAM3XA
+# include "sam3x/pll.h"
+#elif SAM3U
+# include "sam3u/pll.h"
+#elif SAM3N
+# include "sam3n/pll.h"
+#elif SAM4S
+# include "sam4s/pll.h"
+#elif SAM4E
+# include "sam4e/pll.h"
+#elif SAM4C
+# include "sam4c/pll.h"
+#elif SAM4CM
+# include "sam4cm/pll.h"
+#elif SAM4CP
+# include "sam4cp/pll.h"
+#elif SAM4L
+# include "sam4l/pll.h"
+#elif SAM4N
+# include "sam4n/pll.h"
+#elif SAMG
+# include "samg/pll.h"
+#elif (UC3A0 || UC3A1)
 # include "uc3a0_a1/pll.h"
 #elif UC3A3
 # include "uc3a3_a4/pll.h"
@@ -51,7 +83,7 @@
 # include "uc3c/pll.h"
 #elif UC3D
 # include "uc3d/pll.h"
-#elif (UC3L0128 || UC3L0256)
+#elif (UC3L0128 || UC3L0256 || UC3L3_L4)
 # include "uc3l/pll.h"
 #elif XMEGA
 # include "xmega/pll.h"
@@ -78,11 +110,19 @@
  *
  * The following example shows how to configure and enable PLL0 using
  * the default parameters specified using the configuration symbols
- * listed above, and with Wide Bandwidth Mode disabled (a UC3A3-specific
- * PLL option.)
+ * listed above.
+ * \code
+	pll_enable_config_defaults(0); \endcode
+ *
+ * To configure, enable PLL0 using the default parameters and to disable
+ * a specific feature like Wide Bandwidth Mode (a UC3A3-specific
+ * PLL option.), you can use this initialization process.
  * \code
 	struct pll_config pllcfg;
-
+	if (pll_is_locked(pll_id)) {
+		return; // Pll already running
+	}
+	pll_enable_source(CONFIG_PLL0_SOURCE);
 	pll_config_defaults(&pllcfg, 0);
 	pll_config_set_option(&pllcfg, PLL_OPT_WBM_DISABLE);
 	pll_enable(&pllcfg, 0);
@@ -250,6 +290,20 @@
  *
  * \retval true The PLL is locked and ready to use as a clock source
  * \retval false The PLL is not yet locked, or has not been enabled.
+ */
+/**
+ * \fn void pll_enable_source(enum pll_source src)
+ * \brief Enable the source of the pll.
+ * The source is enabled, if the source is not already running.
+ *
+ * \param src The ID of the PLL source to enable.
+ */
+/**
+ * \fn void pll_enable_config_defaults(unsigned int pll_id)
+ * \brief Enable the pll with the default configuration.
+ * PLL is enabled, if the PLL is not already locked.
+ *
+ * \param pll_id The ID of the PLL to enable.
  */
 
 /**

@@ -1,50 +1,62 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief System Control InterFace(SCIF) driver interface.
  *
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 UC3C devices.
- * - AppNote:
+ * \asf_license_start
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 #ifndef _SCIF_UC3C_H_
 #define _SCIF_UC3C_H_
+
+/**
+ * \defgroup group_avr32_drivers_scif CPU - SCIF - System Control Interface
+ *
+ * Driver for the SCIF (System Control Interface).
+ * The SCIF controls the Oscillators, PLL, Generic Clocks, BODs, the voltage regulators and general purpose
+ * low power registers.
+ *
+ * \{
+ */
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,6 +64,11 @@ extern "C" {
 
 #include "compiler.h"
 
+#ifndef AVR32_SCIF_OSCCTRL1
+#define AVR32_SCIF_OSCCTRL1                                0x00000028
+#else
+#warning "Duplicate define(s) to remove from the ASF"
+#endif  //end AVR32_SCIF_OSCCTRL1
 
 //  These defines are missing from or wrong in the toolchain header file ip_xxx.h or part.h
 #ifdef AVR32_SCIF_101_H_INCLUDED
@@ -88,10 +105,10 @@ extern "C" {
 #define AVR32_SCIF_OSCCTRL1_GAIN_G2                         0x00000002
 #define AVR32_SCIF_OSCCTRL1_GAIN_G3                         0x00000003
 #define AVR32_SCIF_UNLOCK_KEY_VALUE                         0x000000AA
-#define AVR32_SCIF_OSCCTRL_OSCEN_ENABLE                     0x00000001  
-#define AVR32_SCIF_OSCCTRL_OSCEN_DISABLE                    0x00000000  
-#define AVR32_SCIF_OSCCTRL32_OSC32EN_ENABLE                 0x00000001  
-#define AVR32_SCIF_OSCCTRL32_OSC32EN_DISABLE                0x00000000  
+#define AVR32_SCIF_OSCCTRL_OSCEN_ENABLE                     0x00000001
+#define AVR32_SCIF_OSCCTRL_OSCEN_DISABLE                    0x00000000
+#define AVR32_SCIF_OSCCTRL32_OSC32EN_ENABLE                 0x00000001
+#define AVR32_SCIF_OSCCTRL32_OSC32EN_DISABLE                0x00000000
 #endif
 
 
@@ -108,14 +125,15 @@ typedef enum
   SCIF_GCCTRL_SLOWCLOCK  = AVR32_SCIF_GC_USES_CLK_SLOW,
   SCIF_GCCTRL_OSC32K  = AVR32_SCIF_GC_USES_CLK_32,
   SCIF_GCCTRL_OSC0  = AVR32_SCIF_GC_USES_OSC0,
-  SCIF_GCCTRL_OSC1  = AVR32_SCIF_GC_USES_OSC1,  
+  SCIF_GCCTRL_OSC1  = AVR32_SCIF_GC_USES_OSC1,
   SCIF_GCCTRL_PLL0  = AVR32_SCIF_GC_USES_PLL0,
-  SCIF_GCCTRL_PLL1  = AVR32_SCIF_GC_USES_PLL1,    
+  SCIF_GCCTRL_PLL1  = AVR32_SCIF_GC_USES_PLL1,
   SCIF_GCCTRL_RC8M  = AVR32_SCIF_GC_USES_RCOSC8,
   SCIF_GCCTRL_CPUCLOCK  = AVR32_SCIF_GC_USES_CLK_CPU,
   SCIF_GCCTRL_HSBCLOCK  = AVR32_SCIF_GC_USES_CLK_HSB,
   SCIF_GCCTRL_PBACLOCK  = AVR32_SCIF_GC_USES_CLK_PBA,
   SCIF_GCCTRL_PBBCLOCK  = AVR32_SCIF_GC_USES_CLK_PBB,
+  SCIF_GCCTRL_PBCCLOCK  = AVR32_SCIF_GC_USES_CLK_PBC,
   SCIF_GCCTRL_OSCSEL_INVALID
 } scif_gcctrl_oscsel_t;
 
@@ -176,9 +194,9 @@ typedef struct
   unsigned int    mul;
   //! PLL DIV in the PLL formula
   unsigned int    div;
-  //! PLL lockount
-  unsigned int    lockcount;                    
-  //! Specify the scillator input.
+  //! PLL lockcount
+  unsigned int    lockcount;
+  //! Specify the oscillator input.
   unsigned char   osc;
 } scif_pll_opt_t;
 
@@ -217,10 +235,7 @@ typedef struct
  *
  * \param mask the interrupts to enable.
  */
- #if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void scif_enable_interrupts(unsigned long mask)
+__always_inline static void scif_enable_interrupts(unsigned long mask)
 {
   AVR32_SCIF.ier = mask;
 }
@@ -229,10 +244,7 @@ static inline void scif_enable_interrupts(unsigned long mask)
  *
  * \param mask the interrupts to disable.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void scif_disable_interrupts(unsigned long mask)
+__always_inline static void scif_disable_interrupts(unsigned long mask)
 {
   AVR32_SCIF.idr = mask;
 }
@@ -241,10 +253,7 @@ static inline void scif_disable_interrupts(unsigned long mask)
  *
  * \return The enabled interrupts.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long scif_get_enabled_interrupts(void)
+__always_inline static unsigned long scif_get_enabled_interrupts(void)
 {
   return(AVR32_SCIF.imr);
 }
@@ -253,10 +262,7 @@ static inline unsigned long scif_get_enabled_interrupts(void)
  *
  * \return The interrupts which have been triggered.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long scif_get_interrupts_status(void)
+__always_inline static unsigned long scif_get_interrupts_status(void)
 {
   return(AVR32_SCIF.isr);
 }
@@ -265,10 +271,7 @@ static inline unsigned long scif_get_interrupts_status(void)
  *
  * \param mask The interrupts to clear.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void scif_clear_interrupts_status(unsigned long mask)
+__always_inline static void scif_clear_interrupts_status(unsigned long mask)
 {
   AVR32_SCIF.icr = mask;
 }
@@ -284,10 +287,7 @@ static inline void scif_clear_interrupts_status(unsigned long mask)
  *
  * \return The content of the PCLKSR register
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long scif_get_pclk_status(void)
+__always_inline static unsigned long scif_get_pclk_status(void)
 {
   return(AVR32_SCIF.pclksr);
 }
@@ -309,7 +309,7 @@ static inline unsigned long scif_get_pclk_status(void)
  *  SCIF_POLL_TIMEOUT times.
  *
  * \return Status.
- *   \retval 0   Oscillator start successfull.
+ *   \retval 0   Oscillator start successful.
  *   \retval <0  Error starting the oscillator.
  */
 extern long int scif_start_osc(scif_osc_t osc, const scif_osc_opt_t *opt, bool wait_for_ready);
@@ -330,7 +330,7 @@ extern bool scif_is_osc_ready(scif_osc_t osc);
  *
  * \return Status.
  *   \retval 0 Oscillator successfully stopped.
- *   \retval <0 An error occured when stopping the oscillator.
+ *   \retval <0 An error occurred when stopping the oscillator.
  */
 extern long int scif_stop_osc(scif_osc_t osc);
 
@@ -387,19 +387,19 @@ extern long int scif_enable_extosc(scif_osc_t osc);
 /*!
  * \brief This function will setup a PLL.
  * \param pll The PLL to configure [INPUT]
- * \param opt The configuration of the PLL [INPUT] 
+ * \param opt The configuration of the PLL [INPUT]
  * \return Status.
  *   \retval 0   PLL successfully started
- *   \retval <0  Error starting the PLL. 
+ *   \retval <0  Error starting the PLL.
  */
-extern long int scif_pll_setup(scif_pll_t pll, const scif_pll_opt_t opt);
+extern long int scif_pll_setup(scif_pll_t pll, const scif_pll_opt_t *opt);
 
 /*!
  * \brief This function will enable a PLL.
  * \param pll The PLL to configure [INPUT]
  * \return Status.
  *   \retval 0   PLL successfully started
- *   \retval <0  Error starting the PLL.  
+ *   \retval <0  Error starting the PLL.
  */
 extern long int scif_pll_enable(scif_pll_t pll);
 
@@ -409,7 +409,7 @@ extern long int scif_pll_enable(scif_pll_t pll);
  * \param pll The PLL to configure [INPUT]
  * \return Status.
  *   \retval 0   PLL successfully started
- *   \retval <0  Error starting the PLL.  
+ *   \retval <0  Error starting the PLL.
  */
 extern long int scif_pll_disable(scif_pll_t pll);
 
@@ -419,7 +419,7 @@ extern long int scif_pll_disable(scif_pll_t pll);
  * \param pll The PLL to configure [INPUT]
  * \return Status.
  *   \retval 0   PLL successfully started
- *   \retval <0  Error starting the PLL.  
+ *   \retval <0  Error starting the PLL.
  */
 extern long int scif_wait_for_pll_locked(scif_pll_t pll);
 
@@ -438,7 +438,7 @@ extern long int scif_wait_for_pll_locked(scif_pll_t pll);
  *       SCIF_POLL_TIMEOUT times.
  *
  * \return Status.
- *   \retval 0   Oscillator start successfull.
+ *   \retval 0   Oscillator start successful.
  *   \retval <0  Error starting the oscillator.
  */
 extern long int scif_start_osc32(const scif_osc32_opt_t *opt, bool wait_for_ready);
@@ -449,10 +449,7 @@ extern long int scif_start_osc32(const scif_osc32_opt_t *opt, bool wait_for_read
  *   \retval true oscillator stable and ready
  *   \retval false oscillator not enabled or not ready.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline bool scif_is_osc32_ready(void)
+__always_inline static bool scif_is_osc32_ready(void)
 {
   return((AVR32_SCIF.pclksr & AVR32_SCIF_PCLKSR_OSC32RDY_MASK)>>AVR32_SCIF_PCLKSR_OSC32RDY_OFFSET);
 }
@@ -462,7 +459,7 @@ static inline bool scif_is_osc32_ready(void)
  *
  * \return Status.
  *   \retval 0 Oscillator successfully stopped.
- *   \retval <0 An error occured when stopping the oscillator.
+ *   \retval <0 An error occurred when stopping the oscillator.
  */
 extern long int scif_stop_osc32(void);
 
@@ -493,7 +490,6 @@ extern void scif_bod18_clear_irq(void);
 
 /*! \brief Gets the 1.8V Brown-Out Detector interrupt flag.
  *
- *
  * \retval 0 No BOD interrupt.
  * \retval 1 BOD interrupt pending.
  */
@@ -501,7 +497,6 @@ extern unsigned long scif_bod18_get_irq_status(void);
 
 
 /*! \brief Gets the 1.8V Brown-Out Detector interrupt enable status.
- *
  *
  * \retval 0 BOD interrupt disabled.
  * \retval 1 BOD interrupt enabled.
@@ -535,7 +530,6 @@ extern void scif_bod33_clear_irq(void);
 
 /*! \brief Gets the 3.3V Brown-Out Detector interrupt flag.
  *
- *
  * \retval 0 No BOD interrupt.
  * \retval 1 BOD interrupt pending.
  */
@@ -543,7 +537,6 @@ extern unsigned long scif_bod33_get_irq_status(void);
 
 
 /*! \brief Gets the 3.3V Brown-Out Detector interrupt enable status.
- *
  *
  * \retval 0 BOD interrupt disabled.
  * \retval 1 BOD interrupt enabled.
@@ -576,7 +569,6 @@ extern void scif_bod50_clear_irq(void);
 
 /*! \brief Gets the 5.0V Brown-Out Detector interrupt flag.
  *
- *
  * \retval 0 No BOD interrupt.
  * \retval 1 BOD interrupt pending.
  */
@@ -584,7 +576,6 @@ extern unsigned long scif_bod50_get_irq_status(void);
 
 
 /*! \brief Gets the 5.0V Brown-Out Detector interrupt enable status.
- *
  *
  * \retval 0 BOD interrupt disabled.
  * \retval 1 BOD interrupt enabled.
@@ -646,7 +637,7 @@ extern void scif_stop_rc120M(void);
  *
  * \return Status.
  *   \retval 0 Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long int scif_start_gclk(unsigned int gclk, const scif_gclk_opt_t *opt);
 
@@ -675,7 +666,7 @@ extern long int scif_stop_gclk(unsigned int gclk);
  *
  * \return Status.
  *   \retval 0 Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long int scif_gc_setup(unsigned int gclk, scif_gcctrl_oscsel_t clk_src, unsigned int diven, unsigned int divfactor);
 
@@ -685,7 +676,7 @@ extern long int scif_gc_setup(unsigned int gclk, scif_gcctrl_oscsel_t clk_src, u
  *
  * \return Status.
  *   \retval 0 Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long int scif_gc_enable(unsigned int gclk);
 
@@ -725,13 +716,10 @@ extern void scif_write_gplp(int gplp, unsigned long value);
  *       there's risk that call is split by any interrupts, disable them first.
  *
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void scif_temperature_sensor_enable(void)
+__always_inline static void scif_temperature_sensor_enable(void)
 {
   // Unlock the write-protected TSENS register
-  SCIF_UNLOCK(AVR32_SCIF_TSENS);    
+  SCIF_UNLOCK(AVR32_SCIF_TSENS);
   AVR32_SCIF.tsens = AVR32_SCIF_TSENS_EN_MASK;
 }
 
@@ -741,13 +729,10 @@ static inline void scif_temperature_sensor_enable(void)
  *       there's risk that call is split by an interrupt, disable them first.
  *
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void scif_temperature_sensor_disable(void)
+__always_inline static void scif_temperature_sensor_disable(void)
 {
   // Unlock the write-protected TSENS register
-  SCIF_UNLOCK(AVR32_SCIF_TSENS);    
+  SCIF_UNLOCK(AVR32_SCIF_TSENS);
   AVR32_SCIF.tsens = ~AVR32_SCIF_TSENS_EN_MASK;
 }
 
@@ -757,5 +742,9 @@ static inline void scif_temperature_sensor_disable(void)
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * \}
+ */
 
 #endif  // _SCIF_UC3C_H_

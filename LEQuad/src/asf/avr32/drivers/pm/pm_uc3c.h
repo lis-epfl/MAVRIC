@@ -1,52 +1,61 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief Power Manager(PM) driver interface.
  *
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 UC3C devices.
- * - AppNote:
+ * \asf_license_start
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 #ifndef _PM_UC3C_H_
 #define _PM_UC3C_H_
 
-#define _PM_UC3C_H_
+/**
+ * \defgroup group_avr32_drivers_pm CPU - PM - Power Manager
+ *
+ * The Power Manager (PM) provides synchronous clocks to the CPU and the modules and peripherals connected
+ * to the HSB and PBx buses. The PM also contains advanced power-saving features and a Reset Controller.
+ *
+ * \{
+ */
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,7 +66,7 @@ extern "C" {
 
 //  These defines are missing from or wrong in the toolchain header file ip_xxx.h or part.h
 #ifdef AVR32_PM_410_H_INCLUDED
-// Optionnal #undef AVR32_PM_UNLOCK_KEY_VALUE if the define values is wrong.
+// Optional #undef AVR32_PM_UNLOCK_KEY_VALUE if the define values is wrong.
 #define AVR32_PM_UNLOCK_KEY_VALUE       0x000000AA
 #endif
 
@@ -68,12 +77,12 @@ typedef enum
 {
   PM_CLK_SRC_SLOW = AVR32_PM_MCSEL_SLOW,
   PM_CLK_SRC_OSC0 = AVR32_PM_MCSEL_OSC0,
-  PM_CLK_SRC_OSC1 = AVR32_PM_MCSEL_OSC1,  
+  PM_CLK_SRC_OSC1 = AVR32_PM_MCSEL_OSC1,
   PM_CLK_SRC_PLL0 = AVR32_PM_MCSEL_PLL0,
-  PM_CLK_SRC_PLL1 = AVR32_PM_MCSEL_PLL1,  
-  PM_CLK_SRC_RC8M = AVR32_PM_MCSEL_RCOSC8,  
-  PM_CLK_SRC_RCRIPOSC = AVR32_PM_MCSEL_CRIPOSC,  
-  PM_CLK_SRC_RC120M = AVR32_PM_MCSEL_RC120M,  
+  PM_CLK_SRC_PLL1 = AVR32_PM_MCSEL_PLL1,
+  PM_CLK_SRC_RC8M = AVR32_PM_MCSEL_RCOSC8,
+  PM_CLK_SRC_RCRIPOSC = AVR32_PM_MCSEL_CRIPOSC,
+  PM_CLK_SRC_RC120M = AVR32_PM_MCSEL_RC120M,
   PM_CLK_SRC_INVALID
 } pm_clk_src_t;
 
@@ -84,7 +93,7 @@ typedef enum
   PM_CLK_DOMAIN_1 = AVR32_PM_CLK_GRP_HSB,
   PM_CLK_DOMAIN_2 = AVR32_PM_CLK_GRP_PBA,
   PM_CLK_DOMAIN_3 = AVR32_PM_CLK_GRP_PBB,
-  PM_CLK_DOMAIN_4 = AVR32_PM_CLK_GRP_PBC,  
+  PM_CLK_DOMAIN_4 = AVR32_PM_CLK_GRP_PBC,
   PM_CLK_DOMAIN_INVALID
 } pm_clk_domain_t;
 
@@ -126,7 +135,7 @@ typedef enum
  *
  * \return Status.
  *   \retval 0 Success.
- *   \retval <0 An error occured when trying to set the main clock.
+ *   \retval <0 An error occurred when trying to set the main clock.
  */
 extern long pm_set_mclk_source(pm_clk_src_t src);
 
@@ -142,7 +151,7 @@ extern long pm_set_mclk_source(pm_clk_src_t src);
  *
  * \return Status.
  *   \retval =0 Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long pm_config_mainclk_safety(bool cfd,  bool final);
 
@@ -156,7 +165,7 @@ extern long pm_config_mainclk_safety(bool cfd,  bool final);
  *
  * \return Status.
  *   \retval =0 Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long pm_set_clk_domain_div(pm_clk_domain_t clock_domain, pm_divratio_t divratio);
 
@@ -169,7 +178,7 @@ extern long pm_set_clk_domain_div(pm_clk_domain_t clock_domain, pm_divratio_t di
  *
  * \return Status.
  *   \retval =0 Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long pm_disable_clk_domain_div(pm_clk_domain_t clock_domain);
 
@@ -199,7 +208,7 @@ extern long pm_wait_for_clk_ready(void);
  *
  * \return Status.
  *   \retval 0  Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long pm_enable_module(unsigned long module);
 
@@ -211,7 +220,7 @@ extern long pm_enable_module(unsigned long module);
  *
  * \return Status.
  *   \retval 0  Success.
- *   \retval <0 An error occured.
+ *   \retval <0 An error occurred.
  */
 extern long pm_disable_module(unsigned long module);
 
@@ -236,10 +245,7 @@ extern long pm_disable_module(unsigned long module);
  * \return The MCU wake cause which can be masked with the
  *         \c AVR32_PM_WCAUSE_x_MASK bit-masks to isolate specific causes.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long pm_get_wake_cause(void)
+__always_inline static unsigned long pm_get_wake_cause(void)
 {
   return AVR32_PM.wcause;
 }
@@ -250,10 +256,7 @@ static inline unsigned long pm_get_wake_cause(void)
  *  AVR32_PM_AWEN_xxxxWEN_MASK in the part-specific header file under
  *  "toolchain folder"/avr32/inc(lude)/avr32/)
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void pm_asyn_wake_up_enable(unsigned long awen_mask)
+__always_inline static void pm_asyn_wake_up_enable(unsigned long awen_mask)
 {
   AVR32_PM.awen |= awen_mask;
 }
@@ -264,10 +267,7 @@ static inline void pm_asyn_wake_up_enable(unsigned long awen_mask)
  *  AVR32_PM_AWEN_xxxxWEN_MASK in the part-specific header file under
  *  "toolchain folder"/avr32/inc(lude)/avr32/)
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void pm_asyn_wake_up_disable(unsigned long awen_mask)
+__always_inline static void pm_asyn_wake_up_disable(unsigned long awen_mask)
 {
   AVR32_PM.awen &= ~awen_mask;
 }
@@ -285,10 +285,7 @@ static inline void pm_asyn_wake_up_disable(unsigned long awen_mask)
  * \return The MCU last reset cause which can be masked with the
  *         \c AVR32_PM_RCAUSE_x_MASK bit-masks to isolate specific causes.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long pm_get_reset_cause(void)
+__always_inline static unsigned long pm_get_reset_cause(void)
 {
   return AVR32_PM.rcause;
 }
@@ -306,10 +303,7 @@ static inline unsigned long pm_get_reset_cause(void)
  * \param mask the interrupts to enable.
  *
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void pm_enable_interrupts(unsigned long mask)
+__always_inline static void pm_enable_interrupts(unsigned long mask)
 {
   AVR32_PM.ier |= mask;
 }
@@ -319,10 +313,7 @@ static inline void pm_enable_interrupts(unsigned long mask)
  * \param mask the interrupts to disable.
  *
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void pm_disable_interrupts(unsigned long mask)
+__always_inline static void pm_disable_interrupts(unsigned long mask)
 {
   AVR32_PM.idr |= mask;
 }
@@ -331,10 +322,7 @@ static inline void pm_disable_interrupts(unsigned long mask)
  *
  * \return mask of the enabled interrupts.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long pm_get_enabled_interrupts(void)
+__always_inline static unsigned long pm_get_enabled_interrupts(void)
 {
   return(AVR32_PM.imr);
 }
@@ -343,10 +331,7 @@ static inline unsigned long pm_get_enabled_interrupts(void)
  *
  * \return mask of the interrupts that have been triggered.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long pm_get_interrupts_status(void)
+__always_inline static unsigned long pm_get_interrupts_status(void)
 {
   return(AVR32_PM.isr);
 }
@@ -355,10 +340,7 @@ static inline unsigned long pm_get_interrupts_status(void)
  *
  * \param mask The interrupts to clear.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline void pm_clear_interrupt_status(unsigned long mask)
+__always_inline static void pm_clear_interrupt_status(unsigned long mask)
 {
   AVR32_PM.icr |= mask;
 }
@@ -375,10 +357,7 @@ static inline void pm_clear_interrupt_status(unsigned long mask)
  *
  * \return The content of the PM Status register.
  */
-#if defined (__GNUC__)
-__attribute__((__always_inline__))
-#endif
-static inline unsigned long pm_get_status(void)
+__always_inline static unsigned long pm_get_status(void)
 {
   return AVR32_PM.sr;
 }
@@ -388,5 +367,9 @@ static inline unsigned long pm_get_status(void)
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * \}
+ */
 
 #endif  // _PM_UC3C_H_

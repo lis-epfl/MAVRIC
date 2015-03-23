@@ -1,48 +1,50 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief System Control InterFace(SCIF) driver.
  *
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 UC3C devices.
- * - AppNote:
+ * \asf_license_start
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #include "compiler.h"
 #include "scif_uc3c.h"
@@ -87,8 +89,8 @@ typedef union
  */
 static long int scif_pclksr_statushigh_wait(unsigned long statusMask)
 {
-  unsigned int  timeout = SCIF_POLL_TIMEOUT;
-  
+  unsigned int timeout = SCIF_POLL_TIMEOUT;
+
   while(!(AVR32_SCIF.pclksr & statusMask))
   {
     if(--timeout == 0)
@@ -105,7 +107,7 @@ unsigned long scif_read_gplp(unsigned long gplp)
 
 void scif_write_gplp(int gplp, unsigned long value)
 {
-  SCIF_UNLOCK(AVR32_SCIF_GPLP + 4*gplp); 
+  SCIF_UNLOCK(AVR32_SCIF_GPLP + 4*gplp);
   AVR32_SCIF.gplp[gplp] = value;
 }
 
@@ -128,7 +130,7 @@ void scif_write_gplp(int gplp, unsigned long value)
 long int scif_start_osc(scif_osc_t osc, const scif_osc_opt_t *opt, bool wait_for_ready)
 {
   u_avr32_scif_oscctrl_t   u_avr32_scif_oscctrl;
-  
+
 #ifdef AVR32SFW_INPUT_CHECK
   // Check that the input frequency is in the supported frequency range.
   if( (opt->freq_hz < SCIF_EXT_CRYSTAL_MIN_FREQ_HZ)
@@ -142,7 +144,7 @@ long int scif_start_osc(scif_osc_t osc, const scif_osc_opt_t *opt, bool wait_for
   {
     return -1;
   }
-  
+
   if (osc == SCIF_OSC0)
   {
     // Check that the startup value is in the supported range.
@@ -167,7 +169,7 @@ long int scif_start_osc(scif_osc_t osc, const scif_osc_opt_t *opt, bool wait_for
     if(opt->gain > AVR32_SCIF_OSCCTRL1_GAIN_G3)
     {
       return -1;
-    }  
+    }
   }
 #endif  // AVR32SFW_INPUT_CHECK
   // Read Register
@@ -179,16 +181,22 @@ long int scif_start_osc(scif_osc_t osc, const scif_osc_opt_t *opt, bool wait_for
   u_avr32_scif_oscctrl.OSCCTRL[osc].oscen = ENABLE;
   AVR32_ENTER_CRITICAL_REGION( );
   // Unlock the write-protected OSCCTRL0 register
-  SCIF_UNLOCK(AVR32_SCIF_OSCCTRL + 4*osc);    
+  SCIF_UNLOCK(AVR32_SCIF_OSCCTRL + 4*osc);
   // Write Back
   AVR32_SCIF.OSCCTRL[osc] = u_avr32_scif_oscctrl.OSCCTRL[osc];
   AVR32_LEAVE_CRITICAL_REGION( );
 
   if(true == wait_for_ready)
   {
-    // Wait until OSC0 is stable and ready to be used.
-    if(scif_pclksr_statushigh_wait(AVR32_SCIF_PCLKSR_OSC0RDY_MASK))
-      return -1;
+	  if (osc == SCIF_OSC0) {
+		  // Wait until OSC0 is stable and ready to be used.
+		  if(scif_pclksr_statushigh_wait(AVR32_SCIF_PCLKSR_OSC0RDY_MASK))
+			return -1;
+	  } else {
+		  // Wait until OSC1 is stable and ready to be used.
+		  if(scif_pclksr_statushigh_wait(AVR32_SCIF_PCLKSR_OSC1RDY_MASK))
+			return -1;
+	  }
   }
   return PASS;
 }
@@ -202,7 +210,7 @@ bool scif_is_osc_ready(scif_osc_t osc)
   }
   else
   {
-    return((AVR32_SCIF.pclksr & AVR32_SCIF_PCLKSR_OSC1RDY_MASK)>>AVR32_SCIF_PCLKSR_OSC1RDY_OFFSET);  
+    return((AVR32_SCIF.pclksr & AVR32_SCIF_PCLKSR_OSC1RDY_MASK)>>AVR32_SCIF_PCLKSR_OSC1RDY_OFFSET);
   }
 }
 
@@ -220,7 +228,7 @@ long int scif_stop_osc(scif_osc_t osc)
   // Stop OSC0.
   AVR32_SCIF.oscctrl[osc] = temp;
   AVR32_LEAVE_CRITICAL_REGION( );
-      
+
   return PASS;
 }
 
@@ -228,18 +236,18 @@ long int scif_stop_osc(scif_osc_t osc)
 long int scif_configure_osc_crystalmode(scif_osc_t osc, unsigned int fcrystal)
 {
   u_avr32_scif_oscctrl_t   u_avr32_scif_oscctrl;
-  
+
   if (osc == SCIF_OSC0)
-  {    
+  {
     // Read Register
-    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC0] = AVR32_SCIF.OSCCTRL[SCIF_OSC0] ;    
+    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC0] = AVR32_SCIF.OSCCTRL[SCIF_OSC0] ;
     // Modify : Configure the oscillator mode to crystal and set the gain according to the
-    // cyrstal frequency.
+    // crystal frequency.
     u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC0].mode = SCIF_OSC_MODE_2PIN_CRYSTAL;
-    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC0].gain = (fcrystal <  900000) ? AVR32_SCIF_OSCCTRL0_GAIN_G0 :
-                                                   (fcrystal < 3000000) ? AVR32_SCIF_OSCCTRL0_GAIN_G1 :
-                                                   (fcrystal < 8000000) ? AVR32_SCIF_OSCCTRL0_GAIN_G2 :
-                                                                          AVR32_SCIF_OSCCTRL0_GAIN_G3;
+    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC0].gain = (fcrystal <  2000000) ? AVR32_SCIF_OSCCTRL0_GAIN_G0 :
+                                                   (fcrystal < 10000000) ? AVR32_SCIF_OSCCTRL0_GAIN_G1 :
+                                                   (fcrystal < 16000000) ? AVR32_SCIF_OSCCTRL0_GAIN_G2 :
+                                                                           AVR32_SCIF_OSCCTRL0_GAIN_G3;
     AVR32_ENTER_CRITICAL_REGION( );
     // Unlock the write-protected OSCCTRL0 register
     SCIF_UNLOCK(AVR32_SCIF_OSCCTRL);
@@ -248,19 +256,19 @@ long int scif_configure_osc_crystalmode(scif_osc_t osc, unsigned int fcrystal)
     AVR32_LEAVE_CRITICAL_REGION( );
   }
   else
-  { 
+  {
     // Read Register
-    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC1] = AVR32_SCIF.OSCCTRL[SCIF_OSC1] ;    
+    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC1] = AVR32_SCIF.OSCCTRL[SCIF_OSC1] ;
     // Modify : Configure the oscillator mode to crystal and set the gain according to the
-    // cyrstal frequency.
+    // crystal frequency.
     u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC1].mode = SCIF_OSC_MODE_2PIN_CRYSTAL;
-    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC1].gain = (fcrystal <  900000) ? AVR32_SCIF_OSCCTRL1_GAIN_G0 :
-                                                   (fcrystal < 3000000) ? AVR32_SCIF_OSCCTRL1_GAIN_G1 :
-                                                   (fcrystal < 8000000) ? AVR32_SCIF_OSCCTRL1_GAIN_G2 :
-                                                                          AVR32_SCIF_OSCCTRL1_GAIN_G3;
+    u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC1].gain = (fcrystal <  2000000) ? AVR32_SCIF_OSCCTRL1_GAIN_G0 :
+                                                   (fcrystal < 10000000) ? AVR32_SCIF_OSCCTRL1_GAIN_G1 :
+                                                   (fcrystal < 16000000) ? AVR32_SCIF_OSCCTRL1_GAIN_G2 :
+                                                                           AVR32_SCIF_OSCCTRL1_GAIN_G3;
     AVR32_ENTER_CRITICAL_REGION( );
     // Unlock the write-protected OSCCTRL1 register
-    SCIF_UNLOCK(AVR32_SCIF_OSCCTRL + 4);
+    SCIF_UNLOCK(AVR32_SCIF_OSCCTRL1);
     // Write Back
     AVR32_SCIF.OSCCTRL[SCIF_OSC1] = u_avr32_scif_oscctrl.OSCCTRL[SCIF_OSC1];
     AVR32_LEAVE_CRITICAL_REGION( );
@@ -272,11 +280,11 @@ long int scif_configure_osc_crystalmode(scif_osc_t osc, unsigned int fcrystal)
 long int scif_configure_osc_extmode(scif_osc_t osc)
 {
   u_avr32_scif_oscctrl_t   u_avr32_scif_oscctrl;
-  
+
       // Read Register
     u_avr32_scif_oscctrl.OSCCTRL[osc] = AVR32_SCIF.OSCCTRL[osc] ;
     // Modify : Configure the oscillator mode to crystal and set the gain according to the
-    // cyrstal frequency.
+    // crystal frequency.
     u_avr32_scif_oscctrl.OSCCTRL[osc].mode = SCIF_OSC_MODE_EXT_CLK;
     AVR32_ENTER_CRITICAL_REGION( );
     // Unlock the write-protected OSCCTRL0 register
@@ -294,7 +302,7 @@ long int scif_enable_osc(scif_osc_t osc, unsigned int startup, bool wait_for_rea
   u_avr32_scif_oscctrl_t   u_avr32_scif_oscctrl;
 
   // Read Register
-  u_avr32_scif_oscctrl.OSCCTRL[osc] = AVR32_SCIF.OSCCTRL[osc] ;      
+  u_avr32_scif_oscctrl.OSCCTRL[osc] = AVR32_SCIF.OSCCTRL[osc] ;
   // Modify: Configure the oscillator startup and enable the osc.
   u_avr32_scif_oscctrl.OSCCTRL[osc].startup = startup;
   u_avr32_scif_oscctrl.OSCCTRL[osc].oscen = ENABLE;
@@ -307,11 +315,17 @@ long int scif_enable_osc(scif_osc_t osc, unsigned int startup, bool wait_for_rea
 
   if(true == wait_for_ready)
   {
-    // Wait until OSC0 is stable and ready to be used.
-    if(scif_pclksr_statushigh_wait(AVR32_SCIF_PCLKSR_OSC0RDY_MASK))
-      return -1;
+	  if (osc == SCIF_OSC0) {
+		  // Wait until OSC0 is stable and ready to be used.
+		  if(scif_pclksr_statushigh_wait(AVR32_SCIF_PCLKSR_OSC0RDY_MASK))
+			return -1;
+	  } else {
+		  // Wait until OSC1 is stable and ready to be used.
+		  if(scif_pclksr_statushigh_wait(AVR32_SCIF_PCLKSR_OSC1RDY_MASK))
+			return -1;
+	  }
   }
-      
+
   return PASS;
 }
 
@@ -321,7 +335,7 @@ long int scif_enable_extosc(scif_osc_t osc)
   u_avr32_scif_oscctrl_t   u_avr32_scif_oscctrl;
 
   // Read Register
-  u_avr32_scif_oscctrl.OSCCTRL[osc] = AVR32_SCIF.OSCCTRL[osc] ;    
+  u_avr32_scif_oscctrl.OSCCTRL[osc] = AVR32_SCIF.OSCCTRL[osc] ;
   // Modify : Enable the osc.
   u_avr32_scif_oscctrl.OSCCTRL[osc].oscen = ENABLE;
   AVR32_ENTER_CRITICAL_REGION( );
@@ -330,29 +344,29 @@ long int scif_enable_extosc(scif_osc_t osc)
   // Write Back
   AVR32_SCIF.OSCCTRL[osc] = u_avr32_scif_oscctrl.OSCCTRL[osc];
   AVR32_LEAVE_CRITICAL_REGION( );
-  
+
   return PASS;
 }
 
 /**
  ** PLL0/PLL1 Functions
  **/
-long int scif_pll_setup(scif_pll_t pll, const scif_pll_opt_t opt)
+long int scif_pll_setup(scif_pll_t pll, const scif_pll_opt_t *opt)
 {
 
   u_avr32_scif_pll_t   u_avr32_scif_pll;
 
   // Read Register
   u_avr32_scif_pll.PLL[pll] = AVR32_SCIF.PLL[pll] ;
-  // Modify Configuration 
-  u_avr32_scif_pll.PLL[pll].pllosc  = opt.osc;
-  u_avr32_scif_pll.PLL[pll].pllopt  = opt.pll_freq | (opt.pll_div2 << 1) | (opt.pll_wbwdisable << 2);
-  u_avr32_scif_pll.PLL[pll].plldiv   = opt.div;
-  u_avr32_scif_pll.PLL[pll].pllmul  = opt.mul;
-  u_avr32_scif_pll.PLL[pll].pllcount= opt.lockcount;
+  // Modify Configuration
+  u_avr32_scif_pll.PLL[pll].pllosc  = opt->osc;
+  u_avr32_scif_pll.PLL[pll].pllopt  = opt->pll_freq | (opt->pll_div2 << 1) | (opt->pll_wbwdisable << 2);
+  u_avr32_scif_pll.PLL[pll].plldiv  = opt->div;
+  u_avr32_scif_pll.PLL[pll].pllmul  = opt->mul;
+  u_avr32_scif_pll.PLL[pll].pllcount= opt->lockcount;
   AVR32_ENTER_CRITICAL_REGION( );
   // Unlock the write-protected PLL0 register
-  SCIF_UNLOCK(AVR32_SCIF_PLL + 4*pll); 
+  SCIF_UNLOCK(AVR32_SCIF_PLL + 4*pll);
   // Write Back
   AVR32_SCIF.PLL[pll] = u_avr32_scif_pll.PLL[pll];
   AVR32_LEAVE_CRITICAL_REGION( );
@@ -364,18 +378,18 @@ long int scif_pll_enable(scif_pll_t pll)
 {
 
   u_avr32_scif_pll_t   u_avr32_scif_pll;
-  
+
     // Read Register
     u_avr32_scif_pll.PLL[pll] = AVR32_SCIF.PLL[pll] ;
-    // Modify Configuration 
+    // Modify Configuration
     u_avr32_scif_pll.PLL[pll].pllen = ENABLE;
     AVR32_ENTER_CRITICAL_REGION( );
     // Unlock the write-protected PLL0 register
-    SCIF_UNLOCK(AVR32_SCIF_PLL + 4*pll); 
+    SCIF_UNLOCK(AVR32_SCIF_PLL + 4*pll);
     // Write Back
     AVR32_SCIF.PLL[pll] = u_avr32_scif_pll.PLL[pll];
     AVR32_LEAVE_CRITICAL_REGION( );
-  
+
   return PASS;
 }
 
@@ -386,11 +400,11 @@ long int scif_pll_disable(scif_pll_t pll)
 
   // Read Register
   u_avr32_scif_pll.PLL[pll] = AVR32_SCIF.PLL[pll] ;
-  // Modify Configuration 
+  // Modify Configuration
   u_avr32_scif_pll.PLL[pll].pllen = DISABLE;
   AVR32_ENTER_CRITICAL_REGION( );
   // Unlock the write-protected PLL0 register
-  SCIF_UNLOCK(AVR32_SCIF_PLL + 4*pll); 
+  SCIF_UNLOCK(AVR32_SCIF_PLL + 4*pll);
   // Write Back
   AVR32_SCIF.PLL[pll] = u_avr32_scif_pll.PLL[pll];
   AVR32_LEAVE_CRITICAL_REGION( );
@@ -400,9 +414,9 @@ long int scif_pll_disable(scif_pll_t pll)
 
 long int scif_wait_for_pll_locked(scif_pll_t pll)
 {
-  
+
   if (pll == SCIF_PLL0)
-  { 
+  {
       // Wait until PLL0 is stable and ready to be used.
       while(!(AVR32_SCIF.pclksr & AVR32_SCIF_PCLKSR_PLL0_LOCK_MASK));
   }
@@ -411,10 +425,10 @@ long int scif_wait_for_pll_locked(scif_pll_t pll)
       // Wait until PLL1 is stable and ready to be used.
       while(!(AVR32_SCIF.pclksr & AVR32_SCIF_PCLKSR_PLL1_LOCK_MASK));
   }
-  
+
   return PASS;
 }
- 
+
 /**
  ** OSC32 Functions
  **/
@@ -422,8 +436,8 @@ long int scif_wait_for_pll_locked(scif_pll_t pll)
 long int scif_start_osc32(const scif_osc32_opt_t *opt, bool wait_for_ready)
 {
   u_avr32_scif_oscctrl32_t  u_avr32_scif_oscctrl32;
-  
-  
+
+
 #ifdef AVR32SFW_INPUT_CHECK
   // Check that the input frequency is in the supported frequency range.
   if( (opt->freq_hz < SCIF_EXT_CRYSTAL_MIN_FREQ_HZ)
@@ -447,17 +461,17 @@ long int scif_start_osc32(const scif_osc32_opt_t *opt, bool wait_for_ready)
 #endif  // AVR32SFW_INPUT_CHECK
 
   // Read Register
-  u_avr32_scif_oscctrl32.oscctrl32 = AVR32_SCIF.oscctrl32 ;  
-  
+  u_avr32_scif_oscctrl32.oscctrl32 = AVR32_SCIF.oscctrl32 ;
+
   // Modify : Configure & start OSC32.
   u_avr32_scif_oscctrl32.OSCCTRL32.mode = opt->mode;
   u_avr32_scif_oscctrl32.OSCCTRL32.startup = opt->startup;
   u_avr32_scif_oscctrl32.OSCCTRL32.osc32en = ENABLE;
-  
+
   AVR32_ENTER_CRITICAL_REGION( );
   // Unlock the write-protected OSCCTRL32 register
   SCIF_UNLOCK(AVR32_SCIF_OSCCTRL32);
-  
+
   // Write Back
   AVR32_SCIF.oscctrl32 = u_avr32_scif_oscctrl32.oscctrl32;
   AVR32_LEAVE_CRITICAL_REGION( );
@@ -468,7 +482,7 @@ long int scif_start_osc32(const scif_osc32_opt_t *opt, bool wait_for_ready)
     if(scif_pclksr_statushigh_wait(AVR32_SCIF_PCLKSR_OSC32RDY_MASK))
       return -1;
   }
-  
+
   return PASS;
 }
 
@@ -481,7 +495,7 @@ long scif_stop_osc32()
   AVR32_ENTER_CRITICAL_REGION( );
   // Unlock the write-protected OSCCTRL32 register
   SCIF_UNLOCK(AVR32_SCIF_OSCCTRL32);
-  
+
   // Stop OSC32.
   AVR32_SCIF.oscctrl32 = temp;
   AVR32_LEAVE_CRITICAL_REGION( );
@@ -516,7 +530,7 @@ void scif_start_rc8M(void)
 void scif_stop_rc8M(void)
 {
   unsigned long temp = AVR32_SCIF.rccr8;
-  
+
   AVR32_ENTER_CRITICAL_REGION( );
   // Unlock the write-protected RC8MCR register
   SCIF_UNLOCK(AVR32_SCIF_RCCR8);
@@ -588,7 +602,7 @@ long int scif_start_gclk(unsigned int gclk, const scif_gclk_opt_t *opt)
 long int scif_stop_gclk(unsigned int gclk)
 {
   unsigned int  timeout = SCIF_POLL_TIMEOUT;
-  
+
 #ifdef AVR32SFW_INPUT_CHECK
   // Check that the generic clock number is correct
   if( gclk > AVR32_SCIF_GCLK_NUM )
@@ -599,23 +613,23 @@ long int scif_stop_gclk(unsigned int gclk)
 
   // Stop the generic clock.
   AVR32_SCIF.gcctrl[gclk] &= ~AVR32_SCIF_GCCTRL_CEN_MASK;
-  
+
   // Wait until the generic clock is actually stopped.
   while(AVR32_SCIF.gcctrl[gclk] & AVR32_SCIF_GCCTRL_CEN_MASK)
   {
     if(--timeout == 0)
       return -1;
   }
-  
+
   return PASS;
 }
 
 
 long int scif_gc_setup(unsigned int gclk, scif_gcctrl_oscsel_t clk_src, unsigned int diven, unsigned int divfactor)
 {
-  int restart_gc = false;
-  
-  
+  bool restart_gc = false;
+
+
   // Change the division factor to conform to the equation: fgclk = fsrc/divfactor = fsrc/(2*(div+1))
   divfactor = (divfactor>>1) -1;
 
@@ -650,7 +664,7 @@ long int scif_gc_setup(unsigned int gclk, scif_gcctrl_oscsel_t clk_src, unsigned
   AVR32_SCIF.gcctrl[gclk] = ((divfactor << AVR32_SCIF_GCCTRL_DIV_OFFSET)&AVR32_SCIF_GCCTRL_DIV_MASK)
                             |((diven << AVR32_SCIF_GCCTRL_DIVEN_OFFSET)&AVR32_SCIF_GCCTRL_DIVEN_MASK)
                             |((clk_src << AVR32_SCIF_GCCTRL_OSCSEL_OFFSET)&AVR32_SCIF_GCCTRL_OSCSEL_MASK);
-                            
+
   // Restart the gc if it previously was enabled.
   if(true == restart_gc)
     AVR32_SCIF.gcctrl[gclk] |= AVR32_SCIF_GCCTRL_CEN_MASK ;
@@ -672,7 +686,7 @@ long int scif_gc_enable(unsigned int gclk)
   // If the generic clock is already enabled, do nothing.
   if(!(AVR32_SCIF.gcctrl[gclk] & AVR32_SCIF_GCCTRL_CEN_MASK))
     AVR32_SCIF.gcctrl[gclk] |= AVR32_SCIF_GCCTRL_CEN_MASK;
-    
+
   return PASS;
 
 }
@@ -726,22 +740,22 @@ void scif_bod33_disable_irq(void)
   AVR32_SCIF.isr;
   if (global_interrupt_enabled) Enable_global_interrupt();
 }
- 
+
 void scif_bod33_clear_irq(void)
 {
   AVR32_SCIF.icr = AVR32_SCIF_ICR_BOD33DET_MASK;
 }
- 
+
 unsigned long scif_bod33_get_irq_status(void)
 {
   return ((AVR32_SCIF.isr & AVR32_SCIF_ISR_BOD33DET_MASK) != 0);
 }
- 
+
 unsigned long scif_bod33_get_irq_enable_bit(void)
 {
   return ((AVR32_SCIF.imr & AVR32_SCIF_IMR_BOD33DET_MASK) != 0);
 }
- 
+
 unsigned long scif_bod33_get_level(void)
 {
   return (AVR32_SCIF.bod33 & AVR32_SCIF_BOD33_LEVEL_MASK) >> AVR32_SCIF_BOD33_LEVEL_OFFSET;
@@ -761,22 +775,22 @@ void scif_bod50_disable_irq(void)
   AVR32_SCIF.isr;
   if (global_interrupt_enabled) Enable_global_interrupt();
 }
- 
+
 void scif_bod50_clear_irq(void)
 {
   AVR32_SCIF.icr = AVR32_SCIF_ICR_BOD50DET_MASK;
 }
- 
+
 unsigned long scif_bod50_get_irq_status(void)
 {
   return ((AVR32_SCIF.isr & AVR32_SCIF_ISR_BOD50DET_MASK) != 0);
 }
- 
+
 unsigned long scif_bod50_get_irq_enable_bit(void)
 {
   return ((AVR32_SCIF.imr & AVR32_SCIF_IMR_BOD50DET_MASK) != 0);
 }
- 
+
 unsigned long scif_bod50_get_level(void)
 {
   return (AVR32_SCIF.bod50 & AVR32_SCIF_BOD50_LEVEL_MASK) >> AVR32_SCIF_BOD50_LEVEL_OFFSET;

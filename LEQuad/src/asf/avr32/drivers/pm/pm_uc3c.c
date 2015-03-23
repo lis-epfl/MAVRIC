@@ -1,48 +1,50 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief Power Manager(PM) driver interface.
  *
+ * Copyright (c) 2014-2015 Atmel Corporation. All rights reserved.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 UC3C devices.
- * - AppNote:
+ * \asf_license_start
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 #include "pm_uc3c.h"
 
 #ifndef AVR32_PM_VERSION_RESETVALUE
@@ -101,7 +103,7 @@ long pm_set_mclk_source(pm_clk_src_t src)
   PM_UNLOCK(AVR32_PM_MCCTRL);
   AVR32_PM.mcctrl = src;
   AVR32_LEAVE_CRITICAL_REGION( );
-  
+
   return PASS;
 }
 
@@ -119,10 +121,10 @@ long pm_config_mainclk_safety(bool cfd, bool final)
   u_avr32_pm_cfdctrl.CFDCTRL.cfden = cfd;
   u_avr32_pm_cfdctrl.CFDCTRL.sfv = final;
   // Write back
-  PM_UNLOCK(AVR32_PM_CFDCTRL);  
+  PM_UNLOCK(AVR32_PM_CFDCTRL);
   AVR32_PM.cfdctrl = u_avr32_pm_cfdctrl.cfdctrl;
   AVR32_LEAVE_CRITICAL_REGION( );
-  
+
   return PASS;
 }
 
@@ -135,7 +137,7 @@ long pm_set_clk_domain_div(pm_clk_domain_t clock_domain, pm_divratio_t divratio)
 
 //# Implementation note: the ckSEL registers are contiguous and memory-mapped in
 //# that order: CPUSEL, HSBSEL, PBASEL, PBBSEL.
-  
+
 #ifdef AVR32SFW_INPUT_CHECK
   // Check the divratio
   if((divratio > PM_CPUSEL_DIVRATIO_MAX)||(divratio < 0))
@@ -207,7 +209,7 @@ long pm_enable_module(unsigned long module)
   unsigned long domain = module>>5;
 //# Implementation note: the ckMASK registers are contiguous and memory-mapped
 //# in that order: CPUMASK, HSBMASK, PBAMASK, PBBMASK.
-  unsigned long *regptr = (unsigned long*)(&(AVR32_PM.cpumask) + domain);  
+  unsigned long *regptr = (unsigned long*)(&(AVR32_PM.cpumask) + domain);
   unsigned long regvalue;
 
 

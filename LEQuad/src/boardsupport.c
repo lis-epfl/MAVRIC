@@ -45,7 +45,7 @@
 #include "sysclk.h"
 #include "sleepmgr.h"
 #include "led.h"
-#include "delay.h"
+//#include "delay.h"
 #include "user_board/user_board.h"
 #include "buffer.h"
 
@@ -89,7 +89,7 @@ bool boardsupport_init(central_data_t *central_data)
 	sysclk_init();
 
 	board_init();
-	delay_init(sysclk_get_cpu_hz());
+//	delay_init(sysclk_get_cpu_hz());
 	time_keeper_init();
 		
 	INTC_init_interrupts();

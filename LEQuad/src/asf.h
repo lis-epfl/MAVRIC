@@ -133,7 +133,7 @@
 #include <twim.h>
 
 // From module: TWI - Two-Wire Slave Interface
-#include <twis.h>
+// #include <twis.h>
 
 // From module: USART - Serial interface - UC3 implementation
 #include <serial.h>

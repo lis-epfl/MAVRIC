@@ -1,19 +1,16 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief TWIM driver for AVR32 UC3.
  *
  * This file defines a useful set of functions for TWIM on AVR32 devices.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with a TWIM module can be used.
- * - AppNote:
- *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
- *
  *****************************************************************************/
-/* Copyright (C) 2010 Atmel Corporation. All rights reserved.
+/**
+ * Copyright (c) 2010-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -21,29 +18,35 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 
 #include "twim.h"
@@ -67,8 +70,8 @@ static volatile const twim_package_t *twim_package;
 //! \internal If Internal Address access is used
 static volatile bool twim_next =false;
 
-/** 
- * \internal  
+/**
+ * \internal
  * \brief TWI interrupt handler.
  */
 ISR(twim_master_interrupt_handler,CONF_TWIM_IRQ_GROUP,CONF_TWIM_IRQ_LEVEL)
@@ -77,9 +80,9 @@ ISR(twim_master_interrupt_handler,CONF_TWIM_IRQ_GROUP,CONF_TWIM_IRQ_LEVEL)
 	uint32_t status = twim_inst->sr & twim_it_mask;
 	// this is a NACK
 	if (status & AVR32_TWIM_SR_STD_MASK) {
-		//if we get a nak, clear the valid bit in cmdr, 
+		//if we get a nak, clear the valid bit in cmdr,
 		//otherwise the command will be resent.
-		transfer_status =(status & AVR32_TWIM_IER_NAK_MASK) ? 
+		transfer_status =(status & AVR32_TWIM_IER_NAK_MASK) ?
 							TWI_RECEIVE_NACK : TWI_ARBITRATION_LOST;
 		twim_inst->CMDR.valid = 0;
 		twim_inst->scr = ~0UL;
@@ -91,69 +94,7 @@ ISR(twim_master_interrupt_handler,CONF_TWIM_IRQ_GROUP,CONF_TWIM_IRQ_LEVEL)
 		// get data from Receive Holding Register
 		*twim_rx_data = twim_inst->rhr;
 		twim_rx_data++;
-		// decrease recieved bytes number
-		twim_rx_nb_bytes--;
-		// receive complete
-		if (twim_rx_nb_bytes == 0) {
-			// finish the receive operation
-			twim_inst->idr = AVR32_TWIM_IDR_RXRDY_MASK;
-			// set busy to false
-			twim_next = false;
-			transfer_status=true;
-			
-		}
-	}
-	// this is a TXRDY
-	else if (status & AVR32_TWIM_SR_TXRDY_MASK) {
-		// no more bytes to transmit
-		if (twim_tx_nb_bytes == 0) {
-			// finish the receive operation
-			twim_inst->idr = AVR32_TWIM_IDR_TXRDY_MASK;
-			// set busy to false
-			twim_next = false;
-		} else {
-			// put the byte in the Transmit Holding Register
-			twim_inst->thr = *twim_tx_data++;
-			// decrease transmited bytes number
-			twim_tx_nb_bytes--;
-			if (twim_tx_nb_bytes == 0) {
-				// Check for next transfer
-				if(twim_next) {
-					twim_next = false;
-					twim_tx_nb_bytes = twim_package->length;
-					twim_tx_data = twim_package->buffer;
-				}
-			}
-		}
-	}
-	return;
-}
-
-/** 
- * \internal  
- * \brief TWI interrupt handler.
- */
-ISR(twim_master_interrupt_handler2,AVR32_TWIM1_GROUP,CONF_TWIM_IRQ_LEVEL)
-{
-	// get masked status register value
-	uint32_t status = twim_inst->sr & twim_it_mask;
-	// this is a NACK
-	if (status & AVR32_TWIM_SR_STD_MASK) {
-		//if we get a nak, clear the valid bit in cmdr, 
-		//otherwise the command will be resent.
-		transfer_status =(status & AVR32_TWIM_IER_NAK_MASK) ? 
-							TWI_RECEIVE_NACK : TWI_ARBITRATION_LOST;
-		twim_inst->CMDR.valid = 0;
-		twim_inst->scr = ~0UL;
-		twim_inst->idr = ~0UL;
-		twim_next = false;
-	}
-	// this is a RXRDY
-	else if (status & AVR32_TWIM_SR_RXRDY_MASK) {
-		// get data from Receive Holding Register
-		*twim_rx_data = twim_inst->rhr;
-		twim_rx_data++;
-		// decrease recieved bytes number
+		// decrease received bytes number
 		twim_rx_nb_bytes--;
 		// receive complete
 		if (twim_rx_nb_bytes == 0) {
@@ -174,7 +115,7 @@ ISR(twim_master_interrupt_handler2,AVR32_TWIM1_GROUP,CONF_TWIM_IRQ_LEVEL)
 		} else {
 			// put the byte in the Transmit Holding Register
 			twim_inst->thr = *twim_tx_data++;
-			// decrease transmited bytes number
+			// decrease transmitted bytes number
 			twim_tx_nb_bytes--;
 			if (twim_tx_nb_bytes == 0) {
 				// Check for next transfer
@@ -188,10 +129,9 @@ ISR(twim_master_interrupt_handler2,AVR32_TWIM1_GROUP,CONF_TWIM_IRQ_LEVEL)
 	}
 	return;
 }
-
 
 /**
- * \brief Set the twim bus speed in cojunction with the clock frequency
+ * \brief Set the twim bus speed in conjunction with the clock frequency
  *
  * \param twim              Base address of the TWIM (i.e. &AVR32_TWIM).
  * \param speed             The desired twim bus speed
@@ -254,28 +194,26 @@ status_code_t twim_master_init (volatile avr32_twim_t *twim,
 	}
 	// Clear SR
 	twim->scr = ~0UL;
-	
+
 	// register Register twim_master_interrupt_handler interrupt on level CONF_TWIM_IRQ_LEVEL
 	irqflags_t flags = cpu_irq_save();
 	irq_register_handler(twim_master_interrupt_handler,
 			CONF_TWIM_IRQ_LINE, CONF_TWIM_IRQ_LEVEL);
-	irq_register_handler(twim_master_interrupt_handler2,
-	AVR32_TWIM1_IRQ , CONF_TWIM_IRQ_LEVEL);
 	cpu_irq_restore(flags);
-	
+
 	if (opt->smbus) {
 		// Enable SMBUS Transfer
 		twim->cr = AVR32_TWIM_CR_SMEN_MASK;
 		twim->smbtr = (uint32_t) -1;
 	}
 	// Select the speed
-	if (twim_set_speed (twim, opt->speed, opt->pba_hz) == 
+	if (twim_set_speed (twim, opt->speed, opt->pba_hz) ==
 			ERR_INVALID_ARG) {
 		return ERR_INVALID_ARG;
 	}
 	// Probe the component
 	twim_probe (twim, opt->chip);
-	//Check for nack and abitration
+	//Check for nack and arbitration
 	if (transfer_status == TWI_RECEIVE_NACK
 			|| transfer_status == TWI_ARBITRATION_LOST) {
 		return ERR_IO_ERROR;
@@ -347,12 +285,11 @@ status_code_t twim_read_packet (volatile avr32_twim_t *twim,
 		twim_inst->cr = AVR32_TWIM_CR_SWRST_MASK;
 		twim_inst->cr = AVR32_TWIM_CR_MDIS_MASK;
 		// selection of first valid byte of the address
-		twim_tx_data = (uint8_t *) (&(package->addr));
-		twim_tx_data += (4 - package->addr_length);
+		twim_tx_data = package->addr;
 		// set the number of bytes to transmit
 		twim_tx_nb_bytes = package->addr_length;
 		// mask NACK, TXRDY and RXRDY interrupts
-		twim_it_mask = AVR32_TWIM_IER_STD_MASK | 
+		twim_it_mask = AVR32_TWIM_IER_STD_MASK |
 				AVR32_TWIM_IER_TXRDY_MASK | AVR32_TWIM_IER_RXRDY_MASK;
 		// Set the command register to initiate the transfer
 		twim_inst->cmdr = (package->chip << AVR32_TWIM_CMDR_SADR_OFFSET)
@@ -506,49 +443,26 @@ status_code_t twim_write_packet (volatile avr32_twim_t *twim,
 	//check if internal address access is performed
 	if (package->addr_length) {
 		// selection of first valid byte of the address
-		twim_tx_data = (uint8_t *) (&(package->addr));
-		twim_tx_data += (4 - package->addr_length);
+		twim_tx_data = package->addr;
 		// set the number of bytes to transmit
 		twim_tx_nb_bytes = package->addr_length;
-		// Initiate the transfer to send the internal address
-		twim_inst->cmdr = (package->chip << AVR32_TWIM_CMDR_SADR_OFFSET)
-				| (package->addr_length << AVR32_TWIM_CMDR_NBYTES_OFFSET)
-				| (AVR32_TWIM_CMDR_VALID_MASK)
-				| (AVR32_TWIM_CMDR_START_MASK)
-				| (0 << AVR32_TWIM_CMDR_STOP_OFFSET)
-				| (0 << AVR32_TWIM_CMDR_READ_OFFSET);
 		// set next transfer to true
 		twim_next = true;
 		// Set the number of bytes & address for next transfer
 		twim_package = package;
-		// set the next command register to followup with the previous command
-		twim_inst->ncmdr = ((package->chip) << AVR32_TWIM_CMDR_SADR_OFFSET)
-				| (package->length << AVR32_TWIM_CMDR_NBYTES_OFFSET)
-				| (AVR32_TWIM_CMDR_VALID_MASK)
-				| (AVR32_TWIM_CMDR_START_MASK)
-				| (AVR32_TWIM_CMDR_STOP_MASK)
-				| (0 << AVR32_TWIM_CMDR_READ_OFFSET);
-		// update IMR through IER
-		twim_inst->ier = twim_it_mask;
-		// Enable master transfer
-		twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
-		// Enable all interrupts
-		cpu_irq_enable ();
-		// wait until Busy to be false
-		while (!(transfer_status) && !(twim_status ())) {
-		cpu_relax();
-		}
 	} else {
 	// get a pointer to applicative data
 	twim_tx_data = package->buffer;
 	// get a copy of nb bytes to write
 	twim_tx_nb_bytes = package->length;
+	}
 	// initiate the transfer to send the data
 	twim->cmdr = (package->chip << AVR32_TWIM_CMDR_SADR_OFFSET)
-			| (package->length << AVR32_TWIM_CMDR_NBYTES_OFFSET)
+			| ((package->length + package->addr_length)
+					<< AVR32_TWIM_CMDR_NBYTES_OFFSET)
 			| (AVR32_TWIM_CMDR_VALID_MASK)
 			| (AVR32_TWIM_CMDR_START_MASK)
-			| (AVR32_TWIM_CMDR_STOP_MASK) 
+			| (AVR32_TWIM_CMDR_STOP_MASK)
 			| (0 << AVR32_TWIM_CMDR_READ_OFFSET);
 	// update IMR through IER
 	twim_inst->ier = twim_it_mask;
@@ -559,7 +473,7 @@ status_code_t twim_write_packet (volatile avr32_twim_t *twim,
 	// send data
 	while (!(transfer_status) && !(twim_status ())) {
 		cpu_relax();
-	}}
+	}
 #if AVR32_TWIM_H_VERSION > 101	//Removed in twim100 module due to IC bug
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
@@ -696,7 +610,7 @@ status_code_t twim_chained_transfer (volatile avr32_twim_t *twim,
 			| (AVR32_TWIM_CMDR_START_MASK)
 			| (AVR32_TWIM_CMDR_STOP_MASK)
 			| ((tenbit ? 1 : 0) << AVR32_TWIM_CMDR_TENBIT_OFFSET)
-			| (((tenbit && second->read) ? 1 : 0) 
+			| (((tenbit && second->read) ? 1 : 0)
 			<< AVR32_TWIM_CMDR_REPSAME_OFFSET)
 			| ((second->read ? 1 : 0) << AVR32_TWIM_CMDR_READ_OFFSET);
 
@@ -740,11 +654,11 @@ status_code_t twim_chained_transfer (volatile avr32_twim_t *twim,
 	} else {
 		// get a pointer to applicative data
 		twim_tx_data = second->buffer;
-		
+
 		twim_tx_nb_bytes = second->length;
 		// send data
 		while (!(twim->sr & AVR32_TWIM_SR_IDLE_MASK)) {
-			if ((twim_tx_nb_bytes > 0) && 
+			if ((twim_tx_nb_bytes > 0) &&
 					(twim->sr & AVR32_TWIM_SR_TXRDY_MASK)) {
 			twim->thr = *twim_tx_data++;
 			twim_tx_nb_bytes--;
@@ -773,7 +687,7 @@ uint8_t twim_status ( void )
 	uint32_t status = twim_inst->sr;
 	if ((status & AVR32_TWIM_SR_IDLE_MASK)
 #if AVR32_TWIM_H_VERSION > 101 ||(status&AVR32_TWIM_SR_BUSFREE_MASK)
-#endif 
+#endif
 		) {
 		return 1;
 	} else {

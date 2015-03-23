@@ -6,7 +6,9 @@
  * This file contains the USB definitions and data structures provided by the
  * USB 2.0 specification.
  *
- * Copyright (C) 2009 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -14,29 +16,35 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 
 #ifndef _USB_PROTOCOL_H_
@@ -55,12 +63,14 @@
  */
 
 //! Value for field bcdUSB
-#define  USB_V2_0    0x0200	//!< USB Specification version 2.00
+#define  USB_V2_0    0x0200 //!< USB Specification version 2.00
+#define  USB_V2_1    0x0201 //!< USB Specification version 2.01
 
 /*! \name Generic definitions (Class, subclass and protocol)
  */
 //! @{
 #define  NO_CLASS                0x00
+#define  CLASS_VENDOR_SPECIFIC   0xFF
 #define  NO_SUBCLASS             0x00
 #define  NO_PROTOCOL             0x00
 //! @}
@@ -75,26 +85,26 @@
 /**
  * \brief USB request data transfer direction (bmRequestType)
  */
-#define  USB_REQ_DIR_OUT         (0<<7)	//!< Host to device
-#define  USB_REQ_DIR_IN          (1<<7)	//!< Device to host
-#define  USB_REQ_DIR_MASK        (1<<7)	//!< Mask
+#define  USB_REQ_DIR_OUT         (0<<7) //!< Host to device
+#define  USB_REQ_DIR_IN          (1<<7) //!< Device to host
+#define  USB_REQ_DIR_MASK        (1<<7) //!< Mask
 
 /**
  * \brief USB request types (bmRequestType)
  */
-#define  USB_REQ_TYPE_STANDARD   (0<<5)	//!< Standard request
-#define  USB_REQ_TYPE_CLASS      (1<<5)	//!< Class-specific request
-#define  USB_REQ_TYPE_VENDOR     (2<<5)	//!< Vendor-specific request
-#define  USB_REQ_TYPE_MASK       (3<<5)	//!< Mask
+#define  USB_REQ_TYPE_STANDARD   (0<<5) //!< Standard request
+#define  USB_REQ_TYPE_CLASS      (1<<5) //!< Class-specific request
+#define  USB_REQ_TYPE_VENDOR     (2<<5) //!< Vendor-specific request
+#define  USB_REQ_TYPE_MASK       (3<<5) //!< Mask
 
 /**
  * \brief USB recipient codes (bmRequestType)
  */
-#define  USB_REQ_RECIP_DEVICE    (0<<0)	//!< Recipient device
-#define  USB_REQ_RECIP_INTERFACE (1<<0)	//!< Recipient interface
-#define  USB_REQ_RECIP_ENDPOINT  (2<<0)	//!< Recipient endpoint
-#define  USB_REQ_RECIP_OTHER     (3<<0)	//!< Recipient other
-#define  USB_REQ_RECIP_MASK      (0x1F)	//!< Mask
+#define  USB_REQ_RECIP_DEVICE    (0<<0) //!< Recipient device
+#define  USB_REQ_RECIP_INTERFACE (1<<0) //!< Recipient interface
+#define  USB_REQ_RECIP_ENDPOINT  (2<<0) //!< Recipient endpoint
+#define  USB_REQ_RECIP_OTHER     (3<<0) //!< Recipient other
+#define  USB_REQ_RECIP_MASK      (0x1F) //!< Mask
 
 /**
  * \brief Standard USB requests (bRequest)
@@ -145,8 +155,8 @@ enum usb_endpoint_status {
  * \note valid for SetFeature request.
  */
 enum usb_device_feature {
-	USB_DEV_FEATURE_REMOTE_WAKEUP = 1,	//!< Remote wakeup enabled
-	USB_DEV_FEATURE_TEST_MODE = 2,	//!< USB test mode
+	USB_DEV_FEATURE_REMOTE_WAKEUP = 1, //!< Remote wakeup enabled
+	USB_DEV_FEATURE_TEST_MODE = 2,     //!< USB test mode
 	USB_DEV_FEATURE_OTG_B_HNP_ENABLE = 3,
 	USB_DEV_FEATURE_OTG_A_HNP_SUPPORT = 4,
 	USB_DEV_FEATURE_OTG_A_ALT_HNP_SUPPORT = 5
@@ -197,7 +207,57 @@ enum usb_descriptor_type {
 	USB_DT_INTERFACE_POWER = 8,
 	USB_DT_OTG = 9,
 	USB_DT_IAD = 0x0B,
+	USB_DT_BOS = 0x0F,
+	USB_DT_DEVICE_CAPABILITY = 0x10,
 };
+
+/**
+ * \brief USB Device Capability types
+ */
+enum usb_capability_type {
+	USB_DC_USB20_EXTENSION = 0x02,
+};
+
+/**
+ * \brief USB Device Capability - USB 2.0 Extension
+ * To fill bmAttributes field of usb_capa_ext_desc_t structure.
+ */
+enum usb_capability_extension_attr {
+	USB_DC_EXT_LPM  = 0x00000002,
+	USB_DC_EXT_BESL = 0x00000004,
+	USB_DC_EXT_BESL_BASELINE_VALID = 0x00000008,
+	USB_DC_EXT_BESL_DEEP_VALID = 0x00000010,
+};
+#define USB_DC_EXT_BESL_DEEP_OFFSET       8
+#define USB_DC_EXT_BESL_DEEP(besl)        ((besl & 0xF) << USB_DC_EXT_BESL_DEEP_OFFSET)
+#define USB_DC_EXT_BESL_BASELINE_OFFSET   12
+#define USB_DC_EXT_BESL_BASELINE(besl)    ((besl & 0xF) << USB_DC_EXT_BESL_BASELINE_OFFSET)
+
+#define BESL_125_US   0
+#define BESL_150_US   1
+#define BESL_200_US   2
+#define BESL_300_US   3
+#define BESL_400_US   4
+#define BESL_500_US   5
+#define BESL_1000_US  6
+#define BESL_2000_US  7
+#define BESL_3000_US  8
+#define BESL_4000_US  9
+#define BESL_5000_US  10
+#define BESL_6000_US  11
+#define BESL_7000_US  12
+#define BESL_8000_US  13
+#define BESL_9000_US  14
+#define BESL_10000_US 15
+
+/** Fields definition from a LPM TOKEN  */
+#define  USB_LPM_ATTRIBUT_BLINKSTATE_MASK      (0xF << 0)
+#define  USB_LPM_ATTRIBUT_BESL_MASK            (0xF << 4)
+#define  USB_LPM_ATTRIBUT_REMOTEWAKE_MASK      (1 << 8)
+#define  USB_LPM_ATTRIBUT_BLINKSTATE(value)    ((value & 0xF) << 0)
+#define  USB_LPM_ATTRIBUT_BESL(value)          ((value & 0xF) << 4)
+#define  USB_LPM_ATTRIBUT_REMOTEWAKE(value)    ((value & 1) << 8)
+#define  USB_LPM_ATTRIBUT_BLINKSTATE_L1        USB_LPM_ATTRIBUT_BLINKSTATE(1)
 
 /**
  * \brief Standard USB endpoint transfer types
@@ -214,21 +274,29 @@ enum usb_ep_type {
  * \brief Standard USB language IDs for string descriptors
  */
 enum usb_langid {
-	USB_LANGID_EN_US = 0x0409,	//!< English (United States)
+	USB_LANGID_EN_US = 0x0409, //!< English (United States)
 };
 
 /**
  * \brief Mask selecting the index part of an endpoint address
  */
 #define  USB_EP_ADDR_MASK     0x0f
+
+//! \brief USB address identifier
+typedef uint8_t usb_add_t;
+
 /**
  * \brief Endpoint transfer direction is IN
  */
 #define  USB_EP_DIR_IN        0x80
+
 /**
  * \brief Endpoint transfer direction is OUT
  */
 #define  USB_EP_DIR_OUT       0x00
+
+//! \brief Endpoint identifier
+typedef uint8_t usb_ep_t;
 
 /**
  * \brief Maximum length in bytes of a USB descriptor
@@ -241,7 +309,7 @@ enum usb_langid {
 /*
  * 2-byte alignment requested for all USB structures.
  */
-COMPILER_PACK_SET(1);
+COMPILER_PACK_SET(1)
 
 /**
  * \brief A USB Device SETUP request
@@ -257,7 +325,7 @@ typedef struct {
 } usb_setup_req_t;
 
 /**
- * \brief Standard USB device descriptor stucture
+ * \brief Standard USB device descriptor structure
  */
 typedef struct {
 	uint8_t bLength;
@@ -296,19 +364,60 @@ typedef struct {
 	uint8_t bReserved;
 } usb_dev_qual_desc_t;
 
+/**
+ * \brief USB Device BOS descriptor structure
+ *
+ * The BOS descriptor (Binary device Object Store) defines a root
+ * descriptor that is similar to the configuration descriptor, and is
+ * the base descriptor for accessing a family of related descriptors.
+ * A host can read a BOS descriptor and learn from the wTotalLength field
+ * the entire size of the device-level descriptor set, or it can read in
+ * the entire BOS descriptor set of device capabilities.
+ * The host accesses this descriptor using the GetDescriptor() request.
+ * The descriptor type in the GetDescriptor() request is set to BOS.
+ */
+typedef struct {
+	uint8_t bLength;
+	uint8_t bDescriptorType;
+	le16_t  wTotalLength;
+	uint8_t bNumDeviceCaps;
+} usb_dev_bos_desc_t;
+
+
+/**
+ * \brief USB Device Capabilities - USB 2.0 Extension Descriptor structure
+ *
+ * Defines the set of USB 1.1-specific device level capabilities.
+ */
+typedef struct {
+	uint8_t bLength;
+	uint8_t bDescriptorType;
+	uint8_t bDevCapabilityType;
+	le32_t  bmAttributes;
+} usb_dev_capa_ext_desc_t;
+
+/**
+ * \brief USB Device LPM Descriptor structure
+ *
+ * The BOS descriptor and capabilities descriptors for LPM.
+ */
+typedef struct {
+	usb_dev_bos_desc_t bos;
+	usb_dev_capa_ext_desc_t capa_ext;
+} usb_dev_lpm_desc_t;
 
 /**
  * \brief Standard USB Interface Association Descriptor structure
  */
 typedef struct {
-	uint8_t bLength;	//!< size of this descriptor in bytes
-	uint8_t bDescriptorType;	//!< INTERFACE descriptor type
-	uint8_t bFirstInterface;	//!< Number of interface
-	uint8_t bInterfaceCount;	//!< value to select alternate setting
-	uint8_t bFunctionClass;	//!< Class code assigned by the USB
-	uint8_t bFunctionSubClass;	//!< Sub-class code assigned by the USB
-	uint8_t bFunctionProtocol;	//!< Protocol code assigned by the USB
-	uint8_t iFunction;	//!< Index of string descriptor
+	uint8_t bLength;          //!< size of this descriptor in bytes
+	uint8_t bDescriptorType;  //!< INTERFACE descriptor type
+	uint8_t bFirstInterface;  //!< Number of interface
+	uint8_t bInterfaceCount;  //!< value to select alternate setting
+	uint8_t bFunctionClass;   //!< Class code assigned by the USB
+	uint8_t bFunctionSubClass;//!< Sub-class code assigned by the USB
+	uint8_t bFunctionProtocol;//!< Protocol code assigned by the USB
+	uint8_t iFunction;        //!< Index of string descriptor
 } usb_association_desc_t;
 
 
@@ -327,12 +436,12 @@ typedef struct {
 } usb_conf_desc_t;
 
 
-#define  USB_CONFIG_ATTR_MUST_SET         (1 << 7)	//!< Must always be set
-#define  USB_CONFIG_ATTR_BUS_POWERED      (0 << 6)	//!< Bus-powered
-#define  USB_CONFIG_ATTR_SELF_POWERED     (1 << 6)	//!< Self-powered
-#define  USB_CONFIG_ATTR_REMOTE_WAKEUP    (1 << 5)	//!< remote wakeup supported
+#define  USB_CONFIG_ATTR_MUST_SET         (1 << 7) //!< Must always be set
+#define  USB_CONFIG_ATTR_BUS_POWERED      (0 << 6) //!< Bus-powered
+#define  USB_CONFIG_ATTR_SELF_POWERED     (1 << 6) //!< Self-powered
+#define  USB_CONFIG_ATTR_REMOTE_WAKEUP    (1 << 5) //!< remote wakeup supported
 
-#define  USB_CONFIG_MAX_POWER(ma)         (((ma) + 1) / 2)	//!< Max power in mA
+#define  USB_CONFIG_MAX_POWER(ma)         (((ma) + 1) / 2) //!< Max power in mA
 
 /**
  * \brief Standard USB association descriptor structure
@@ -364,7 +473,7 @@ typedef struct {
 } usb_iface_desc_t;
 
 /**
- * \brief Standard USB endpoint descriptor stcuture
+ * \brief Standard USB endpoint descriptor structure
  */
 typedef struct {
 	uint8_t bLength;
@@ -377,7 +486,7 @@ typedef struct {
 
 
 /**
- * \brief A standard USB string descriptor sructure
+ * \brief A standard USB string descriptor structure
  */
 typedef struct {
 	uint8_t bLength;
@@ -389,7 +498,7 @@ typedef struct {
 	le16_t string[1];
 } usb_str_lgid_desc_t;
 
-COMPILER_PACK_RESET();
+COMPILER_PACK_RESET()
 
 //! @}
 

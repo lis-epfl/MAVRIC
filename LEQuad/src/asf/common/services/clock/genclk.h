@@ -3,7 +3,9 @@
  *
  * \brief Generic clock management
  *
- * Copyright (C) 2010 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2010-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
  *
  * \page License
  *
@@ -11,36 +13,66 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
  * 4. This software may only be redistributed and used in connection with an
- * Atmel AVR product.
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- * DAMAGE.
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
+ */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #ifndef CLK_GENCLK_H_INCLUDED
 #define CLK_GENCLK_H_INCLUDED
 
-#include <parts.h>
+#include "parts.h"
 
-#if (UC3A0 || UC3A1)
+#if SAM3S
+# include "sam3s/genclk.h"
+#elif SAM3U
+# include "sam3u/genclk.h"
+#elif SAM3N
+# include "sam3n/genclk.h"
+#elif SAM3XA
+# include "sam3x/genclk.h"
+#elif SAM4S
+# include "sam4s/genclk.h"
+#elif SAM4L
+# include "sam4l/genclk.h"
+#elif SAM4E
+# include "sam4e/genclk.h"
+#elif SAM4N
+# include "sam4n/genclk.h"
+#elif SAM4C
+# include "sam4c/genclk.h"
+#elif SAM4CM
+# include "sam4cm/genclk.h"
+#elif SAM4CP
+# include "sam4cp/genclk.h"
+#elif SAMG
+# include "samg/genclk.h"
+#elif (UC3A0 || UC3A1)
 # include "uc3a0_a1/genclk.h"
 #elif UC3A3
 # include "uc3a3_a4/genclk.h"
@@ -116,7 +148,11 @@
  *              unsigned int divider)
  * \brief Set a new \a divider in configuration \a cfg.
  */
-//@}
+/**
+ * \fn void genclk_enable_source(enum genclk_source src)
+ * \brief Enable the source clock \a src used by a generic clock.
+ */
+ //@}
 
 //! \name Enabling and disabling Generic Clocks
 //@{
@@ -130,6 +166,25 @@
  * \brief Disable the generic clock identified by \a id.
  */
 //@}
+
+/**
+ * \brief Enable the configuration defined by \a src and \a divider
+ * for the generic clock identified by \a id.
+ *
+ * \param id      The ID of the generic clock.
+ * \param src     The source clock of the generic clock.
+ * \param divider The divider used to generate the generic clock.
+ */
+static inline void genclk_enable_config(unsigned int id, enum genclk_source src, unsigned int divider)
+{
+	struct genclk_config gcfg;
+
+	genclk_config_defaults(&gcfg, id);
+	genclk_enable_source(src);
+	genclk_config_set_source(&gcfg, src);
+	genclk_config_set_divider(&gcfg, divider);
+	genclk_enable(&gcfg, id);
+}
 
 //! @}
 

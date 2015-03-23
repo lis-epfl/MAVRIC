@@ -1,53 +1,65 @@
-/*This file has been prepared for Doxygen automatic documentation generation.*/
-/*! \file *********************************************************************
+/*****************************************************************************
+ *
+ * \file
  *
  * \brief PWM driver for AVR32 UC3 with PWM module version above 4.0.0.
  *
  * This file defines a useful set of functions for the PWM interface on AVR32
  * devices.
  *
- * - Compiler:           IAR EWAVR32 and GNU GCC for AVR32
- * - Supported devices:  All AVR32 devices with a PWM module version above 400 can be used.
- * - AppNote:
+ * Copyright (c) 2009-2015 Atmel Corporation. All rights reserved.
  *
- * \author               Atmel Corporation: http://www.atmel.com \n
- *                       Support and FAQ: http://support.atmel.no/
+ * \asf_license_start
  *
- *****************************************************************************/
-
-/* Copyright (c) 2009 Atmel Corporation. All rights reserved.
+ * \page License
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * 3. The name of Atmel may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
+ *    from this software without specific prior written permission.
  *
- * 4. This software may only be redistributed and used in connection with an Atmel
- * AVR product.
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
  *
  * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
  * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
+ * \asf_license_stop
+ *
+ *****************************************************************************/
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+
 
 #ifndef _PWM_H_
 #define _PWM_H_
+
+/**
+ * \defgroup group_avr32_drivers_pwm PWM - Pulse Width Modulation (>v4.0.0)
+ *
+ * Pulse Width Modulation (PWM) Software Driver for modules above revision >v4.0.0.
+ * This driver provides an API to get access to the main features of the PWM controller.
+ *
+ * \{
+ */
 
 #include <avr32/io.h>
 
@@ -63,7 +75,7 @@
 //! for some unspecified reason.
 #define PWM_FAILURE                           -1
 
-//! Value returned by function when the input paramters are out of range.
+//! Value returned by function when the input parameters are out of range.
 #define PWM_INVALID_INPUT                      1
 
 //! Value returned by function when the channel number is invalid.
@@ -214,16 +226,16 @@ typedef struct
 
   //! Clock Input Selection.
   unsigned int cksel;
-    
+
   //! Fault Detection Activation.
   unsigned char fault_detection_activated;
 
   //! Synchronous Channel Activation.
   unsigned char sync_channel_activated;
-  
+
   //! Synchronous channel Mode.
   unsigned char sync_update_channel_mode;
-  
+
   //! Synchronous Channel Select.
   unsigned char sync_channel_select[PWM_OOV_LINES];
 } pwm_opt_t;
@@ -233,7 +245,7 @@ typedef struct
 {
   //! Output Selection Register
   unsigned char os[2][PWM_OOV_LINES];
-  
+
   //! Output Value Register
   unsigned char oov[2][PWM_OOV_LINES];
 
@@ -244,21 +256,21 @@ typedef struct
   //! Compare Match PWM Counter Value
   U32 compare_pwm_counter_value;
 
-  //! Compare Match  Mode 
+  //! Compare Match  Mode
   unsigned char compare_mode;
 
   //! Compare Match PWM Period Value
   U32 compare_pwm_period_counter_value;
-  
+
   //! Compare Match Period Value
   U8 compare_period_counter_value;
-  
+
   //! Compare Update Period Value
   U8 compare_pwm_update_period;
-  
+
   //! Compare Status
   U8 compare_status;
-  
+
 } pwm_compare_opt_t;
 
 
@@ -350,7 +362,7 @@ extern int pwm_update_period_value(unsigned int value);
  */
 extern int pwm_update_period_value_update(unsigned int value);
 
-/*! \brief Return Current Counter of Update Period Value 
+/*! \brief Return Current Counter of Update Period Value
  *  \return Value of Counter
  */
 extern unsigned int pwm_get_update_period_counter_value(void);
@@ -471,5 +483,9 @@ extern int pwm_compare_event_enable(int line, int event_line);
  *  \return PWM_SUCCESS or PWM_INVALID_INPUT
  */
 extern int pwm_compare_event_disable(int line, int event_line);
+
+/**
+ * \}
+ */
 
 #endif  // _PWM_H_
