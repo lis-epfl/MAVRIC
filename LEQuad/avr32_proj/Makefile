@@ -139,6 +139,8 @@ SRCS += asf/avr32/drivers/flashc/flashc.c
 SRCS += asf/avr32/drivers/gpio/gpio.c
 SRCS += asf/avr32/drivers/intc/intc.c
 SRCS += asf/avr32/drivers/intc/exception.S
+SRCS += asf/avr32/utils/startup/trampoline_uc3.S
+SRCS += asf/avr32/utils/startup/startup_uc3.S
 SRCS += asf/avr32/drivers/pdca/pdca.c
 SRCS += asf/avr32/drivers/pevc/pevc.c
 SRCS += asf/avr32/drivers/pm/pm_uc3c.c  
@@ -300,6 +302,11 @@ PREPROC_OPT += -DUDD_ENABLE
 AS = avr32-gcc
 ASFLAGS = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax 
 
+# Include files from MAVRIC library and source folder
+CXXFLAGS += -I.
+CXXFLAGS += ${LIB_INC}
+CXXFLAGS += ${SRCS_INC}
+
 # ------------------------------------------------------------------------------
 # C COMPILER OPTIONS
 # ------------------------------------------------------------------------------
@@ -323,7 +330,7 @@ CXX = avr32-g++
 
 CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
 CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MD -MP -MF
-CXXFLAGS += -D_DEFAULT_SOURCE 
+# CXXFLAGS += -D_DEFAULT_SOURCE 
 CXXFLAGS += ${PREPROC_OPT}
 
 # Include files from MAVRIC library and source folder
@@ -342,8 +349,7 @@ OBJCOPYFLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 
 LDFLAGS  = -nostartfiles -Wl,-Map="mavric.map" -Wl,--start-group -lm  
 LDGLAGS += -Wl,--end-group -L"src/asf/avr32/utils/libs/dsplib/at32ucr3fp/gcc"  
-LDFLAGS += -Wl,--gc-sections -mpart=uc3c1512c -Wl,--relax -Wl,-e,
-# _trampoline
+LDFLAGS += -Wl,--gc-sections -mpart=uc3c1512c -Wl,--relax -Wl,-e,_trampoline
 
 ################################################################################
 # Normally you shouldn't need to change anything below this line!
