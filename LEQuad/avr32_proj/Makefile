@@ -131,6 +131,10 @@ SRCS += boardsupport.c
 SRCS += mavlink_telemetry.c
 SRCS += tasks.c
 
+SRCS += asf/avr32/drivers/intc/exception.S
+# SRCS += exception.S
+SRCS += asf/avr32/utils/startup/startup_uc3.S
+SRCS += asf/avr32/utils/startup/trampoline_uc3.S
 SRCS += asf/avr32/drivers/adcifa/adcifa.c
 SRCS += asf/avr32/drivers/ast/ast.c
 SRCS += asf/avr32/drivers/dacifb/dacifb.c
@@ -138,9 +142,6 @@ SRCS += asf/avr32/drivers/eic/eic.c
 SRCS += asf/avr32/drivers/flashc/flashc.c
 SRCS += asf/avr32/drivers/gpio/gpio.c
 SRCS += asf/avr32/drivers/intc/intc.c
-SRCS += asf/avr32/drivers/intc/exception.S
-SRCS += asf/avr32/utils/startup/trampoline_uc3.S
-SRCS += asf/avr32/utils/startup/startup_uc3.S
 SRCS += asf/avr32/drivers/pdca/pdca.c
 SRCS += asf/avr32/drivers/pevc/pevc.c
 SRCS += asf/avr32/drivers/pm/pm_uc3c.c  
@@ -197,6 +198,7 @@ LIB_SRCS += util/print_util.c
 LIB_SRCS += util/quick_trig.c
 
 LIB_SRCS += hal/avr32/adc_int.c                   
+LIB_SRCS += hal/avr32/ads1274.c                   
 LIB_SRCS += hal/avr32/adxl345_driver.c                   
 LIB_SRCS += hal/avr32/airspeed_analog.c           
 LIB_SRCS += hal/avr32/analog_monitor.c            
@@ -303,9 +305,9 @@ AS = avr32-gcc
 ASFLAGS = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax 
 
 # Include files from MAVRIC library and source folder
-CXXFLAGS += -I.
-CXXFLAGS += ${LIB_INC}
-CXXFLAGS += ${SRCS_INC}
+ASFLAGS += -I.
+ASFLAGS += ${LIB_INC}
+ASFLAGS += ${SRCS_INC}
 
 # ------------------------------------------------------------------------------
 # C COMPILER OPTIONS
@@ -350,6 +352,12 @@ OBJCOPYFLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 LDFLAGS  = -nostartfiles -Wl,-Map="mavric.map" -Wl,--start-group -lm  
 LDGLAGS += -Wl,--end-group -L"src/asf/avr32/utils/libs/dsplib/at32ucr3fp/gcc"  
 LDFLAGS += -Wl,--gc-sections -mpart=uc3c1512c -Wl,--relax -Wl,-e,_trampoline
+
+# Include files from MAVRIC library and source folder
+LDFLAGS += -I.
+LDFLAGS += ${LIB_INC}
+LDFLAGS += ${SRCS_INC}
+
 
 ################################################################################
 # Normally you shouldn't need to change anything below this line!
@@ -396,7 +404,7 @@ proj: $(PROJ_NAME).elf
 # Linking
 ${PROJ_NAME}.elf: ${OBJS}
 	@echo Linking...
-	$(CXX) $(LDFLAGS) $^ -o $@ 
+	$(CXX) $(LDFLAGS) $^ -o $@  
 	@$(OBJCOPY) -O ihex ${OBJCOPYFLAGS} $(PROJ_NAME).elf $(PROJ_NAME).hex
 	@$(OBJCOPY) -O binary $(PROJ_NAME).elf $(PROJ_NAME).bin
 	@$(BUILD_CMD)
@@ -404,7 +412,7 @@ ${PROJ_NAME}.elf: ${OBJS}
 # Assembly files in Library
 ${BUILD_DIR}/%.o: ${MAVRIC_LIB}/%.S
 	@mkdir -p $(dir $@)
-	@$(CC) $(ASFLAGS) -c $< -o $@
+	@$(AS) -c $< -o $@ $(ASFLAGS)
 	@$(BUILD_CMD)
 	
 # C files in Library
@@ -422,7 +430,7 @@ ${BUILD_DIR}/%.o: ${MAVRIC_LIB}/%.cpp
 # Assembly files in source folder
 ${BUILD_DIR}/%.o: ${MAVRIC_SRC}/%.S
 	@mkdir -p $(dir $@)
-	@$(CC) $(ASFLAGS) -c $< -o $@ 
+	@$(AS) -c $< -o $@ $(ASFLAGS)
 	@$(BUILD_CMD)
 
 # C files in source folder
