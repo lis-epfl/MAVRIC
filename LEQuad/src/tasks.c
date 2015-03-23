@@ -109,7 +109,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (((central_data->state.nav_plan_active&&(!central_data->navigation.auto_takeoff)&&(!central_data->navigation.auto_landing)&&(!central_data->navigation.stop_nav)))||((central_data->state.mav_state == MAV_STATE_CRITICAL)&&(central_data->navigation.critical_behavior == FLY_TO_HOME_WP)))
 			//if (((central_data->state.nav_plan_active&&(!central_data->navigation.auto_takeoff)&&(!central_data->navigation.auto_landing)))||((central_data->state.mav_state == MAV_STATE_CRITICAL)&&(central_data->navigation.critical_behavior == FLY_TO_HOME_WP)))
 			{
-				central_data->controls.yaw_mode = YAW_COORDINATED;
+				central_data->controls.yaw_mode = YAW_RELATIVE;
 			}
 			else
 			{
