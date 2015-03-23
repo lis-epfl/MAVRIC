@@ -404,7 +404,7 @@ proj: $(PROJ_NAME).elf
 # Linking
 ${PROJ_NAME}.elf: ${OBJS}
 	@echo Linking...
-	$(CXX) $(LDFLAGS) $^ -o $@  
+	@$(CXX) $(LDFLAGS) $^ -o $@  
 	@$(OBJCOPY) -O ihex ${OBJCOPYFLAGS} $(PROJ_NAME).elf $(PROJ_NAME).hex
 	@$(OBJCOPY) -O binary $(PROJ_NAME).elf $(PROJ_NAME).bin
 	@$(BUILD_CMD)
@@ -412,7 +412,7 @@ ${PROJ_NAME}.elf: ${OBJS}
 # Assembly files in Library
 ${BUILD_DIR}/%.o: ${MAVRIC_LIB}/%.S
 	@mkdir -p $(dir $@)
-	@$(AS) -c $< -o $@ $(ASFLAGS)
+	@$(AS) $(ASFLAGS) -c $< -o $@
 	@$(BUILD_CMD)
 	
 # C files in Library
@@ -430,7 +430,7 @@ ${BUILD_DIR}/%.o: ${MAVRIC_LIB}/%.cpp
 # Assembly files in source folder
 ${BUILD_DIR}/%.o: ${MAVRIC_SRC}/%.S
 	@mkdir -p $(dir $@)
-	@$(AS) -c $< -o $@ $(ASFLAGS)
+	@$(AS) $(ASFLAGS) -c $< -o $@
 	@$(BUILD_CMD)
 
 # C files in source folder
