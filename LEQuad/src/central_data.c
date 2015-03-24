@@ -98,7 +98,6 @@ bool central_data_init()
 	//Init state_machine	
 	init_success &= state_machine_init( &central_data.state_machine,
 										&central_data.state,
-										&central_data.waypoint_handler,
 										&central_data.sim_model,
 										&central_data.remote,
 										&central_data.joystick_parsing);
@@ -187,6 +186,7 @@ bool central_data_init()
 									&central_data.position_estimation,
 									&central_data.pressure,
 									&central_data.gps,
+									&central_data.sonar_i2cxl.data,
 									&central_data.state,
 									&central_data.servos,
 									&central_data.state.nav_plan_active);
