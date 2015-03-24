@@ -85,11 +85,7 @@ void tasks_run_imu_update(void* arg)
 	
 	imu_update(	&central_data->imu);
 	qfilter_update(&central_data->attitude_filter);
-	
-	if (central_data->imu.calibration_level == OFF)
-	{
-		position_estimation_update(&central_data->position_estimation);
-	}
+	position_estimation_update(&central_data->position_estimation);
 }
 
 task_return_t tasks_run_stabilisation(void* arg) 

@@ -44,7 +44,6 @@
 
 #include "conf_imu.h"
 
-#include "ahrs_default_config.h"
 #include "stabilisation_copter_default_config.h"
 #include "navigation_default_config.h"
 #include "servos_default_config.h"
@@ -113,7 +112,7 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	// Init ahrs
-	init_success &= ahrs_init(	&central_data.ahrs, &ahrs_default_config);
+	init_success &= ahrs_init(&central_data.ahrs);
 
 	time_keeper_delay_ms(100);
 

@@ -72,7 +72,6 @@ void initialisation()
 	init_success &= mavlink_telemetry_init();
 
 	central_data->state.mav_state = MAV_STATE_STANDBY;	
-	central_data->imu.calibration_level = OFF;
 	
 	init_success &= tasks_create_tasks();	
 
