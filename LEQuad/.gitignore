@@ -9,3 +9,5 @@
 *Debug/
 *LEQuad_linux.txt
 *Maveric_myCopter_linux.txt
+*.sublime-project
+*.sublime-workspace
