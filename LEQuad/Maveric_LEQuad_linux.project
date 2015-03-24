@@ -435,6 +435,7 @@
           <File Name="Library/hal/avr32/include/uart_default_config.h"/>
           <File Name="Library/hal/avr32/include/uart_int.h"/>
         </VirtualDirectory>
+        <File Name="Library/hal/avr32/battery.c"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="runtime">

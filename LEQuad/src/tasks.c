@@ -128,7 +128,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			
 			if ((central_data->state.mav_state == MAV_STATE_CRITICAL) && (central_data->navigation.critical_behavior == FLY_TO_HOME_WP))
 			{
-				central_data->controls.yaw_mode = YAW_COORDINATED;
+				central_data->controls.yaw_mode = YAW_RELATIVE;
 			}
 			else
 			{
@@ -144,13 +144,12 @@ task_return_t tasks_run_stabilisation(void* arg)
 		{
 			if (central_data->state.remote_active == 1)
 			{
-			remote_get_velocity_vector_from_remote(&central_data->remote, &central_data->controls);
+				remote_get_velocity_vector_from_remote(&central_data->remote, &central_data->controls);
 			}
 			else
 			{
 				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing,&central_data->controls);
 			}
-			
 			
 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
 			central_data->controls.yaw_mode = YAW_RELATIVE;
@@ -164,7 +163,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 		{
 			if (central_data->state.remote_active == 1)
 			{
-			remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
 			}
 			else
 			{
