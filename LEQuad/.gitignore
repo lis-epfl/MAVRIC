@@ -3,6 +3,9 @@
 *.hex
 *.elf
 
+# Link to Library
+Library
+
 # Others
 *-D_DEFAULT_SOURCE
 *-I.
