@@ -42,59 +42,58 @@
 #ifndef CENTRAL_DATA_H_
 #define CENTRAL_DATA_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-#include <stdbool.h>
-#include <stdint.h>
+extern "C" 
+{
+	#include <stdbool.h>
+	#include <stdint.h>
 
-#include "stdbool.h"
+	#include "stdbool.h"
 
-#include "time_keeper.h"
-#include "qfilter.h"
-#include "imu.h"
-#include "ahrs.h"
-#include "stabilisation_copter.h"
+	#include "time_keeper.h"
+	#include "qfilter.h"
+	#include "imu.h"
+	#include "ahrs.h"
+	#include "stabilisation_copter.h"
 
-#include "remote.h"
-#include "pid_controller.h"
-#include "streams.h"
-#include "buffer.h"
-#include "print_util.h"
+	#include "remote.h"
+	#include "pid_controller.h"
+	#include "streams.h"
+	#include "buffer.h"
+	#include "print_util.h"
 
-#include "mavlink_stream.h"
-#include "mavlink_communication.h"
-#include "coord_conventions.h"
-#include "onboard_parameters.h"
-#include "gps_ublox.h"
-#include "mavlink_waypoint_handler.h"
-#include "simulation.h"
-#include "bmp085.h"
-#include "position_estimation.h"
+	#include "mavlink_stream.h"
+	#include "mavlink_communication.h"
+	#include "coord_conventions.h"
+	#include "onboard_parameters.h"
+	#include "gps_ublox.h"
+	#include "mavlink_waypoint_handler.h"
+	#include "simulation.h"
+	#include "bmp085.h"
+	#include "position_estimation.h"
 
-#include "analog_monitor.h"
-#include "sonar_i2cxl.h"
-#include "navigation.h"
-#include "state.h"
-#include "stabilisation.h"
+	#include "analog_monitor.h"
+	#include "sonar_i2cxl.h"
+	#include "navigation.h"
+	#include "state.h"
+	#include "stabilisation.h"
 
-#include "hud_telemetry.h"
-#include "sd_spi.h"
+	#include "hud_telemetry.h"
+	#include "sd_spi.h"
 
-#include "attitude_controller_p2.h"
-#include "servos.h"
-#include "pwm_servos.h"
-#include "servos_mix_quadcopter_diag.h"
-#include "remote.h"
+	#include "attitude_controller_p2.h"
+	#include "servos.h"
+	#include "pwm_servos.h"
+	#include "servos_mix_quadcopter_diag.h"
+	#include "remote.h"
 
-#include "state_machine.h"
-#include "sd_spi.h"
-#include "joystick_parsing.h"
-#include "data_logging.h"
+	#include "state_machine.h"
+	#include "sd_spi.h"
+	#include "joystick_parsing.h"
+	#include "data_logging.h"
 
-#include "acoustic.h" 
-// TODO : update documentation
+	#include "acoustic.h" 
+}
 
 /**
  * \brief The central data structure
@@ -160,18 +159,9 @@ typedef struct  {
  *
  * \return	The initialization status, succeed == true, failure == false
  */
-bool central_data_init(void);
+bool central_data_init(central_data_t* p_central_data);
 
 
-/**
- * \brief	Get a pointer to the central data
- *
- * \return	A pointer to the structure central data
-*/
-central_data_t* central_data_get_pointer_to_struct(void);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* CENTRAL_DATA_H_ */

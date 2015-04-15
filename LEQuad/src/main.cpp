@@ -38,42 +38,44 @@
  *
  ******************************************************************************/
  
+#include "boardsupport.h"
+#include "central_data.h"
+#include "mavlink_telemetry.h"
+#include "tasks.h"
 
-extern "C" {
+extern "C" 
+{
 	#include "led.h"
 	#include "time_keeper.h"
 	#include "print_util.h"
-	#include "central_data.h"
-	#include "boardsupport.h"
-	#include "tasks.h"
-	#include "mavlink_telemetry.h"
 	#include "piezo_speaker.h"
 }
+
+
  
-central_data_t *central_data;
+central_data_t central_data;
 
 void initialisation() 
 {	
 	bool init_success = true;
 	
-	central_data = central_data_get_pointer_to_struct();
-	init_success &= boardsupport_init(central_data);
-	init_success &= central_data_init();
+	init_success &= boardsupport_init(&central_data);
+	init_success &= central_data_init(&central_data);
 	
-	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
+	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
 
-	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
+	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data.mavlink_communication.onboard_parameters);
 
 	if (read_from_flash_result)
 	{
-		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
+		simulation_switch_from_reality_to_simulation(&central_data.sim_model);
 	}
 
-	init_success &= mavlink_telemetry_init();
+	init_success &= mavlink_telemetry_init(&central_data);
 
-	central_data->state.mav_state = MAV_STATE_STANDBY;	
+	central_data.state.mav_state = MAV_STATE_STANDBY;	
 	
-	init_success &= tasks_create_tasks();	
+	init_success &= tasks_create_tasks(&central_data);	
 
 	if (init_success)
 	{
@@ -96,7 +98,7 @@ int main (void)
 	
 	while (1 == 1) 
 	{
-		scheduler_update(&central_data->scheduler);
+		scheduler_update(&central_data.scheduler);
 	}
 
 	return 0;

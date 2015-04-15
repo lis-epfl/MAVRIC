@@ -46,89 +46,88 @@
 
 #include "imu.h"
 
-static imu_conf_t imu_config =
+static imu_conf_t imu_config()
 {
-	.accelerometer =
+	imu_conf_t imu_conf = {};
+	imu_conf.accelerometer = {};
+	imu_conf.accelerometer.axis =
 	{
-		.axis =
-		{
-			0,					//ACC_AXIS_X
-			1,					//ACC_AXIS_Y
-			2					//ACC_AXIS_Z
-		},
-		.orientation =
-		{
-			1.0f,				//ACC_ORIENTATION_X
-			-1.0f,				//ACC_ORIENTATION_Y
-			-1.0f				//ACC_ORIENTATION_Z
-		},
-		.bias =
-		{
-			  37.0f,			//ACC_BIAIS_X
-			 165.0f,			//ACC_BIAIS_Y
-			-150.0f				//ACC_BIAIS_Z
-		},
-		.scale_factor =
-		{
-			4021.25f,			//RAW_ACC_X_SCALE
-			4195.14f,			//RAW_ACC_Y_SCALE
-			4137.07f			//RAW_ACC_Z_SCALE
-		}
-	},
-	.gyroscope =
+		0,					//ACC_AXIS_X
+		1,					//ACC_AXIS_Y
+		2					//ACC_AXIS_Z
+	};
+	imu_conf.accelerometer.orientation =
 	{
-		.axis =
-		{
-			0,					//GYRO_AXIS_X
-			1,					//GYRO_AXIS_Y
-			2					//GYRO_AXIS_Z
-		},
-		.orientation =
-		{
-			1.0f,				//GYRO_ORIENTATION_X
-			-1.0f,				//GYRO_ORIENTATION_Y
-			-1.0f				//GYRO_ORIENTATION_Z
-		},
-		.bias =
-		{
-			13.0f,				//GYRO_BIAIS_X
-			 8.4f,				//GYRO_BIAIS_Y
-			 0.0f				//GYRO_BIAIS_Z
-		},
-		.scale_factor =
-		{
-			818.5111f,			//RAW_GYRO_X_SCALE
-			818.5111f,			//RAW_GYRO_Y_SCALE
-			818.5111f			//RAW_GYRO_Z_SCALE
-		}
-	},
-	.magnetometer =
+		1.0f,				//ACC_ORIENTATION_X
+		-1.0f,				//ACC_ORIENTATION_Y
+		-1.0f				//ACC_ORIENTATION_Z
+	};
+	imu_conf.accelerometer.bias =
 	{
-		.axis =
-		{
-			2,					//MAG_AXIS_X
-			0,					//MAG_AXIS_Y
-			1					//MAG_AXIS_Z
-		},
-		.orientation =
-		{
-			-1.0f,				//MAG_ORIENTATION_X
-			-1.0f,				//MAG_ORIENTATION_Y
-			-1.0f				//MAG_ORIENTATION_Z
-		},
-		.bias =
-		{
-			-74.0f,				//MAG_BIAIS_X
-			-173.0f,			//MAG_BIAIS_Y
-			-307.0f				//MAG_BIAIS_Z
-		},
-		.scale_factor =
-		{
-			550.0f,				//RAW_MAG_X_SCALE
-			550.0f,				//RAW_MAG_Y_SCALE
-			550.0f				//RAW_MAG_Z_SCALE
-		}
-	}
+		  37.0f,			//ACC_BIAIS_X
+		 165.0f,			//ACC_BIAIS_Y
+		-150.0f				//ACC_BIAIS_Z
+	};
+	imu_conf.accelerometer.scale_factor =
+	{
+		4021.25f,			//RAW_ACC_X_SCALE
+		4195.14f,			//RAW_ACC_Y_SCALE
+		4137.07f			//RAW_ACC_Z_SCALE
+	};
+
+	imu_conf.gyroscope = {};
+	imu_conf.gyroscope.axis =
+	{
+		0,					//GYRO_AXIS_X
+		1,					//GYRO_AXIS_Y
+		2					//GYRO_AXIS_Z
+	};
+	imu_conf.gyroscope.orientation =
+	{
+		1.0f,				//GYRO_ORIENTATION_X
+		-1.0f,				//GYRO_ORIENTATION_Y
+		-1.0f				//GYRO_ORIENTATION_Z
+	};
+	imu_conf.gyroscope.bias =
+	{
+		13.0f,				//GYRO_BIAIS_X
+		 8.4f,				//GYRO_BIAIS_Y
+		 0.0f				//GYRO_BIAIS_Z
+	};
+	imu_conf.gyroscope.scale_factor =
+	{
+		818.5111f,			//RAW_GYRO_X_SCALE
+		818.5111f,			//RAW_GYRO_Y_SCALE
+		818.5111f			//RAW_GYRO_Z_SCALE
+	};
+	
+	imu_conf.magnetometer = {};
+	imu_conf.magnetometer.axis =
+	{
+		2,					//MAG_AXIS_X
+		0,					//MAG_AXIS_Y
+		1					//MAG_AXIS_Z
+	};
+	imu_conf.magnetometer.orientation =
+	{
+		-1.0f,				//MAG_ORIENTATION_X
+		-1.0f,				//MAG_ORIENTATION_Y
+		-1.0f				//MAG_ORIENTATION_Z
+	};
+	imu_conf.magnetometer.bias =
+	{
+		-74.0f,				//MAG_BIAIS_X
+		-173.0f,			//MAG_BIAIS_Y
+		-307.0f				//MAG_BIAIS_Z
+	};
+	imu_conf.magnetometer.scale_factor =
+	{
+		550.0f,				//RAW_MAG_X_SCALE
+		550.0f,				//RAW_MAG_Y_SCALE
+		550.0f				//RAW_MAG_Z_SCALE
+	};
+
+	return imu_conf;
 };
 
 #endif /* CONF_IMU_REV4_H_ */

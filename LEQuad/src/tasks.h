@@ -42,34 +42,26 @@
 #ifndef TASKS_H_
 #define TASKS_H_
 
+#include "central_data.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include "scheduler.h"
-#include "remote.h"
+extern "C" 
+{
+	#include "scheduler.h"
+	#include "remote.h"
+}
 
 /**
  * \brief 			Initialises all the tasks
  *
  * \return	The initialization status, succeed == true
  */	
-bool tasks_create_tasks(void);
-
-
-/**
- * \brief          	Returns a pointer to the main task-set  
- * 
- * \return          Pointer to the main task-set
- */
-task_set_t* tasks_get_main_taskset(void);
+bool tasks_create_tasks(central_data_t* central_data);
 
 
 /**
  * \brief            Updates the IMU
  */
-void tasks_run_imu_update(void* arg);
+void tasks_run_imu_update(central_data_t* central_data);
 
 
 /**
@@ -93,43 +85,35 @@ void tasks_rc_user_channels(uint8_t* chan_switch, signal_quality_t* rc_check, in
 /**
  * \brief            Run the main stabilisation loop
  */
-task_return_t tasks_run_stabilisation(void* arg);
+task_return_t tasks_run_stabilisation(central_data_t* central_data);
 
 
 /**
  * \brief            Run GPS update
  */
-task_return_t tasks_run_gps_update(void* arg);
+task_return_t tasks_run_gps_update(central_data_t* central_data);
 
 
 /**
  * \brief            Run the navigation task
  */
-task_return_t tasks_run_navigation_update(void* arg);
+task_return_t tasks_run_navigation_update(central_data_t* central_data);
 
 
 /**
  * \brief            Run the barometer task
  */
-task_return_t tasks_run_barometer_update(void* arg);
+task_return_t tasks_run_barometer_update(central_data_t* central_data);
 
 /**
  * \brief            Run the sonar task
  */
-task_return_t sonar_update(void* arg);
-
-/**
- * \brief            Run the analog to digital converter task
- */
-task_return_t adc_update(void* arg);
+task_return_t sonar_update(central_data_t* central_data);
 
 /**
  * \brief            Run the LED toggle task
  */
 task_return_t tasks_led_toggle(void* arg);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* TASKS_H_ */

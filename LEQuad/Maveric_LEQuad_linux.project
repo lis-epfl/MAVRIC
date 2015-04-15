@@ -264,12 +264,12 @@
     <File Name="src/central_data.h"/>
     <File Name="src/boardsupport.h"/>
     <File Name="src/tasks.h"/>
-    <File Name="src/tasks.c"/>
     <File Name="src/main.cpp"/>
-    <File Name="src/boardsupport.c"/>
     <File Name="src/mavlink_telemetry.h"/>
-    <File Name="src/mavlink_telemetry.c"/>
-    <File Name="src/central_data.c"/>
+    <File Name="src/boardsupport.cpp"/>
+    <File Name="src/central_data.cpp"/>
+    <File Name="src/mavlink_telemetry.cpp"/>
+    <File Name="src/tasks.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Library">
     <VirtualDirectory Name="communication">

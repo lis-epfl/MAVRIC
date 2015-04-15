@@ -43,11 +43,45 @@
 #ifndef BOARDSUPPORT_H_
 #define BOARDSUPPORT_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "central_data.h"
+
+
+extern "C" {
+	#include "uart_int.h"
+	#include "sysclk.h"
+	#include "sleepmgr.h"
+	#include "led.h"
+	#include "delay.h"
+	#include "user_board/user_board.h"
+	#include "buffer.h"
+
+	#include "time_keeper.h"
+	#include "i2c_driver_int.h"
+	#include "print_util.h"
+	// #include "mavlink_stream.h"
+	//#include "simulation.h"
+	#include "bmp085.h"
+	#include "lsm330dlc.h"
+	#include "hmc5883l.h"
+	#include "analog_monitor.h"
+	#include "piezo_speaker.h"
+	#include "gpio.h"
+
+	#include "gps_ublox.h"
+	#include "xbee.h"
+	#include "console.h"
+	#include "stdio_usb.h"
+
+	#include "pwm_servos.h"
+	#include "spektrum_satellite.h"
+	#include "conf_platform.h"
+	#include "sonar_i2cxl.h"
+
+	#include "analog_monitor_default_config.h"
+	#include "twim_default_config.h"
+	#include "uart_default_config.h"
+	#include "usb_default_config.h"
+}
 
 #define BOARD USER_BOARD
 
@@ -58,10 +92,8 @@ extern "C" {
  *
  * \return	The initialization status of each module, succeed == true
  */
-bool boardsupport_init(central_data_t* central_data);
+bool boardsupport_init(central_data_t* p_central_data);
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif /* BOARDSUPPORT_H_ */

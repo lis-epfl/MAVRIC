@@ -39,42 +39,8 @@
  *
  ******************************************************************************/
 
-
 #include "boardsupport.h" 
-#include "uart_int.h"
-#include "sysclk.h"
-#include "sleepmgr.h"
-#include "led.h"
-#include "delay.h"
-#include "user_board/user_board.h"
-#include "buffer.h"
 
-#include "time_keeper.h"
-#include "i2c_driver_int.h"
-#include "print_util.h"
-// #include "mavlink_stream.h"
-//#include "simulation.h"
-#include "bmp085.h"
-#include "lsm330dlc.h"
-#include "hmc5883l.h"
-#include "analog_monitor.h"
-#include "piezo_speaker.h"
-#include "gpio.h"
-
-#include "gps_ublox.h"
-#include "xbee.h"
-#include "console.h"
-#include "stdio_usb.h"
-
-#include "pwm_servos.h"
-#include "spektrum_satellite.h"
-#include "conf_platform.h"
-#include "sonar_i2cxl.h"
-
-#include "analog_monitor_default_config.h"
-#include "twim_default_config.h"
-#include "uart_default_config.h"
-#include "usb_default_config.h"
 
 bool boardsupport_init(central_data_t *central_data) 
 {
@@ -101,7 +67,7 @@ bool boardsupport_init(central_data_t *central_data)
 	pwm_servos_init( USE_SERVOS_7_8 );
 	
 	// Init UART 0 for XBEE communication
-	xbee_init(UART0,usart_default_config_xbee);
+	xbee_init(UART0,usart_default_config_xbee());
 	
 	//Init UART 2 for audio communication
 	//acoustic_init(	&central_data->audio_data,
@@ -116,12 +82,12 @@ bool boardsupport_init(central_data_t *central_data)
 					//xbee_get_out_stream());//central_data->telemetry_down_stream);
 				
 	// Init UART 3 for GPS communication
-	gps_ublox_init(&(central_data->gps), UART3, usart_default_config_gps);
+	gps_ublox_init(&(central_data->gps), UART3, usart_default_config_gps());
 	
 	// Init UART 4 for wired communication
 	//console_init(CONSOLE_UART4, usart_default_config_console, usb_default_config_console);
 	// Init USB for wired communication
-	console_init(CONSOLE_USB, usart_default_config_console, usb_default_config_console);
+	console_init(CONSOLE_USB, usart_default_config_console(), usb_default_config_console());
 		
 	// connect abstracted aliases to hardware ports
 	central_data->telemetry_down_stream = xbee_get_out_stream();
@@ -134,13 +100,13 @@ bool boardsupport_init(central_data_t *central_data)
 	print_util_dbg_print("Debug stream initialised\r\n");
 
 	// RC receiver initialization
-	spektrum_satellite_init(&(central_data->remote.sat), usart_default_config_spektrum);
+	spektrum_satellite_init(&(central_data->remote.sat), usart_default_config_spektrum());
 
 	// Init analog rails
-	analog_monitor_init(&central_data->analog_monitor,&analog_monitor_default_config);
+	analog_monitor_init(&central_data->analog_monitor, analog_monitor_default_config());
 	
 	// init imu & compass
-	i2c_driver_init(I2C0, twim_default_config);
+	i2c_driver_init(I2C0, twim_default_config());
 	
 	lsm330dlc_init();
 	print_util_dbg_print("LSM330 initialised \r\n");
@@ -151,7 +117,7 @@ bool boardsupport_init(central_data_t *central_data)
 	bmp085_init(&central_data->pressure);
 	
 	// Init I2C for ultrasound
-	i2c_driver_init(I2C1, twim_default_config);
+	i2c_driver_init(I2C1, twim_default_config());
 	
 	// init 6V enable
 	gpio_enable_gpio_pin(AVR32_PIN_PA04);

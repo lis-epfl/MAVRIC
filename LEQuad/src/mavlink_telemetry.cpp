@@ -41,34 +41,35 @@
 
 #include "mavlink_telemetry.h"
 #include "central_data.h"
-#include "onboard_parameters.h"
-#include "mavlink_stream.h"
-#include "scheduler.h"
-#include "tasks.h"
-#include "mavlink_waypoint_handler.h"
-#include "analog_monitor.h"
-#include "state.h"
-#include "position_estimation.h"
-#include "sonar_i2cxl.h"
+ 
+extern "C"
+{
+	#include "onboard_parameters.h"
+	#include "mavlink_stream.h"
+	#include "scheduler.h"
+	#include "mavlink_waypoint_handler.h"
+	#include "analog_monitor.h"
+	#include "state.h"
+	#include "position_estimation.h"
+	#include "sonar_i2cxl.h"
 
-#include "acoustic_telemetry.h"
-#include "data_logging_telemetry.h"
-#include "hud_telemetry.h"
-#include "remote_telemetry.h"
-#include "servos_telemetry.h"
-#include "state_telemetry.h"
-#include "gps_ublox_telemetry.h"
-#include "imu_telemetry.h"
-#include "bmp085_telemetry.h"
-#include "ahrs_telemetry.h"
-#include "position_estimation_telemetry.h"
-#include "stabilisation_telemetry.h"
-#include "joystick_parsing_telemetry.h"
-#include "simulation_telemetry.h"
-#include "scheduler_telemetry.h"
-#include "sonar_telemetry.h"
-
-central_data_t *central_data;
+	#include "acoustic_telemetry.h"
+	#include "data_logging_telemetry.h"
+	#include "hud_telemetry.h"
+	#include "remote_telemetry.h"
+	#include "servos_telemetry.h"
+	#include "state_telemetry.h"
+	#include "gps_ublox_telemetry.h"
+	#include "imu_telemetry.h"
+	#include "bmp085_telemetry.h"
+	#include "ahrs_telemetry.h"
+	#include "position_estimation_telemetry.h"
+	#include "stabilisation_telemetry.h"
+	#include "joystick_parsing_telemetry.h"
+	#include "simulation_telemetry.h"
+	#include "scheduler_telemetry.h"
+	#include "sonar_telemetry.h"
+}
 
 //------------------------------------------------------------------------------
 // PRIVATE FUNCTIONS DECLARATION
@@ -81,23 +82,23 @@ central_data_t *central_data;
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging);
+bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data_t* central_data);
 
 /**
  * \brief   Initialise the callback functions
  * 
- * \param   central_data            The pointer to the central_data structure
+ * \param   p_central_data_            The pointer to the p_central_data structure
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_init_communication_module(central_data_t *central_data);
+bool mavlink_telemetry_init_communication_module(central_data_t* central_data);
 
 //------------------------------------------------------------------------------
 // PRIVATE FUNCTIONS IMPLEMENTATION
 //------------------------------------------------------------------------------
 
 
-bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
+bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data_t* central_data)
 {
 	bool init_success = true;
 	
@@ -132,7 +133,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	return init_success;
 };
 
-bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
+bool mavlink_telemetry_init_communication_module(central_data_t* central_data)
 {
 	bool init_success = true;
 	
@@ -165,7 +166,7 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 //------------------------------------------------------------------------------
 
 
-bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters)
+bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_parameters, central_data_t* central_data)
 {
 	bool init_success = true;
 	
@@ -340,20 +341,19 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 //	init_success &= onboard_parameters_add_parameter_int32    ( onboard_parameters , ( int32_t*)&central_data->state_machine.low_battery_counter			, "safe_count"     );
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.remote_active,"Remote_Active");
-
+	init_success = onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.source_mode, "Remote_Src_Mode");
+    
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters,(int32_t*)&central_data->data_logging.log_data, "Log_continue");
 	
 	return init_success;
 }
 
 
-bool mavlink_telemetry_init(void)
+bool mavlink_telemetry_init(central_data_t* central_data)
 {
 	bool init_success = true;
 	
-	central_data = central_data_get_pointer_to_struct();
-	
-	init_success &= mavlink_telemetry_add_data_logging_parameters(&central_data->data_logging);
+	init_success &= mavlink_telemetry_add_data_logging_parameters(&central_data->data_logging, central_data);
 
 	init_success &= mavlink_telemetry_init_communication_module(central_data);
 	

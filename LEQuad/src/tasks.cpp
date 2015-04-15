@@ -41,36 +41,29 @@
 
 #include "tasks.h"
 #include "central_data.h"
-#include "print_util.h"
-#include "stabilisation.h"
-#include "gps_ublox.h"
-#include "navigation.h"
-#include "led.h"
-#include "imu.h"
-#include "delay.h"
-#include "sonar_i2cxl.h"
-#include "analog_monitor.h"
-#include "lsm330dlc.h"
-#include "hmc5883l.h"
-#include "stdio_usb.h"
-//#include "data_logging.h"
 
-#include "pwm_servos.h"
-
-#include "remote.h"
-#include "attitude_controller_p2.h"
-
-central_data_t* central_data;
-
-
-task_set_t* tasks_get_main_taskset() 
+extern "C"
 {
-	central_data = central_data_get_pointer_to_struct();
-
-	return central_data->scheduler.task_set;
+	#include "print_util.h"
+	#include "stabilisation.h"
+	#include "gps_ublox.h"
+	#include "navigation.h"
+	#include "led.h"
+	#include "imu.h"
+	#include "delay.h"
+	#include "sonar_i2cxl.h"
+	#include "analog_monitor.h"
+	#include "lsm330dlc.h"
+	#include "hmc5883l.h"
+	#include "stdio_usb.h"
+	//#include "data_logging.h"
+	#include "pwm_servos.h"
+	#include "remote.h"
+	#include "attitude_controller_p2.h"
 }
 
-void tasks_run_imu_update(void* arg)
+
+void tasks_run_imu_update(central_data_t* central_data)
 {
 	if (central_data->state.mav_mode.HIL == HIL_ON)
 	{
@@ -88,9 +81,9 @@ void tasks_run_imu_update(void* arg)
 	position_estimation_update(&central_data->position_estimation);
 }
 
-task_return_t tasks_run_stabilisation(void* arg) 
+task_return_t tasks_run_stabilisation(central_data_t* central_data) 
 {
-	tasks_run_imu_update(0);
+	tasks_run_imu_update(central_data);
 	
 	mav_mode_t mode = central_data->state.mav_mode;
 
@@ -193,10 +186,10 @@ task_return_t tasks_run_stabilisation(void* arg)
 
 
 // new task to test P^2 attutude controller
-task_return_t tasks_run_stabilisation_quaternion(void* arg);
-task_return_t tasks_run_stabilisation_quaternion(void* arg)
+task_return_t tasks_run_stabilisation_quaternion(central_data_t* central_data);
+task_return_t tasks_run_stabilisation_quaternion(central_data_t* central_data)
 {
-	tasks_run_imu_update(0);
+	tasks_run_imu_update(central_data);
 	
 	mav_mode_t mode = central_data->state.mav_mode;
 
@@ -229,7 +222,7 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 
 
 
-task_return_t tasks_run_gps_update(void* arg) 
+task_return_t tasks_run_gps_update(central_data_t* central_data) 
 {
 	if (central_data->state.mav_mode.HIL == HIL_ON)
 	{
@@ -244,7 +237,7 @@ task_return_t tasks_run_gps_update(void* arg)
 }
 
 
-task_return_t tasks_run_barometer_update(void* arg)
+task_return_t tasks_run_barometer_update(central_data_t* central_data)
 {
 	if (central_data->state.mav_mode.HIL == HIL_ON)
 	{
@@ -266,21 +259,17 @@ task_return_t tasks_led_toggle(void* arg)
 }
 
 
-bool tasks_create_tasks() 
+bool tasks_create_tasks(central_data_t* central_data) 
 {	
 	bool init_success = true;
 	
-	central_data = central_data_get_pointer_to_struct();
-	
 	scheduler_t* scheduler = &central_data->scheduler;
 
-	init_success &= scheduler_add_task(scheduler, 4000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation												, 0                                                    , 0);
-	//init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation_quaternion                               , 0 													, 0);
+	init_success &= scheduler_add_task(scheduler, 4000,		RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, (task_function_t)&tasks_run_stabilisation							, (task_argument_t)central_data 						, 0);
+	//init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation_quaternion                               , (task_argument_t)central_data						, 0);
 
-	//init_success &= scheduler_add_task(scheduler, 20000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , (task_function_t)&remote_update                                   , 0 													, 1);
-	
-	init_success &= scheduler_add_task(scheduler, 15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , &tasks_run_barometer_update                                       , 0 													, 2);
-	init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , &tasks_run_gps_update                                             , 0 													, 3);
+	init_success &= scheduler_add_task(scheduler, 15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , (task_function_t)&tasks_run_barometer_update                      , (task_argument_t)central_data						, 2);
+	init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&tasks_run_gps_update                            , (task_argument_t)central_data						, 3);
 	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&navigation_update								, (task_argument_t)&central_data->navigation			, 4);
 	
 	init_success &= scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
@@ -295,8 +284,6 @@ bool tasks_create_tasks()
 
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
 	
-	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
-
 	scheduler_sort_tasks(scheduler);
 	
 	return init_success;

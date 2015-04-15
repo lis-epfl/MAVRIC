@@ -42,19 +42,20 @@
 #ifndef MAVLINK_TELEMETRY_H_
 #define MAVLINK_TELEMETRY_H_
 
-#include "mavlink_stream.h"
-#include "onboard_parameters.h"
+#include "central_data.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+extern "C" 
+{
+	#include "mavlink_stream.h"
+	#include "onboard_parameters.h"
+}
 
 /**
  * \brief     Initialise all the mavlink streams and call the onboard parameters register
  *
  * \return	The initialization status of the module, suceed == true
  */
-bool mavlink_telemetry_init(void);
+bool mavlink_telemetry_init(central_data_t* central_data);
 
 /**
  * \brief   Add all onboard parameters to the parameter list
@@ -63,10 +64,7 @@ bool mavlink_telemetry_init(void);
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters);
+bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters, central_data_t* central_data);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* MAVLINK_DOWN_TELEMETRY_H_ */
