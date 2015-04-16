@@ -82,7 +82,7 @@ extern "C"
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data_t* central_data);
+bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data* central_data);
 
 /**
  * \brief   Initialise the callback functions
@@ -91,14 +91,14 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging,
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_init_communication_module(central_data_t* central_data);
+bool mavlink_telemetry_init_communication_module(central_data* central_data);
 
 //------------------------------------------------------------------------------
 // PRIVATE FUNCTIONS IMPLEMENTATION
 //------------------------------------------------------------------------------
 
 
-bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data_t* central_data)
+bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data* central_data)
 {
 	bool init_success = true;
 	
@@ -133,7 +133,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging,
 	return init_success;
 };
 
-bool mavlink_telemetry_init_communication_module(central_data_t* central_data)
+bool mavlink_telemetry_init_communication_module(central_data* central_data)
 {
 	bool init_success = true;
 	
@@ -166,7 +166,7 @@ bool mavlink_telemetry_init_communication_module(central_data_t* central_data)
 //------------------------------------------------------------------------------
 
 
-bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_parameters, central_data_t* central_data)
+bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_parameters, central_data* central_data)
 {
 	bool init_success = true;
 	
@@ -349,7 +349,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_para
 }
 
 
-bool mavlink_telemetry_init(central_data_t* central_data)
+bool mavlink_telemetry_init(central_data* central_data)
 {
 	bool init_success = true;
 	
@@ -380,7 +380,7 @@ bool mavlink_telemetry_init(central_data_t* central_data)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&hud_telemetry_send_message,									&central_data->hud_structure, 			MAVLINK_MSG_ID_VFR_HUD				);// ID 74
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_state,								&central_data->sim_model, 				MAVLINK_MSG_ID_HIL_STATE			);// ID 90
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,	 RUN_NEVER,	   PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_quaternions,							&central_data->sim_model,				MAVLINK_MSG_ID_HIL_STATE_QUATERNION	);// ID 115
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,											&central_data->sonar_i2cxl.data, 		MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 119
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,											&central_data->sonar.data,		 		MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 119
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
 	

@@ -40,6 +40,7 @@
 
 
 #include "central_data.h"
+#include "boardsupport.h"
 
 extern "C" 
 {
@@ -61,177 +62,182 @@ extern "C"
 }}
 
 
-bool central_data_init(central_data_t* central_data)
+central_data::central_data():
+	init_success(true),
+	sonar( sonar_i2cxl(board.i2c1) ),
+	board( megafly_rev4() )
 {	
-	bool init_success = true;
-	
+	// Legacy board initialisation (TODO: remove this)
+	boardsupport_init(this);
+
+	// New board initialisation
+	board.init();
+
 	// Init servos
 	//servo_pwm_init(central_data->servos);
-	init_success &= servos_init( &central_data->servos, servos_default_config());
-	servos_set_value_failsafe( &central_data->servos );
-	pwm_servos_write_to_hardware( &central_data->servos );
+	init_success &= servos_init( &servos, servos_default_config());
+	servos_set_value_failsafe( &servos );
+	pwm_servos_write_to_hardware( &servos );
 
 	time_keeper_delay_ms(100);	
 
 
 	// Init main sheduler
-	init_success &= scheduler_init(&central_data->scheduler, scheduler_default_config());
+	init_success &= scheduler_init(&scheduler, scheduler_default_config());
 	
 	time_keeper_delay_ms(100); 
 
 	// Init mavlink communication
 	mavlink_communication_conf_t mavlink_communication_config = mavlink_communication_default_config();
 	mavlink_communication_config.mavlink_stream_config.sysid = MAVLINK_SYS_ID;
-	init_success &= mavlink_communication_init(	&central_data->mavlink_communication, 
+	init_success &= mavlink_communication_init(	&mavlink_communication, 
 												mavlink_communication_config, 
-												central_data->telemetry_up_stream, 
-												central_data->telemetry_down_stream);
+												telemetry_up_stream, 
+												telemetry_down_stream);
 	
 	time_keeper_delay_ms(100); 
 
 	// Init state structure
-	init_success &= state_init(	&central_data->state,
+	init_success &= state_init(	&state,
 								state_default_config(),
-								&central_data->analog_monitor); 
+								&analog_monitor); 
 	
 	time_keeper_delay_ms(100);
 
 	//Init state_machine	
-	init_success &= state_machine_init( &central_data->state_machine,
-										&central_data->state,
-										&central_data->sim_model,
-										&central_data->remote,
-										&central_data->joystick_parsing);
+	init_success &= state_machine_init( &state_machine,
+										&state,
+										&sim_model,
+										&remote,
+										&joystick_parsing);
 	time_keeper_delay_ms(100);
 
 	// Init imu
-	init_success &= imu_init(   &central_data->imu,
+	init_success &= imu_init(   &imu,
 								imu_config(),
-								&central_data->state);
+								&state);
 	
 	time_keeper_delay_ms(100);
 
 	// Init ahrs
-	init_success &= ahrs_init(&central_data->ahrs);
+	init_success &= ahrs_init(&ahrs);
 
 	time_keeper_delay_ms(100);
 
 	
 	// Init qfilter
-	init_success &= qfilter_init(   &central_data->attitude_filter,
+	init_success &= qfilter_init(   &attitude_filter,
 									qfilter_default_config(),
-									&central_data->imu,
-									&central_data->ahrs);
+									&imu,
+									&ahrs);
 	
 	time_keeper_delay_ms(100);
 	
 	// Init position_estimation_init
-	init_success &= position_estimation_init(   	&central_data->position_estimation,
+	init_success &= position_estimation_init(   	&position_estimation,
 													position_estimation_default_config(),
-													&central_data->state,
-													&central_data->pressure,
-													&central_data->gps,
-													&central_data->ahrs,
-													&central_data->imu);
+													&state,
+													&pressure,
+													&gps,
+													&ahrs,
+													&imu);
 	
 	time_keeper_delay_ms(100);
 
 	// Init navigation
-	init_success &= navigation_init(&central_data->navigation,
+	init_success &= navigation_init(&navigation,
 									navigation_default_config(),
-									&central_data->controls_nav,
-									&central_data->ahrs.qe,
-									&central_data->waypoint_handler,
-									&central_data->position_estimation,
-									&central_data->state,
-									&central_data->joystick_parsing,
-									&central_data->remote,
-									&central_data->mavlink_communication);/*,
-									&central_data->sonar_i2cxl);*/
+									&controls_nav,
+									&ahrs.qe,
+									&waypoint_handler,
+									&position_estimation,
+									&state,
+									&joystick_parsing,
+									&remote,
+									&mavlink_communication);/*,
+									&sonar_i2cxl);*/
 	
 	time_keeper_delay_ms(100);
 
 	// Init waypont handler
-	init_success &= waypoint_handler_init(  &central_data->waypoint_handler,
-											&central_data->position_estimation,
-											&central_data->ahrs,
-											&central_data->state,
-											&central_data->mavlink_communication,
-											&central_data->mavlink_communication.mavlink_stream);
-	waypoint_handler_init_homing_waypoint(&central_data->waypoint_handler);
-	waypoint_handler_nav_plan_init(&central_data->waypoint_handler);
+	init_success &= waypoint_handler_init(  &waypoint_handler,
+											&position_estimation,
+											&ahrs,
+											&state,
+											&mavlink_communication,
+											&mavlink_communication.mavlink_stream);
+	waypoint_handler_init_homing_waypoint(&waypoint_handler);
+	waypoint_handler_nav_plan_init(&waypoint_handler);
 	
 	time_keeper_delay_ms(100);
 
 	
 	// Init stabilisers
-	init_success &= stabilisation_copter_init(	&central_data->stabilisation_copter,
+	init_success &= stabilisation_copter_init(	&stabilisation_copter,
 												stabilisation_copter_default_config(),
-												&central_data->controls,
-												&central_data->imu,
-												&central_data->ahrs,
-												&central_data->position_estimation,
-												&central_data->servos);
+												&controls,
+												&imu,
+												&ahrs,
+												&position_estimation,
+												&servos);
 	
 	time_keeper_delay_ms(100);
 
-	init_success &= stabilisation_init( &central_data->controls);
+	init_success &= stabilisation_init( &controls);
 	
 	time_keeper_delay_ms(100);
 
 	// Init simulation (should be done after position_estimation)
-	init_success &= simulation_init(&central_data->sim_model,
+	init_success &= simulation_init(&sim_model,
 									simulation_default_config(),
-									&central_data->ahrs,
-									&central_data->imu,
-									&central_data->position_estimation,
-									&central_data->pressure,
-									&central_data->gps,
-									&central_data->sonar_i2cxl.data,
-									&central_data->state,
-									&central_data->servos,
-									&central_data->state.nav_plan_active);
+									&ahrs,
+									&imu,
+									&position_estimation,
+									&pressure,
+									&gps,
+									&sonar.data,
+									&state,
+									&servos,
+									&state.nav_plan_active);
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
 	// Init hud	
-	init_success &= hud_telemetry_init(	&central_data->hud_structure, 
-										&central_data->position_estimation,
-										&central_data->controls,
-										&central_data->ahrs);
+	init_success &= hud_telemetry_init(	&hud_structure, 
+										&position_estimation,
+										&controls,
+										&ahrs);
 	
 	time_keeper_delay_ms(100);
 	
-	init_success &= joystick_parsing_init(	&central_data->joystick_parsing,
-											&central_data->state);
+	init_success &= joystick_parsing_init(	&joystick_parsing,
+											&state);
 	time_keeper_delay_ms(100);
 	
 	// Init sonar
-	init_success &= sonar_i2cxl_init(&central_data->sonar_i2cxl);
+	// init_success &= sonar_i2cxl_init(&sonar_i2cxl);
 
 	// Init P^2 attitude controller
-	attitude_controller_p2_init( 	&central_data->attitude_controller,
+	attitude_controller_p2_init( 	&attitude_controller,
 									attitude_controller_p2_default_config(),
-									&central_data->command.attitude,
-									&central_data->command.torque,
-									&central_data->ahrs );
+									&command.attitude,
+									&command.torque,
+									&ahrs );
 
 	// Init servo mixing
-	init_success &= servo_mix_quadcotper_diag_init( &central_data->servo_mix, 
+	init_success &= servo_mix_quadcotper_diag_init( &servo_mix, 
 													servo_mix_quadcopter_diag_default_config(), 
-													&central_data->command.torque, 
-													&central_data->command.thrust, 
-													&central_data->servos);
+													&command.torque, 
+													&command.thrust, 
+													&servos);
 
 	// Init remote
-	init_success &= remote_init( 	&central_data->remote, 
+	init_success &= remote_init( 	&remote, 
 									remote_default_config());
 
 	
 	//Init data logging
-	init_success &= data_logging_init(  &central_data->data_logging,
+	init_success &= data_logging_init(  &data_logging,
 										data_logging_default_config(),
-										&central_data->state);
-										
-	return init_success;
+										&state);
 }

@@ -92,7 +92,7 @@ extern "C" {
  *
  * \return	The initialization status of each module, succeed == true
  */
-bool boardsupport_init(central_data_t* p_central_data);
+bool boardsupport_init(central_data* p_central_data);
 
 
 

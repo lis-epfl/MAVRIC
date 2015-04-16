@@ -41,6 +41,7 @@
 
 #include "tasks.h"
 #include "central_data.h"
+#include "sonar_i2cxl.h"
 
 extern "C"
 {
@@ -51,7 +52,6 @@ extern "C"
 	#include "led.h"
 	#include "imu.h"
 	#include "delay.h"
-	#include "sonar_i2cxl.h"
 	#include "analog_monitor.h"
 	#include "lsm330dlc.h"
 	#include "hmc5883l.h"
@@ -63,7 +63,7 @@ extern "C"
 }
 
 
-void tasks_run_imu_update(central_data_t* central_data)
+void tasks_run_imu_update(central_data* central_data)
 {
 	if (central_data->state.mav_mode.HIL == HIL_ON)
 	{
@@ -81,7 +81,7 @@ void tasks_run_imu_update(central_data_t* central_data)
 	position_estimation_update(&central_data->position_estimation);
 }
 
-task_return_t tasks_run_stabilisation(central_data_t* central_data) 
+task_return_t tasks_run_stabilisation(central_data* central_data) 
 {
 	tasks_run_imu_update(central_data);
 	
@@ -186,8 +186,8 @@ task_return_t tasks_run_stabilisation(central_data_t* central_data)
 
 
 // new task to test P^2 attutude controller
-task_return_t tasks_run_stabilisation_quaternion(central_data_t* central_data);
-task_return_t tasks_run_stabilisation_quaternion(central_data_t* central_data)
+task_return_t tasks_run_stabilisation_quaternion(central_data* central_data);
+task_return_t tasks_run_stabilisation_quaternion(central_data* central_data)
 {
 	tasks_run_imu_update(central_data);
 	
@@ -222,7 +222,7 @@ task_return_t tasks_run_stabilisation_quaternion(central_data_t* central_data)
 
 
 
-task_return_t tasks_run_gps_update(central_data_t* central_data) 
+task_return_t tasks_run_gps_update(central_data* central_data) 
 {
 	if (central_data->state.mav_mode.HIL == HIL_ON)
 	{
@@ -237,7 +237,7 @@ task_return_t tasks_run_gps_update(central_data_t* central_data)
 }
 
 
-task_return_t tasks_run_barometer_update(central_data_t* central_data)
+task_return_t tasks_run_barometer_update(central_data* central_data)
 {
 	if (central_data->state.mav_mode.HIL == HIL_ON)
 	{
@@ -259,7 +259,7 @@ task_return_t tasks_led_toggle(void* arg)
 }
 
 
-bool tasks_create_tasks(central_data_t* central_data) 
+bool tasks_create_tasks(central_data* central_data) 
 {	
 	bool init_success = true;
 	
@@ -282,7 +282,7 @@ bool tasks_create_tasks(central_data_t* central_data)
 	
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
-	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
+	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar					, 12);
 	
 	scheduler_sort_tasks(scheduler);
 	

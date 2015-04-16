@@ -44,6 +44,10 @@
 #ifndef CONF_IMU_REV4_H_
 #define CONF_IMU_REV4_H_
 
+#ifdef __cplusplus
+	extern "C" {
+#endif
+
 #include "imu.h"
 
 static imu_conf_t imu_config()
@@ -129,5 +133,10 @@ static imu_conf_t imu_config()
 
 	return imu_conf;
 };
+
+
+#ifdef __cplusplus
+	}
+#endif
 
 #endif /* CONF_IMU_REV4_H_ */

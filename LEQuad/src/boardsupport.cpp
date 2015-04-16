@@ -41,8 +41,7 @@
 
 #include "boardsupport.h" 
 
-
-bool boardsupport_init(central_data_t *central_data) 
+bool boardsupport_init(central_data* central_data) 
 {
 	bool init_success = true;
 	
@@ -117,8 +116,10 @@ bool boardsupport_init(central_data_t *central_data)
 	bmp085_init(&central_data->pressure);
 	
 	// Init I2C for ultrasound
-	i2c_driver_init(I2C1, twim_default_config());
+	// i2c_driver_init(I2C1, twim_default_config());
 	
+	
+
 	// init 6V enable
 	gpio_enable_gpio_pin(AVR32_PIN_PA04);
 	gpio_set_gpio_pin(AVR32_PIN_PA04);
@@ -129,6 +130,8 @@ bool boardsupport_init(central_data_t *central_data)
 	piezo_speaker_init_binary();
 	
 	print_util_dbg_print("Board initialised\r\n");
-	
+
+	time_keeper_delay_ms(2000);
+
 	return init_success;
 }

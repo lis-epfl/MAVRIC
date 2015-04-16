@@ -55,7 +55,7 @@ extern "C"
  *
  * \return	The initialization status of the module, suceed == true
  */
-bool mavlink_telemetry_init(central_data_t* central_data);
+bool mavlink_telemetry_init(central_data* central_data);
 
 /**
  * \brief   Add all onboard parameters to the parameter list
@@ -64,7 +64,7 @@ bool mavlink_telemetry_init(central_data_t* central_data);
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters, central_data_t* central_data);
+bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters, central_data* central_data);
 
 
 #endif /* MAVLINK_DOWN_TELEMETRY_H_ */

@@ -52,15 +52,12 @@ extern "C"
 }
 
 
- 
-central_data_t central_data;
-
-void initialisation() 
+void initialisation(central_data& central_data) 
 {	
 	bool init_success = true;
 	
-	init_success &= boardsupport_init(&central_data);
-	init_success &= central_data_init(&central_data);
+	// init_success &= boardsupport_init(&central_data);
+	// init_success &= central_data_init(&central_data);
 	
 	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
 
@@ -94,11 +91,13 @@ void initialisation()
 
 int main (void)
 {
-	initialisation();
-	
+	central_data cd;
+
+	initialisation(cd);
+
 	while (1 == 1) 
 	{
-		scheduler_update(&central_data.scheduler);
+		scheduler_update(&cd.scheduler);
 	}
 
 	return 0;

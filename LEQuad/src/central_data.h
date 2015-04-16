@@ -42,6 +42,8 @@
 #ifndef CENTRAL_DATA_H_
 #define CENTRAL_DATA_H_
 
+#include "megafly_rev4.h"
+#include "sonar_i2cxl.h"
 
 extern "C" 
 {
@@ -73,7 +75,6 @@ extern "C"
 	#include "position_estimation.h"
 
 	#include "analog_monitor.h"
-	#include "sonar_i2cxl.h"
 	#include "navigation.h"
 	#include "state.h"
 	#include "stabilisation.h"
@@ -98,7 +99,30 @@ extern "C"
 /**
  * \brief The central data structure
  */
-typedef struct  {
+class central_data
+{
+public:
+	/**
+	 * @brief   Constructor
+	 */
+	central_data();
+
+	/**
+	 * @brief   Initialisation
+	 * @return [description]
+	 */
+	bool init(void);
+
+	/**
+	 * Public members
+	 * 
+	 */	
+	bool init_success;
+	sonar_i2cxl sonar;
+	megafly_rev4 board;
+
+
+
 	scheduler_t	scheduler;
 	mavlink_communication_t mavlink_communication;
 	attitude_controller_p2_t attitude_controller;
@@ -144,14 +168,12 @@ typedef struct  {
 	
 	barometer_t pressure;										///< The pressure structure
 	
-	hud_telemetry_structure_t hud_structure;								///< The HUD structure
-
-	sonar_i2cxl_t sonar_i2cxl;									///< The i2cxl sonar structure
+	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 	
 	sd_spi_t sd_spi;											///< The sd_SPI driver structure
 	
 	data_logging_t data_logging;								///< The log data structure	
-} central_data_t;
+};
 
 
 /**
@@ -159,7 +181,7 @@ typedef struct  {
  *
  * \return	The initialization status, succeed == true, failure == false
  */
-bool central_data_init(central_data_t* p_central_data);
+// bool central_data_init(central_data_t* p_central_data);
 
 
 

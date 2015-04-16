@@ -126,10 +126,10 @@ SRCS_INC += -I${MAVRIC_SRC}/asf/common/boards/user_board
 
 # Sources files for project folder (*.c and *.cpp)
 SRCS += main.cpp
-SRCS += central_data.c
-SRCS += boardsupport.c
-SRCS += mavlink_telemetry.c
-SRCS += tasks.c
+SRCS += central_data.cpp
+SRCS += boardsupport.cpp
+SRCS += mavlink_telemetry.cpp
+SRCS += tasks.cpp
 
 SRCS += asf/avr32/drivers/intc/exception.S
 # SRCS += exception.S
@@ -176,17 +176,20 @@ MAVRIC_LIB=../../MAVRIC_Library/
 
 # Include folders for Library
 LIB_INC += -I$(MAVRIC_LIB)/
+LIB_INC += -I$(MAVRIC_LIB)/boards
+LIB_INC += -I$(MAVRIC_LIB)/communication/
+LIB_INC += -I$(MAVRIC_LIB)/control/
+LIB_INC += -I$(MAVRIC_LIB)/drivers
+LIB_INC += -I$(MAVRIC_LIB)/hal/common
+LIB_INC += -I$(MAVRIC_LIB)/hal/avr32/
+LIB_INC += -I$(MAVRIC_LIB)/hal/include
 LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/common/
 LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric/
 LIB_INC += -I$(MAVRIC_LIB)/libs/fats/
 LIB_INC += -I$(MAVRIC_LIB)/libs/
-LIB_INC += -I$(MAVRIC_LIB)/util/
-LIB_INC += -I$(MAVRIC_LIB)/hal/include
-LIB_INC += -I$(MAVRIC_LIB)/hal/avr32/include
-LIB_INC += -I$(MAVRIC_LIB)/control/
 LIB_INC += -I$(MAVRIC_LIB)/sensing/
 LIB_INC += -I$(MAVRIC_LIB)/runtime/
-LIB_INC += -I$(MAVRIC_LIB)/communication/
+LIB_INC += -I$(MAVRIC_LIB)/util/
 LIB_INC += -I$(MAVRIC_SRC)/
 
 # Library source files (*.c and *.cpp)
@@ -197,39 +200,43 @@ LIB_SRCS += util/linear_algebra.c
 LIB_SRCS += util/print_util.c
 LIB_SRCS += util/quick_trig.c
 
+LIB_SRCS += boards/megafly_rev4.cpp
+
+LIB_SRCS += drivers/ads1274.c                   
+LIB_SRCS += drivers/adxl345_driver.c
+LIB_SRCS += drivers/airspeed_analog.c           
+LIB_SRCS += drivers/battery.c                    
+LIB_SRCS += drivers/bmp085.c                    
+LIB_SRCS += drivers/bmp085_telemetry.c          
+LIB_SRCS += drivers/curvace.c                   
+LIB_SRCS += drivers/gps_ublox.c                 
+LIB_SRCS += drivers/gps_ublox_telemetry.c       
+LIB_SRCS += drivers/hmc5883l.c             
+LIB_SRCS += drivers/itg3200.c              
+LIB_SRCS += drivers/lsm330dlc.c            
+LIB_SRCS += drivers/radar_driver.c         
+LIB_SRCS += drivers/radar_module_driver.c
+LIB_SRCS += drivers/servos.c                              
+LIB_SRCS += drivers/servos_telemetry.c
+LIB_SRCS += drivers/sonar_i2cxl.c
+LIB_SRCS += drivers/sonar_telemetry.c
+LIB_SRCS += drivers/spektrum_satellite.c
+LIB_SRCS += drivers/xbee.c
+                   
 LIB_SRCS += hal/avr32/adc_int.c                   
-LIB_SRCS += hal/avr32/ads1274.c                   
-LIB_SRCS += hal/avr32/adxl345_driver.c                   
-LIB_SRCS += hal/avr32/airspeed_analog.c           
 LIB_SRCS += hal/avr32/analog_monitor.c            
 LIB_SRCS += hal/avr32/analog_monitor_telemetry.c  
-LIB_SRCS += hal/avr32/battery.c                    
-LIB_SRCS += hal/avr32/bmp085.c                    
-LIB_SRCS += hal/avr32/bmp085_telemetry.c          
-LIB_SRCS += hal/avr32/curvace.c                   
 LIB_SRCS += hal/avr32/dac_dma.c                   
-LIB_SRCS += hal/avr32/gps_ublox.c                 
-LIB_SRCS += hal/avr32/gps_ublox_telemetry.c       
-LIB_SRCS += hal/avr32/hmc5883l.c             
+LIB_SRCS += hal/avr32/i2c_avr32.cpp       
 LIB_SRCS += hal/avr32/i2c_driver_int.c       
-LIB_SRCS += hal/avr32/itg3200.c              
 LIB_SRCS += hal/avr32/led.c                  
-LIB_SRCS += hal/avr32/lsm330dlc.c            
 LIB_SRCS += hal/avr32/piezo_speaker.c        
 LIB_SRCS += hal/avr32/pwm_servos.c           
-LIB_SRCS += hal/avr32/radar_driver.c         
-LIB_SRCS += hal/avr32/radar_module_driver.c
 LIB_SRCS += hal/avr32/sd_spi.c
-LIB_SRCS += hal/avr32/servos.c                              
-LIB_SRCS += hal/avr32/servos_telemetry.c
-LIB_SRCS += hal/avr32/sonar_i2cxl.c
-LIB_SRCS += hal/avr32/sonar_telemetry.c
-LIB_SRCS += hal/avr32/spektrum_satellite.c
 LIB_SRCS += hal/avr32/spi_buffered.c
 LIB_SRCS += hal/avr32/time_keeper.c
 LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c
-LIB_SRCS += hal/avr32/xbee.c
 
 LIB_SRCS += control/adaptive_parameter.c          
 LIB_SRCS += control/attitude_controller.c         
