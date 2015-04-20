@@ -39,7 +39,7 @@
  *
  ******************************************************************************/
 
-#include "boardsupport.h" 
+#include "boardsupport.hpp" 
 
 bool boardsupport_init(central_data* central_data) 
 {

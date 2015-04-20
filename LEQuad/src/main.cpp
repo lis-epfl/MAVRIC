@@ -38,10 +38,10 @@
  *
  ******************************************************************************/
  
-#include "boardsupport.h"
-#include "central_data.h"
-#include "mavlink_telemetry.h"
-#include "tasks.h"
+#include "boardsupport.hpp"
+#include "central_data.hpp"
+#include "mavlink_telemetry.hpp"
+#include "tasks.hpp"
 
 extern "C" 
 {

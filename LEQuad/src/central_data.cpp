@@ -39,8 +39,8 @@
  ******************************************************************************/
 
 
-#include "central_data.h"
-#include "boardsupport.h"
+#include "central_data.hpp"
+#include "boardsupport.hpp"
 
 extern "C" 
 {

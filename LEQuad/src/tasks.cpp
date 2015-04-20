@@ -39,9 +39,9 @@
  ******************************************************************************/
 
 
-#include "tasks.h"
-#include "central_data.h"
-#include "sonar_i2cxl.h"
+#include "tasks.hpp"
+#include "central_data.hpp"
+#include "sonar_i2cxl.hpp"
 
 extern "C"
 {

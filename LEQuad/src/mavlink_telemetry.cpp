@@ -39,8 +39,9 @@
  ******************************************************************************/
 
 
-#include "mavlink_telemetry.h"
-#include "central_data.h"
+#include "mavlink_telemetry.hpp"
+#include "central_data.hpp"
+#include "sonar_i2cxl.hpp"
  
 extern "C"
 {
@@ -51,7 +52,6 @@ extern "C"
 	#include "analog_monitor.h"
 	#include "state.h"
 	#include "position_estimation.h"
-	#include "sonar_i2cxl.h"
 
 	#include "acoustic_telemetry.h"
 	#include "data_logging_telemetry.h"
