@@ -453,6 +453,13 @@ ${BUILD_DIR}/%.o: ${MAVRIC_SRC}/%.cpp
 	@$(CXX) -c $< -o $@ $(CXXFLAGS)
 	@$(BUILD_CMD)
 
+# Flash
+flash: ${PROJ_NAME}.elf
+	@dfu-programmer at32uc3c1512 erase
+	@dfu-programmer at32uc3c1512 get 
+	@dfu-programmer at32uc3c1512 flash ${PROJ_NAME}.hex --suppress-bootloader-mem 
+	@dfu-programmer at32uc3c1512 reset 
+
 .PHONY: clean
 clean:
 	@rm -f $(OBJS) $(PROJ_NAME).elf $(PROJ_NAME).hex $(PROJ_NAME).bin
