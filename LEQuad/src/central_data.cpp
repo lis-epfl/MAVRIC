@@ -84,13 +84,14 @@ Central_data::Central_data():
 	// }
 
 	const char* msg = "Hello";
-
+	print_util_dbg_print("[UART0] WRITING...\r\n");
+	time_keeper_delay_ms(1000);
 	board.uart0.write((uint8_t*)msg, sizeof(msg));
 	time_keeper_delay_ms(1000);
 
+	// board.uart0.flush();
 
 	// Init servos
-	//servo_pwm_init(central_data->servos);
 	init_success &= servos_init( &servos, servos_default_config());
 	servos_set_value_failsafe( &servos );
 	pwm_servos_write_to_hardware( &servos );
@@ -98,7 +99,7 @@ Central_data::Central_data():
 	time_keeper_delay_ms(100);	
 
 	// Init GPS
-	gps_ublox_init( &gps, &board.uart3 );	
+	// gps_ublox_init( &gps, &board.uart3 );	
 
 	// Init main sheduler
 	init_success &= scheduler_init(&scheduler, scheduler_default_config());
