@@ -43,11 +43,11 @@
 #define TASKS_H_
 
 #include "central_data.hpp"
+#include "remote.hpp"
 
 extern "C" 
 {
 	#include "scheduler.h"
-	#include "remote.h"
 }
 
 /**
@@ -55,13 +55,13 @@ extern "C"
  *
  * \return	The initialization status, succeed == true
  */	
-bool tasks_create_tasks(central_data* central_data);
+bool tasks_create_tasks(Central_data* central_data);
 
 
 /**
  * \brief            Updates the IMU
  */
-void tasks_run_imu_update(central_data* central_data);
+void tasks_run_imu_update(Central_data* central_data);
 
 
 /**
@@ -85,30 +85,30 @@ void tasks_rc_user_channels(uint8_t* chan_switch, signal_quality_t* rc_check, in
 /**
  * \brief            Run the main stabilisation loop
  */
-task_return_t tasks_run_stabilisation(central_data* central_data);
+task_return_t tasks_run_stabilisation(Central_data* central_data);
 
 
 /**
  * \brief            Run GPS update
  */
-task_return_t tasks_run_gps_update(central_data* central_data);
+task_return_t tasks_run_gps_update(Central_data* central_data);
 
 
 /**
  * \brief            Run the navigation task
  */
-task_return_t tasks_run_navigation_update(central_data* central_data);
+task_return_t tasks_run_navigation_update(Central_data* central_data);
 
 
 /**
  * \brief            Run the barometer task
  */
-task_return_t tasks_run_barometer_update(central_data* central_data);
+task_return_t tasks_run_barometer_update(Central_data* central_data);
 
 /**
  * \brief            Run the sonar task
  */
-task_return_t sonar_update(central_data* central_data);
+task_return_t sonar_update(Central_data* central_data);
 
 /**
  * \brief            Run the LED toggle task

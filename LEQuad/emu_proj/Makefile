@@ -20,9 +20,10 @@ SRCS_INC += -I${MAVRIC_SRC}/asf/common/user_board/
 
 # Sources files for project folder (*.c and *.cpp)
 SRCS += main.cpp
-SRCS += central_data.c
-SRCS += boardsupport.c
-
+SRCS += central_data.cpp
+SRCS += boardsupport.cpp
+SRCS += mavlink_telemetry.cpp
+SRCS += tasks.cpp
 
 # ------------------------------------------------------------------------------
 # MAVRIC LIBRARY
@@ -31,18 +32,23 @@ SRCS += boardsupport.c
 MAVRIC_LIB=../../MAVRIC_Library/
 
 # Include folders for Library
-LIB_INC += -I$(MAVRIC_LIB)/
-LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/common/
-LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric/
-LIB_INC += -I$(MAVRIC_LIB)/libs/
-LIB_INC += -I$(MAVRIC_LIB)/util/
-LIB_INC += -I$(MAVRIC_LIB)/hal/include
-LIB_INC += -I$(MAVRIC_LIB)/hal/emu/include
-LIB_INC += -I$(MAVRIC_LIB)/control/
-LIB_INC += -I$(MAVRIC_LIB)/sensing/
-LIB_INC += -I$(MAVRIC_LIB)/runtime/
-LIB_INC += -I$(MAVRIC_LIB)/communication/
-LIB_INC += -I$(MAVRIC_SRC)/
+LIB_INC += -I$(MAVRIC_LIB)
+LIB_INC += -I$(MAVRIC_LIB)/boards
+LIB_INC += -I$(MAVRIC_LIB)/communication
+LIB_INC += -I$(MAVRIC_LIB)/control
+LIB_INC += -I$(MAVRIC_LIB)/drivers
+LIB_INC += -I$(MAVRIC_LIB)/hal/common
+LIB_INC += -I$(MAVRIC_LIB)/hal/linux
+LIB_INC += -I$(MAVRIC_LIB)/hal/dummy
+LIB_INC += -I$(MAVRIC_LIB)/hal
+LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/common
+LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric
+LIB_INC += -I$(MAVRIC_LIB)/libs/fats
+LIB_INC += -I$(MAVRIC_LIB)/libs
+LIB_INC += -I$(MAVRIC_LIB)/sensing
+LIB_INC += -I$(MAVRIC_LIB)/runtime
+LIB_INC += -I$(MAVRIC_LIB)/util
+LIB_INC += -I$(MAVRIC_SRC)
 
 # Library source files (*.c and *.cpp)
 LIB_SRCS += util/buffer.c
@@ -52,19 +58,99 @@ LIB_SRCS += util/linear_algebra.c
 LIB_SRCS += util/print_util.c
 LIB_SRCS += util/quick_trig.c
 
-LIB_SRCS += hal/emu/adxl345_driver.c
-LIB_SRCS += hal/emu/analog_monitor.c
-LIB_SRCS += hal/emu/bmp085.c
-LIB_SRCS += hal/emu/hmc5883l.c
-LIB_SRCS += hal/emu/itg3200.c
-LIB_SRCS += hal/emu/led.c
-LIB_SRCS += hal/emu/lsm330dlc.c
-LIB_SRCS += hal/emu/piezo_speaker.c
-LIB_SRCS += hal/emu/radar_module_driver.c
-LIB_SRCS += hal/emu/pwm_servos.c
-LIB_SRCS += hal/emu/spektrum_satellite.c
-LIB_SRCS += hal/emu/time_keeper.c
-LIB_SRCS += hal/emu/udp_stream.c
+# LIB_SRCS += boards/megafly_rev4.cpp
+
+# LIB_SRCS += drivers/ads1274.c                   
+# LIB_SRCS += drivers/adxl345_driver.c
+# LIB_SRCS += drivers/airspeed_analog.c           
+# LIB_SRCS += drivers/battery.c                    
+# LIB_SRCS += drivers/bmp085.c                    
+# LIB_SRCS += drivers/bmp085_telemetry.c          
+# LIB_SRCS += drivers/curvace.c                   
+# LIB_SRCS += drivers/gps_ublox.c                 
+# LIB_SRCS += drivers/gps_ublox_telemetry.c       
+# LIB_SRCS += drivers/hmc5883l.c             
+# LIB_SRCS += drivers/itg3200.c              
+# LIB_SRCS += drivers/lsm330dlc.c            
+# LIB_SRCS += drivers/radar_driver.c         
+# LIB_SRCS += drivers/radar_module_driver.c
+# LIB_SRCS += drivers/servos.c                              
+# LIB_SRCS += drivers/servos_telemetry.c
+# LIB_SRCS += drivers/sonar_i2cxl.c
+# LIB_SRCS += drivers/sonar_telemetry.c
+# LIB_SRCS += drivers/spektrum_satellite.c
+# LIB_SRCS += drivers/xbee.c
+
+LIB_SRCS += control/adaptive_parameter.c          
+LIB_SRCS += control/attitude_controller.c         
+LIB_SRCS += control/attitude_controller_p2.c      
+LIB_SRCS += control/attitude_error_estimator.c    
+LIB_SRCS += control/joystick_parsing.c            
+LIB_SRCS += control/joystick_parsing_telemetry.c  
+LIB_SRCS += control/navigation.c                   
+LIB_SRCS += control/pid_controller.c               
+LIB_SRCS += control/servos_mix_quadcopter_cross.c  
+LIB_SRCS += control/servos_mix_quadcopter_diag.c   
+LIB_SRCS += control/stabilisation.c
+LIB_SRCS += control/stabilisation_copter.c
+LIB_SRCS += control/stabilisation_telemetry.c
+LIB_SRCS += control/vector_field_waypoint.c
+LIB_SRCS += control/velocity_controller_copter.c
+
+LIB_SRCS += sensing/ahrs.c            
+LIB_SRCS += sensing/ahrs_telemetry.c  
+LIB_SRCS += sensing/imu.c             
+LIB_SRCS += sensing/imu_telemetry.c                  
+LIB_SRCS += sensing/position_estimation.c            
+LIB_SRCS += sensing/position_estimation_telemetry.c
+LIB_SRCS += sensing/qfilter.c
+LIB_SRCS += sensing/simulation.c
+LIB_SRCS += sensing/simulation_telemetry.c   
+
+LIB_SRCS += runtime/scheduler.c  
+LIB_SRCS += runtime/scheduler_telemetry.c
+
+LIB_SRCS += communication/acoustic.c                      
+LIB_SRCS += communication/acoustic_telemetry.c      
+LIB_SRCS += communication/console.c                 
+LIB_SRCS += communication/data_logging.c            
+LIB_SRCS += communication/data_logging_telemetry.c  
+LIB_SRCS += communication/hud_telemetry.c           
+LIB_SRCS += communication/mavlink_communication.c     
+LIB_SRCS += communication/mavlink_message_handler.c   
+LIB_SRCS += communication/mavlink_stream.c            
+LIB_SRCS += communication/mavlink_waypoint_handler.c  
+LIB_SRCS += communication/onboard_parameters.c
+LIB_SRCS += communication/remote.c
+LIB_SRCS += communication/remote_telemetry.c
+LIB_SRCS += communication/state.c
+LIB_SRCS += communication/state_machine.c
+LIB_SRCS += communication/state_telemetry.c
+
+LIB_SRCS += libs/fat_fs/diskio.c  
+LIB_SRCS += libs/fat_fs/ff.c  
+LIB_SRCS += libs/fat_fs/option/ccsbcs.c
+LIB_SRCS += libs/fat_fs/option/syscall.c
+LIB_SRCS += libs/fat_fs/option/unicode.c
+
+LIB_SRCS += hal/dummy/serial_dummy.cpp
+LIB_SRCS += hal/dummy/serial_udp.cpp
+LIB_SRCS += hal/dummy/i2c_dummy.cpp
+
+
+# LIB_SRCS += hal/emu/adxl345_driver.c
+# LIB_SRCS += hal/emu/analog_monitor.c
+# LIB_SRCS += hal/emu/bmp085.c
+# LIB_SRCS += hal/emu/hmc5883l.c
+# LIB_SRCS += hal/emu/itg3200.c
+# LIB_SRCS += hal/emu/led.c
+# LIB_SRCS += hal/emu/lsm330dlc.c
+# LIB_SRCS += hal/emu/piezo_speaker.c
+# LIB_SRCS += hal/emu/radar_module_driver.c
+# LIB_SRCS += hal/emu/pwm_servos.c
+# LIB_SRCS += hal/emu/spektrum_satellite.c
+# LIB_SRCS += hal/emu/time_keeper.c
+# LIB_SRCS += hal/emu/udp_stream.c
 
 
 # ------------------------------------------------------------------------------
@@ -75,7 +161,7 @@ OBJCOPY = objcopy
 
 CFLAGS  = -g -O2 -Wall -std=c11
 CFLAGS += -fdiagnostics-color=auto
-CFLAGS += -D_DEFAULT_SOURCE
+# CFLAGS += -D_DEFAULT_SOURCE
 
 # Include files from MAVRIC library and source folder
 CFLAGS += -I.
@@ -91,7 +177,7 @@ OBJCOPY = objcopy
 
 CXXFLAGS  = -g -O2 -Wall -std=c++11
 CXXFLAGS += -fdiagnostics-color=auto
-CXXFLAGS += -D_DEFAULT_SOURCE
+# CXXFLAGS += -D_DEFAULT_SOURCE
 
 # Include files from MAVRIC library and source folder
 CXXFLAGS += -I.

@@ -42,33 +42,34 @@
 #include "mavlink_telemetry.hpp"
 #include "central_data.hpp"
 #include "sonar_i2cxl.hpp"
+#include "onboard_parameters.hpp"
+#include "mavlink_waypoint_handler.hpp"
+#include "acoustic_telemetry.hpp"
+#include "data_logging_telemetry.hpp"
+#include "hud_telemetry.hpp"
+#include "stabilisation_telemetry.hpp"
+#include "mavlink_stream.hpp"
+#include "state.hpp"
+#include "position_estimation.hpp"
+#include "remote_telemetry.hpp"
+#include "servos_telemetry.hpp"
+#include "state_telemetry.hpp"
+#include "gps_ublox_telemetry.hpp"
+#include "imu_telemetry.hpp"
+ 
+#include "bmp085_telemetry.hpp"
+#include "ahrs_telemetry.hpp"
+#include "position_estimation_telemetry.hpp"
+#include "joystick_parsing_telemetry.hpp"
+#include "simulation_telemetry.hpp"
+#include "scheduler_telemetry.hpp"
+#include "sonar_telemetry.hpp"
  
 extern "C"
 {
-	#include "onboard_parameters.h"
-	#include "mavlink_stream.h"
 	#include "scheduler.h"
-	#include "mavlink_waypoint_handler.h"
 	#include "analog_monitor.h"
-	#include "state.h"
-	#include "position_estimation.h"
 
-	#include "acoustic_telemetry.h"
-	#include "data_logging_telemetry.h"
-	#include "hud_telemetry.h"
-	#include "remote_telemetry.h"
-	#include "servos_telemetry.h"
-	#include "state_telemetry.h"
-	#include "gps_ublox_telemetry.h"
-	#include "imu_telemetry.h"
-	#include "bmp085_telemetry.h"
-	#include "ahrs_telemetry.h"
-	#include "position_estimation_telemetry.h"
-	#include "stabilisation_telemetry.h"
-	#include "joystick_parsing_telemetry.h"
-	#include "simulation_telemetry.h"
-	#include "scheduler_telemetry.h"
-	#include "sonar_telemetry.h"
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +83,7 @@ extern "C"
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data* central_data);
+bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, Central_data* central_data);
 
 /**
  * \brief   Initialise the callback functions
@@ -91,14 +92,14 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging,
  *
  * \return	The initialization status of the module, succeed == true
  */
-bool mavlink_telemetry_init_communication_module(central_data* central_data);
+bool mavlink_telemetry_init_communication_module(Central_data* central_data);
 
 //------------------------------------------------------------------------------
 // PRIVATE FUNCTIONS IMPLEMENTATION
 //------------------------------------------------------------------------------
 
 
-bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, central_data* central_data)
+bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging, Central_data* central_data)
 {
 	bool init_success = true;
 	
@@ -133,7 +134,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging,
 	return init_success;
 };
 
-bool mavlink_telemetry_init_communication_module(central_data* central_data)
+bool mavlink_telemetry_init_communication_module(Central_data* central_data)
 {
 	bool init_success = true;
 	
@@ -166,7 +167,7 @@ bool mavlink_telemetry_init_communication_module(central_data* central_data)
 //------------------------------------------------------------------------------
 
 
-bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_parameters, central_data* central_data)
+bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_parameters, Central_data* central_data)
 {
 	bool init_success = true;
 	
@@ -349,7 +350,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_para
 }
 
 
-bool mavlink_telemetry_init(central_data* central_data)
+bool mavlink_telemetry_init(Central_data* central_data)
 {
 	bool init_success = true;
 	

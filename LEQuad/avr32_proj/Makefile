@@ -175,22 +175,23 @@ SRCS += asf/common/utils/stdio/stdio_usb/stdio_usb.c
 MAVRIC_LIB=../../MAVRIC_Library/
 
 # Include folders for Library
-LIB_INC += -I$(MAVRIC_LIB)/
+LIB_INC += -I$(MAVRIC_LIB)
 LIB_INC += -I$(MAVRIC_LIB)/boards
-LIB_INC += -I$(MAVRIC_LIB)/communication/
-LIB_INC += -I$(MAVRIC_LIB)/control/
+LIB_INC += -I$(MAVRIC_LIB)/communication
+LIB_INC += -I$(MAVRIC_LIB)/control
 LIB_INC += -I$(MAVRIC_LIB)/drivers
 LIB_INC += -I$(MAVRIC_LIB)/hal/common
-LIB_INC += -I$(MAVRIC_LIB)/hal/avr32/
-LIB_INC += -I$(MAVRIC_LIB)/hal/include
-LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/common/
-LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric/
-LIB_INC += -I$(MAVRIC_LIB)/libs/fats/
-LIB_INC += -I$(MAVRIC_LIB)/libs/
-LIB_INC += -I$(MAVRIC_LIB)/sensing/
-LIB_INC += -I$(MAVRIC_LIB)/runtime/
-LIB_INC += -I$(MAVRIC_LIB)/util/
-LIB_INC += -I$(MAVRIC_SRC)/
+LIB_INC += -I$(MAVRIC_LIB)/hal/avr32
+LIB_INC += -I$(MAVRIC_LIB)/hal/dummy
+LIB_INC += -I$(MAVRIC_LIB)/hal
+LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/common
+LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric
+LIB_INC += -I$(MAVRIC_LIB)/libs/fats
+LIB_INC += -I$(MAVRIC_LIB)/libs
+LIB_INC += -I$(MAVRIC_LIB)/sensing
+LIB_INC += -I$(MAVRIC_LIB)/runtime
+LIB_INC += -I$(MAVRIC_LIB)/util
+LIB_INC += -I$(MAVRIC_SRC)
 
 # Library source files (*.c and *.cpp)
 LIB_SRCS += util/buffer.c
@@ -233,10 +234,13 @@ LIB_SRCS += hal/avr32/led.c
 LIB_SRCS += hal/avr32/piezo_speaker.c        
 LIB_SRCS += hal/avr32/pwm_servos.c           
 LIB_SRCS += hal/avr32/sd_spi.c
+LIB_SRCS += hal/avr32/serial_avr32.cpp
 LIB_SRCS += hal/avr32/spi_buffered.c
 LIB_SRCS += hal/avr32/time_keeper.c
 LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c
+
+LIB_SRCS += hal/dummy/i2c_dummy.cpp
 
 LIB_SRCS += control/adaptive_parameter.c          
 LIB_SRCS += control/attitude_controller.c         

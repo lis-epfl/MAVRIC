@@ -45,6 +45,8 @@
 
 #include "central_data.hpp"
 #include "sonar_i2cxl.hpp"
+#include "hmc5883l.hpp"
+#include "gps_ublox.hpp"
 
 extern "C" {
 	#include "uart_int.h"
@@ -62,12 +64,10 @@ extern "C" {
 	//#include "simulation.h"
 	#include "bmp085.h"
 	#include "lsm330dlc.h"
-	#include "hmc5883l.h"
 	#include "analog_monitor.h"
 	#include "piezo_speaker.h"
 	#include "gpio.h"
 
-	#include "gps_ublox.h"
 	#include "xbee.h"
 	#include "console.h"
 	#include "stdio_usb.h"
@@ -91,7 +91,7 @@ extern "C" {
  *
  * \return	The initialization status of each module, succeed == true
  */
-bool boardsupport_init(central_data* p_central_data);
+bool boardsupport_init(Central_data* p_central_data);
 
 
 

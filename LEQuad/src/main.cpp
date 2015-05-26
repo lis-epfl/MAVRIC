@@ -52,7 +52,7 @@ extern "C"
 }
 
 
-void initialisation(central_data& central_data) 
+void initialisation(Central_data& central_data) 
 {	
 	bool init_success = true;
 	
@@ -91,7 +91,7 @@ void initialisation(central_data& central_data)
 
 int main (void)
 {
-	central_data cd;
+	Central_data cd = Central_data();
 
 	initialisation(cd);
 

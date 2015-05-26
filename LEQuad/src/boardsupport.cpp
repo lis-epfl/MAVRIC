@@ -41,7 +41,7 @@
 
 #include "boardsupport.hpp" 
 
-bool boardsupport_init(central_data* central_data) 
+bool boardsupport_init(Central_data* central_data) 
 {
 	bool init_success = true;
 	
@@ -66,7 +66,7 @@ bool boardsupport_init(central_data* central_data)
 	pwm_servos_init( USE_SERVOS_7_8 );
 	
 	// Init UART 0 for XBEE communication
-	xbee_init(UART0,usart_default_config_xbee());
+	// xbee_init(UART0,usart_default_config_xbee());
 	
 	//Init UART 2 for audio communication
 	//acoustic_init(	&central_data->audio_data,
@@ -80,17 +80,16 @@ bool boardsupport_init(central_data* central_data)
 					//&central_data->waypoint_handler,
 					//xbee_get_out_stream());//central_data->telemetry_down_stream);
 				
-	// Init UART 3 for GPS communication
-	gps_ublox_init(&(central_data->gps), UART3, usart_default_config_gps());
-	
 	// Init UART 4 for wired communication
 	//console_init(CONSOLE_UART4, usart_default_config_console, usb_default_config_console);
+	
 	// Init USB for wired communication
 	console_init(CONSOLE_USB, usart_default_config_console(), usb_default_config_console());
 		
 	// connect abstracted aliases to hardware ports
 	central_data->telemetry_down_stream = xbee_get_out_stream();
 	central_data->telemetry_up_stream = xbee_get_in_stream();
+	
 	central_data->debug_out_stream = console_get_out_stream();
 	central_data->debug_in_stream = console_get_in_stream();
 	
@@ -105,15 +104,15 @@ bool boardsupport_init(central_data* central_data)
 	analog_monitor_init(&central_data->analog_monitor, analog_monitor_default_config());
 	
 	// init imu & compass
-	i2c_driver_init(I2C0, twim_default_config());
+	// i2c_driver_init(I2C0, twim_default_config());
 	
-	lsm330dlc_init();
-	print_util_dbg_print("LSM330 initialised \r\n");
+	// lsm330dlc_init();
+	// print_util_dbg_print("LSM330 initialised \r\n");
 		
-	hmc5883l_init_slow();
-	print_util_dbg_print("HMC5883 initialised \r\n");
+	// hmc5883l_init_slow();
+	// print_util_dbg_print("HMC5883 initialised \r\n");
 	
-	bmp085_init(&central_data->pressure);
+	// bmp085_init(&central_data->pressure);
 	
 	// Init I2C for ultrasound
 	// i2c_driver_init(I2C1, twim_default_config());

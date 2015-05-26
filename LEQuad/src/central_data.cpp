@@ -41,37 +41,53 @@
 
 #include "central_data.hpp"
 #include "boardsupport.hpp"
+#include "stabilisation_copter_default_config.hpp"
+#include "data_logging_default_config.hpp"
+#include "mavlink_communication_default_config.hpp"
+#include "conf_imu.hpp"
+#include "position_estimation_default_config.hpp"
+#include "simulation_default_config.hpp"
+#include "remote_default_config.hpp"
+#include "state_default_config.hpp"
 
 extern "C" 
 {
 	#include "time_keeper.h"
-	#include "conf_imu.h"
-	#include "stabilisation_copter_default_config.h"
 	#include "navigation_default_config.h"
 	#include "servos_default_config.h"
 	#include "qfilter_default_config.h"
-	#include "position_estimation_default_config.h"
-	#include "simulation_default_config.h"
 	#include "scheduler_default_config.h"
-	#include "remote_default_config.h"
-	#include "data_logging_default_config.h"
-	#include "state_default_config.h"
-	#include "mavlink_communication_default_config.h"
 	#include "attitude_controller_p2_default_config.h"
 	#include "servos_mix_quadcopter_diag_default_config.h"
-}}
+}
 
 
-central_data::central_data():
+Central_data::Central_data():
 	init_success(true),
-	sonar( sonar_i2cxl(board.i2c1) ),
-	board( megafly_rev4() )
+	board( Megafly_rev4( imu, megafly_rev4_default_config() ) ),
+	sonar( Sonar_i2cxl(board.i2c1) )
 {	
-	// Legacy board initialisation (TODO: remove this)
+	// Legacy board initialisation (TODO: remove)
 	boardsupport_init(this);
 
 	// New board initialisation
 	board.init();
+
+	// while(1)
+	// {
+	// 	print_util_dbg_print("Init\r\n");
+	// 	board.uart0.init();
+	// 	print_util_dbg_print("Flush\r\n");
+	// 	board.uart0.flush();
+	// 	print_util_dbg_print("Put\r\n");
+	// 	board.uart0.put(64);
+	// }
+
+	const char* msg = "Hello";
+
+	board.uart0.write((uint8_t*)msg, sizeof(msg));
+	time_keeper_delay_ms(1000);
+
 
 	// Init servos
 	//servo_pwm_init(central_data->servos);
@@ -81,6 +97,8 @@ central_data::central_data():
 
 	time_keeper_delay_ms(100);	
 
+	// Init GPS
+	gps_ublox_init( &gps, &board.uart3 );	
 
 	// Init main sheduler
 	init_success &= scheduler_init(&scheduler, scheduler_default_config());
@@ -92,8 +110,9 @@ central_data::central_data():
 	mavlink_communication_config.mavlink_stream_config.sysid = MAVLINK_SYS_ID;
 	init_success &= mavlink_communication_init(	&mavlink_communication, 
 												mavlink_communication_config, 
-												telemetry_up_stream, 
-												telemetry_down_stream);
+												&board.uart0 );
+												// telemetry_up_stream, 
+												// telemetry_down_stream);
 	
 	time_keeper_delay_ms(100); 
 
@@ -115,7 +134,7 @@ central_data::central_data():
 	// Init imu
 	init_success &= imu_init(   &imu,
 								imu_config(),
-								&state);
+								&state );
 	
 	time_keeper_delay_ms(100);
 
@@ -139,8 +158,7 @@ central_data::central_data():
 													&state,
 													&pressure,
 													&gps,
-													&ahrs,
-													&imu);
+													&ahrs);
 	
 	time_keeper_delay_ms(100);
 
@@ -159,6 +177,7 @@ central_data::central_data():
 	
 	time_keeper_delay_ms(100);
 
+
 	// Init waypont handler
 	init_success &= waypoint_handler_init(  &waypoint_handler,
 											&position_estimation,
@@ -169,6 +188,7 @@ central_data::central_data():
 	waypoint_handler_init_homing_waypoint(&waypoint_handler);
 	waypoint_handler_nav_plan_init(&waypoint_handler);
 	
+
 	time_keeper_delay_ms(100);
 
 	
@@ -176,7 +196,6 @@ central_data::central_data():
 	init_success &= stabilisation_copter_init(	&stabilisation_copter,
 												stabilisation_copter_default_config(),
 												&controls,
-												&imu,
 												&ahrs,
 												&position_estimation,
 												&servos);

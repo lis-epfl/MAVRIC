@@ -44,6 +44,24 @@
 
 #include "megafly_rev4.hpp"
 #include "sonar_i2cxl.hpp"
+#include "stabilisation_copter.hpp"
+#include "mavlink_communication.hpp"
+#include "onboard_parameters.hpp"
+#include "mavlink_waypoint_handler.hpp"
+#include "navigation.hpp"
+#include "hud_telemetry.hpp"
+#include "state_machine.hpp"
+#include "data_logging.hpp"
+#include "acoustic.hpp" 
+#include "qfilter.hpp"
+#include "imu.hpp"
+#include "remote.hpp"
+#include "mavlink_stream.hpp"
+#include "simulation.hpp"
+#include "position_estimation.hpp"
+#include "state.hpp"
+#include "joystick_parsing.hpp"
+#include "gps_ublox.hpp"
 
 extern "C" 
 {
@@ -53,59 +71,39 @@ extern "C"
 	#include "stdbool.h"
 
 	#include "time_keeper.h"
-	#include "qfilter.h"
-	#include "imu.h"
 	#include "ahrs.h"
-	#include "stabilisation_copter.h"
 
-	#include "remote.h"
 	#include "pid_controller.h"
 	#include "streams.h"
 	#include "buffer.h"
 	#include "print_util.h"
 
-	#include "mavlink_stream.h"
-	#include "mavlink_communication.h"
 	#include "coord_conventions.h"
-	#include "onboard_parameters.h"
-	#include "gps_ublox.h"
-	#include "mavlink_waypoint_handler.h"
-	#include "simulation.h"
 	#include "bmp085.h"
-	#include "position_estimation.h"
 
 	#include "analog_monitor.h"
-	#include "navigation.h"
-	#include "state.h"
 	#include "stabilisation.h"
 
-	#include "hud_telemetry.h"
 	#include "sd_spi.h"
 
 	#include "attitude_controller_p2.h"
 	#include "servos.h"
 	#include "pwm_servos.h"
 	#include "servos_mix_quadcopter_diag.h"
-	#include "remote.h"
 
-	#include "state_machine.h"
 	#include "sd_spi.h"
-	#include "joystick_parsing.h"
-	#include "data_logging.h"
-
-	#include "acoustic.h" 
 }
 
 /**
  * \brief The central data structure
  */
-class central_data
+class Central_data
 {
 public:
 	/**
 	 * @brief   Constructor
 	 */
-	central_data();
+	Central_data();
 
 	/**
 	 * @brief   Initialisation
@@ -117,9 +115,9 @@ public:
 	 * Public members
 	 * 
 	 */	
-	bool init_success;
-	sonar_i2cxl sonar;
-	megafly_rev4 board;
+	bool 			init_success;
+	Megafly_rev4 	board;
+	Sonar_i2cxl 	sonar;
 
 
 

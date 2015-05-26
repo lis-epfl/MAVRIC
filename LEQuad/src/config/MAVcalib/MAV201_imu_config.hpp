@@ -48,9 +48,9 @@
 	extern "C" {
 #endif
 
-#include "imu.h"
+#include "imu.hpp"
 
-static imu_conf_t imu_config()
+static inline imu_conf_t imu_config()
 {
 	imu_conf_t imu_conf = {};
 	imu_conf.accelerometer = {};
