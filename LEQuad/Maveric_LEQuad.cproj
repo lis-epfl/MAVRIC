@@ -343,7 +343,9 @@
             <Value>../Library/communication</Value>
             <Value>../Library/actuation</Value>
             <Value>../Library/control</Value>
-            <Value>../Library/hal</Value>
+            <Value>../Library/hal/avr32</Value>
+            <Value>../Library/hal/avr32/include</Value>
+            <Value>../Library/hal/include</Value>
             <Value>../Library/runtime</Value>
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
@@ -414,7 +416,9 @@
             <Value>../Library/communication</Value>
             <Value>../Library/actuation</Value>
             <Value>../Library/control</Value>
-            <Value>../Library/hal</Value>
+            <Value>../Library/hal/avr32</Value>
+            <Value>../Library/hal/avr32/include</Value>
+            <Value>../Library/hal/include</Value>
             <Value>../Library/runtime</Value>
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
@@ -500,7 +504,9 @@
             <Value>../Library/communication</Value>
             <Value>../Library/actuation</Value>
             <Value>../Library/control</Value>
-            <Value>../Library/hal</Value>
+            <Value>../Library/hal/avr32</Value>
+            <Value>../Library/hal/avr32/include</Value>
+            <Value>../Library/hal/include</Value>
             <Value>../Library/runtime</Value>
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
@@ -572,7 +578,9 @@
             <Value>../Library/communication</Value>
             <Value>../Library/actuation</Value>
             <Value>../Library/control</Value>
-            <Value>../Library/hal</Value>
+            <Value>../Library/hal/avr32</Value>
+            <Value>../Library/hal/avr32/include</Value>
+            <Value>../Library/hal/include</Value>
             <Value>../Library/runtime</Value>
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
@@ -696,6 +704,12 @@
     <Compile Include="Library\control\adaptive_parameter.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\control\altitude_controller.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\altitude_controller_default_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\control\attitude_controller.h">
       <SubType>compile</SubType>
     </Compile>
@@ -783,43 +797,43 @@
     <Compile Include="Library\control\velocity_controller_copter_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\accelerometer.h">
+    <Compile Include="Library\hal\include\accelerometer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\analog_monitor_default_config.h">
+    <Compile Include="Library\hal\include\analog_monitor_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\analog_monitor_telemetry.c">
+    <Compile Include="Library\hal\avr32\analog_monitor_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\analog_monitor_telemetry.h">
+    <Compile Include="Library\hal\include\analog_monitor_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\barometer.h">
+    <Compile Include="Library\hal\include\barometer.h">
       <SubType>compile</SubType>
     </Compile>
-	<Compile Include="Library\hal\battery.c">
+    <Compile Include="Library\hal\avr32\battery.c">
       <SubType>compile</SubType>
     </Compile>
-	<Compile Include="Library\hal\battery.h">
+    <Compile Include="Library\hal\include\battery.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\analog_monitor.h">
+    <Compile Include="Library\hal\include\analog_monitor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\analog_monitor.c">
+    <Compile Include="Library\hal\avr32\analog_monitor.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\bmp085_telemetry.c">
+    <Compile Include="Library\hal\avr32\bmp085_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\bmp085_telemetry.h">
+    <Compile Include="Library\hal\include\bmp085_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\curvace.c">
+    <Compile Include="Library\hal\include\curvace.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\curvace.h">
+    <Compile Include="Library\hal\include\curvace_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\libs\fat_fs\diskio.c">
@@ -849,133 +863,133 @@
     <Compile Include="Library\libs\fat_fs\option\unicode.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\gps_ublox.c">
+    <Compile Include="Library\hal\avr32\gps_ublox.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\gps_ublox.h">
+    <Compile Include="Library\hal\include\gps_ublox.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\gps_ublox_telemetry.c">
+    <Compile Include="Library\hal\avr32\gps_ublox_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\gps_ublox_telemetry.h">
+    <Compile Include="Library\hal\include\gps_ublox_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\gyroscope.h">
+    <Compile Include="Library\hal\include\gyroscope.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\hmc5883l.c">
+    <Compile Include="Library\hal\avr32\hmc5883l.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\hmc5883l.h">
+    <Compile Include="Library\hal\include\hmc5883l.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\i2c_driver_int.c">
+    <Compile Include="Library\hal\avr32\i2c_driver_int.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\i2c_driver_int.h">
+    <Compile Include="Library\hal\include\i2c_driver_int.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\lsm330dlc.c">
+    <Compile Include="Library\hal\avr32\lsm330dlc.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\lsm330dlc.h">
+    <Compile Include="Library\hal\include\lsm330dlc.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\magnetometer.h">
+    <Compile Include="Library\hal\include\magnetometer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\optic_flow.h">
+    <Compile Include="Library\hal\include\optic_flow.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\piezo_speaker.c">
+    <Compile Include="Library\hal\avr32\piezo_speaker.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\piezo_speaker.h">
+    <Compile Include="Library\hal\include\piezo_speaker.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\pwm_servos.c">
+    <Compile Include="Library\hal\avr32\pwm_servos.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\pwm_servos.h">
+    <Compile Include="Library\hal\include\pwm_servos.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\satellite.h">
+    <Compile Include="Library\hal\include\satellite.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\sd_spi.c">
+    <Compile Include="Library\hal\avr32\sd_spi.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\sd_spi.h">
+    <Compile Include="Library\hal\include\sd_spi.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\servos.c">
+    <Compile Include="Library\hal\avr32\servos.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\servos.h">
+    <Compile Include="Library\hal\include\servos.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\servos_default_config.h">
+    <Compile Include="Library\hal\include\servos_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\servos_telemetry.c">
+    <Compile Include="Library\hal\avr32\servos_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\servos_telemetry.h">
+    <Compile Include="Library\hal\include\servos_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\sonar.h">
+    <Compile Include="Library\hal\include\sonar.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\sonar_i2cxl.c">
+    <Compile Include="Library\hal\avr32\sonar_i2cxl.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\sonar_i2cxl.h">
+    <Compile Include="Library\hal\include\sonar_i2cxl.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\sonar_telemetry.c">
+    <Compile Include="Library\hal\avr32\sonar_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\sonar_telemetry.h">
+    <Compile Include="Library\hal\include\sonar_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\spektrum.h">
+    <Compile Include="Library\hal\include\spektrum.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\spektrum_satellite.c">
+    <Compile Include="Library\hal\avr32\spektrum_satellite.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\spektrum_satellite.h">
+    <Compile Include="Library\hal\include\spektrum_satellite.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\time_keeper.c">
+    <Compile Include="Library\hal\avr32\time_keeper.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\time_keeper.h">
+    <Compile Include="Library\hal\include\time_keeper.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\turnigy.h">
+    <Compile Include="Library\hal\include\turnigy.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\twim_default_config.h">
+    <Compile Include="Library\hal\include\twim_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\uart_default_config.h">
+    <Compile Include="Library\hal\avr32\include\uart_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\usb_default_config.h">
+    <Compile Include="Library\hal\include\usb_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\usb_int.c">
+    <Compile Include="Library\hal\avr32\usb_int.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\usb_int.h">
+    <Compile Include="Library\hal\include\usb_int.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\xbee.c">
+    <Compile Include="Library\hal\avr32\xbee.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\xbee.h">
+    <Compile Include="Library\hal\include\xbee.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\libs\mavlink\include\common\common.h">
@@ -1179,9 +1193,6 @@
     <Compile Include="Library\libs\mavlink\include\common\mavlink_msg_nav_controller_output.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\libs\mavlink\include\common\mavlink_msg_omnidirectional_flow.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Library\libs\mavlink\include\common\mavlink_msg_optical_flow.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1317,21 +1328,6 @@
     <Compile Include="Library\libs\mavlink\include\mavric\mavlink.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_global_position_setpoint_int.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_local_position_setpoint.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_radar_raw_data.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_radar_tracked_target.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_radar_velocity_hist.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_roll_pitch_yaw_rates_thrust_setpoint.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1341,31 +1337,7 @@
     <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_roll_pitch_yaw_thrust_setpoint.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_set_global_position_setpoint_int.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_set_local_position_setpoint.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_set_quad_motors_setpoint.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_set_quad_swarm_led_roll_pitch_yaw_thrust.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_set_quad_swarm_roll_pitch_yaw_thrust.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_set_roll_pitch_yaw_speed_thrust.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_set_roll_pitch_yaw_thrust.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_spherical_optic_flow.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\libs\mavlink\include\mavric\mavlink_msg_state_correction.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\libs\mavlink\include\mavric\mavric.h">
@@ -1392,13 +1364,19 @@
     <Compile Include="Library\sensing\ahrs.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\sensing\ahrs_default_config.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Library\sensing\ahrs_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\sensing\ahrs_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\sensing\altitude.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\sensing\altitude_estimation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\sensing\altitude_estimation_default_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\sensing\imu_default_config.h">
@@ -1578,9 +1556,6 @@
     <Compile Include="src\tasks.h">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="Library\libs\mavlink\include\mavlink_protobuf_manager.hpp">
-      <SubType>compile</SubType>
-    </None>
     <None Include="src\asf.h">
       <SubType>compile</SubType>
     </None>
@@ -1608,46 +1583,46 @@
     <Compile Include="Library\control\stabilisation.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\adc_int.c">
+    <Compile Include="Library\hal\avr32\adc_int.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\adc_int.h">
+    <Compile Include="Library\hal\include\adc_int.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\ads1274.c">
+    <Compile Include="Library\hal\avr32\ads1274.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\ads1274.h">
+    <Compile Include="Library\hal\include\ads1274.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\bmp085.c">
+    <Compile Include="Library\hal\avr32\bmp085.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\bmp085.h">
+    <Compile Include="Library\hal\include\bmp085.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\dac_dma.c">
+    <Compile Include="Library\hal\avr32\dac_dma.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\dac_dma.h">
+    <Compile Include="Library\hal\include\dac_dma.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\led.c">
+    <Compile Include="Library\hal\avr32\led.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\led.h">
+    <Compile Include="Library\hal\include\led.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\spi_buffered.c">
+    <Compile Include="Library\hal\avr32\spi_buffered.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\spi_buffered.h">
+    <Compile Include="Library\hal\include\spi_buffered.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\uart_int.c">
+    <Compile Include="Library\hal\avr32\uart_int.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\uart_int.h">
+    <Compile Include="Library\hal\avr32\include\uart_int.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\libs\mavlink\include\checksum.h">
@@ -2019,6 +1994,10 @@
     <Folder Include="Library\communication\" />
     <Folder Include="Library\control\" />
     <Folder Include="Library\hal\" />
+    <Folder Include="Library\hal\avr32\" />
+    <Folder Include="Library\hal\avr32\include\" />
+    <Folder Include="Library\hal\include\" />
+    <Folder Include="Library\libs\" />
     <Folder Include="Library\libs\fat_fs\" />
     <Folder Include="Library\libs\fat_fs\option\" />
     <Folder Include="Library\libs\mavlink\" />
