@@ -92,6 +92,7 @@ extern "C" {
 #include "sd_spi.h"
 #include "joystick_parsing.h"
 #include "data_logging.h"
+#include "fat_fs_mounting.h"
 
 #include "acoustic.h" 
 // TODO : update documentation
@@ -145,13 +146,14 @@ typedef struct  {
 	
 	barometer_t pressure;										///< The pressure structure
 	
-	hud_telemetry_structure_t hud_structure;								///< The HUD structure
+	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 
 	sonar_i2cxl_t sonar_i2cxl;									///< The i2cxl sonar structure
 	
 	sd_spi_t sd_spi;											///< The sd_SPI driver structure
 	
 	data_logging_t data_logging;								///< The log data structure	
+	fat_fs_mounting_t fat_fs_mounting;							///< The Fat fs system file mounting structure
 } central_data_t;
 
 

@@ -626,12 +626,6 @@
     <Compile Include="Library\communication\data_logging_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\communication\data_logging_telemetry.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\communication\data_logging_telemetry.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Library\communication\hud_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
@@ -863,7 +857,19 @@
     <Compile Include="Library\libs\fat_fs\option\unicode.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\hal\avr32\gps_ublox.c">
+    <Compile Include="Library\hal\avr32\fat_fs_mounting_telemetry.c">
+      <SubType>compile</SubType>
+    </Compile>
+	<Compile Include="Library\hal\include\fat_fs_mounting_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
+	<Compile Include="Library\hal\avr32\fat_fs_mounting.c">
+      <SubType>compile</SubType>
+    </Compile>
+	<Compile Include="Library\hal\include\fat_fs_mounting.h">
+      <SubType>compile</SubType>
+    </Compile>
+	<Compile Include="Library\hal\avr32\gps_ublox.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\hal\include\gps_ublox.h">
