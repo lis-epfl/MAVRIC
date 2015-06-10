@@ -860,16 +860,16 @@
     <Compile Include="Library\hal\avr32\fat_fs_mounting_telemetry.c">
       <SubType>compile</SubType>
     </Compile>
-	<Compile Include="Library\hal\include\fat_fs_mounting_telemetry.h">
+    <Compile Include="Library\hal\include\fat_fs_mounting_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
-	<Compile Include="Library\hal\avr32\fat_fs_mounting.c">
+    <Compile Include="Library\hal\avr32\fat_fs_mounting.c">
       <SubType>compile</SubType>
     </Compile>
-	<Compile Include="Library\hal\include\fat_fs_mounting.h">
+    <Compile Include="Library\hal\include\fat_fs_mounting.h">
       <SubType>compile</SubType>
     </Compile>
-	<Compile Include="Library\hal\avr32\gps_ublox.c">
+    <Compile Include="Library\hal\avr32\gps_ublox.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\hal\include\gps_ublox.h">
@@ -1514,6 +1514,9 @@
     <Compile Include="src\config\MAVcalib\MAV022_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\config\MAVcalib\MAV026_imu_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\config\MAVcalib\MAV042_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1548,6 +1551,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\config\MAVcalib\MAV205_imu_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\config\MAVcalib\MAV206_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\mavlink_telemetry.c">

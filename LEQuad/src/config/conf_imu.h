@@ -70,6 +70,8 @@
 #include "MAVcalib/MAV009_imu_config.h"
 #elif MAVLINK_SYS_ID == 10
 #include "MAVcalib/MAV010_imu_config.h"
+#elif MAVLINK_SYS_ID == 26
+#include "MAVcalib/MAV026_imu_config.h"
 #elif MAVLINK_SYS_ID == 42
 #include "MAVcalib/MAV042_imu_config.h"
 #elif MAVLINK_SYS_ID == 51
@@ -88,6 +90,10 @@
 #include "MAVcalib/MAV203_imu_config.h"
 #elif MAVLINK_SYS_ID == 204
 #include "MAVcalib/MAV204_imu_config.h"
+#elif MAVLINK_SYS_ID == 205
+#include "MAVcalib/MAV205_imu_config.h"
+#elif MAVLINK_SYS_ID == 206
+#include "MAVcalib/MAV206_imu_config.h"
 #else
 #error "Unknown IMU calibration for the board with ID MAVLINK_SYS_ID, please use imu_default_config or create a imu_config for this board"
 #endif
