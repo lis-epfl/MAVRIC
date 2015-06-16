@@ -133,6 +133,8 @@ C_SRCS +=  \
 ../Library/hal/avr32/battery.c \
 ../Library/hal/avr32/analog_monitor.c \
 ../Library/hal/avr32/bmp085_telemetry.c \
+../Library/hal/avr32/fat_fs_mounting.c \
+../Library/hal/avr32/fat_fs_mounting_telemetry.c \
 ../Library/libs/fat_fs/diskio.c \
 ../Library/libs/fat_fs/ff.c \
 ../Library/libs/fat_fs/option/ccsbcs.c \
@@ -260,6 +262,8 @@ Library/hal/avr32/analog_monitor_telemetry.o \
 Library/hal/avr32/battery.o \
 Library/hal/avr32/analog_monitor.o \
 Library/hal/avr32/bmp085_telemetry.o \
+Library/hal/avr32/fat_fs_mounting.o \
+Library/hal/avr32/fat_fs_mounting_telemetry.o \
 Library/libs/fat_fs/diskio.o \
 Library/libs/fat_fs/ff.o \
 Library/libs/fat_fs/option/ccsbcs.o \
@@ -380,6 +384,8 @@ Library/hal/avr32/analog_monitor_telemetry.o \
 Library/hal/avr32/battery.o \
 Library/hal/avr32/analog_monitor.o \
 Library/hal/avr32/bmp085_telemetry.o \
+Library/hal/avr32/fat_fs_mounting.o \
+Library/hal/avr32/fat_fs_mounting_telemetry.o \
 Library/libs/fat_fs/diskio.o \
 Library/libs/fat_fs/ff.o \
 Library/libs/fat_fs/option/ccsbcs.o \
@@ -500,6 +506,8 @@ Library/hal/avr32/analog_monitor_telemetry.d \
 Library/hal/avr32/battery.d \
 Library/hal/avr32/analog_monitor.d \
 Library/hal/avr32/bmp085_telemetry.d \
+Library/hal/avr32/fat_fs_mounting.d \
+Library/hal/avr32/fat_fs_mounting_telemetry.d \
 Library/libs/fat_fs/diskio.d \
 Library/libs/fat_fs/ff.d \
 Library/libs/fat_fs/option/ccsbcs.d \
@@ -620,6 +628,8 @@ Library/hal/avr32/analog_monitor_telemetry.d \
 Library/hal/avr32/battery.d \
 Library/hal/avr32/analog_monitor.d \
 Library/hal/avr32/bmp085_telemetry.d \
+Library/hal/avr32/fat_fs_mounting.d \
+Library/hal/avr32/fat_fs_mounting_telemetry.d \
 Library/libs/fat_fs/diskio.d \
 Library/libs/fat_fs/ff.d \
 Library/libs/fat_fs/option/ccsbcs.d \
@@ -722,6 +732,10 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

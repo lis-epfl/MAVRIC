@@ -1,5 +1,5 @@
-src/central_data.d src/central_data.o src/central_data.o: \
- ../src/central_data.c ../src/central_data.h \
+src/boardsupport.d src/boardsupport.o src/boardsupport.o: \
+ ../src/boardsupport.c ../src/boardsupport.h ../src/central_data.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/stdint.h \
  ../Library/hal/include/time_keeper.h ../Library/sensing/qfilter.h \
@@ -241,27 +241,64 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/libs/fat_fs/integer.h ../Library/libs/fat_fs/ffconf.h \
  ../Library/hal/include/fat_fs_mounting.h \
  ../Library/communication/acoustic.h ../Library/communication/remote.h \
- ../src/config/conf_imu.h ../src/config/conf_platform.h \
- ../src/config/MAVcalib/MAV201_imu_config.h \
- ../Library/control/stabilisation_copter_default_config.h \
- ../Library/control/stabilisation_copter.h \
- ../Library/control/navigation_default_config.h \
- ../Library/hal/include/servos_default_config.h \
- ../Library/sensing/qfilter_default_config.h \
- ../Library/sensing/position_estimation_default_config.h \
- ../Library/sensing/simulation_default_config.h \
- ../Library/sensing/simulation.h \
- ../Library/runtime/scheduler_default_config.h \
- ../Library/runtime/scheduler.h \
- ../Library/communication/remote_default_config.h \
- ../Library/communication/data_logging_default_config.h \
- ../Library/communication/data_logging.h \
- ../Library/communication/state_default_config.h \
- ../Library/communication/mavlink_communication_default_config.h \
- ../Library/control/attitude_controller_p2_default_config.h \
- ../Library/control/attitude_controller_p2.h \
- ../Library/control/servos_mix_quadcopter_diag_default_config.h \
- ../Library/control/servos_mix_quadcopter_diag.h
+ ../src/asf/common/services/clock/sysclk.h ../src/config/conf_clock.h \
+ ../src/asf/common/services/clock/uc3c/sysclk.h \
+ ../src/asf/common/boards/board.h ../src/config/conf_board.h \
+ ../src/asf/common/boards/user_board/user_board.h \
+ ../src/asf/common/services/clock/osc.h \
+ ../src/asf/common/services/clock/uc3c/osc.h \
+ ../src/asf/common/services/clock/pll.h \
+ ../src/asf/common/services/clock/uc3c/pll.h \
+ ../src/asf/common/services/clock/genclk.h \
+ ../src/asf/common/services/clock/uc3c/genclk.h \
+ ../src/asf/common/services/sleepmgr/sleepmgr.h \
+ ../src/asf/avr32/drivers/pm/sleep.h \
+ ../src/asf/avr32/drivers/pm/pm_uc3c.h \
+ ../src/asf/common/services/sleepmgr/uc3/sleepmgr.h \
+ ../src/config/conf_sleepmgr.h ../Library/hal/include/led.h \
+ ../src/asf/avr32/services/delay/delay.h \
+ ../src/asf/avr32/drivers/cpu/cycle_counter/cycle_counter.h \
+ ../src/asf/common/boards/user_board/user_board.h \
+ ../Library/hal/include/i2c_driver_int.h \
+ ../src/asf/avr32/drivers/twim/twim.h \
+ ../src/asf/avr32/utils/status_codes.h ../src/config/conf_twim.h \
+ ../src/config/dma_channel_config.h ../Library/hal/include/lsm330dlc.h \
+ ../Library/hal/include/gyroscope.h \
+ ../Library/hal/include/accelerometer.h ../Library/hal/include/hmc5883l.h \
+ ../Library/hal/include/magnetometer.h \
+ ../Library/hal/include/piezo_speaker.h \
+ ../src/asf/avr32/drivers/gpio/gpio.h ../Library/hal/include/xbee.h \
+ ../Library/communication/console.h ../Library/hal/include/usb_int.h \
+ ../src/asf/common/utils/stdio/stdio_usb/stdio_usb.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/stdio.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdarg.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/types.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/types.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/features.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/stdio.h \
+ ../src/asf/common/services/usb/udc/udc.h ../src/config/conf_usb.h \
+ ../src/asf/common/services/usb/class/cdc/device/udi_cdc_conf.h \
+ ../src/asf/common/services/usb/class/cdc/usb_protocol_cdc.h \
+ ../src/asf/common/services/usb/usb_protocol.h \
+ ../src/asf/common/services/usb/usb_atmel.h \
+ ../src/asf/common/services/usb/udc/udc_desc.h \
+ ../src/asf/common/services/usb/udc/udi.h \
+ ../src/asf/common/services/usb/udc/udd.h \
+ ../src/asf/common/services/usb/class/cdc/device/udi_cdc.h \
+ ../src/asf/common/services/usb/udc/udd.h \
+ ../src/asf/common/services/usb/udc/udc_desc.h \
+ ../src/asf/common/services/usb/udc/udi.h \
+ ../Library/hal/include/spektrum_satellite.h \
+ ../Library/hal/include/satellite.h ../src/config/conf_platform.h \
+ ../Library/hal/include/analog_monitor_default_config.h \
+ ../Library/hal/include/analog_monitor.h \
+ ../Library/hal/include/twim_default_config.h \
+ ../Library/hal/avr32/include/uart_default_config.h \
+ ../Library/hal/avr32/include/uart_int.h \
+ ../Library/hal/include/usb_default_config.h \
+ ../Library/hal/include/usb_int.h
+
+../src/boardsupport.h:
 
 ../src/central_data.h:
 
@@ -809,46 +846,134 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/communication/remote.h:
 
-../src/config/conf_imu.h:
+../src/asf/common/services/clock/sysclk.h:
+
+../src/config/conf_clock.h:
+
+../src/asf/common/services/clock/uc3c/sysclk.h:
+
+../src/asf/common/boards/board.h:
+
+../src/config/conf_board.h:
+
+../src/asf/common/boards/user_board/user_board.h:
+
+../src/asf/common/services/clock/osc.h:
+
+../src/asf/common/services/clock/uc3c/osc.h:
+
+../src/asf/common/services/clock/pll.h:
+
+../src/asf/common/services/clock/uc3c/pll.h:
+
+../src/asf/common/services/clock/genclk.h:
+
+../src/asf/common/services/clock/uc3c/genclk.h:
+
+../src/asf/common/services/sleepmgr/sleepmgr.h:
+
+../src/asf/avr32/drivers/pm/sleep.h:
+
+../src/asf/avr32/drivers/pm/pm_uc3c.h:
+
+../src/asf/common/services/sleepmgr/uc3/sleepmgr.h:
+
+../src/config/conf_sleepmgr.h:
+
+../Library/hal/include/led.h:
+
+../src/asf/avr32/services/delay/delay.h:
+
+../src/asf/avr32/drivers/cpu/cycle_counter/cycle_counter.h:
+
+../src/asf/common/boards/user_board/user_board.h:
+
+../Library/hal/include/i2c_driver_int.h:
+
+../src/asf/avr32/drivers/twim/twim.h:
+
+../src/asf/avr32/utils/status_codes.h:
+
+../src/config/conf_twim.h:
+
+../src/config/dma_channel_config.h:
+
+../Library/hal/include/lsm330dlc.h:
+
+../Library/hal/include/gyroscope.h:
+
+../Library/hal/include/accelerometer.h:
+
+../Library/hal/include/hmc5883l.h:
+
+../Library/hal/include/magnetometer.h:
+
+../Library/hal/include/piezo_speaker.h:
+
+../src/asf/avr32/drivers/gpio/gpio.h:
+
+../Library/hal/include/xbee.h:
+
+../Library/communication/console.h:
+
+../Library/hal/include/usb_int.h:
+
+../src/asf/common/utils/stdio/stdio_usb/stdio_usb.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/stdio.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdarg.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/types.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/types.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/features.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/stdio.h:
+
+../src/asf/common/services/usb/udc/udc.h:
+
+../src/config/conf_usb.h:
+
+../src/asf/common/services/usb/class/cdc/device/udi_cdc_conf.h:
+
+../src/asf/common/services/usb/class/cdc/usb_protocol_cdc.h:
+
+../src/asf/common/services/usb/usb_protocol.h:
+
+../src/asf/common/services/usb/usb_atmel.h:
+
+../src/asf/common/services/usb/udc/udc_desc.h:
+
+../src/asf/common/services/usb/udc/udi.h:
+
+../src/asf/common/services/usb/udc/udd.h:
+
+../src/asf/common/services/usb/class/cdc/device/udi_cdc.h:
+
+../src/asf/common/services/usb/udc/udd.h:
+
+../src/asf/common/services/usb/udc/udc_desc.h:
+
+../src/asf/common/services/usb/udc/udi.h:
+
+../Library/hal/include/spektrum_satellite.h:
+
+../Library/hal/include/satellite.h:
 
 ../src/config/conf_platform.h:
 
-../src/config/MAVcalib/MAV201_imu_config.h:
+../Library/hal/include/analog_monitor_default_config.h:
 
-../Library/control/stabilisation_copter_default_config.h:
+../Library/hal/include/analog_monitor.h:
 
-../Library/control/stabilisation_copter.h:
+../Library/hal/include/twim_default_config.h:
 
-../Library/control/navigation_default_config.h:
+../Library/hal/avr32/include/uart_default_config.h:
 
-../Library/hal/include/servos_default_config.h:
+../Library/hal/avr32/include/uart_int.h:
 
-../Library/sensing/qfilter_default_config.h:
+../Library/hal/include/usb_default_config.h:
 
-../Library/sensing/position_estimation_default_config.h:
-
-../Library/sensing/simulation_default_config.h:
-
-../Library/sensing/simulation.h:
-
-../Library/runtime/scheduler_default_config.h:
-
-../Library/runtime/scheduler.h:
-
-../Library/communication/remote_default_config.h:
-
-../Library/communication/data_logging_default_config.h:
-
-../Library/communication/data_logging.h:
-
-../Library/communication/state_default_config.h:
-
-../Library/communication/mavlink_communication_default_config.h:
-
-../Library/control/attitude_controller_p2_default_config.h:
-
-../Library/control/attitude_controller_p2.h:
-
-../Library/control/servos_mix_quadcopter_diag_default_config.h:
-
-../Library/control/servos_mix_quadcopter_diag.h:
+../Library/hal/include/usb_int.h:

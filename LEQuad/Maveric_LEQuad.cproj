@@ -830,6 +830,18 @@
     <Compile Include="Library\hal\include\curvace_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
+	 <Compile Include="Library\hal\avr32\fat_fs_mounting.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\avr32\fat_fs_mounting_telemetry.c">
+      <SubType>compile</SubType>
+    </Compile>
+	 <Compile Include="Library\hal\include\fat_fs_mounting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\include\fat_fs_mounting_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\libs\fat_fs\diskio.c">
       <SubType>compile</SubType>
     </Compile>

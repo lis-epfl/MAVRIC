@@ -1,37 +1,31 @@
-src/central_data.d src/central_data.o src/central_data.o: \
- ../src/central_data.c ../src/central_data.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h \
+src/mavlink_telemetry.d src/mavlink_telemetry.o src/mavlink_telemetry.o: \
+ ../src/mavlink_telemetry.c ../src/mavlink_telemetry.h \
+ ../Library/communication/mavlink_stream.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/stdint.h \
- ../Library/hal/include/time_keeper.h ../Library/sensing/qfilter.h \
- ../Library/sensing/imu.h ../Library/hal/include/gyroscope.h \
- ../Library/hal/include/accelerometer.h \
- ../Library/hal/include/magnetometer.h ../Library/util/quaternions.h \
- ../Library/util/maths.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/math.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/reent.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/newlib.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/config.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/ieeefp.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/_types.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_types.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_default_types.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stddef.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h \
- ../Library/util/vectors.h ../Library/runtime/scheduler.h \
- ../Library/communication/state.h ../Library/communication/mav_modes.h \
- ../Library/communication/mavlink_stream.h ../Library/util/streams.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h \
+ ../Library/util/streams.h \
  ../Library/libs/mavlink/include/mavric/mavlink.h \
  ../Library/libs/mavlink/include/mavric/version.h \
  ../Library/libs/mavlink/include/mavric/mavric.h \
  ../Library/libs/mavlink/include/mavric/../protocol.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/string.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/newlib.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/config.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/ieeefp.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/reent.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/_types.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_types.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_default_types.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stddef.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/string.h \
  ../Library/libs/mavlink/include/mavric/../mavlink_types.h \
  ../Library/libs/mavlink/include/mavric/../mavlink_helpers.h \
  ../Library/libs/mavlink/include/mavric/../checksum.h \
  ../Library/libs/mavlink/include/mavric/../mavlink_conversions.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/math.h \
  ../Library/libs/mavlink/include/mavric/../common/common.h \
  ../Library/libs/mavlink/include/mavric/../common/../protocol.h \
  ../Library/libs/mavlink/include/mavric/../common/./mavlink_msg_heartbeat.h \
@@ -153,6 +147,16 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/libs/mavlink/include/mavric/./mavlink_msg_roll_pitch_yaw_rates_thrust_setpoint.h \
  ../Library/libs/mavlink/include/mavric/./mavlink_msg_spherical_optic_flow.h \
  ../Library/libs/mavlink/include/mavric/./mavlink_msg_control_command.h \
+ ../Library/communication/onboard_parameters.h \
+ ../Library/communication/mavlink_stream.h \
+ ../Library/communication/mavlink_message_handler.h \
+ ../Library/runtime/scheduler.h ../src/central_data.h \
+ ../Library/hal/include/time_keeper.h ../Library/sensing/qfilter.h \
+ ../Library/sensing/imu.h ../Library/hal/include/gyroscope.h \
+ ../Library/hal/include/accelerometer.h \
+ ../Library/hal/include/magnetometer.h ../Library/util/quaternions.h \
+ ../Library/util/maths.h ../Library/util/vectors.h \
+ ../Library/communication/state.h ../Library/communication/mav_modes.h \
  ../Library/hal/include/analog_monitor.h ../Library/hal/include/battery.h \
  ../Library/sensing/ahrs.h ../Library/sensing/imu.h \
  ../Library/sensing/ahrs.h ../Library/control/stabilisation_copter.h \
@@ -216,13 +220,11 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/control/stabilisation.h ../Library/control/control_command.h \
  ../Library/util/constants.h ../Library/hal/include/servos.h \
  ../Library/communication/mavlink_waypoint_handler.h \
- ../Library/communication/mavlink_message_handler.h \
  ../Library/communication/mavlink_communication.h \
  ../Library/communication/onboard_parameters.h \
  ../Library/communication/state.h ../Library/control/pid_controller.h \
- ../Library/util/print_util.h ../Library/communication/mavlink_stream.h \
+ ../Library/util/print_util.h \
  ../Library/communication/mavlink_communication.h \
- ../Library/communication/onboard_parameters.h \
  ../Library/sensing/simulation.h ../Library/sensing/qfilter.h \
  ../Library/hal/include/barometer.h ../Library/hal/include/sonar.h \
  ../Library/sensing/position_estimation.h \
@@ -241,83 +243,33 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/libs/fat_fs/integer.h ../Library/libs/fat_fs/ffconf.h \
  ../Library/hal/include/fat_fs_mounting.h \
  ../Library/communication/acoustic.h ../Library/communication/remote.h \
- ../src/config/conf_imu.h ../src/config/conf_platform.h \
- ../src/config/MAVcalib/MAV201_imu_config.h \
- ../Library/control/stabilisation_copter_default_config.h \
+ ../src/tasks.h ../Library/communication/acoustic_telemetry.h \
+ ../Library/communication/acoustic.h \
+ ../Library/hal/include/fat_fs_mounting_telemetry.h \
+ ../Library/communication/mavlink_message_handler.h \
+ ../Library/hal/include/fat_fs_mounting.h \
+ ../Library/communication/remote_telemetry.h \
+ ../Library/hal/include/servos_telemetry.h \
+ ../Library/communication/state_telemetry.h \
+ ../Library/hal/include/gps_ublox_telemetry.h \
+ ../Library/hal/include/gps_ublox.h ../Library/sensing/imu_telemetry.h \
+ ../Library/hal/include/bmp085_telemetry.h \
+ ../Library/hal/include/bmp085.h ../Library/sensing/ahrs_telemetry.h \
+ ../Library/sensing/position_estimation_telemetry.h \
+ ../Library/control/stabilisation_telemetry.h \
  ../Library/control/stabilisation_copter.h \
- ../Library/control/navigation_default_config.h \
- ../Library/hal/include/servos_default_config.h \
- ../Library/sensing/qfilter_default_config.h \
- ../Library/sensing/position_estimation_default_config.h \
- ../Library/sensing/simulation_default_config.h \
- ../Library/sensing/simulation.h \
- ../Library/runtime/scheduler_default_config.h \
- ../Library/runtime/scheduler.h \
- ../Library/communication/remote_default_config.h \
- ../Library/communication/data_logging_default_config.h \
- ../Library/communication/data_logging.h \
- ../Library/communication/state_default_config.h \
- ../Library/communication/mavlink_communication_default_config.h \
- ../Library/control/attitude_controller_p2_default_config.h \
- ../Library/control/attitude_controller_p2.h \
- ../Library/control/servos_mix_quadcopter_diag_default_config.h \
- ../Library/control/servos_mix_quadcopter_diag.h
+ ../Library/control/joystick_parsing_telemetry.h \
+ ../Library/sensing/simulation_telemetry.h \
+ ../Library/sensing/simulation.h ../Library/runtime/scheduler_telemetry.h \
+ ../Library/runtime/scheduler.h ../Library/hal/include/sonar_telemetry.h
 
-../src/central_data.h:
+../src/mavlink_telemetry.h:
 
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h:
+../Library/communication/mavlink_stream.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/stdint.h:
 
-../Library/hal/include/time_keeper.h:
-
-../Library/sensing/qfilter.h:
-
-../Library/sensing/imu.h:
-
-../Library/hal/include/gyroscope.h:
-
-../Library/hal/include/accelerometer.h:
-
-../Library/hal/include/magnetometer.h:
-
-../Library/util/quaternions.h:
-
-../Library/util/maths.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/math.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/reent.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/newlib.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/config.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/ieeefp.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/_types.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_types.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_default_types.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stddef.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h:
-
-../Library/util/vectors.h:
-
-../Library/runtime/scheduler.h:
-
-../Library/communication/state.h:
-
-../Library/communication/mav_modes.h:
-
-../Library/communication/mavlink_stream.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h:
 
 ../Library/util/streams.h:
 
@@ -331,6 +283,28 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/string.h:
 
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/newlib.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/config.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/ieeefp.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/reent.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/_types.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_types.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_default_types.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stddef.h:
+
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/string.h:
 
 ../Library/libs/mavlink/include/mavric/../mavlink_types.h:
@@ -340,6 +314,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 ../Library/libs/mavlink/include/mavric/../checksum.h:
 
 ../Library/libs/mavlink/include/mavric/../mavlink_conversions.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/math.h:
 
 ../Library/libs/mavlink/include/mavric/../common/common.h:
 
@@ -583,6 +559,38 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/libs/mavlink/include/mavric/./mavlink_msg_control_command.h:
 
+../Library/communication/onboard_parameters.h:
+
+../Library/communication/mavlink_stream.h:
+
+../Library/communication/mavlink_message_handler.h:
+
+../Library/runtime/scheduler.h:
+
+../src/central_data.h:
+
+../Library/hal/include/time_keeper.h:
+
+../Library/sensing/qfilter.h:
+
+../Library/sensing/imu.h:
+
+../Library/hal/include/gyroscope.h:
+
+../Library/hal/include/accelerometer.h:
+
+../Library/hal/include/magnetometer.h:
+
+../Library/util/quaternions.h:
+
+../Library/util/maths.h:
+
+../Library/util/vectors.h:
+
+../Library/communication/state.h:
+
+../Library/communication/mav_modes.h:
+
 ../Library/hal/include/analog_monitor.h:
 
 ../Library/hal/include/battery.h:
@@ -737,8 +745,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/communication/mavlink_waypoint_handler.h:
 
-../Library/communication/mavlink_message_handler.h:
-
 ../Library/communication/mavlink_communication.h:
 
 ../Library/communication/onboard_parameters.h:
@@ -749,11 +755,7 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/util/print_util.h:
 
-../Library/communication/mavlink_stream.h:
-
 ../Library/communication/mavlink_communication.h:
-
-../Library/communication/onboard_parameters.h:
 
 ../Library/sensing/simulation.h:
 
@@ -809,46 +811,50 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/communication/remote.h:
 
-../src/config/conf_imu.h:
+../src/tasks.h:
 
-../src/config/conf_platform.h:
+../Library/communication/acoustic_telemetry.h:
 
-../src/config/MAVcalib/MAV201_imu_config.h:
+../Library/communication/acoustic.h:
 
-../Library/control/stabilisation_copter_default_config.h:
+../Library/hal/include/fat_fs_mounting_telemetry.h:
+
+../Library/communication/mavlink_message_handler.h:
+
+../Library/hal/include/fat_fs_mounting.h:
+
+../Library/communication/remote_telemetry.h:
+
+../Library/hal/include/servos_telemetry.h:
+
+../Library/communication/state_telemetry.h:
+
+../Library/hal/include/gps_ublox_telemetry.h:
+
+../Library/hal/include/gps_ublox.h:
+
+../Library/sensing/imu_telemetry.h:
+
+../Library/hal/include/bmp085_telemetry.h:
+
+../Library/hal/include/bmp085.h:
+
+../Library/sensing/ahrs_telemetry.h:
+
+../Library/sensing/position_estimation_telemetry.h:
+
+../Library/control/stabilisation_telemetry.h:
 
 ../Library/control/stabilisation_copter.h:
 
-../Library/control/navigation_default_config.h:
+../Library/control/joystick_parsing_telemetry.h:
 
-../Library/hal/include/servos_default_config.h:
-
-../Library/sensing/qfilter_default_config.h:
-
-../Library/sensing/position_estimation_default_config.h:
-
-../Library/sensing/simulation_default_config.h:
+../Library/sensing/simulation_telemetry.h:
 
 ../Library/sensing/simulation.h:
 
-../Library/runtime/scheduler_default_config.h:
+../Library/runtime/scheduler_telemetry.h:
 
 ../Library/runtime/scheduler.h:
 
-../Library/communication/remote_default_config.h:
-
-../Library/communication/data_logging_default_config.h:
-
-../Library/communication/data_logging.h:
-
-../Library/communication/state_default_config.h:
-
-../Library/communication/mavlink_communication_default_config.h:
-
-../Library/control/attitude_controller_p2_default_config.h:
-
-../Library/control/attitude_controller_p2.h:
-
-../Library/control/servos_mix_quadcopter_diag_default_config.h:
-
-../Library/control/servos_mix_quadcopter_diag.h:
+../Library/hal/include/sonar_telemetry.h:

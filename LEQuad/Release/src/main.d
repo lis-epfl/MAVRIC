@@ -1,11 +1,9 @@
-src/central_data.d src/central_data.o src/central_data.o: \
- ../src/central_data.c ../src/central_data.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h \
+src/main.d src/main.o src/main.o: ../src/main.cpp \
+ ../Library/hal/include/led.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/stdint.h \
- ../Library/hal/include/time_keeper.h ../Library/sensing/qfilter.h \
- ../Library/sensing/imu.h ../Library/hal/include/gyroscope.h \
- ../Library/hal/include/accelerometer.h \
- ../Library/hal/include/magnetometer.h ../Library/util/quaternions.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h \
+ ../Library/hal/include/time_keeper.h ../Library/util/print_util.h \
+ ../Library/util/streams.h ../Library/util/quaternions.h \
  ../Library/util/maths.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/math.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/reent.h \
@@ -19,8 +17,13 @@ src/central_data.d src/central_data.o src/central_data.o: \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stddef.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h \
- ../Library/util/vectors.h ../Library/runtime/scheduler.h \
- ../Library/communication/state.h ../Library/communication/mav_modes.h \
+ ../Library/util/vectors.h ../src/central_data.h \
+ ../Library/sensing/qfilter.h ../Library/sensing/imu.h \
+ ../Library/hal/include/gyroscope.h \
+ ../Library/hal/include/accelerometer.h \
+ ../Library/hal/include/magnetometer.h ../Library/util/quaternions.h \
+ ../Library/runtime/scheduler.h ../Library/communication/state.h \
+ ../Library/communication/mav_modes.h \
  ../Library/communication/mavlink_stream.h ../Library/util/streams.h \
  ../Library/libs/mavlink/include/mavric/mavlink.h \
  ../Library/libs/mavlink/include/mavric/version.h \
@@ -160,7 +163,7 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/sensing/position_estimation.h ../Library/hal/include/bmp085.h \
  ../Library/hal/include/barometer.h ../Library/hal/include/gps_ublox.h \
  ../Library/util/maths.h ../Library/util/buffer.h \
- ../Library/util/streams.h ../Library/hal/avr32/include/uart_int.h \
+ ../Library/hal/avr32/include/uart_int.h \
  ../src/asf/avr32/drivers/usart/usart.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/avr32/io.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/avr32/uc3c1512c.h \
@@ -211,16 +214,16 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../src/asf/common/utils/interrupt/interrupt_avr32.h \
  ../src/asf/avr32/utils/preprocessor/tpaste.h \
  ../src/asf/avr32/drivers/intc/intc.h ../Library/util/coord_conventions.h \
- ../Library/util/quaternions.h ../src/tasks.h \
- ../Library/communication/remote.h ../Library/hal/include/satellite.h \
- ../Library/control/stabilisation.h ../Library/control/control_command.h \
- ../Library/util/constants.h ../Library/hal/include/servos.h \
+ ../src/tasks.h ../Library/communication/remote.h \
+ ../Library/hal/include/satellite.h ../Library/control/stabilisation.h \
+ ../Library/control/control_command.h ../Library/util/constants.h \
+ ../Library/hal/include/servos.h \
  ../Library/communication/mavlink_waypoint_handler.h \
  ../Library/communication/mavlink_message_handler.h \
  ../Library/communication/mavlink_communication.h \
  ../Library/communication/onboard_parameters.h \
  ../Library/communication/state.h ../Library/control/pid_controller.h \
- ../Library/util/print_util.h ../Library/communication/mavlink_stream.h \
+ ../Library/communication/mavlink_stream.h \
  ../Library/communication/mavlink_communication.h \
  ../Library/communication/onboard_parameters.h \
  ../Library/sensing/simulation.h ../Library/sensing/qfilter.h \
@@ -241,45 +244,20 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/libs/fat_fs/integer.h ../Library/libs/fat_fs/ffconf.h \
  ../Library/hal/include/fat_fs_mounting.h \
  ../Library/communication/acoustic.h ../Library/communication/remote.h \
- ../src/config/conf_imu.h ../src/config/conf_platform.h \
- ../src/config/MAVcalib/MAV201_imu_config.h \
- ../Library/control/stabilisation_copter_default_config.h \
- ../Library/control/stabilisation_copter.h \
- ../Library/control/navigation_default_config.h \
- ../Library/hal/include/servos_default_config.h \
- ../Library/sensing/qfilter_default_config.h \
- ../Library/sensing/position_estimation_default_config.h \
- ../Library/sensing/simulation_default_config.h \
- ../Library/sensing/simulation.h \
- ../Library/runtime/scheduler_default_config.h \
- ../Library/runtime/scheduler.h \
- ../Library/communication/remote_default_config.h \
- ../Library/communication/data_logging_default_config.h \
- ../Library/communication/data_logging.h \
- ../Library/communication/state_default_config.h \
- ../Library/communication/mavlink_communication_default_config.h \
- ../Library/control/attitude_controller_p2_default_config.h \
- ../Library/control/attitude_controller_p2.h \
- ../Library/control/servos_mix_quadcopter_diag_default_config.h \
- ../Library/control/servos_mix_quadcopter_diag.h
+ ../src/boardsupport.h ../src/tasks.h ../src/mavlink_telemetry.h \
+ ../Library/hal/include/piezo_speaker.h
 
-../src/central_data.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h:
+../Library/hal/include/led.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/stdint.h:
 
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/include/stdbool.h:
+
 ../Library/hal/include/time_keeper.h:
 
-../Library/sensing/qfilter.h:
+../Library/util/print_util.h:
 
-../Library/sensing/imu.h:
-
-../Library/hal/include/gyroscope.h:
-
-../Library/hal/include/accelerometer.h:
-
-../Library/hal/include/magnetometer.h:
+../Library/util/streams.h:
 
 ../Library/util/quaternions.h:
 
@@ -310,6 +288,20 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/_ansi.h:
 
 ../Library/util/vectors.h:
+
+../src/central_data.h:
+
+../Library/sensing/qfilter.h:
+
+../Library/sensing/imu.h:
+
+../Library/hal/include/gyroscope.h:
+
+../Library/hal/include/accelerometer.h:
+
+../Library/hal/include/magnetometer.h:
+
+../Library/util/quaternions.h:
 
 ../Library/runtime/scheduler.h:
 
@@ -611,8 +603,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/util/buffer.h:
 
-../Library/util/streams.h:
-
 ../Library/hal/avr32/include/uart_int.h:
 
 ../src/asf/avr32/drivers/usart/usart.h:
@@ -719,8 +709,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/util/coord_conventions.h:
 
-../Library/util/quaternions.h:
-
 ../src/tasks.h:
 
 ../Library/communication/remote.h:
@@ -746,8 +734,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 ../Library/communication/state.h:
 
 ../Library/control/pid_controller.h:
-
-../Library/util/print_util.h:
 
 ../Library/communication/mavlink_stream.h:
 
@@ -809,46 +795,10 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.1002\avr
 
 ../Library/communication/remote.h:
 
-../src/config/conf_imu.h:
+../src/boardsupport.h:
 
-../src/config/conf_platform.h:
+../src/tasks.h:
 
-../src/config/MAVcalib/MAV201_imu_config.h:
+../src/mavlink_telemetry.h:
 
-../Library/control/stabilisation_copter_default_config.h:
-
-../Library/control/stabilisation_copter.h:
-
-../Library/control/navigation_default_config.h:
-
-../Library/hal/include/servos_default_config.h:
-
-../Library/sensing/qfilter_default_config.h:
-
-../Library/sensing/position_estimation_default_config.h:
-
-../Library/sensing/simulation_default_config.h:
-
-../Library/sensing/simulation.h:
-
-../Library/runtime/scheduler_default_config.h:
-
-../Library/runtime/scheduler.h:
-
-../Library/communication/remote_default_config.h:
-
-../Library/communication/data_logging_default_config.h:
-
-../Library/communication/data_logging.h:
-
-../Library/communication/state_default_config.h:
-
-../Library/communication/mavlink_communication_default_config.h:
-
-../Library/control/attitude_controller_p2_default_config.h:
-
-../Library/control/attitude_controller_p2.h:
-
-../Library/control/servos_mix_quadcopter_diag_default_config.h:
-
-../Library/control/servos_mix_quadcopter_diag.h:
+../Library/hal/include/piezo_speaker.h:
