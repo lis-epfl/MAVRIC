@@ -134,3 +134,5 @@ bool boardsupport_init(Central_data* central_data)
 
 	return init_success;
 }
+
+

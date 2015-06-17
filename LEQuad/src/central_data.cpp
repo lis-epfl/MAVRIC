@@ -237,27 +237,23 @@ Central_data::Central_data():
 	// Init sonar
 	// init_success &= sonar_i2cxl_init(&sonar_i2cxl);
 
-	// Init P^2 attitude controller
-	attitude_controller_p2_init( 	&attitude_controller,
-									attitude_controller_p2_default_config(),
-									&command.attitude,
-									&command.torque,
-									&ahrs );
 
 	// Init servo mixing
-	init_success &= servo_mix_quadcotper_diag_init( &servo_mix, 
-													servo_mix_quadcopter_diag_default_config(), 
-													&command.torque, 
-													&command.thrust, 
+	init_success &= servo_mix_quadcotper_diag_init( &servo_mix,
+													servo_mix_quadcopter_diag_default_config(),
+													&command.torque,
+													&command.thrust,
 													&servos);
 
 	// Init remote
-	init_success &= remote_init( 	&remote, 
+	init_success &= remote_init( 	&remote,
 									remote_default_config());
 
-	
+
 	//Init data logging
-	init_success &= data_logging_init(  &data_logging,
-										data_logging_default_config(),
-										&state);
+	init_success &= data_logging_create_new_log_file(	&data_logging,
+														"Log_file",
+														true,
+														&fat_fs_mounting,
+														mavlink_communication.mavlink_stream.sysid);
 }

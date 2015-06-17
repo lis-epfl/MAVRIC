@@ -52,6 +52,7 @@
 #include "hud_telemetry.hpp"
 #include "state_machine.hpp"
 #include "data_logging.hpp"
+#include "fat_fs_mounting.hpp"
 #include "acoustic.hpp" 
 #include "qfilter.hpp"
 #include "imu.hpp"
@@ -171,6 +172,7 @@ public:
 	sd_spi_t sd_spi;											///< The sd_SPI driver structure
 	
 	data_logging_t data_logging;								///< The log data structure	
+	fat_fs_mounting_t fat_fs_mounting; 							///< The Fat fs system file mounting structure
 };
 
 
