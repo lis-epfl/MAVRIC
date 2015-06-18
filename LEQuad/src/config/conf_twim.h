@@ -48,6 +48,12 @@
  */
 #ifndef _CONF_TWIM_H
 #define _CONF_TWIM_H
+
+ #ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "board.h"
 
 
@@ -103,6 +109,10 @@
 #	define CONF_TWIM_IRQ_LEVEL         1
 #else
 #	error MCU Not Supported
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif // _CONF_TWIM_H

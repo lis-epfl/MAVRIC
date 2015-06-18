@@ -40,6 +40,13 @@
 #ifndef CONF_CLOCK_H_INCLUDED
 #define CONF_CLOCK_H_INCLUDED
 
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
 //#define CONFIG_SYSCLK_INIT_CPUMASK  (1 << SYSCLK_SYSTIMER)
 //#define CONFIG_SYSCLK_INIT_PBAMASK  (1 << SYSCLK_USART0)
 //#define CONFIG_SYSCLK_INIT_PBBMASK  (1 << SYSCLK_HMATRIX)
@@ -81,5 +88,9 @@
 /* Fpll1 = (Fclk * PLL_mul) / PLL_div */
 #define CONFIG_PLL1_MUL               (48000000UL / BOARD_OSC0_HZ)
 #define CONFIG_PLL1_DIV               1
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CONF_CLOCK_H_INCLUDED */

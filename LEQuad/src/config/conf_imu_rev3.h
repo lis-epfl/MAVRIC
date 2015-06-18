@@ -40,6 +40,10 @@
 #ifndef CONF_IMU_REV3_H_
 #define CONF_IMU_REV3_H_
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 #define GYRO_AXIS_X 1
 #define GYRO_AXIS_Y 0
@@ -114,6 +118,9 @@
 #define MAG_BIAIS_Z  61.1646f
 
 
+#ifdef __cplusplus
+}
+#endif
 
 
 

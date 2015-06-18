@@ -9,8 +9,15 @@
 #ifndef CONF_TWIS_H_
 #define CONF_TWIS_H_
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CONF_TWIS_H_ */

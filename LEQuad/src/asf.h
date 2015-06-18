@@ -44,6 +44,12 @@
 #ifndef ASF_H
 #define ASF_H
 
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /*
  * This file includes all API header files for the selected drivers from ASF.
  * Note: There might be duplicate includes required by more than one driver.
@@ -156,5 +162,9 @@
 // From module: USB Device Stack Core (Common API)
 #include <udc.h>
 #include <udd.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ASF_H

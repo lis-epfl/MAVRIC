@@ -39,6 +39,12 @@
 #ifndef _CONF_USB_H_
 #define _CONF_USB_H_
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
 #include "compiler.h"
 
 //#warning You must refill the following definitions with a correct values
@@ -143,4 +149,9 @@
 //! The includes of classes and other headers must be done at the end of this file to avoid compile error
 #include "udi_cdc_conf.h"
 #include <stdio_usb.h>
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif // _CONF_USB_H_
