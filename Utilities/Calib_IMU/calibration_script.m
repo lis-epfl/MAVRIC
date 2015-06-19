@@ -1,5 +1,5 @@
 
-filename = '14_08_2014_MAV051_compressed.txt';
+filename = '17_compressed.06.2015_MAV201.txt';
 
 fileid = fopen(filename);
 textFromFile = textscan(fileid,'%s');%,'HeaderLines',2,'Delimiter','\t');

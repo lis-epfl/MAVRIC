@@ -33245,7 +33245,7 @@ Disassembly of section .text:
 80018946:	93 2a       	st.w	r9[0x8],r10
 80018948:	70 38       	ld.w	r8,r8[0xc]
 8001894a:	93 38       	st.w	r9[0xc],r8
-8001894c:	e0 68 00 c9 	mov	r8,201
+8001894c:	e0 68 00 96 	mov	r8,150
 80018950:	50 a8       	stdsp	sp[0x28],r8
 80018952:	ea c8 ff f4 	sub	r8,r5,-12
 80018956:	50 08       	stdsp	sp[0x0],r8

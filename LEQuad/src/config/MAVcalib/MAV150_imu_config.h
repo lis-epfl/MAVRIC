@@ -30,54 +30,105 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file conf_platform.h
+ * \file MAV007_imu_config.h
  * 
  * \author MAV'RIC Team
- * 
- * \brief  This file configures the imu for the rev 4 of the maveric autopilot
  *   
+ * \brief This file defines the mapping between the IMU and the compass and the 
+ * frames of the vehicles as well as the scales and the biaises. 
+ * The NED frame is used.
+ *
  ******************************************************************************/
 
 
-#ifndef CONF_PLATFORM_H_
-#define CONF_PLATFORM_H_
+#ifndef CONF_IMU_REV4_H_
+#define CONF_IMU_REV4_H_
 
-#ifdef __cplusplus
-	extern "C" {
-#endif  
+#include "imu.h"
 
-#define MAVLINK_SYS_ID 150
+static imu_conf_t imu_config =
+{
+	.accelerometer =
+	{
+		.axis =
+		{
+			0,					//ACC_AXIS_X
+			1,					//ACC_AXIS_Y
+			2					//ACC_AXIS_Z
+		},
+		.orientation =
+		{
+			 1.0f,				//ACC_ORIENTATION_X
+			-1.0f,				//ACC_ORIENTATION_Y
+			-1.0f				//ACC_ORIENTATION_Z
+		},
+		.bias =
+		{
+			 -40.0f,			//ACC_BIAIS_X
+			  70.0f,			//ACC_BIAIS_Y
+			-150.0f				//ACC_BIAIS_Z
+		},
+		.scale_factor =
+		{
+			4021.8f,			//RAW_ACC_X_SCALE
+			4154.9f,			//RAW_ACC_Y_SCALE
+			4167.5f				//RAW_ACC_Z_SCALE
+		}
+	},
+	.gyroscope =
+	{
+		.axis =
+		{
+			0,					//GYRO_AXIS_X
+			1,					//GYRO_AXIS_Y
+			2					//GYRO_AXIS_Z
+		},
+		.orientation =
+		{
+			1.0f,				//GYRO_ORIENTATION_X
+			-1.0f,				//GYRO_ORIENTATION_Y
+			-1.0f				//GYRO_ORIENTATION_Z
+		},
+		.bias =
+		{
+			 -3.6f,			//GYRO_BIAIS_X
+			 -4.6f,			//GYRO_BIAIS_Y
+			 13.00f			//GYRO_BIAIS_Z
+		},
+		.scale_factor =
+		{
+			818.5111f,			//RAW_GYRO_X_SCALE
+			818.5111f,			//RAW_GYRO_Y_SCALE
+			818.5111f			//RAW_GYRO_Z_SCALE
+		}
+	},
+	.magnetometer =
+	{
+		.axis =
+		{
+			2,					//MAG_AXIS_X
+			0,					//MAG_AXIS_Y
+			1					//MAG_AXIS_Z
+		},
+		.orientation =
+		{
+			-1.0f,				//MAG_ORIENTATION_X
+			-1.0f,				//MAG_ORIENTATION_Y
+			-1.0f				//MAG_ORIENTATION_Z
+		},
+		.bias =
+		{
+			-22.0f,			//MAG_BIAIS_X
+			-185.5f,		//MAG_BIAIS_Y
+			-171.0f			//MAG_BIAIS_Z
+		},
+		.scale_factor =
+		{
+			451.35f,			//RAW_MAG_X_SCALE
+			458.06f,			//RAW_MAG_Y_SCALE
+			436.79f				//RAW_MAG_Z_SCALE
+		}
+	}
+};
 
-///< Definitions of Platform configuration
-#define M_REAR_LEFT 0		///< Define the index for the control
-#define M_FRONT_LEFT 1		///< Define the index for the control
-#define M_FRONT_RIGHT 2		///< Define the index for the control
-#define M_REAR_RIGHT 3		///< Define the index for the control
-
-#define M_FR_DIR ( 1)		///< Define the front right motor turn direction
-#define M_FL_DIR (-1)		///< Define the front left motor turn direction
-#define M_RR_DIR (-1)		///< Define the motor turn direction
-#define M_RL_DIR ( 1)		///< Define the motor turn direction
-
-#define M_FRONT 0			///< Define the index for the movement control to go front
-#define M_RIGHT 1			///< Define the index for the movement control to go right
-#define M_REAR 2			///< Define the index for the movement control to go backward
-#define M_LEFT 3			///< Define the index for the movement control to go left
-
-#define M_FRONT_DIR ( 1)	///< Define the direction of control
-#define M_RIGHT_DIR (-1)	///< Define the direction of control
-#define M_REAR_DIR  ( 1)	///< Define the direction of control
-#define M_LEFT_DIR  (-1)	///< Define the direction of control
-
-#define MIN_THRUST -0.9f	///< Define the minimum thrust to apply
-#define MAX_THRUST 1.0f		///< Define the maximum thrust to apply
-
-///< define if servos 7 and 8 are used
-#define USE_SERVOS_7_8 false
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* CONF_PLATFORM_H_ */
+#endif /* CONF_IMU_REV4_H_ */
