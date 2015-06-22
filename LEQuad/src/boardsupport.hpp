@@ -45,7 +45,6 @@
 
 #include "central_data.hpp"
 #include "sonar_i2cxl.hpp"
-#include "hmc5883l.hpp"
 #include "gps_ublox.hpp"
 
 extern "C" {
@@ -63,7 +62,6 @@ extern "C" {
 	// #include "mavlink_stream.h"
 	//#include "simulation.h"
 	#include "bmp085.h"
-	#include "lsm330dlc.h"
 	#include "analog_monitor.h"
 	#include "piezo_speaker.h"
 	#include "gpio.h"

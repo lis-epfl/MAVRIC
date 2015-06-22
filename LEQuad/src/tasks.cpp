@@ -43,6 +43,7 @@
 #include "central_data.hpp"
 #include "sonar_i2cxl.hpp"
 #include "hmc5883l.hpp"
+#include "lsm330dlc.hpp"
 #include "navigation.hpp"
 #include "imu.hpp"
 #include "remote.hpp"
@@ -55,7 +56,6 @@ extern "C"
 	#include "led.h"
 	#include "delay.h"
 	#include "analog_monitor.h"
-	#include "lsm330dlc.h"
 	#include "stdio_usb.h"
 	//#include "data_logging.h"
 	#include "pwm_servos.h"
@@ -71,10 +71,8 @@ void tasks_run_imu_update(Central_data* central_data)
 	} 
 	else 
 	{
-		// lsm330dlc_gyro_update(&(central_data->imu.raw_gyro));
-		// lsm330dlc_acc_update(&(central_data->imu.raw_accelero));
+		central_data->board.lsm330dlc.update();
 		
-		// hmc5883l_update(&(central_data->imu.raw_magneto));
 		central_data->board.magnetometer.update();
 	}
 	

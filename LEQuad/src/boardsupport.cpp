@@ -103,15 +103,6 @@ bool boardsupport_init(Central_data* central_data)
 	// Init analog rails
 	analog_monitor_init(&central_data->analog_monitor, analog_monitor_default_config());
 	
-	// init imu & compass
-	// i2c_driver_init(I2C0, twim_default_config());
-	
-	// lsm330dlc_init();
-	// print_util_dbg_print("LSM330 initialised \r\n");
-		
-	// hmc5883l_init_slow();
-	// print_util_dbg_print("HMC5883 initialised \r\n");
-	
 	// bmp085_init(&central_data->pressure);
 	
 	// Init I2C for ultrasound
