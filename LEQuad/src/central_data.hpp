@@ -80,7 +80,6 @@ extern "C"
 	#include "print_util.h"
 
 	#include "coord_conventions.h"
-	#include "bmp085.h"
 
 	#include "analog_monitor.h"
 	#include "stabilisation.h"
@@ -165,7 +164,7 @@ public:
 	state_t state;												///< The structure with all state information
 	state_machine_t state_machine;								///< The structure for the state machine
 	
-	barometer_t pressure;										///< The pressure structure
+	//Barometer pressure;											///< The pressure structure
 	
 	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 	

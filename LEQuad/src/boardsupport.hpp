@@ -46,7 +46,8 @@
 #include "central_data.hpp"
 #include "sonar_i2cxl.hpp"
 #include "gps_ublox.hpp"
-
+#include "spektrum_satellite.hpp"
+	
 extern "C" {
 	#include "uart_int.h"
 	#include "sysclk.h"
@@ -61,7 +62,6 @@ extern "C" {
 	#include "print_util.h"
 	// #include "mavlink_stream.h"
 	//#include "simulation.h"
-	#include "bmp085.h"
 	#include "analog_monitor.h"
 	#include "piezo_speaker.h"
 	#include "gpio.h"
@@ -71,7 +71,6 @@ extern "C" {
 	#include "stdio_usb.h"
 
 	#include "pwm_servos.h"
-	#include "spektrum_satellite.h"
 	#include "conf_platform.h"
 
 	#include "analog_monitor_default_config.h"

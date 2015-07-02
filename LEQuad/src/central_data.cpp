@@ -157,7 +157,7 @@ Central_data::Central_data():
 	init_success &= position_estimation_init(   	&position_estimation,
 													position_estimation_default_config(),
 													&state,
-													&pressure,
+													&board.bmp085,
 													&gps,
 													&ahrs);
 	
@@ -213,7 +213,7 @@ Central_data::Central_data():
 									&ahrs,
 									&imu,
 									&position_estimation,
-									&pressure,
+									&board.bmp085,
 									&gps,
 									&sonar.data,
 									&state,
@@ -251,6 +251,7 @@ Central_data::Central_data():
 
 
 	//Init data logging
+	//TODO: not working here
 	init_success &= data_logging_create_new_log_file(	&data_logging,
 														"Log_file",
 														true,
