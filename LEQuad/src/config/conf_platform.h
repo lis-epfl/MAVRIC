@@ -72,6 +72,10 @@
 #define MIN_THRUST -0.9f	///< Define the minimum thrust to apply
 #define MAX_THRUST 1.0f		///< Define the maximum thrust to apply
 
+#define GIMBAL_SERVO_ROLL  2	///< Define the index for the gimbal
+#define GIMBAL_SERVO_PITCH 0	///< Define the index for the gimbal
+#define GIMBAL_SERVO_YAW   1	///< Define the index for the gimbal
+
 ///< define if servos 7 and 8 are used
 #define USE_SERVOS_7_8 false
 

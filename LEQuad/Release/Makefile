@@ -127,6 +127,8 @@ C_SRCS +=  \
 ../Library/control/servos_mix_quadcopter_cross.c \
 ../Library/control/servos_mix_quadcopter_diag.c \
 ../Library/control/stabilisation_copter.c \
+../Library/control/stabilisation_gimbal.c \
+../Library/control/stabilisation_gimbal_telemetry.c \
 ../Library/control/stabilisation_telemetry.c \
 ../Library/control/vector_field_waypoint.c \
 ../Library/hal/avr32/analog_monitor_telemetry.c \
@@ -256,6 +258,8 @@ Library/control/pid_controller.o \
 Library/control/servos_mix_quadcopter_cross.o \
 Library/control/servos_mix_quadcopter_diag.o \
 Library/control/stabilisation_copter.o \
+Library/control/stabilisation_gimbal.o \
+Library/control/stabilisation_gimbal_telemetry.o \
 Library/control/stabilisation_telemetry.o \
 Library/control/vector_field_waypoint.o \
 Library/hal/avr32/analog_monitor_telemetry.o \
@@ -378,6 +382,8 @@ Library/control/pid_controller.o \
 Library/control/servos_mix_quadcopter_cross.o \
 Library/control/servos_mix_quadcopter_diag.o \
 Library/control/stabilisation_copter.o \
+Library/control/stabilisation_gimbal.o \
+Library/control/stabilisation_gimbal_telemetry.o \
 Library/control/stabilisation_telemetry.o \
 Library/control/vector_field_waypoint.o \
 Library/hal/avr32/analog_monitor_telemetry.o \
@@ -500,6 +506,8 @@ Library/control/pid_controller.d \
 Library/control/servos_mix_quadcopter_cross.d \
 Library/control/servos_mix_quadcopter_diag.d \
 Library/control/stabilisation_copter.d \
+Library/control/stabilisation_gimbal.d \
+Library/control/stabilisation_gimbal_telemetry.d \
 Library/control/stabilisation_telemetry.d \
 Library/control/vector_field_waypoint.d \
 Library/hal/avr32/analog_monitor_telemetry.d \
@@ -622,6 +630,8 @@ Library/control/pid_controller.d \
 Library/control/servos_mix_quadcopter_cross.d \
 Library/control/servos_mix_quadcopter_diag.d \
 Library/control/stabilisation_copter.d \
+Library/control/stabilisation_gimbal.d \
+Library/control/stabilisation_gimbal_telemetry.d \
 Library/control/stabilisation_telemetry.d \
 Library/control/vector_field_waypoint.d \
 Library/hal/avr32/analog_monitor_telemetry.d \
@@ -732,6 +742,10 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

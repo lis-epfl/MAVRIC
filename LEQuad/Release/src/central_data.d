@@ -214,8 +214,7 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/util/quaternions.h ../src/tasks.h \
  ../Library/communication/remote.h ../Library/hal/include/satellite.h \
  ../Library/control/stabilisation.h ../Library/control/control_command.h \
- ../Library/util/constants.h ../Library/hal/include/sonar.h \
- ../Library/hal/include/servos.h \
+ ../Library/util/constants.h ../Library/hal/include/servos.h \
  ../Library/communication/mavlink_waypoint_handler.h \
  ../Library/communication/mavlink_message_handler.h \
  ../Library/communication/mavlink_communication.h \
@@ -225,7 +224,7 @@ src/central_data.d src/central_data.o src/central_data.o: \
  ../Library/communication/mavlink_communication.h \
  ../Library/communication/onboard_parameters.h \
  ../Library/sensing/simulation.h ../Library/sensing/qfilter.h \
- ../Library/hal/include/barometer.h \
+ ../Library/hal/include/barometer.h ../Library/hal/include/sonar.h \
  ../Library/sensing/position_estimation.h \
  ../Library/hal/include/sonar_i2cxl.h ../Library/hal/include/sonar.h \
  ../Library/control/navigation.h ../Library/control/joystick_parsing.h \
@@ -734,8 +733,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.435\avr3
 
 ../Library/util/constants.h:
 
-../Library/hal/include/sonar.h:
-
 ../Library/hal/include/servos.h:
 
 ../Library/communication/mavlink_waypoint_handler.h:
@@ -763,6 +760,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.435\avr3
 ../Library/sensing/qfilter.h:
 
 ../Library/hal/include/barometer.h:
+
+../Library/hal/include/sonar.h:
 
 ../Library/sensing/position_estimation.h:
 

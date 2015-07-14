@@ -729,6 +729,9 @@
     <Compile Include="Library\control\control_command.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\control\gimbal_control_command.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\control\joystick_parsing.c">
       <SubType>compile</SubType>
     </Compile>
@@ -772,6 +775,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\stabilisation_copter_default_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_gimbal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_gimbal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_gimbal_telemetry.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_gimbal_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\stabilisation_telemetry.c">

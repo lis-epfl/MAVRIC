@@ -54,6 +54,7 @@
 #include "hmc5883l.h"
 #include "stdio_usb.h"
 //#include "data_logging.h"
+#include "stabilisation_gimbal.h"
 
 #include "pwm_servos.h"
 
@@ -88,6 +89,18 @@ void tasks_run_imu_update(void* arg)
 	position_estimation_update(&central_data->position_estimation);
 }
 
+task_return_t tasks_run_gimbal_stabilisation(void* arg)
+{
+	if (central_data->state.remote_active == 1)
+	{
+		remote_get_gimbal_command_from_remote(&central_data->remote, &central_data->controls);
+	}
+	
+	stabilisation_gimbal(&central_data->stabilisation_copter);
+		
+	return TASK_RUN_SUCCESS;
+}
+
 task_return_t tasks_run_stabilisation(void* arg) 
 {
 	tasks_run_imu_update(0);
@@ -96,7 +109,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 
 	if( mode.ARMED == ARMED_ON )
 	{
-		if ( mode.AUTO == AUTO_ON )
+		if ( mode.AUTO == AUTO_ON ) //Waypoint navigation
 		{
 			central_data->controls = central_data->controls_nav;
 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
@@ -117,7 +130,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 			}
 		}
-		else if ( mode.GUIDED == GUIDED_ON )
+		else if ( mode.GUIDED == GUIDED_ON ) 
 		{
 			central_data->controls = central_data->controls_nav;
 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
@@ -136,7 +149,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 			}
 		}
-		else if ( mode.STABILISE == STABILISE_ON )
+		else if ( mode.STABILISE == STABILISE_ON ) //Velocity mode
 		{
 			if (central_data->state.remote_active == 1)
 			{
@@ -155,7 +168,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 			}		
 		}
-		else if ( mode.MANUAL == MANUAL_ON )
+		else if ( mode.MANUAL == MANUAL_ON ) //Manual mode
 		{
 			if (central_data->state.remote_active == 1)
 			{
@@ -183,7 +196,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 
 		
 	// !!! -- for safety, this should remain the only place where values are written to the servo outputs! --- !!!
-	if ( mode.HIL == HIL_OFF )
+	if ( mode.HIL == HIL_OFF ) //if simulation is off
 	{
 		pwm_servos_write_to_hardware( &central_data->servos );
 	}
@@ -192,7 +205,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 }
 
 
-// new task to test P^2 attutude controller
+// new task to test P^2 attitude controller
 task_return_t tasks_run_stabilisation_quaternion(void* arg);
 task_return_t tasks_run_stabilisation_quaternion(void* arg)
 {
@@ -274,26 +287,27 @@ bool tasks_create_tasks()
 	
 	scheduler_t* scheduler = &central_data->scheduler;
 
-	init_success &= scheduler_add_task(scheduler, 4000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation												, 0                                                    , 0);
+	init_success &= scheduler_add_task(scheduler,	4000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation											, 0                                                    , 0);
+	init_success &= scheduler_add_task(scheduler,	10000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH,	  &tasks_run_gimbal_stabilisation									, 0                                                    , 1);
 	//init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation_quaternion                               , 0 													, 0);
 
 	//init_success &= scheduler_add_task(scheduler, 20000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , (task_function_t)&remote_update                                   , 0 													, 1);
 	
-	init_success &= scheduler_add_task(scheduler, 15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , &tasks_run_barometer_update                                       , 0 													, 2);
-	init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , &tasks_run_gps_update                                             , 0 													, 3);
-	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&navigation_update								, (task_argument_t)&central_data->navigation			, 4);
+	init_success &= scheduler_add_task(scheduler,	15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , &tasks_run_barometer_update                                       , 0 													, 2);
+	init_success &= scheduler_add_task(scheduler,	100000, RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , &tasks_run_gps_update                                             , 0 													, 3);
+	init_success &= scheduler_add_task(scheduler,	10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&navigation_update								, (task_argument_t)&central_data->navigation			, 4);
 	
-	init_success &= scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
+	init_success &= scheduler_add_task(scheduler,	200000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
 
-	init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&mavlink_communication_update                    , (task_argument_t)&central_data->mavlink_communication , 6);
-	init_success &= scheduler_add_task(scheduler, 300000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
-	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&waypoint_handler_control_time_out_waypoint_msg  , (task_argument_t)&central_data->waypoint_handler 		, 8);
+	init_success &= scheduler_add_task(scheduler,	4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&mavlink_communication_update                    , (task_argument_t)&central_data->mavlink_communication , 6);
+	init_success &= scheduler_add_task(scheduler,	300000, RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
+	init_success &= scheduler_add_task(scheduler,	10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&waypoint_handler_control_time_out_waypoint_msg  , (task_argument_t)&central_data->waypoint_handler 		, 8);
 	
-	init_success &= scheduler_add_task(scheduler, 100000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
+	init_success &= scheduler_add_task(scheduler,	100000, RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
 	
-	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
+	init_success &= scheduler_add_task(scheduler,	500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
-	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
+	init_success &= scheduler_add_task(scheduler,	500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
 	
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 

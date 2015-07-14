@@ -89,6 +89,10 @@ void tasks_rc_user_channels(uint8_t* chan_switch, signal_quality_t* rc_check, in
  */
 // task_return_t tasks_set_mav_mode_n_state(void* arg);
 
+/**
+ * \brief            Run the gimbal stabilisation loop
+ */
+task_return_t tasks_run_gimbal_stabilisation(void* arg);
 
 /**
  * \brief            Run the main stabilisation loop

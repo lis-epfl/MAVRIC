@@ -67,6 +67,7 @@
 #include "simulation_telemetry.h"
 #include "scheduler_telemetry.h"
 #include "sonar_telemetry.h"
+#include "stabilisation_gimbal_telemetry.h"
 
 central_data_t *central_data;
 
@@ -356,7 +357,7 @@ bool mavlink_telemetry_init(void)
 	
 	mavlink_communication_t* mavlink_communication = &central_data->mavlink_communication;
 	
-	stabiliser_t* stabiliser_show = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
+	stabiliser_stack_copter_t* stabiliser_stack = &central_data->stabilisation_copter.stabiliser_stack;
 
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_heartbeat,								&central_data->state, 					MAVLINK_MSG_ID_HEARTBEAT			);// ID 0
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,	 RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_status,									&central_data->state,					MAVLINK_MSG_ID_SYS_STATUS			);// ID 1
@@ -369,7 +370,7 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&position_estimation_telemetry_send_position,					&central_data->position_estimation, 	MAVLINK_MSG_ID_LOCAL_POSITION_NED	);// ID 32
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&position_estimation_telemetry_send_global_position,			&central_data->position_estimation, 	MAVLINK_MSG_ID_GLOBAL_POSITION_INT	);// ID 33
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&remote_telemetry_send_scaled,									&central_data->remote,					MAVLINK_MSG_ID_RC_CHANNELS_SCALED	);// ID 34
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,    PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&remote_telemetry_send_raw,										&central_data->remote,					MAVLINK_MSG_ID_RC_CHANNELS_RAW		);// ID 35
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,    PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&remote_telemetry_send_raw,									&central_data->remote,					MAVLINK_MSG_ID_RC_CHANNELS_RAW		);// ID 35
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_NEVER,    PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&servos_telemetry_mavlink_send,									&central_data->servos, 					MAVLINK_MSG_ID_SERVO_OUTPUT_RAW		);// ID 36
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,	 RUN_NEVER,    PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&joystick_parsing_telemetry_send_manual_ctrl_msg,				&central_data->joystick_parsing,		MAVLINK_MSG_ID_MANUAL_CONTROL		);// ID 69
@@ -378,9 +379,11 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_state,								&central_data->sim_model, 				MAVLINK_MSG_ID_HIL_STATE			);// ID 90
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,	 RUN_NEVER,	   PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_quaternions,							&central_data->sim_model,				MAVLINK_MSG_ID_HIL_STATE_QUATERNION	);// ID 115
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,											&central_data->sonar_i2cxl.data, 		MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 119
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		&stabiliser_stack->rate_stabiliser,		MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160, 181?
 	
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
-	
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, (mavlink_send_msg_function_t)&gimbal_stabilisation_telemetry_send_rpy_setpoint,				&central_data->stabilisation_copter,	MAVLINK_MSG_ID_DEBUG_VECT-1 );// ID 249
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, (mavlink_send_msg_function_t)&gimbal_stabilisation_telemetry_send_rpy_output,				&stabiliser_stack->gimbal_attitude_stabiliser,	MAVLINK_MSG_ID_DEBUG_VECT );// ID 250
+
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&scheduler_telemetry_send_rt_stats,								&central_data->scheduler, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&acoustic_telemetry_send,										&central_data->audio_data, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250

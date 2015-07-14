@@ -73,6 +73,7 @@ void initialisation()
 
 	central_data->state.mav_state = MAV_STATE_STANDBY;	
 	
+	//Assign the tasks (every kind of updates as the imu values, motor controls, etc) to the scheduler
 	init_success &= tasks_create_tasks();	
 
 	if (init_success)
