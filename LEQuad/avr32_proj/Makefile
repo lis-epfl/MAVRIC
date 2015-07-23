@@ -172,7 +172,7 @@ SRCS += asf/common/utils/stdio/stdio_usb/stdio_usb.c
 # MAVRIC LIBRARY
 # ------------------------------------------------------------------------------
 # MAVRIC_Library code directory
-MAVRIC_LIB=../../MAVRIC_Library/
+MAVRIC_LIB=../../MAVRIC_Library
 
 # Include folders for Library
 LIB_INC += -I$(MAVRIC_LIB)
@@ -205,89 +205,90 @@ LIB_SRCS += boards/megafly_rev4.cpp
 
 LIB_SRCS += drivers/ads1274.c                   
 LIB_SRCS += drivers/adxl345_driver.c
-LIB_SRCS += drivers/airspeed_analog.c           
+LIB_SRCS += drivers/airspeed_analog.c  
+LIB_SRCS += drivers/barometer.c 
 LIB_SRCS += drivers/battery.c                    
-LIB_SRCS += drivers/bmp085.c                    
-LIB_SRCS += drivers/bmp085_telemetry.c          
+LIB_SRCS += drivers/bmp085.cpp                   
+LIB_SRCS += drivers/bmp085_telemetry.cpp          
 LIB_SRCS += drivers/curvace.c                   
-LIB_SRCS += drivers/gps_ublox.c                 
-LIB_SRCS += drivers/gps_ublox_telemetry.c       
-LIB_SRCS += drivers/hmc5883l.c             
+LIB_SRCS += drivers/gps_ublox.cpp                 
+LIB_SRCS += drivers/gps_ublox_telemetry.cpp       
+LIB_SRCS += drivers/hmc5883l.cpp             
 LIB_SRCS += drivers/itg3200.c              
-LIB_SRCS += drivers/lsm330dlc.c            
+LIB_SRCS += drivers/lsm330dlc.cpp            
 LIB_SRCS += drivers/radar_driver.c         
-LIB_SRCS += drivers/radar_module_driver.c
+LIB_SRCS += drivers/radar_module_driver.cpp
+LIB_SRCS += drivers/satellite.cpp
 LIB_SRCS += drivers/servos.c                              
 LIB_SRCS += drivers/servos_telemetry.c
-LIB_SRCS += drivers/sonar_i2cxl.c
-LIB_SRCS += drivers/sonar_telemetry.c
-LIB_SRCS += drivers/spektrum_satellite.c
+LIB_SRCS += drivers/sonar_i2cxl.cpp
+LIB_SRCS += drivers/sonar_telemetry.cpp
+LIB_SRCS += drivers/spektrum_satellite.cpp
 LIB_SRCS += drivers/xbee.c
                    
-LIB_SRCS += hal/avr32/adc_int.c                   
+LIB_SRCS += hal/avr32/adc_int.c          
 LIB_SRCS += hal/avr32/analog_monitor.c            
-LIB_SRCS += hal/avr32/analog_monitor_telemetry.c  
-LIB_SRCS += hal/avr32/dac_dma.c                   
-LIB_SRCS += hal/avr32/fat_fs_mounting.c            
-LIB_SRCS += hal/avr32/i2c_avr32.cpp       
-LIB_SRCS += hal/avr32/i2c_driver_int.c       
-LIB_SRCS += hal/avr32/led.c                  
+LIB_SRCS += hal/avr32/analog_monitor_telemetry.cpp                  
+LIB_SRCS += hal/avr32/dac_dma.c
+LIB_SRCS += hal/avr32/i2c_avr32.cpp            
+LIB_SRCS += hal/avr32/i2c_driver_int.c             
+LIB_SRCS += hal/avr32/fat_fs_mounting.cpp
+LIB_SRCS += hal/avr32/fat_fs_mounting_telemetry.cpp
+LIB_SRCS += hal/avr32/led.c            
 LIB_SRCS += hal/avr32/piezo_speaker.c        
-LIB_SRCS += hal/avr32/pwm_servos.c           
-LIB_SRCS += hal/avr32/sd_spi.c
+LIB_SRCS += hal/avr32/pwm_servos.c
 LIB_SRCS += hal/avr32/serial_avr32.cpp
+LIB_SRCS += hal/avr32/sd_spi.c
 LIB_SRCS += hal/avr32/spi_buffered.c
 LIB_SRCS += hal/avr32/time_keeper.c
 LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c
 
-LIB_SRCS += hal/dummy/i2c_dummy.cpp
-
 LIB_SRCS += control/adaptive_parameter.c          
 LIB_SRCS += control/attitude_controller.c         
 LIB_SRCS += control/attitude_controller_p2.c      
 LIB_SRCS += control/attitude_error_estimator.c    
-LIB_SRCS += control/joystick_parsing.c            
-LIB_SRCS += control/joystick_parsing_telemetry.c  
-LIB_SRCS += control/navigation.c                   
+LIB_SRCS += control/joystick_parsing.cpp            
+LIB_SRCS += control/joystick_parsing_telemetry.cpp  
+LIB_SRCS += control/navigation.cpp                   
 LIB_SRCS += control/pid_controller.c               
 LIB_SRCS += control/servos_mix_quadcopter_cross.c  
 LIB_SRCS += control/servos_mix_quadcopter_diag.c   
 LIB_SRCS += control/stabilisation.c
-LIB_SRCS += control/stabilisation_copter.c
-LIB_SRCS += control/stabilisation_telemetry.c
-LIB_SRCS += control/vector_field_waypoint.c
-LIB_SRCS += control/velocity_controller_copter.c
+LIB_SRCS += control/stabilisation_copter.cpp
+LIB_SRCS += control/stabilisation_telemetry.cpp
+LIB_SRCS += control/vector_field_waypoint.cpp
+LIB_SRCS += control/velocity_controller_copter.cpp
 
 LIB_SRCS += sensing/ahrs.c            
-LIB_SRCS += sensing/ahrs_telemetry.c  
-LIB_SRCS += sensing/imu.c             
-LIB_SRCS += sensing/imu_telemetry.c                  
-LIB_SRCS += sensing/position_estimation.c            
-LIB_SRCS += sensing/position_estimation_telemetry.c
-LIB_SRCS += sensing/qfilter.c
-LIB_SRCS += sensing/simulation.c
-LIB_SRCS += sensing/simulation_telemetry.c   
+LIB_SRCS += sensing/ahrs_telemetry.cpp  
+LIB_SRCS += sensing/imu.cpp             
+LIB_SRCS += sensing/imu_telemetry.cpp                 
+LIB_SRCS += sensing/position_estimation.cpp            
+LIB_SRCS += sensing/position_estimation_telemetry.cpp
+LIB_SRCS += sensing/qfilter.cpp
+LIB_SRCS += sensing/simulation.cpp
+LIB_SRCS += sensing/simulation_telemetry.cpp   
 
 LIB_SRCS += runtime/scheduler.c  
-LIB_SRCS += runtime/scheduler_telemetry.c
+LIB_SRCS += runtime/scheduler_telemetry.cpp
 
-LIB_SRCS += communication/acoustic.c                      
-LIB_SRCS += communication/acoustic_telemetry.c      
+LIB_SRCS += communication/acoustic.cpp                      
+LIB_SRCS += communication/acoustic_telemetry.cpp      
 LIB_SRCS += communication/console.c                 
-LIB_SRCS += communication/data_logging.c            
-# LIB_SRCS += communication/data_logging_telemetry.c  
-LIB_SRCS += communication/hud_telemetry.c           
-LIB_SRCS += communication/mavlink_communication.c     
-LIB_SRCS += communication/mavlink_message_handler.c   
-LIB_SRCS += communication/mavlink_stream.c            
-LIB_SRCS += communication/mavlink_waypoint_handler.c  
-LIB_SRCS += communication/onboard_parameters.c
-LIB_SRCS += communication/remote.c
-LIB_SRCS += communication/remote_telemetry.c
-LIB_SRCS += communication/state.c
-LIB_SRCS += communication/state_machine.c
-LIB_SRCS += communication/state_telemetry.c
+LIB_SRCS += communication/data_logging.cpp            
+#LIB_SRCS += communication/data_logging_telemetry.cpp  
+LIB_SRCS += communication/hud_telemetry.cpp           
+LIB_SRCS += communication/mavlink_communication.cpp     
+LIB_SRCS += communication/mavlink_message_handler.cpp   
+LIB_SRCS += communication/mavlink_stream.cpp            
+LIB_SRCS += communication/mavlink_waypoint_handler.cpp  
+LIB_SRCS += communication/onboard_parameters.cpp
+LIB_SRCS += communication/remote.cpp
+LIB_SRCS += communication/remote_telemetry.cpp
+LIB_SRCS += communication/state.cpp
+LIB_SRCS += communication/state_machine.cpp
+LIB_SRCS += communication/state_telemetry.cpp
 
 LIB_SRCS += libs/fat_fs/diskio.c  
 LIB_SRCS += libs/fat_fs/ff.c  
@@ -314,7 +315,14 @@ PREPROC_OPT += -DUDD_ENABLE
 # ------------------------------------------------------------------------------
 # ASSEMBLY COMPILER OPTIONS
 # ------------------------------------------------------------------------------
-AS = avr32-gcc
+UNAME := $(shell uname)
+$(info $$UNAME is [${UNAME}])
+ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
+	WIN32_PATH="C:/Program Files (x86)/Atmel/Atmel Toolchain/AVR32 GCC/Native/3.4.2.1002/avr32-gnu-toolchain/bin"
+	AS = $(WIN32_PATH)/avr32-gcc
+else
+	AS = avr32-gcc
+endif
 ASFLAGS = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax 
 
 # Include files from MAVRIC library and source folder
@@ -325,7 +333,11 @@ ASFLAGS += ${SRCS_INC}
 # ------------------------------------------------------------------------------
 # C COMPILER OPTIONS
 # ------------------------------------------------------------------------------
-CC = avr32-gcc
+ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
+	CC = $(WIN32_PATH)/avr32-gcc
+else
+	CC = avr32-gcc
+endif
 
 CFLAGS  = -O3 -mhard-float -fdata-sections -muse-rodata-section -g2 -pg -p -Wall 
 CFLAGS += -mpart=uc3c1512c -c -std=gnu99 -Wstrict-prototypes -Wmissing-prototypes 
@@ -341,7 +353,11 @@ CFLAGS += ${SRCS_INC}
 # ------------------------------------------------------------------------------
 # C++ COMPILER OPTIONS
 # ------------------------------------------------------------------------------
-CXX = avr32-g++
+ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
+	CXX = $(WIN32_PATH)/avr32-g++
+else
+	CXX = avr32-g++
+endif
 
 CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
 CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MD -MP -MF
@@ -356,9 +372,16 @@ CXXFLAGS += ${SRCS_INC}
 # ------------------------------------------------------------------------------
 # LINKER OPTIONS
 # ------------------------------------------------------------------------------
-LINKER = avr32-g++
-OBJCOPY = avr32-objcopy
-SIZER = avr32-size 
+ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
+	LINKER = $(WIN32_PATH)/avr32-g++
+	OBJCOPY = $(WIN32_PATH)/avr32-objcopy
+	SIZER = $(WIN32_PATH)/avr32-size 
+else
+	LINKER = avr32-g++
+	OBJCOPY = avr32-objcopy
+	SIZER = avr32-size
+endif
+
 
 OBJCOPYFLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 
