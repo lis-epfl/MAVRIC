@@ -82,6 +82,8 @@
 #include "MAVcalib/MAV102_imu_config.h"
 #elif MAVLINK_SYS_ID == 128
 #include "MAVcalib/MAV128_imu_config.h"
+#elif MAVLINK_SYS_ID == 150
+#include "MAVcalib/MAV150_imu_config.h"
 #elif MAVLINK_SYS_ID == 201
 #include "MAVcalib/MAV201_imu_config.h"
 #elif MAVLINK_SYS_ID == 202
