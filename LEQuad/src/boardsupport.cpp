@@ -98,7 +98,7 @@ bool boardsupport_init(Central_data* central_data)
 	print_util_dbg_print("Debug stream initialised\r\n");
 
 	// RC receiver initialization
-	spektrum_satellite_init(&(central_data->remote.sat), usart_default_config_spektrum());
+	// spektrum_satellite_init(&(central_data->remote.sat), usart_default_config_spektrum());
 
 	// Init analog rails
 	analog_monitor_init(&central_data->analog_monitor, analog_monitor_default_config());

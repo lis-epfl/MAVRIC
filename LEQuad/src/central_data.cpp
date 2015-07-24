@@ -247,6 +247,7 @@ Central_data::Central_data():
 
 	// Init remote
 	init_success &= remote_init( 	&remote,
+									&board.spektrum_satellite,
 									remote_default_config());
 
 
