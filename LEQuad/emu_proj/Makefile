@@ -11,19 +11,17 @@ PROJ_NAME=LEQuad
 # PROJECT FOLDER
 # ------------------------------------------------------------------------------
 # Project source folder
-MAVRIC_SRC=../src/
+MAVRIC_SRC = ./
 
 # Include paths for project folder
 SRCS_INC += -I${MAVRIC_SRC}
-SRCS_INC += -I${MAVRIC_SRC}/config/
-SRCS_INC += -I${MAVRIC_SRC}/asf/common/user_board/
 
 # Sources files for project folder (*.c and *.cpp)
 SRCS += main.cpp
-SRCS += central_data.cpp
-SRCS += boardsupport.cpp
-SRCS += mavlink_telemetry.cpp
-SRCS += tasks.cpp
+# SRCS += central_data.cpp
+# SRCS += boardsupport.cpp
+# SRCS += mavlink_telemetry.cpp
+# SRCS += tasks.cpp
 
 # ------------------------------------------------------------------------------
 # MAVRIC LIBRARY
@@ -52,11 +50,11 @@ LIB_INC += -I$(MAVRIC_SRC)
 
 # Library source files (*.c and *.cpp)
 LIB_SRCS += util/buffer.c
-LIB_SRCS += util/coord_conventions.c
-LIB_SRCS += util/kalman.c
-LIB_SRCS += util/linear_algebra.c
-LIB_SRCS += util/print_util.c
-LIB_SRCS += util/quick_trig.c
+# LIB_SRCS += util/coord_conventions.c
+# LIB_SRCS += util/kalman.c
+# LIB_SRCS += util/linear_algebra.c
+# LIB_SRCS += util/print_util.c
+# LIB_SRCS += util/quick_trig.c
 
 # LIB_SRCS += boards/megafly_rev4.cpp
 
@@ -81,62 +79,61 @@ LIB_SRCS += util/quick_trig.c
 # LIB_SRCS += drivers/spektrum_satellite.c
 # LIB_SRCS += drivers/xbee.c
 
-LIB_SRCS += control/adaptive_parameter.c          
-LIB_SRCS += control/attitude_controller.c         
-LIB_SRCS += control/attitude_controller_p2.c      
-LIB_SRCS += control/attitude_error_estimator.c    
-LIB_SRCS += control/joystick_parsing.c            
-LIB_SRCS += control/joystick_parsing_telemetry.c  
-LIB_SRCS += control/navigation.c                   
-LIB_SRCS += control/pid_controller.c               
-LIB_SRCS += control/servos_mix_quadcopter_cross.c  
-LIB_SRCS += control/servos_mix_quadcopter_diag.c   
-LIB_SRCS += control/stabilisation.c
-LIB_SRCS += control/stabilisation_copter.c
-LIB_SRCS += control/stabilisation_telemetry.c
-LIB_SRCS += control/vector_field_waypoint.c
-LIB_SRCS += control/velocity_controller_copter.c
+# LIB_SRCS += control/adaptive_parameter.c          
+# LIB_SRCS += control/attitude_controller.c         
+# LIB_SRCS += control/attitude_controller_p2.c      
+# LIB_SRCS += control/attitude_error_estimator.c    
+# LIB_SRCS += control/joystick_parsing.c            
+# LIB_SRCS += control/joystick_parsing_telemetry.c  
+# LIB_SRCS += control/navigation.c                   
+# LIB_SRCS += control/pid_controller.c               
+# LIB_SRCS += control/servos_mix_quadcopter_cross.c  
+# LIB_SRCS += control/servos_mix_quadcopter_diag.c   
+# LIB_SRCS += control/stabilisation.c
+# LIB_SRCS += control/stabilisation_copter.c
+# LIB_SRCS += control/stabilisation_telemetry.c
+# LIB_SRCS += control/vector_field_waypoint.c
+# LIB_SRCS += control/velocity_controller_copter.c
 
-LIB_SRCS += sensing/ahrs.c            
-LIB_SRCS += sensing/ahrs_telemetry.c  
-LIB_SRCS += sensing/imu.c             
-LIB_SRCS += sensing/imu_telemetry.c                  
-LIB_SRCS += sensing/position_estimation.c            
-LIB_SRCS += sensing/position_estimation_telemetry.c
-LIB_SRCS += sensing/qfilter.c
-LIB_SRCS += sensing/simulation.c
-LIB_SRCS += sensing/simulation_telemetry.c   
+# LIB_SRCS += sensing/ahrs.c            
+# LIB_SRCS += sensing/ahrs_telemetry.c  
+# LIB_SRCS += sensing/imu.c             
+# LIB_SRCS += sensing/imu_telemetry.c                  
+# LIB_SRCS += sensing/position_estimation.c            
+# LIB_SRCS += sensing/position_estimation_telemetry.c
+# LIB_SRCS += sensing/qfilter.c
+# LIB_SRCS += sensing/simulation.c
+# LIB_SRCS += sensing/simulation_telemetry.c   
 
-LIB_SRCS += runtime/scheduler.c  
-LIB_SRCS += runtime/scheduler_telemetry.c
+# LIB_SRCS += runtime/scheduler.c  
+# LIB_SRCS += runtime/scheduler_telemetry.c
 
-LIB_SRCS += communication/acoustic.c                      
-LIB_SRCS += communication/acoustic_telemetry.c      
-LIB_SRCS += communication/console.c                 
-LIB_SRCS += communication/data_logging.c            
-LIB_SRCS += communication/data_logging_telemetry.c  
-LIB_SRCS += communication/hud_telemetry.c           
-LIB_SRCS += communication/mavlink_communication.c     
-LIB_SRCS += communication/mavlink_message_handler.c   
-LIB_SRCS += communication/mavlink_stream.c            
-LIB_SRCS += communication/mavlink_waypoint_handler.c  
-LIB_SRCS += communication/onboard_parameters.c
-LIB_SRCS += communication/remote.c
-LIB_SRCS += communication/remote_telemetry.c
-LIB_SRCS += communication/state.c
-LIB_SRCS += communication/state_machine.c
-LIB_SRCS += communication/state_telemetry.c
+# LIB_SRCS += communication/acoustic.c                      
+# LIB_SRCS += communication/acoustic_telemetry.c      
+# LIB_SRCS += communication/console.c                 
+# LIB_SRCS += communication/data_logging.c            
+# LIB_SRCS += communication/data_logging_telemetry.c  
+# LIB_SRCS += communication/hud_telemetry.c           
+# LIB_SRCS += communication/mavlink_communication.c     
+# LIB_SRCS += communication/mavlink_message_handler.c   
+# LIB_SRCS += communication/mavlink_stream.c            
+# LIB_SRCS += communication/mavlink_waypoint_handler.c  
+# LIB_SRCS += communication/onboard_parameters.c
+# LIB_SRCS += communication/remote.c
+# LIB_SRCS += communication/remote_telemetry.c
+# LIB_SRCS += communication/state.c
+# LIB_SRCS += communication/state_machine.c
+# LIB_SRCS += communication/state_telemetry.c
 
-LIB_SRCS += libs/fat_fs/diskio.c  
-LIB_SRCS += libs/fat_fs/ff.c  
-LIB_SRCS += libs/fat_fs/option/ccsbcs.c
-LIB_SRCS += libs/fat_fs/option/syscall.c
-LIB_SRCS += libs/fat_fs/option/unicode.c
+# LIB_SRCS += libs/fat_fs/diskio.c  
+# LIB_SRCS += libs/fat_fs/ff.c  
+# LIB_SRCS += libs/fat_fs/option/ccsbcs.c
+# LIB_SRCS += libs/fat_fs/option/syscall.c
+# LIB_SRCS += libs/fat_fs/option/unicode.c
 
 LIB_SRCS += hal/dummy/serial_dummy.cpp
-LIB_SRCS += hal/dummy/serial_udp.cpp
-LIB_SRCS += hal/dummy/i2c_dummy.cpp
-
+LIB_SRCS += hal/linux/udp_client_server.cpp
+LIB_SRCS += hal/linux/serial_udp.cpp
 
 # LIB_SRCS += hal/emu/adxl345_driver.c
 # LIB_SRCS += hal/emu/analog_monitor.c
