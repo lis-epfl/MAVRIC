@@ -1,61 +1,44 @@
 #include "serial_udp.hpp"
-// #include <unistd.h>
-#include "stdio.h"
-
-
-#include "udp_client_server.hpp"
+#include "mavlink_communication.hpp"
+#include "time_keeper.h"
 
 int main()
 {
-
+	// Init udp
 	Serial_udp udp = Serial_udp();
-
 	udp.init();
 
-	uint8_t i = 0; 
+	// Init mavlink stream
+	mavlink_stream_t 		mavlink_stream;
+	mavlink_stream_conf_t 	mavlink_stream_config;
+	mavlink_stream_config.sysid  = 123;
+	mavlink_stream_config.compid = 50;
+	mavlink_stream_init(&mavlink_stream, &mavlink_stream_config, &udp);
+
 	while(1)
 	{
-		udp.write(&i);
-		// printf("%i writeable \n", udp.writeable());
-		// udp.flush();
-		i +=1;
-
-
-		// printf("%i, readable \n", udp.readable());
-		if( udp.readable() > 50)
+		// Receive messages
+		mavlink_stream_receive(&mavlink_stream);
+		if( mavlink_stream.msg_available==true)
 		{
-			uint32_t n_bytes = udp.readable(); 
-			uint8_t bytes[n_bytes];
-			udp.read(bytes, n_bytes);
-			
-			for (int i = 0; i < n_bytes; ++i)
-			{
-				printf("%i ", bytes[i]);
-			}
-			printf("\n");
+			mavlink_message_t msg = mavlink_stream.rec.msg;
+			printf("Rec msg with ID %i \n", msg.msgid);
+			mavlink_stream.msg_available = false;
 		}
+
+		// Send hearbeat
+		mavlink_message_t msg;
+		mavlink_msg_heartbeat_pack( mavlink_stream.sysid, mavlink_stream.compid, &msg,
+						       		0,  // uint8_t type, 
+						       		0,  // uint8_t autopilot, 
+						       		0,  // uint8_t base_mode, 
+						       		0,  // uint32_t custom_mode, 
+						       		0); //uint8_t system_status)
+		mavlink_stream_send(&mavlink_stream, &msg);
+
+
+		time_keeper_delay_ms(200);
 	}
-
-
-	// udp_server udp_rx("127.0.0.1", 14555);
-	// udp_client udp_tx("127.0.0.1", 14550);
-
-	// while(1)
-	// {
-	// 	uint8_t byte[17];
-	// 	// udp.recv((char*)byte, 15);
-	// 	// printf("Received: \n");
-	// 	// for (int i = 0; i < 17; ++i)
-	// 	// {
-	// 	// 	printf("%i ", byte[i]);
-	// 	// }
-	// 	// printf("\n");
-
-
-	// 	// change sys id
-	// 	byte[3] = 123;
-	// 	udp_tx.send((char*)byte, 17);
-	// }
 
 	return 0;
 }

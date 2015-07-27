@@ -53,7 +53,7 @@ LIB_SRCS += util/buffer.c
 # LIB_SRCS += util/coord_conventions.c
 # LIB_SRCS += util/kalman.c
 # LIB_SRCS += util/linear_algebra.c
-# LIB_SRCS += util/print_util.c
+LIB_SRCS += util/print_util.c
 # LIB_SRCS += util/quick_trig.c
 
 # LIB_SRCS += boards/megafly_rev4.cpp
@@ -105,7 +105,7 @@ LIB_SRCS += util/buffer.c
 # LIB_SRCS += sensing/simulation.c
 # LIB_SRCS += sensing/simulation_telemetry.c   
 
-# LIB_SRCS += runtime/scheduler.c  
+LIB_SRCS += runtime/scheduler.cpp  
 # LIB_SRCS += runtime/scheduler_telemetry.c
 
 # LIB_SRCS += communication/acoustic.c                      
@@ -116,7 +116,7 @@ LIB_SRCS += util/buffer.c
 # LIB_SRCS += communication/hud_telemetry.c           
 # LIB_SRCS += communication/mavlink_communication.c     
 # LIB_SRCS += communication/mavlink_message_handler.c   
-# LIB_SRCS += communication/mavlink_stream.c            
+LIB_SRCS += communication/mavlink_stream.cpp            
 # LIB_SRCS += communication/mavlink_waypoint_handler.c  
 # LIB_SRCS += communication/onboard_parameters.c
 # LIB_SRCS += communication/remote.c
@@ -134,6 +134,7 @@ LIB_SRCS += util/buffer.c
 LIB_SRCS += hal/dummy/serial_dummy.cpp
 LIB_SRCS += hal/linux/udp_client_server.cpp
 LIB_SRCS += hal/linux/serial_udp.cpp
+LIB_SRCS += hal/linux/time_keeper.c
 
 # LIB_SRCS += hal/emu/adxl345_driver.c
 # LIB_SRCS += hal/emu/analog_monitor.c
@@ -146,7 +147,6 @@ LIB_SRCS += hal/linux/serial_udp.cpp
 # LIB_SRCS += hal/emu/radar_module_driver.c
 # LIB_SRCS += hal/emu/pwm_servos.c
 # LIB_SRCS += hal/emu/spektrum_satellite.c
-# LIB_SRCS += hal/emu/time_keeper.c
 # LIB_SRCS += hal/emu/udp_stream.c
 
 
