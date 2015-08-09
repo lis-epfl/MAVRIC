@@ -52,6 +52,26 @@ extern "C" {
  
 central_data_t *central_data;
 
+typedef struct
+{
+	float old_value;
+} test_struct_t;
+
+void mytest_function(void *mystruct, float value)
+{
+	test_struct_t *t = (test_struct_t*) mystruct;
+
+	print_util_dbg_print("Callback: value changed from ");
+	print_util_dbg_putfloat(t->old_value, 3);
+	print_util_dbg_print(" to ");
+	print_util_dbg_putfloat(value, 3);
+	print_util_dbg_print("\r\n");
+
+	t->old_value = value;
+}
+
+
+
 void initialisation() 
 {	
 	bool init_success = true;
@@ -74,6 +94,14 @@ void initialisation()
 	central_data->state.mav_state = MAV_STATE_STANDBY;	
 	
 	init_success &= tasks_create_tasks();	
+
+	/* define stuff for testing callback (this is not done properly, since callback_struct is not freed if callback is unregistered*/
+	test_struct_t* mystruct0 = (test_struct_t*)malloc(sizeof(test_struct_t));
+	test_struct_t* mystruct1 = (test_struct_t*)malloc(sizeof(test_struct_t));
+
+	/* register callback */
+	remote_callback_register(&central_data->remote, &mytest_function, mystruct0, CHANNEL_FLAPS);
+	remote_callback_register(&central_data->remote, &mytest_function, mystruct1, CHANNEL_AUX1);
 
 	if (init_success)
 	{
