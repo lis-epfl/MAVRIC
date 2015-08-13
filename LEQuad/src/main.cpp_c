@@ -52,6 +52,29 @@ extern "C" {
  
 central_data_t *central_data;
 
+typedef struct
+{
+	int channel;
+	float old_value;
+} test_struct_t;
+
+void mytest_function(void *mystruct, float value)
+{
+	test_struct_t *t = (test_struct_t*) mystruct;
+
+	print_util_dbg_print("Callback channel ");
+	print_util_dbg_print_num(t->channel,10);
+	print_util_dbg_print(": value changed from ");
+	print_util_dbg_putfloat(t->old_value, 3);
+	print_util_dbg_print(" to ");
+	print_util_dbg_putfloat(value, 3);
+	print_util_dbg_print("\r\n");
+
+	t->old_value = value;
+}
+
+
+
 void initialisation() 
 {	
 	bool init_success = true;
@@ -75,6 +98,8 @@ void initialisation()
 	
 	init_success &= tasks_create_tasks();	
 
+
+
 	if (init_success)
 	{
 		piezo_speaker_quick_startup();
@@ -93,6 +118,30 @@ void initialisation()
 int main (void)
 {
 	initialisation();
+
+	// /* define stuff for testing callback (this is not done properly, since callback_struct is not freed if callback is unregistered*/
+	// test_struct_t mystructs[REMOTE_CHANNEL_COUNT];
+	// int i;
+	// for(i=0; i < REMOTE_CHANNEL_COUNT; i++)
+	// {
+	// 	mystructs[i].channel = i+1;
+	// }
+
+	// /* register callback */
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[0], CHANNEL_THROTTLE, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[1], CHANNEL_ROLL, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[2], CHANNEL_PITCH, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[3], CHANNEL_YAW, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[4], CHANNEL_GEAR, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[5], CHANNEL_FLAPS, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[6], CHANNEL_AUX1, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[7], CHANNEL_AUX2, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[8], CHANNEL_AUX3, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[9], CHANNEL_AUX4, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[10], CHANNEL_AUX5, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[11], CHANNEL_AUX6, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[12], CHANNEL_AUX7, REMOTE_CALLBACK_EDGE_BOTH);
+	// remote_callback_register(&central_data->remote, &mytest_function, &mystructs[13], CHANNEL_AUX8, REMOTE_CALLBACK_EDGE_BOTH);
 	
 	while (1 == 1) 
 	{

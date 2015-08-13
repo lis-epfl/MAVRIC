@@ -30,74 +30,54 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file main.cpp
+ * \file pitch_estimator.h
  * 
  * \author MAV'RIC Team
+ * \author Basil Huber
  *   
- * \brief Main file
+ * \brief This file implements an estimator for the pitch angle (assuming 2D motion)
+ * 			For use in TP only
+ * 			This estimator can only be used if roll ~ 0 and yaw constant
  *
  ******************************************************************************/
- 
+#ifndef PITCH_ESTIMATOR_H_
+#define PITCH_ESTIMATOR_H_
 
+
+#ifdef __cplusplus
 extern "C" {
-	#include "led.h"
-	#include "time_keeper.h"
-	#include "print_util.h"
-	#include "central_data.h"
-	#include "boardsupport.h"
-	#include "tasks.h"
-	#include "mavlink_telemetry.h"
-	#include "piezo_speaker.h"
-}
- 
-central_data_t *central_data;
+	#endif
 
-void initialisation() 
-{	
-	bool init_success = true;
-	
-	central_data = central_data_get_pointer_to_struct();
-	init_success &= boardsupport_init(central_data);
-	init_success &= central_data_init();
-	
-	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
+#include "imu.h"
+#include "mavlink_stream.h"
+#include "mavlink_message_handler.h"
 
-	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
-
-	if (read_from_flash_result)
-	{
-		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
-	}
-
-	init_success &= mavlink_telemetry_init();
-
-	central_data->state.mav_state = MAV_STATE_STANDBY;	
-	
-	init_success &= tasks_create_tasks();	
-
-	if (init_success)
-	{
-		piezo_speaker_quick_startup();
-		
-		// Switch off red LED
-		LED_Off(LED2);
-	}
-	else
-	{
-		piezo_speaker_critical_error_melody();
-	}
-
-	print_util_dbg_print("OK. Starting up.\r\n");
-}
-
-int main (void)
+/**
+ * \brief Structure for pitch estimation
+ */
+typedef struct
 {
-	initialisation();
-	
-	while (1 == 1) 
-	{
-		scheduler_update(&central_data->scheduler);
-	}
+	imu_t* imu; 								///< IMU containing measurement, biases, etc.
+	float values[3];
+	float gyro_values[3];						///< gyro values
+	float accelero_values[3];					///< accelerometer
+	float timestamp;							///< time stamp of IMU measurement (in ticks)
+} pitch_estimator_t;
 
-	return 0;
+/**
+ * \brief	Initialize the pitch estimator
+ * 
+ * \param	estimator	The pointer to the pitch estimator structure
+ * \param 	imu 		Pointer to the imu structure
+ *
+ * \return 				returns true if init was successful
+ */
+bool pitch_estimator_init(pitch_estimator_t* estimator, imu_t* imu);
+
+void pitch_estimator_update(pitch_estimator_t* estimator);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* PITCH_ESTIMATOR_H_ */

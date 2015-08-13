@@ -95,6 +95,7 @@ extern "C" {
 #include "fat_fs_mounting.h"
 
 #include "acoustic.h" 
+#include "pitch_estimator.h"
 // TODO : update documentation
 
 /**
@@ -154,6 +155,8 @@ typedef struct  {
 	
 	data_logging_t data_logging;								///< The log data structure	
 	fat_fs_mounting_t fat_fs_mounting;							///< The Fat fs system file mounting structure
+
+	pitch_estimator_t pitch_estimator;							///< The pitch estimator structure used in MobRob Lab B
 } central_data_t;
 
 

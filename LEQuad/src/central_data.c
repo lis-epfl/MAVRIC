@@ -243,6 +243,8 @@ bool central_data_init()
 														&central_data.fat_fs_mounting,
 														central_data.mavlink_communication.mavlink_stream.sysid);
 										
+	init_success &= pitch_estimator_init(&central_data.pitch_estimator, &central_data.imu);
+
 	return init_success;
 }
 

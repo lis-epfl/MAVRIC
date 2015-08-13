@@ -30,74 +30,43 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file main.cpp
+ * \file pitch_estimator_telemetry.h
  * 
  * \author MAV'RIC Team
+ * \author Basil Huber
  *   
- * \brief Main file
+ * \brief pitch estimator telemetry functions
  *
  ******************************************************************************/
- 
 
+
+#ifndef PITCH_ESTIMATOR_TELEMETRY_H_
+#define PITCH_ESTIMATOR_TELEMETRY_H_
+
+
+#ifdef __cplusplus
 extern "C" {
-	#include "led.h"
-	#include "time_keeper.h"
-	#include "print_util.h"
-	#include "central_data.h"
-	#include "boardsupport.h"
-	#include "tasks.h"
-	#include "mavlink_telemetry.h"
-	#include "piezo_speaker.h"
+#endif
+
+#include "pitch_estimator.h"
+#include "mavlink_stream.h"
+#include "mavlink_message_handler.h"
+
+/**
+ * \brief 	Send the estimated pitch
+ *
+ * \param	estimator			Pointer to the pitch estimator structure
+ * \param	mavlink_stream		Pointer to mavlink stream structure
+ * \param	msg					Pointer to the message structure
+ */
+void pitch_estimator_telemetry_send (const pitch_estimator_t* estimator, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg);
+
+#ifdef __cplusplus
 }
- 
-central_data_t *central_data;
+#endif
 
-void initialisation() 
-{	
-	bool init_success = true;
-	
-	central_data = central_data_get_pointer_to_struct();
-	init_success &= boardsupport_init(central_data);
-	init_success &= central_data_init();
-	
-	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
+#endif /* PITCH_ESTIMATOR_TELEMETRY_H_ */
 
-	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
 
-	if (read_from_flash_result)
-	{
-		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
-	}
 
-	init_success &= mavlink_telemetry_init();
 
-	central_data->state.mav_state = MAV_STATE_STANDBY;	
-	
-	init_success &= tasks_create_tasks();	
-
-	if (init_success)
-	{
-		piezo_speaker_quick_startup();
-		
-		// Switch off red LED
-		LED_Off(LED2);
-	}
-	else
-	{
-		piezo_speaker_critical_error_melody();
-	}
-
-	print_util_dbg_print("OK. Starting up.\r\n");
-}
-
-int main (void)
-{
-	initialisation();
-	
-	while (1 == 1) 
-	{
-		scheduler_update(&central_data->scheduler);
-	}
-
-	return 0;
-}

@@ -15,6 +15,7 @@ MAVRIC_SRC=../src/
 
 # Include paths for project folder
 SRCS_INC += -I${MAVRIC_SRC}
+SRCS_INC += -I${MAVRIC_SRC}/Lab_B/
 SRCS_INC += -I${MAVRIC_SRC}/config/
 SRCS_INC += -I${MAVRIC_SRC}/asf
 SRCS_INC += -I${MAVRIC_SRC}/asf/avr32
@@ -130,6 +131,8 @@ SRCS += central_data.c
 SRCS += boardsupport.c
 SRCS += mavlink_telemetry.c
 SRCS += tasks.c
+SRCS += Lab_B/pitch_estimator.c
+SRCS += Lab_B/pitch_estimator_telemetry.c
 
 SRCS += asf/avr32/drivers/intc/exception.S
 # SRCS += exception.S
