@@ -55,7 +55,7 @@ void pitch_estimator_telemetry_send (const pitch_estimator_t* estimator, const m
 									msg,
 									"Pitch estimations",
 									time_keeper_get_micros(),
-									1000*estimator->values[0],
-									1000*estimator->values[1],
-									1000*estimator->values[2]);
+									1000*estimator->pitch_accelero,
+									1000*estimator->pitch_gyro,
+									1000*estimator->pitch_gyro_filtered);
 }

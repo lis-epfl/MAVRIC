@@ -58,9 +58,14 @@ extern "C" {
 typedef struct
 {
 	imu_t* imu; 								///< IMU containing measurement, biases, etc.
-	float values[3];
-	float gyro_values[3];						///< gyro values
-	float accelero_values[3];					///< accelerometer
+	float pitch_accelero;						///< Estimated pitch based on accelerometer data
+	float pitch_accelero_filtered;				///< Estimated pitch based on accelerometer data filtered
+	float pitch_gyro;							///< Estimated pitch based on gyroscope data
+	float pitch_gyro_filtered;					///< Estimated pitch based on gyroscope data filtered
+	float pitch_fused;							///< Estimated pitch by fusion of accelerometer and gyroscope data
+	float accelero_x;							///< Acceleration in x axis in g
+	float accelero_z;							///< Acceleration in z axis in g
+	float gyro_y;								///< Rate around y axis in rad
 	float timestamp;							///< time stamp of IMU measurement (in ticks)
 } pitch_estimator_t;
 
