@@ -58,15 +58,16 @@ extern "C" {
 typedef struct
 {
 	imu_t* imu; 								///< IMU containing measurement, biases, etc.
-	float pitch_accelero;						///< Estimated pitch based on accelerometer data
-	float pitch_accelero_filtered;				///< Estimated pitch based on accelerometer data filtered
-	float pitch_gyro;							///< Estimated pitch based on gyroscope data
-	float pitch_gyro_filtered;					///< Estimated pitch based on gyroscope data filtered
-	float pitch_fused;							///< Estimated pitch by fusion of accelerometer and gyroscope data
-	float accelero_x;							///< Acceleration in x axis in g
-	float accelero_z;							///< Acceleration in z axis in g
-	float gyro_y;								///< Rate around y axis in rad
-	float timestamp;							///< time stamp of IMU measurement (in ticks)
+	float pitch_accelero_raw;					///< Estimated pitch based on raw accelerometer data [rad]
+	float pitch_accelero_scaled;				///< Estimated pitch based on corrected accelerometer data [rad]
+	float pitch_accelero_filtered;				///< Estimated pitch based on filtered accelerometer data [rad]
+	float pitch_gyro_raw;						///< Estimated pitch based on raw gyroscope data [rad]
+	float pitch_gyro_scaled;					///< Estimated pitch based on corrected gyroscope data [rad]
+	float pitch_gyro_filtered;					///< Estimated pitch based on filtered gyroscope data [rad]
+	float pitch_fused;							///< Estimated pitch by fusion of accelerometer and gyroscope data [rad]
+	float gyro_y_raw;							///< Rate raw around y axis [rad]
+	float gyro_y_scaled;						///< Rate scaled around y axis [rad]
+	float timestamp;							///< time stamp of IMU measurement [ticks]
 } pitch_estimator_t;
 
 /**
