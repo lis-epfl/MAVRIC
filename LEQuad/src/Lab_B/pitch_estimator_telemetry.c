@@ -53,9 +53,55 @@ void pitch_estimator_telemetry_send (const pitch_estimator_t* estimator, const m
 	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
 									mavlink_stream->compid,
 									msg,
-									"Pitch estimations",
+									"Pitch accelero",
 									time_keeper_get_micros(),
 									1000*estimator->pitch_accelero,
+									1000*estimator->pitch_accelero_filtered,
+									0);
+	mavlink_stream_send(mavlink_stream, msg);
+	
+	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
+									mavlink_stream->compid,
+									msg,
+									"Pitch gyro",
+									time_keeper_get_micros(),
 									1000*estimator->pitch_gyro,
-									1000*estimator->pitch_gyro_filtered);
+									1000*estimator->pitch_gyro_filtered,
+									0);
+	
+	/*mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
+	 									mavlink_stream->compid,
+	 									msg,
+						       			time_keeper_get_micros(),
+						       			"pa",
+						       			estimator->pitch_accelero
+						       			);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
+	 									mavlink_stream->compid,
+	 									msg,
+						       			time_keeper_get_micros()+1,
+						       			"paf",
+						       			estimator->pitch_accelero_filtered
+						       			);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
+	 									mavlink_stream->compid,
+	 									msg,
+						       			time_keeper_get_micros()+2,
+						       			"pg",
+						       			estimator->pitch_gyro
+						       			);
+	mavlink_stream_send(mavlink_stream, msg);
+
+
+	mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
+	 									mavlink_stream->compid,
+	 									msg,
+						       			time_keeper_get_micros()+2,
+						       			"pgf",
+						       			estimator->pitch_gyro_filtered
+						       			);*/
 }
