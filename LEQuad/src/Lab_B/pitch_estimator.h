@@ -67,6 +67,11 @@ typedef struct
 	float pitch_fused;							///< Estimated pitch by fusion of accelerometer and gyroscope data [rad]
 	float gyro_y_raw;							///< Rate raw around y axis [rad]
 	float gyro_y_scaled;						///< Rate scaled around y axis [rad]
+	float gyro_y_filtered;						///< Rate scaled around y axis [rad]
+	float accelero_x_scaled;
+	float accelero_z_scaled;
+	float accelero_x_filtered;
+	float accelero_z_filtered;
 	float timestamp;							///< time stamp of IMU measurement [ticks]
 } pitch_estimator_t;
 

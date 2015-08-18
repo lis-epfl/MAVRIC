@@ -180,6 +180,7 @@ float estimate_pitch_fused(float pitch_accelero_filtered, float pitch_gyro_filte
 
 float low_pass_filter(float x, float y_old, float deltaT, float tau)
 {
+	//y_old = make_angle_continuous(y_old, x);
 	float alpha = deltaT / (deltaT + tau);
 	return alpha*x + (1 - alpha)*y_old;
 }
@@ -187,6 +188,8 @@ float low_pass_filter(float x, float y_old, float deltaT, float tau)
 
 float high_pass_filter(float x, float x_old, float y_old, float deltaT, float tau)
 {
+	//x_old = make_angle_continuous(x_old, x);
+	//y_old = make_angle_continuous(y_old, x);
 	float alpha = tau / (deltaT + tau);
 	return alpha*(x-x_old) + alpha*y_old;
 }
@@ -238,8 +241,13 @@ float angle_pi(float phi)
 	estimator->pitch_gyro_scaled		= 0;
 	estimator->pitch_gyro_filtered 		= 0;
 	estimator->pitch_fused 				= 0;
+	estimator->accelero_x_scaled 		= 0;
+	estimator->accelero_z_scaled 		= 0;
+	estimator->accelero_x_filtered 		= 0;
+	estimator->accelero_z_filtered 		= 0;
 	estimator->gyro_y_raw				= 0;
 	estimator->gyro_y_scaled			= 0;
+	estimator->gyro_y_filtered			= 0;
 	estimator->timestamp 				= 0;
 	return true;
 }
@@ -254,14 +262,24 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	float pitch_gyro_scaled			= 0;
 	float pitch_gyro_filtered 		= 0;
 	float pitch_fused 				= 0;
+	float accelero_x_filtered 			= 0;
+	float accelero_z_filtered 			= 0;
+	float gyro_y_filtered 			= 0;
 
 	/* values of last iteration (this variables are for readability only */
+	const float pitch_accelero_raw_old 		= estimator->pitch_accelero_raw;
+	const float pitch_accelero_scaled_old	= estimator->pitch_accelero_scaled;
 	const float pitch_accelero_filtered_old = estimator->pitch_accelero_filtered;
 	const float pitch_gyro_raw_old			= estimator->pitch_gyro_raw;
 	const float pitch_gyro_scaled_old		= estimator->pitch_gyro_scaled;
 	const float pitch_gyro_filtered_old 	= estimator->pitch_gyro_filtered;
 	const float gyro_y_raw_old 				= estimator->gyro_y_raw;
 	const float gyro_y_scaled_old			= estimator->gyro_y_scaled;
+	const float gyro_y_filtered_old			= estimator->gyro_y_filtered;
+	const float accelero_x_scaled_old		= estimator->accelero_x_scaled;
+	const float accelero_z_scaled_old		= estimator->accelero_z_scaled;
+	const float accelero_x_filtered_old		= estimator->accelero_x_filtered;
+	const float accelero_z_filtered_old		= estimator->accelero_z_filtered;
 	const uint32_t timestamp_old 			= estimator->timestamp;	
 
 	/* get new measurements */
@@ -269,43 +287,50 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	float accelero_z_raw					= -estimator->imu->raw_accelero.data[2];
 	float gyro_y_raw						= -estimator->imu->raw_gyro.data[1];
 	uint32_t timestamp 						=  estimator->imu->last_update;
-	float deltaT = time_keeper_ticks_to_seconds(timestamp - timestamp_old);
+	const float deltaT = time_keeper_ticks_to_seconds(timestamp - timestamp_old);
 
 	/* correct bias and scale of measurememts */
 	float accelero_x_scaled = correct_measurement(accelero_x_raw, ACCELERO_X_BIAS, ACCELERO_X_SCALE);
 	float accelero_z_scaled = correct_measurement(accelero_z_raw, ACCELERO_Z_BIAS, ACCELERO_Z_SCALE);
-	float gyro_y_scaled = correct_measurement(gyro_y_raw, GYRO_Y_BIAS, GYRO_Y_SCALE);
+	float gyro_y_scaled = correct_measurement(gyro_y_raw, estimator->imu->calib_gyro.bias[1], estimator->imu->calib_gyro.scale_factor[1]);
+	//float gyro_y_scaled = estimator->imu->scaled_gyro.data[1];
 
 	/* get filter time constant from qgroundcontrol */
-	float tau 								= 100*deltaT;
+	const float tau 								= 100*deltaT;
 
 	/* ------------------------------------------------------------------------------*
 	 *		         Here comes the interesting part of the code 					 *
 	 * ------------------------------------------------------------------------------*/
 
 	/* estimate pitch based on RAW ACCELEROMETER data */
-	pitch_accelero_raw = estimate_pitch_accelerometer(accelero_x_raw, accelero_z_raw);
-	//pitch_accelero_raw = make_angle_continuous(pitch_accelero_raw, pitch_accelero_raw_old);
+	pitch_accelero_raw = estimate_pitch_accelerometer(accelero_x_scaled, accelero_z_scaled);
+	pitch_accelero_raw = make_angle_continuous(pitch_accelero_raw, pitch_accelero_raw_old);
+
 	/* estimate pitch based on SCALED ACCELEROMETER accelerometer data */
-	pitch_accelero_scaled = estimate_pitch_accelerometer(accelero_x_scaled, accelero_z_scaled);
-	//pitch_accelero_scaled = make_angle_continuous(pitch_accelero_scaled, pitch_accelero_scaled_old);
+	accelero_x_filtered = low_pass_filter(accelero_x_scaled, accelero_x_filtered_old, deltaT, tau);
+	accelero_z_filtered = low_pass_filter(accelero_z_scaled, accelero_z_filtered_old, deltaT, tau);	
+	pitch_accelero_scaled = estimate_pitch_accelerometer(accelero_x_filtered, accelero_z_scaled);
+	pitch_accelero_scaled = make_angle_continuous(pitch_accelero_scaled, pitch_accelero_scaled_old);
+	
 	/* filter SCALED ACCELEROMETER data */
-	pitch_accelero_filtered = low_pass_filter(pitch_accelero_scaled, pitch_accelero_filtered_old, deltaT, tau);
+	pitch_accelero_filtered = low_pass_filter(pitch_accelero_raw, pitch_accelero_filtered_old, deltaT, tau);
+	pitch_accelero_filtered = make_angle_continuous(pitch_accelero_filtered, pitch_accelero_filtered_old);
 
 	/* estimate pitch based on gyro data */
-	if(timestamp > 0)
+	if(timestamp_old >= 0)
 	{
-		pitch_gyro_raw = estimate_pitch_gyro(gyro_y_raw, gyro_y_raw_old, pitch_gyro_raw_old, deltaT);
-		pitch_gyro_raw = angle_pi(pitch_gyro_raw);
-		pitch_gyro_scaled = estimate_pitch_gyro(gyro_y_scaled, gyro_y_scaled_old, pitch_gyro_scaled_old, deltaT);
-		pitch_gyro_scaled = angle_pi(pitch_gyro_scaled);
+		pitch_gyro_raw = estimate_pitch_gyro(gyro_y_scaled, gyro_y_scaled_old, pitch_gyro_raw_old, deltaT);
+		//pitch_gyro_raw = angle_pi(pitch_gyro_raw);
+		gyro_y_filtered = high_pass_filter(gyro_y_scaled, gyro_y_scaled_old, gyro_y_filtered_old, deltaT, tau);
+		pitch_gyro_scaled = estimate_pitch_gyro(gyro_y_filtered, gyro_y_filtered_old, pitch_gyro_scaled_old, deltaT);
+		//pitch_gyro_scaled = angle_pi(pitch_gyro_scaled);
 	}else
 	{
 		/* if it is the first mesurement, take pitch of accelerometer (to have decent init value) */
-		pitch_gyro_raw = pitch_accelero_raw;
-		pitch_gyro_scaled = pitch_accelero_scaled;
+		pitch_gyro_raw = 0;//pitch_accelero_raw;
+		pitch_gyro_scaled = 0;//pitch_accelero_scaled;
 	}
-	pitch_gyro_filtered = high_pass_filter(pitch_gyro_scaled, pitch_gyro_scaled_old, pitch_gyro_filtered_old, deltaT, tau);
+	pitch_gyro_filtered = high_pass_filter(pitch_gyro_raw, pitch_gyro_raw_old, pitch_gyro_filtered_old, deltaT, tau);
 	
 	/* estimate pitch by fusing accelerometer and gyro data */
 	pitch_fused = estimate_pitch_fused(pitch_accelero_filtered, pitch_gyro_filtered);
@@ -325,6 +350,10 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	estimator->pitch_fused 				= pitch_fused;
 	estimator->gyro_y_raw 				= gyro_y_raw;
 	estimator->gyro_y_scaled			= gyro_y_scaled;
+	estimator->accelero_x_scaled		= accelero_x_scaled;
+	estimator->accelero_z_scaled		= accelero_z_scaled;
+	estimator->accelero_x_filtered		= accelero_x_filtered;
+	estimator->accelero_z_filtered		= accelero_z_filtered;
 	estimator->timestamp 				= timestamp;
 }
 
