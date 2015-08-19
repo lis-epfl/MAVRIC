@@ -30,61 +30,70 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file pitch_estimator.h
+ * \file imu_lab_b_telemetry.c
  * 
  * \author MAV'RIC Team
  * \author Basil Huber
  *   
- * \brief This file implements an estimator for the pitch angle (assuming 2D motion)
- * 			For use in TP only
- * 			This estimator can only be used if roll ~ 0 and yaw constant
+ * \brief 
  *
  ******************************************************************************/
-#ifndef PITCH_ESTIMATOR_H_
-#define PITCH_ESTIMATOR_H_
 
+#include "imu_lab_b_telemetry.h"
+#include "time_keeper.h"
 
-#ifdef __cplusplus
-extern "C" {
-	#endif
+//------------------------------------------------------------------------------
+// PRIVATE FUNCTIONS IMPLEMENTATION
+//------------------------------------------------------------------------------
 
-#include "imu.h"
-#include "imu_lab_b.h"
-
-/**
- * \brief Structure for pitch estimation
- */
-typedef struct
+void send_vect(const float* vect, const char* name, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg)
 {
-	imu_t* imu; 								///< IMU containing measurement, biases, etc.
-	float pitch_accelero_raw;					///< Estimated pitch based on raw accelerometer data [rad]
-	float pitch_accelero_scaled;				///< Estimated pitch based on corrected accelerometer data [rad]
-	float pitch_accelero_filtered;				///< Estimated pitch based on filtered accelerometer data [rad]
-	float pitch_gyro_raw;						///< Estimated pitch based on raw gyroscope data [rad]
-	float pitch_gyro_scaled;					///< Estimated pitch based on corrected gyroscope data [rad]
-	float pitch_gyro_filtered;					///< Estimated pitch based on filtered gyroscope data [rad]
-	float pitch_fused;
-	float gyro_y_raw;							///< Rate raw around y axis [rad]
-	float gyro_y_scaled;						///< Rate raw around y axis [rad]
-	int continuous_angles;
-	float timestamp;							///< time stamp of IMU measurement [ticks]
-	imu_lab_b_t imu_lab_b;
-} pitch_estimator_t;
-
-/**
- * \brief	Initialize the pitch estimator
- * 
- * \param	estimator	The pointer to the pitch estimator structure
- * \param 	imu 		Pointer to the imu structure
- *
- * \return 				returns true if init was successful
- */
-bool pitch_estimator_init(pitch_estimator_t* estimator, imu_t* imu);
-
-void pitch_estimator_update(pitch_estimator_t* estimator);
-
-#ifdef __cplusplus
+	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
+									mavlink_stream->compid,
+									msg,
+									name,
+									time_keeper_get_micros(),
+									1000*vect[0],
+									1000*vect[1],
+									1000*vect[2]);
 }
-#endif
 
-#endif /* PITCH_ESTIMATOR_H_ */
+//------------------------------------------------------------------------------
+// PUBLIC FUNCTIONS IMPLEMENTATION
+//------------------------------------------------------------------------------
+
+void imu_lab_b_telemetry_send(const imu_lab_b_t* imu_lab_b, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg)
+{
+		
+	send_vect(imu_lab_b->values, "ACC", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	send_vect(imu_lab_b->filtered, "ACC FILTERED", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+	
+	time_keeper_delay_ms(10);
+	
+	send_vect(imu_lab_b->mean, "ACC MEAN", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+	
+	send_vect(imu_lab_b->min, "ACC MIN", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	time_keeper_delay_ms(10);
+	
+	send_vect(imu_lab_b->max, "ACC MAX", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+	
+	send_vect(&imu_lab_b->filtered[3], "GYRO FILTERED", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	time_keeper_delay_ms(10);
+
+	send_vect(&imu_lab_b->mean[3], "GYRO MEAN", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+	
+	send_vect(&imu_lab_b->min[3], "GYRO MIN", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	send_vect(&imu_lab_b->max[3], "GYRO MAX", mavlink_stream, msg);
+}

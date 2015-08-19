@@ -40,7 +40,9 @@
  ******************************************************************************/
 
 #include "pitch_estimator_telemetry.h"
+#include "imu_lab_b_telemetry.h"
 #include "time_keeper.h"
+
 /**
  * \brief 	Send the estimated pitch
  *
@@ -53,7 +55,7 @@ void pitch_estimator_telemetry_send (const pitch_estimator_t* estimator, const m
 	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
 									mavlink_stream->compid,
 									msg,
-									"Pitch accelero",
+									"PITCH_accelero",
 									time_keeper_get_micros(),
 									1000*estimator->pitch_accelero_raw,
 									1000*estimator->pitch_accelero_scaled,
@@ -63,23 +65,31 @@ void pitch_estimator_telemetry_send (const pitch_estimator_t* estimator, const m
 	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
 									mavlink_stream->compid,
 									msg,
-									"Pitch gyro",
-									time_keeper_get_micros(),
+									"PITCH_gyro",
+									estimator->timestamp,
 									1000*estimator->pitch_gyro_raw,
 									1000*estimator->pitch_gyro_scaled,
 									1000*estimator->pitch_gyro_filtered);
-
 	mavlink_stream_send(mavlink_stream, msg);
 	
 	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
 									mavlink_stream->compid,
 									msg,
-									"Pitch fused",
+									"PITCH_fused",
 									time_keeper_get_micros(),
 									1000*estimator->pitch_fused,
 									0,
 									0);
-	
+	mavlink_stream_send(mavlink_stream, msg);
+
+	static int i = 0;
+
+	if(i%5 == 0)
+	{
+		time_keeper_delay_ms(10);
+		imu_lab_b_telemetry_send(&estimator->imu_lab_b, mavlink_stream, msg);
+	}
+	i++;
 	/*mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
 	 									mavlink_stream->compid,
 	 									msg,

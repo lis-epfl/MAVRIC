@@ -30,74 +30,45 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file main.cpp
+ * \file imu_lab_b.h
  * 
  * \author MAV'RIC Team
+ * \author Basil Huber
  *   
- * \brief Main file
+ * \brief 
  *
  ******************************************************************************/
- 
+#ifndef IMU_LAB_B_H_
+#define IMU_LAB_B_H_
 
+
+#ifdef __cplusplus
 extern "C" {
-	#include "led.h"
-	#include "time_keeper.h"
-	#include "print_util.h"
-	#include "central_data.h"
-	#include "boardsupport.h"
-	#include "tasks.h"
-	#include "mavlink_telemetry.h"
-	#include "piezo_speaker.h"
-}
- 
-central_data_t *central_data;
+	#endif
 
-void initialisation() 
-{	
-	bool init_success = true;
-	
-	central_data = central_data_get_pointer_to_struct();
-	init_success &= boardsupport_init(central_data);
-	init_success &= central_data_init();
-	
-	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
+#include "imu.h"
 
-	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
-
-	if (read_from_flash_result)
-	{
-		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
-	}
-
-	init_success &= mavlink_telemetry_init();
-
-	central_data->state.mav_state = MAV_STATE_STANDBY;	
-	
-	init_success &= tasks_create_tasks();	
-
-	if (init_success)
-	{
-		//piezo_speaker_quick_startup();
-		
-		// Switch off red LED
-		LED_Off(LED2);
-	}
-	else
-	{
-		piezo_speaker_critical_error_melody();
-	}
-
-	print_util_dbg_print("OK. Starting up.\r\n");
-}
-
-int main (void)
+typedef struct
 {
-	initialisation();
-	
-	while (1 == 1) 
-	{
-		scheduler_update(&central_data->scheduler);
-	}
+	imu_t* imu; 								///< IMU containing measurement, biases, etc.
+	float values[6];
+	float filtered[6];
+	float mean[6];
+	float min[6];
+	float max[6];
+	float bias[6];
+	float scale[6];
+	int measurement_count;
+	uint32_t timestamp;
+} imu_lab_b_t;
 
-	return 0;
+
+void imu_lab_b_init(imu_lab_b_t* imu_lab_b, imu_t* imu);
+
+void imu_lab_b_update(imu_lab_b_t* imu_lab_b);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* IMU_LAB_B_H_ */

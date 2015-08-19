@@ -133,6 +133,8 @@ SRCS += mavlink_telemetry.c
 SRCS += tasks.c
 SRCS += Lab_B/pitch_estimator.c
 SRCS += Lab_B/pitch_estimator_telemetry.c
+SRCS += Lab_B/imu_lab_b.c
+SRCS += Lab_B/imu_lab_b_telemetry.c
 
 SRCS += asf/avr32/drivers/intc/exception.S
 # SRCS += exception.S

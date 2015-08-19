@@ -30,74 +30,31 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file main.cpp
+ * \file imu_lab_b_telemetry.h
  * 
  * \author MAV'RIC Team
+ * \author Basil Huber
  *   
- * \brief Main file
+ * \brief 
  *
  ******************************************************************************/
- 
+#ifndef IMU_LAB_B_TLELEMETRY_H_
+#define IMU_LAB_B_TLELEMETRY_H_
 
+
+#ifdef __cplusplus
 extern "C" {
-	#include "led.h"
-	#include "time_keeper.h"
-	#include "print_util.h"
-	#include "central_data.h"
-	#include "boardsupport.h"
-	#include "tasks.h"
-	#include "mavlink_telemetry.h"
-	#include "piezo_speaker.h"
+#endif
+
+#include "imu_lab_b.h"
+#include "mavlink_stream.h"
+#include "mavlink_message_handler.h"
+
+
+void imu_lab_b_telemetry_send(const imu_lab_b_t* imu_lab_b, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg);
+
+#ifdef __cplusplus
 }
- 
-central_data_t *central_data;
+#endif
 
-void initialisation() 
-{	
-	bool init_success = true;
-	
-	central_data = central_data_get_pointer_to_struct();
-	init_success &= boardsupport_init(central_data);
-	init_success &= central_data_init();
-	
-	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
-
-	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
-
-	if (read_from_flash_result)
-	{
-		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
-	}
-
-	init_success &= mavlink_telemetry_init();
-
-	central_data->state.mav_state = MAV_STATE_STANDBY;	
-	
-	init_success &= tasks_create_tasks();	
-
-	if (init_success)
-	{
-		//piezo_speaker_quick_startup();
-		
-		// Switch off red LED
-		LED_Off(LED2);
-	}
-	else
-	{
-		piezo_speaker_critical_error_melody();
-	}
-
-	print_util_dbg_print("OK. Starting up.\r\n");
-}
-
-int main (void)
-{
-	initialisation();
-	
-	while (1 == 1) 
-	{
-		scheduler_update(&central_data->scheduler);
-	}
-
-	return 0;
-}
+#endif /* IMU_LAB_B_TLELEMETRY_H_ */

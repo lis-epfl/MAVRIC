@@ -84,7 +84,7 @@ void tasks_run_imu_update(void* arg)
 	}
 	
 	imu_update(	&central_data->imu);
-	qfilter_update(&central_data->attitude_filter);
+	//qfilter_update(&central_data->attitude_filter);
 	position_estimation_update(&central_data->position_estimation);
 }
 
@@ -297,7 +297,6 @@ bool tasks_create_tasks()
 	
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 	init_success &= scheduler_add_task(scheduler, 10000,		RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL	, (task_function_t)&pitch_estimator_update							, (task_argument_t)&central_data->pitch_estimator		, 15);
-
 	scheduler_sort_tasks(scheduler);
 	
 	return init_success;
