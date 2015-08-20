@@ -318,6 +318,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_compass.scale_factor[Y]                        , "Scale_Mag_Y"      );
 	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_compass.scale_factor[Z]                        , "Scale_Mag_Z"      );
 
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->pitch_estimator.filter_constant                        , "Filter_constant"      );
 	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_alt_baro                              , "Pos_kp_alt_baro"       );
 	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_vel_baro                              , "Pos_kp_velb"      );
 	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_pos_gps[0]                            , "Pos_kp_pos0"      );

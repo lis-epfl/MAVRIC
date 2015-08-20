@@ -247,6 +247,7 @@ float angle_pi(float phi)
 	estimator->gyro_y_raw				= 0;
 	estimator->gyro_y_scaled			= 0;
 	estimator->timestamp 				= 0;
+	estimator->filter_constant 			= 1;
 	return true;
 }
 
@@ -287,7 +288,7 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 
 
 	/* get filter time constant from qgroundcontrol */
-	const float tau 								= 100*deltaT;
+	const float tau = estimator->filter_constant;
 
 	/* ------------------------------------------------------------------------------*
 	 *		         Here comes the interesting part of the code 					 *

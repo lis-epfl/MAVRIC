@@ -66,8 +66,8 @@ typedef struct
 	float pitch_fused;
 	float gyro_y_raw;							///< Rate raw around y axis [rad]
 	float gyro_y_scaled;						///< Rate raw around y axis [rad]
-	int continuous_angles;
 	float timestamp;							///< time stamp of IMU measurement [ticks]
+	float filter_constant;						///< constant for low pass and high pass filter [s]
 	imu_lab_b_t imu_lab_b;
 } pitch_estimator_t;
 
