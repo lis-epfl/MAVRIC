@@ -51,7 +51,8 @@ extern "C" {
 typedef struct
 {
 	imu_t* imu; 								///< IMU containing measurement, biases, etc.
-	float values[6];
+	float raw[6];
+	float scaled[6];
 	float filtered[6];
 	float mean[6];
 	float min[6];

@@ -59,6 +59,8 @@
  */
 static float low_pass_filter(float x, float y_old, float deltaT, float tau);
 
+
+static float scale_value(float raw_value, float bias, float scale);
 //------------------------------------------------------------------------------
 // PRIVATE FUNCTIONS IMPLEMENTATION
 //------------------------------------------------------------------------------
@@ -69,6 +71,10 @@ static float low_pass_filter(float x, float y_old, float deltaT, float tau)
 	return alpha*x + (1 - alpha)*y_old;
 }
 
+static float scale_value(float raw_value, float bias, float scale)
+{
+	return (raw_value - bias)*scale;
+}
 
 //------------------------------------------------------------------------------
 // PUBLIC FUNCTIONS IMPLEMENTATION
@@ -90,29 +96,44 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 	const float deltaT = time_keeper_ticks_to_seconds(timestamp - imu_lab_b->timestamp);
 	const float tau = deltaT * 2;
 	const float tau_mean = deltaT * 200;
+
 	int i;
-	for(i = 0; i < 6; i++)
+	for(i = 0; i < 3; i++)
 	{
-		float mean;
+		float mean, raw_value, scaled_value;
 		if(i < 3)
 		{
-			imu_lab_b->values[i] = imu_lab_b->imu->raw_accelero.data[i];
-		} else if(i < 6){
-			imu_lab_b->values[i] = imu_lab_b->imu->raw_gyro.data[i-3];
+			raw_value = imu_lab_b->imu->oriented_accelero.data[i];
+			/* scale the value */
+			float bias = imu_lab_b->imu->calib_accelero.bias[i];
+			float scale = imu_lab_b->imu->calib_accelero.scale_factor[i];
+			scaled_value = scale_value(raw_value, bias, scale);
+		}
+		else
+		{
+			raw_value = imu_lab_b->imu->oriented_gyro.data[i-3];
+			/* scale the value */
+			float bias = imu_lab_b->imu->calib_gyro.bias[i-3];
+			float scale = imu_lab_b->imu->calib_gyro.scale_factor[i-3];
+			scaled_value = scale_value(raw_value, bias, scale);	
 		}
 		if(imu_lab_b->measurement_count > 0)
 		{
-			imu_lab_b->filtered[i] = low_pass_filter(imu_lab_b->values[i], imu_lab_b->filtered[i], deltaT, tau);
+			float filtered = low_pass_filter(raw_value, imu_lab_b->filtered[i], deltaT, tau);
 			//mean = (imu_lab_b->mean[i]*imu_lab_b->measurement_count + imu_lab_b->values[i])/(imu_lab_b->measurement_count+1);
-			imu_lab_b->mean[i] = low_pass_filter(imu_lab_b->values[i], imu_lab_b->mean[i], deltaT, tau_mean);
-			imu_lab_b->min[i] = fmin(imu_lab_b->min[i], imu_lab_b->filtered[i]);
-			imu_lab_b->max[i] = fmax(imu_lab_b->max[i], imu_lab_b->filtered[i]);
+			imu_lab_b->filtered[i] = filtered;
+			imu_lab_b->mean[i] = low_pass_filter(raw_value, imu_lab_b->mean[i], deltaT, tau_mean);
+			imu_lab_b->min[i] = fmin(imu_lab_b->min[i], filtered);
+			imu_lab_b->max[i] = fmax(imu_lab_b->max[i], filtered);
 		} else {
-			imu_lab_b->filtered[i] = imu_lab_b->values[i];
-			imu_lab_b->mean[i] = imu_lab_b->values[i];
-			imu_lab_b->min[i] = imu_lab_b->values[i];
-			imu_lab_b->max[i] = imu_lab_b->values[i];
+			imu_lab_b->filtered[i] = raw_value;
+			imu_lab_b->mean[i] = raw_value;
+			imu_lab_b->min[i] = raw_value;
+			imu_lab_b->max[i] = raw_value;
 		}
+
+		imu_lab_b->raw[i] = raw_value;
+		imu_lab_b->scaled[i] = scaled_value;
 	}
 	imu_lab_b->measurement_count++;
 	imu_lab_b->timestamp = timestamp;
