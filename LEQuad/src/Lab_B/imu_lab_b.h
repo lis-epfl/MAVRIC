@@ -61,6 +61,7 @@ typedef struct
 	float scale[6];
 	int measurement_count;
 	uint32_t timestamp;
+	uint32_t reset_filter;
 } imu_lab_b_t;
 
 

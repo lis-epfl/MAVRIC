@@ -84,6 +84,7 @@ void imu_lab_b_init(imu_lab_b_t* imu_lab_b, imu_t* imu)
 {
 	imu_lab_b->imu = imu;
 	imu_lab_b->measurement_count = 0;
+	imu_lab_b->reset_filter = 1;
 }
 
 void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
@@ -95,7 +96,7 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 
 	const float deltaT = time_keeper_ticks_to_seconds(timestamp - imu_lab_b->timestamp);
 	const float tau = deltaT * 2;
-	const float tau_mean = deltaT * 200;
+	const float tau_mean = deltaT * 500;
 
 	int i;
 	for(i = 0; i < 6; i++)
@@ -117,7 +118,7 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 			float scale = imu_lab_b->imu->calib_gyro.scale_factor[i-3];
 			scaled_value = scale_value(raw_value, bias, scale);	
 		}
-		if(imu_lab_b->measurement_count > 0)
+		if(imu_lab_b->reset_filter <= 0)
 		{
 			float filtered = low_pass_filter(raw_value, imu_lab_b->filtered[i], deltaT, tau);
 			//mean = (imu_lab_b->mean[i]*imu_lab_b->measurement_count + imu_lab_b->values[i])/(imu_lab_b->measurement_count+1);
