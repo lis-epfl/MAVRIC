@@ -56,11 +56,9 @@ extern "C" {
  */
 typedef struct
 {
-	float pitch_accelero_raw;					///< Estimated pitch based on raw accelerometer data [rad]
-	float pitch_accelero_scaled;				///< Estimated pitch based on corrected accelerometer data [rad]
+	float pitch_accelero;						///< Estimated pitch based on scaled accelerometer data [rad]
 	float pitch_accelero_filtered;				///< Estimated pitch based on filtered accelerometer data [rad]
-	float pitch_gyro_raw;						///< Estimated pitch based on raw gyroscope data [rad]
-	float pitch_gyro_scaled;					///< Estimated pitch based on corrected gyroscope data [rad]
+	float pitch_gyro;							///< Estimated pitch based on scaled gyroscope data [rad]
 	float pitch_gyro_filtered;					///< Estimated pitch based on filtered gyroscope data [rad]
 	float pitch_fused;
 	float gyro_y_raw;							///< Rate raw around y axis [rad]

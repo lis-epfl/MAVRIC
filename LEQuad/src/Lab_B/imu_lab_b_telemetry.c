@@ -54,20 +54,8 @@ void send_vect(const float* vect, const char* name, const mavlink_stream_t* mavl
 									name,
 									time_keeper_get_micros(),
 									vect[0],
-									vect[1],
+									vect[4],
 									vect[2]);
-}
-
-void send_vect_scaled(const float* vect, const char* name, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg)
-{
-	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
-									mavlink_stream->compid,
-									msg,
-									name,
-									time_keeper_get_micros(),
-									1000*vect[0],
-									1000*vect[1],
-									1000*vect[2]);
 }
 
 //------------------------------------------------------------------------------
@@ -77,46 +65,24 @@ void send_vect_scaled(const float* vect, const char* name, const mavlink_stream_
 void imu_lab_b_telemetry_send(const imu_lab_b_t* imu_lab_b, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg)
 {
 		
-	send_vect(imu_lab_b->raw, "ACC RAW", mavlink_stream, msg);
+	send_vect(imu_lab_b->raw, "RAW", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 
-	send_vect_scaled(imu_lab_b->scaled, "ACC SCALED", mavlink_stream, msg);
-	mavlink_stream_send(mavlink_stream, msg);
-
-	time_keeper_delay_ms(10);
-	
-	send_vect(imu_lab_b->filtered, "ACC FILTERED", mavlink_stream, msg);
-	mavlink_stream_send(mavlink_stream, msg);
-	
-	send_vect(imu_lab_b->mean, "ACC MEAN", mavlink_stream, msg);
-	mavlink_stream_send(mavlink_stream, msg);
-	
-	time_keeper_delay_ms(10);
-
-	send_vect(imu_lab_b->min, "ACC MIN", mavlink_stream, msg);
-	mavlink_stream_send(mavlink_stream, msg);
-
-	send_vect(imu_lab_b->max, "ACC MAX", mavlink_stream, msg);
+	send_vect(imu_lab_b->scaled, "SCALED", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 
 	time_keeper_delay_ms(10);
 	
-	send_vect(&imu_lab_b->raw[3], "GYRO RAW", mavlink_stream, msg);
-	mavlink_stream_send(mavlink_stream, msg);
-
-	send_vect(&imu_lab_b->scaled[3], "GYRO SCALED", mavlink_stream, msg);
-	mavlink_stream_send(mavlink_stream, msg);	
-
-	time_keeper_delay_ms(10);
-
-	send_vect(&imu_lab_b->filtered[3], "GYRO FILTERED", mavlink_stream, msg);
-	mavlink_stream_send(mavlink_stream, msg);
-
-	send_vect(&imu_lab_b->mean[3], "GYRO MEAN", mavlink_stream, msg);
+	//send_vect(imu_lab_b->filtered, "FILTERED", mavlink_stream, msg);
+	//mavlink_stream_send(mavlink_stream, msg);
+	
+	send_vect(imu_lab_b->mean, "MEAN", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 	
-	send_vect(&imu_lab_b->min[3], "GYRO MIN", mavlink_stream, msg);
+	time_keeper_delay_ms(10);
+
+	send_vect(imu_lab_b->min, "MIN", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 
-	send_vect(&imu_lab_b->max[3], "GYRO MAX", mavlink_stream, msg);
+	send_vect(imu_lab_b->max, "MAX", mavlink_stream, msg);
 }

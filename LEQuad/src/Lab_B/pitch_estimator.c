@@ -234,14 +234,11 @@ float angle_pi(float phi)
 	imu_lab_b_init(&estimator->imu_lab_b, imu);
 
 	/* set current values to zero */
-	estimator->pitch_accelero_raw 		= 0;
-	estimator->pitch_accelero_scaled	= 0;
+	estimator->pitch_accelero 			= 0;
 	estimator->pitch_accelero_filtered 	= 0;
-	estimator->pitch_gyro_raw			= 0;
-	estimator->pitch_gyro_scaled		= 0;
+	estimator->pitch_gyro				= 0;
 	estimator->pitch_gyro_filtered 		= 0;
 	estimator->pitch_fused 				= 0;
-	estimator->gyro_y_raw				= 0;
 	estimator->gyro_y_scaled			= 0;
 	estimator->timestamp 				= 0;
 	estimator->filter_constant 			= 1;
@@ -253,27 +250,20 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	imu_lab_b_update(&estimator->imu_lab_b);
 	
 	/* values of this iteration*/
-	float pitch_accelero_raw		= 0;
-	float pitch_accelero_scaled 	= 0;
-	float pitch_accelero_filtered 	= 0;
-	float pitch_gyro_raw			= 0;
-	float pitch_gyro_scaled			= 0;
-	float pitch_gyro_filtered 		= 0;
+	float pitch_accelero;
+	float pitch_accelero_filtered;
+	float pitch_gyro;
+	float pitch_gyro_filtered;
 	float pitch_fused;
 
 	/* values of last iteration (this variables are for readability only */
 	const float pitch_accelero_filtered_old = estimator->pitch_accelero_filtered;
-	const float pitch_gyro_raw_old			= estimator->pitch_gyro_raw;
-	const float pitch_gyro_scaled_old		= estimator->pitch_gyro_scaled;
+	const float pitch_gyro_old 				= estimator->pitch_gyro;
 	const float pitch_gyro_filtered_old 	= estimator->pitch_gyro_filtered;
-	const float gyro_y_raw_old 				= estimator->gyro_y_raw;
 	const float gyro_y_scaled_old			= estimator->gyro_y_scaled;
 	const uint32_t timestamp_old 			= estimator->timestamp;	
 
 	/* get new measurements */
-	float accelero_x_raw					= estimator->imu_lab_b.raw[0];
-	float accelero_z_raw					= estimator->imu_lab_b.raw[2];
-	float gyro_y_raw						= estimator->imu_lab_b.raw[4];
 	float accelero_x_scaled 				= estimator->imu_lab_b.scaled[0];
 	float accelero_z_scaled 				= estimator->imu_lab_b.scaled[2];
 	float gyro_y_scaled 					= estimator->imu_lab_b.scaled[4];
@@ -287,34 +277,28 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	/* ------------------------------------------------------------------------------*
 	 *		         Here comes the interesting part of the code 					 *
 	 * ------------------------------------------------------------------------------*/
-
-	/* estimate pitch based on RAW ACCELEROMETER data */
-	pitch_accelero_raw = estimate_pitch_accelerometer(accelero_x_raw, accelero_z_raw);
 	
 	/* estimate pitch based on SCALED ACCELEROMETER accelerometer data */
-	pitch_accelero_scaled = estimate_pitch_accelerometer(accelero_x_scaled, accelero_z_scaled);
+	pitch_accelero = estimate_pitch_accelerometer(accelero_x_scaled, accelero_z_scaled);
 	
 	/* check if we have to reset the filters and estimations */
 	if(estimator->imu_lab_b.reset_filter <= 0)
 	{
 		/* filter SCALED ACCELEROMETER data */
-		pitch_accelero_filtered = low_pass_filter(pitch_accelero_scaled, pitch_accelero_filtered_old, deltaT, tau);
+		pitch_accelero_filtered = low_pass_filter(pitch_accelero, pitch_accelero_filtered_old, deltaT, tau);
 
 		/* estimate pitch based on gyro data */
-		pitch_gyro_raw = estimate_pitch_gyro(gyro_y_raw, gyro_y_raw_old, pitch_gyro_raw_old, deltaT);
-		pitch_gyro_raw = angle_pi(pitch_gyro_raw);
-		pitch_gyro_scaled = estimate_pitch_gyro(gyro_y_scaled, gyro_y_scaled_old, pitch_gyro_scaled_old, deltaT);
-		pitch_gyro_scaled = angle_pi(pitch_gyro_scaled);
-		pitch_gyro_filtered = high_pass_filter(pitch_gyro_scaled, pitch_gyro_scaled_old, pitch_gyro_filtered_old, deltaT, tau);
+		pitch_gyro = estimate_pitch_gyro(gyro_y_scaled, gyro_y_scaled_old, pitch_gyro_old, deltaT);
+		pitch_gyro = angle_pi(pitch_gyro);
+		pitch_gyro_filtered = high_pass_filter(pitch_gyro, pitch_gyro_old, pitch_gyro_filtered_old, deltaT, tau);
 		pitch_gyro_filtered = angle_pi(pitch_gyro_filtered);
 	}else
 	{
 		/* if we reset the filter, we do not filter the accelero */		
-		pitch_accelero_filtered = pitch_accelero_scaled;
+		pitch_accelero_filtered = pitch_accelero;
 
 		/* if we reset the filter, take pitch estimation for gyros*/
-		pitch_gyro_raw = pitch_accelero_scaled;
-		pitch_gyro_scaled = pitch_accelero_scaled;
+		pitch_gyro = pitch_accelero;
 		pitch_gyro_filtered = 0;
 		estimator->imu_lab_b.reset_filter = 0;
 	}
@@ -329,14 +313,11 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	 * ------------------------------------------------------------------------------*/
 
 	/* write values to estimator_pitch struct */
-	estimator->pitch_accelero_raw 		= pitch_accelero_raw;
-	estimator->pitch_accelero_scaled 	= pitch_accelero_scaled;
+	estimator->pitch_accelero 	 		= pitch_accelero;
 	estimator->pitch_accelero_filtered 	= pitch_accelero_filtered;
-	estimator->pitch_gyro_raw 			= pitch_gyro_raw;
-	estimator->pitch_gyro_scaled		= pitch_gyro_scaled;
+	estimator->pitch_gyro 	 			= pitch_gyro;
 	estimator->pitch_gyro_filtered		= pitch_gyro_filtered;
 	estimator->pitch_fused 				= pitch_fused;
-	estimator->gyro_y_raw 				= gyro_y_raw;
 	estimator->gyro_y_scaled			= gyro_y_scaled;
 	estimator->timestamp 				= timestamp;
 }

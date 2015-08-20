@@ -55,74 +55,25 @@ void pitch_estimator_telemetry_send (const pitch_estimator_t* estimator, const m
 	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
 									mavlink_stream->compid,
 									msg,
-									"PITCH_accelero",
+									"PITCH",
 									time_keeper_get_micros(),
-									1000*estimator->pitch_accelero_raw,
-									1000*estimator->pitch_accelero_scaled,
-									1000*estimator->pitch_accelero_filtered);
-	mavlink_stream_send(mavlink_stream, msg);
-	
-	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
-									mavlink_stream->compid,
-									msg,
-									"PITCH_gyro",
-									estimator->timestamp,
-									1000*estimator->pitch_gyro_raw,
-									1000*estimator->pitch_gyro_scaled,
-									1000*estimator->pitch_gyro_filtered);
-	mavlink_stream_send(mavlink_stream, msg);
-	
-	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
-									mavlink_stream->compid,
-									msg,
-									"PITCH_fused",
-									time_keeper_get_micros(),
-									1000*estimator->pitch_fused,
-									0,
+									estimator->pitch_accelero,
+									estimator->pitch_gyro,
 									0);
+	mavlink_stream_send(mavlink_stream, msg);
+	
+	mavlink_msg_debug_vect_pack(	mavlink_stream->sysid,
+									mavlink_stream->compid,
+									msg,
+									"PITCH_FILTERED",
+									time_keeper_get_micros(),
+									estimator->pitch_accelero_filtered,
+									estimator->pitch_gyro_filtered,
+									estimator->pitch_fused);
 	mavlink_stream_send(mavlink_stream, msg);
 
 	static int i = 0;
 
-	if(i%5 == 0)
-	{
-		time_keeper_delay_ms(10);
-		imu_lab_b_telemetry_send(&estimator->imu_lab_b, mavlink_stream, msg);
-	}
-	i++;
-	/*mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
-	 									mavlink_stream->compid,
-	 									msg,
-						       			time_keeper_get_micros(),
-						       			"pa",
-						       			estimator->pitch_accelero
-						       			);
-	mavlink_stream_send(mavlink_stream, msg);
-
-	mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
-	 									mavlink_stream->compid,
-	 									msg,
-						       			time_keeper_get_micros()+1,
-						       			"paf",
-						       			estimator->pitch_accelero_filtered
-						       			);
-	mavlink_stream_send(mavlink_stream, msg);
-
-	mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
-	 									mavlink_stream->compid,
-	 									msg,
-						       			time_keeper_get_micros()+2,
-						       			"pg",
-						       			estimator->pitch_gyro
-						       			);
-	mavlink_stream_send(mavlink_stream, msg);
-
-
-	mavlink_msg_named_value_int_pack(	mavlink_stream->sysid,
-	 									mavlink_stream->compid,
-	 									msg,
-						       			time_keeper_get_micros()+2,
-						       			"pgf",
-						       			estimator->pitch_gyro_filtered
-						       			);*/
+	time_keeper_delay_ms(10);
+	imu_lab_b_telemetry_send(&estimator->imu_lab_b, mavlink_stream, msg);
 }
