@@ -42,8 +42,8 @@
 #include "central_data.h"
 #include "time_keeper.h"
 
-#include "conf_imu.h"
-
+//#include "conf_imu.h"
+#include "MAV_imu_config.h"
 #include "stabilisation_copter_default_config.h"
 #include "navigation_default_config.h"
 #include "servos_default_config.h"
