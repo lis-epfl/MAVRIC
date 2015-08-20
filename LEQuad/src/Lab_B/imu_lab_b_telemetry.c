@@ -53,9 +53,9 @@ void send_vect(const float* vect, const char* name, const mavlink_stream_t* mavl
 									msg,
 									name,
 									time_keeper_get_micros(),
-									1000*vect[0],
-									1000*vect[1],
-									1000*vect[2]);
+									vect[0],
+									vect[1],
+									vect[2]);
 }
 
 //------------------------------------------------------------------------------

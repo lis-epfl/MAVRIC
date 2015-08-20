@@ -88,7 +88,7 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 		return;
 
 	const float deltaT = time_keeper_ticks_to_seconds(timestamp - imu_lab_b->timestamp);
-	const float tau = deltaT * 10;
+	const float tau = deltaT * 2;
 	const float tau_mean = deltaT * 200;
 	int i;
 	for(i = 0; i < 6; i++)
@@ -96,9 +96,9 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 		float mean;
 		if(i < 3)
 		{
-			imu_lab_b->values[i] = imu_lab_b->imu->scaled_accelero.data[i];
+			imu_lab_b->values[i] = imu_lab_b->imu->raw_accelero.data[i];
 		} else if(i < 6){
-			imu_lab_b->values[i] = imu_lab_b->imu->scaled_gyro.data[i-3];
+			imu_lab_b->values[i] = imu_lab_b->imu->raw_gyro.data[i-3];
 		}
 		if(imu_lab_b->measurement_count > 0)
 		{
