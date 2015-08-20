@@ -56,7 +56,6 @@ extern "C" {
  */
 typedef struct
 {
-	imu_t* imu; 								///< IMU containing measurement, biases, etc.
 	float pitch_accelero_raw;					///< Estimated pitch based on raw accelerometer data [rad]
 	float pitch_accelero_scaled;				///< Estimated pitch based on corrected accelerometer data [rad]
 	float pitch_accelero_filtered;				///< Estimated pitch based on filtered accelerometer data [rad]

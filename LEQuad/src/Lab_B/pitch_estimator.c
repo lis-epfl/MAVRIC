@@ -231,9 +231,6 @@ float angle_pi(float phi)
  */
  bool pitch_estimator_init(pitch_estimator_t* estimator, imu_t* imu)
 {
-	/* set imu */
-	estimator->imu = imu;
-
 	imu_lab_b_init(&estimator->imu_lab_b, imu);
 
 	/* set current values to zero */
@@ -274,18 +271,15 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	const uint32_t timestamp_old 			= estimator->timestamp;	
 
 	/* get new measurements */
-	float accelero_x_raw					= estimator->imu->oriented_accelero.data[0];
-	float accelero_z_raw					= estimator->imu->oriented_accelero.data[2];
-	float gyro_y_raw						= estimator->imu->oriented_gyro.data[1];
-	uint32_t timestamp 						= estimator->imu->last_update;
+	float accelero_x_raw					= estimator->imu_lab_b.raw[0];
+	float accelero_z_raw					= estimator->imu_lab_b.raw[2];
+	float gyro_y_raw						= estimator->imu_lab_b.raw[4];
+	float accelero_x_scaled 				= estimator->imu_lab_b.scaled[0];
+	float accelero_z_scaled 				= estimator->imu_lab_b.scaled[2];
+	float gyro_y_scaled 					= estimator->imu_lab_b.scaled[4];
+
+	uint32_t timestamp 						= estimator->imu_lab_b.timestamp;
 	const float deltaT = time_keeper_ticks_to_seconds(timestamp - timestamp_old);
-
-	/* correct bias and scale of measurememts */
-	float accelero_x_scaled = correct_measurement(accelero_x_raw, estimator->imu->calib_accelero.bias[0], estimator->imu->calib_gyro.scale_factor[0]);
-	float accelero_z_scaled = correct_measurement(accelero_z_raw,estimator->imu->calib_accelero.bias[2], estimator->imu->calib_gyro.scale_factor[2]);
-	float gyro_y_scaled = correct_measurement(gyro_y_raw, estimator->imu->calib_gyro.bias[1], estimator->imu->calib_gyro.scale_factor[1]);
-
-
 
 	/* get filter time constant from qgroundcontrol */
 	const float tau = estimator->filter_constant;

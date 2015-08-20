@@ -98,9 +98,9 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 	const float tau_mean = deltaT * 200;
 
 	int i;
-	for(i = 0; i < 3; i++)
+	for(i = 0; i < 6; i++)
 	{
-		float mean, raw_value, scaled_value;
+		float raw_value, scaled_value;
 		if(i < 3)
 		{
 			raw_value = imu_lab_b->imu->oriented_accelero.data[i];
