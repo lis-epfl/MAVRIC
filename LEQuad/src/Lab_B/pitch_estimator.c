@@ -77,7 +77,7 @@ float estimate_pitch_accelerometer(float acc_x, float acc_z);
  *
  * \return 				estimated pitch [rad]
  */
-float estimate_pitch_gyro(float gyro_y, float gyro_y_old, float pitch_old, float deltaT);
+float estimate_pitch_gyro(float gyro_y, float pitch_old, float deltaT);
 
 
 /**
@@ -161,9 +161,9 @@ float estimate_pitch_accelerometer(float acc_x, float acc_z)
 }
 
 
-float estimate_pitch_gyro(float gyro_y, float gyro_y_old, float pitch_old, float deltaT)
+float estimate_pitch_gyro(float gyro_y, float pitch_old, float deltaT)
 {
-	float pitch =  (gyro_y + gyro_y_old)*deltaT/2.0f + pitch_old;
+	float pitch =  gyro_y*deltaT + pitch_old;
 	return angle_pi(pitch);
 }
 
@@ -260,7 +260,6 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	const float pitch_accelero_filtered_old = estimator->pitch_accelero_filtered;
 	const float pitch_gyro_old 				= estimator->pitch_gyro;
 	const float pitch_gyro_filtered_old 	= estimator->pitch_gyro_filtered;
-	const float gyro_y_scaled_old			= estimator->gyro_y_scaled;
 	const uint32_t timestamp_old 			= estimator->timestamp;	
 
 	/* get new measurements */
@@ -288,7 +287,7 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 		pitch_accelero_filtered = low_pass_filter(pitch_accelero, pitch_accelero_filtered_old, deltaT, tau);
 
 		/* estimate pitch based on gyro data */
-		pitch_gyro = estimate_pitch_gyro(gyro_y_scaled, gyro_y_scaled_old, pitch_gyro_old, deltaT);
+		pitch_gyro = estimate_pitch_gyro(gyro_y_scaled, pitch_gyro_old, deltaT);
 		pitch_gyro = angle_pi(pitch_gyro);
 		pitch_gyro_filtered = high_pass_filter(pitch_gyro, pitch_gyro_old, pitch_gyro_filtered_old, deltaT, tau);
 		pitch_gyro_filtered = angle_pi(pitch_gyro_filtered);
