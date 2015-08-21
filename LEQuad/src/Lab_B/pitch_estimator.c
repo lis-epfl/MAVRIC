@@ -119,18 +119,6 @@ float high_pass_filter(float x, float x_old, float y_old, float deltaT, float ta
 
 
 /**
- * \brief	Correct bias and scale of gyro or accelero values
- *
- * \param	value_raw	raw data (gyro/accelero)
- * \param	bias 		bias of the sensor value
- * \param	scale 		scale of the sensor value
- *
- * \return 				corrected value
- */
- float correct_measurement(float value_raw, float bias, float scale);
-
-
-/**
  * \brief	Make a angle continuous i.e., prevent jumps at +/- PI
  *
  * \param	phi 		current value [rad]
@@ -157,45 +145,34 @@ float make_angle_continuous(float phi, float phi_old);
 
 float estimate_pitch_accelerometer(float acc_x, float acc_z)
 {
-	return atan2(acc_x, -acc_z);
+	return 0;
 }
 
 
 float estimate_pitch_gyro(float gyro_y, float pitch_old, float deltaT)
 {
-	float pitch =  gyro_y*deltaT + pitch_old;
-	return angle_pi(pitch);
+	return 0;
 }
 
 
 float estimate_pitch_fused(float pitch_accelero_filtered, float pitch_gyro_filtered)
 {
-	return pitch_accelero_filtered + pitch_gyro_filtered;
+	return 0;
 }
 
 
 static float low_pass_filter(float x, float y_old, float deltaT, float tau)
 {
 	y_old = make_angle_continuous(y_old, x);
-	float alpha = deltaT / (deltaT + tau);
-	return alpha*x + (1 - alpha)*y_old;
+	return 0;
 }
 
 
 float high_pass_filter(float x, float x_old, float y_old, float deltaT, float tau)
 {
 	x_old = make_angle_continuous(x_old, x);
-	//y_old = make_angle_continuous(y_old, x);
-	float alpha = tau / (deltaT + tau);
-	return alpha*(x-x_old) + alpha*y_old;
+	return 0;
 }
-
-
-float correct_measurement(float value_raw, float bias, float scale)
-{
-	return (value_raw - bias) * scale;
-}
-
 
 float make_angle_continuous(float phi, float phi_old)
 {

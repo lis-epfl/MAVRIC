@@ -54,7 +54,7 @@ static float scale_value(float raw_value, float bias, float scale);
 
 static float scale_value(float raw_value, float bias, float scale)
 {
-	return (raw_value - bias)*scale;
+	return 0;
 }
 
 //------------------------------------------------------------------------------
