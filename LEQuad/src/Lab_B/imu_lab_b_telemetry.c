@@ -42,6 +42,8 @@
 #include "imu_lab_b_telemetry.h"
 #include "time_keeper.h"
 
+void send_vect(const float* vect, const char* name, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg);
+
 //------------------------------------------------------------------------------
 // PRIVATE FUNCTIONS IMPLEMENTATION
 //------------------------------------------------------------------------------
@@ -54,7 +56,7 @@ void send_vect(const float* vect, const char* name, const mavlink_stream_t* mavl
 									name,
 									time_keeper_get_micros(),
 									vect[0],
-									vect[4],
+									vect[1],
 									vect[2]);
 }
 
@@ -65,10 +67,16 @@ void send_vect(const float* vect, const char* name, const mavlink_stream_t* mavl
 void imu_lab_b_telemetry_send(const imu_lab_b_t* imu_lab_b, const mavlink_stream_t* mavlink_stream, mavlink_message_t* msg)
 {
 		
-	send_vect(imu_lab_b->raw, "RAW", mavlink_stream, msg);
+	send_vect(imu_lab_b->raw, "RAW_ACCELERO", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 
-	send_vect(imu_lab_b->scaled, "SCALED", mavlink_stream, msg);
+	send_vect(&imu_lab_b->raw[3], "RAW_GYRO", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	send_vect(imu_lab_b->scaled, "SCALED_ACCELERO", mavlink_stream, msg);
+	mavlink_stream_send(mavlink_stream, msg);
+
+	send_vect(&imu_lab_b->scaled[3], "SCALED_GYRO", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 
 	time_keeper_delay_ms(10);
@@ -76,13 +84,13 @@ void imu_lab_b_telemetry_send(const imu_lab_b_t* imu_lab_b, const mavlink_stream
 	//send_vect(imu_lab_b->filtered, "FILTERED", mavlink_stream, msg);
 	//mavlink_stream_send(mavlink_stream, msg);
 	
-	send_vect(imu_lab_b->mean, "MEAN", mavlink_stream, msg);
+	send_vect(&imu_lab_b->mean[3], "MEAN_GYRO", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 	
 	time_keeper_delay_ms(10);
 
-	send_vect(imu_lab_b->min, "MIN", mavlink_stream, msg);
+	send_vect(imu_lab_b->min, "MIN_ACCELERO", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 
-	send_vect(imu_lab_b->max, "MAX", mavlink_stream, msg);
+	send_vect(imu_lab_b->max, "MAX_ACCELERO", mavlink_stream, msg);
 }

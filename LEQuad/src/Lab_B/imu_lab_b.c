@@ -43,33 +43,14 @@
 #include "time_keeper.h"
 #include <math.h>
 
-#define TAU = 10
 
-
-
-/**
- * \brief	First order low pass filter
- *
- * \param	x 	 		Current unfiltered value
- * \param	y_old		low passed value of last iteration
- * \param 	deltaT		Time step between estimations [s]
- * \param 	tau			Time constant of the filter (tau = 1/(2 *pi *f_c), where f_c is the cutoff freq) [s]
- *
- * \return 				low passed value
- */
-static float low_pass_filter(float x, float y_old, float deltaT, float tau);
-
+#define ALPHA 0.5f
+#define ALPHA_MEAN 0.0002f
 
 static float scale_value(float raw_value, float bias, float scale);
 //------------------------------------------------------------------------------
 // PRIVATE FUNCTIONS IMPLEMENTATION
 //------------------------------------------------------------------------------
-
-static float low_pass_filter(float x, float y_old, float deltaT, float tau)
-{
-	float alpha = deltaT / (deltaT + tau);
-	return alpha*x + (1 - alpha)*y_old;
-}
 
 static float scale_value(float raw_value, float bias, float scale)
 {
@@ -93,11 +74,7 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 
 	if(timestamp <= 0)
 		return;
-
-	const float deltaT = time_keeper_ticks_to_seconds(timestamp - imu_lab_b->timestamp);
-	const float tau = deltaT * 2;
-	const float tau_mean = deltaT * 500;
-
+	
 	int i;
 	for(i = 0; i < 6; i++)
 	{
@@ -120,10 +97,10 @@ void imu_lab_b_update(imu_lab_b_t* imu_lab_b)
 		}
 		if(imu_lab_b->reset_filter <= 0)
 		{
-			float filtered = low_pass_filter(raw_value, imu_lab_b->filtered[i], deltaT, tau);
+			float filtered = ALPHA*raw_value + ((1-ALPHA)* imu_lab_b->filtered[i]);
 			//mean = (imu_lab_b->mean[i]*imu_lab_b->measurement_count + imu_lab_b->values[i])/(imu_lab_b->measurement_count+1);
 			imu_lab_b->filtered[i] = filtered;
-			imu_lab_b->mean[i] = low_pass_filter(raw_value, imu_lab_b->mean[i], deltaT, tau_mean);
+			imu_lab_b->mean[i] = ALPHA_MEAN*raw_value + ((1-ALPHA_MEAN) * imu_lab_b->mean[i]);
 			imu_lab_b->min[i] = fmin(imu_lab_b->min[i], filtered);
 			imu_lab_b->max[i] = fmax(imu_lab_b->max[i], filtered);
 		} else {
