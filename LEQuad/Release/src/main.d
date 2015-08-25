@@ -217,17 +217,20 @@ src/main.d src/main.o src/main.o: ../src/main.cpp \
  ../src/tasks.h ../Library/communication/remote.h \
  ../Library/hal/include/satellite.h ../Library/control/stabilisation.h \
  ../Library/control/control_command.h ../Library/util/constants.h \
- ../Library/hal/include/servos.h \
+ ../Library/hal/include/sonar.h ../Library/communication/data_logging.h \
+ ../Library/libs/fat_fs/ff.h ../Library/libs/fat_fs/integer.h \
+ ../Library/libs/fat_fs/ffconf.h ../Library/hal/include/fat_fs_mounting.h \
+ ../Library/communication/state.h ../Library/hal/include/servos.h \
  ../Library/communication/mavlink_waypoint_handler.h \
  ../Library/communication/mavlink_message_handler.h \
  ../Library/communication/mavlink_communication.h \
  ../Library/communication/onboard_parameters.h \
- ../Library/communication/state.h ../Library/control/pid_controller.h \
+ ../Library/control/pid_controller.h \
  ../Library/communication/mavlink_stream.h \
  ../Library/communication/mavlink_communication.h \
  ../Library/communication/onboard_parameters.h \
  ../Library/sensing/simulation.h ../Library/sensing/qfilter.h \
- ../Library/hal/include/barometer.h ../Library/hal/include/sonar.h \
+ ../Library/hal/include/barometer.h \
  ../Library/sensing/position_estimation.h \
  ../Library/hal/include/sonar_i2cxl.h ../Library/hal/include/sonar.h \
  ../Library/control/navigation.h ../Library/control/joystick_parsing.h \
@@ -240,9 +243,6 @@ src/main.d src/main.o src/main.o: ../src/main.cpp \
  ../Library/communication/state_machine.h \
  ../Library/communication/mavlink_waypoint_handler.h \
  ../Library/control/joystick_parsing.h \
- ../Library/communication/data_logging.h ../Library/libs/fat_fs/ff.h \
- ../Library/libs/fat_fs/integer.h ../Library/libs/fat_fs/ffconf.h \
- ../Library/hal/include/fat_fs_mounting.h \
  ../Library/communication/acoustic.h ../Library/communication/remote.h \
  ../src/boardsupport.h ../src/tasks.h ../src/mavlink_telemetry.h \
  ../Library/hal/include/piezo_speaker.h
@@ -721,6 +721,20 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.435\avr3
 
 ../Library/util/constants.h:
 
+../Library/hal/include/sonar.h:
+
+../Library/communication/data_logging.h:
+
+../Library/libs/fat_fs/ff.h:
+
+../Library/libs/fat_fs/integer.h:
+
+../Library/libs/fat_fs/ffconf.h:
+
+../Library/hal/include/fat_fs_mounting.h:
+
+../Library/communication/state.h:
+
 ../Library/hal/include/servos.h:
 
 ../Library/communication/mavlink_waypoint_handler.h:
@@ -730,8 +744,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.435\avr3
 ../Library/communication/mavlink_communication.h:
 
 ../Library/communication/onboard_parameters.h:
-
-../Library/communication/state.h:
 
 ../Library/control/pid_controller.h:
 
@@ -746,8 +758,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.435\avr3
 ../Library/sensing/qfilter.h:
 
 ../Library/hal/include/barometer.h:
-
-../Library/hal/include/sonar.h:
 
 ../Library/sensing/position_estimation.h:
 
@@ -780,16 +790,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.2.435\avr3
 ../Library/communication/mavlink_waypoint_handler.h:
 
 ../Library/control/joystick_parsing.h:
-
-../Library/communication/data_logging.h:
-
-../Library/libs/fat_fs/ff.h:
-
-../Library/libs/fat_fs/integer.h:
-
-../Library/libs/fat_fs/ffconf.h:
-
-../Library/hal/include/fat_fs_mounting.h:
 
 ../Library/communication/acoustic.h:
 

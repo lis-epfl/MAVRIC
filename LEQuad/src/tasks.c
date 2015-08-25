@@ -191,7 +191,8 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
-		servos_set_value_failsafe( &central_data->servos );
+		servos_wo_gimbal_set_value_failsafe( &central_data->servos );
+		//servos_set_value_failsafe( &central_data->servos );
 	}
 
 		

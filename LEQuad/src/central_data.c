@@ -132,10 +132,11 @@ bool central_data_init()
 													&position_estimation_default_config,
 													&central_data.state,
 													&central_data.pressure,
-													//&central_data.sonar_i2cxl,
+													&central_data.sonar_i2cxl.data,
 													&central_data.gps,
 													&central_data.ahrs,
-													&central_data.imu);
+													&central_data.imu,
+													&central_data.data_logging);
 	
 	time_keeper_delay_ms(100);
 
