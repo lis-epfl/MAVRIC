@@ -338,6 +338,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 //	init_success &= onboard_parameters_add_parameter_int32    ( onboard_parameters , ( int32_t*)&central_data->state_machine.low_battery_counter			, "safe_count"     );
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.remote_active,"Remote_Active");
+	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, (int32_t*) &central_data->state.source_mode,"Remote_Src_Mode");
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters,(int32_t*)&central_data->fat_fs_mounting.log_data, "Log_continue");
 	
