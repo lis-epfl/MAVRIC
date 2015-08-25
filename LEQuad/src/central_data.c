@@ -78,6 +78,9 @@ bool central_data_init()
 	
 	time_keeper_delay_ms(100); 
 
+
+	
+	
 	// Init mavlink communication
 	mavlink_communication_conf_t mavlink_communication_config = mavlink_communication_default_config;
 	mavlink_communication_config.mavlink_stream_config.sysid = MAVLINK_SYS_ID;
@@ -154,7 +157,7 @@ bool central_data_init()
 	
 	time_keeper_delay_ms(100);
 
-	// Init waypont handler
+	// Init waypoints handler
 	init_success &= waypoint_handler_init(  &central_data.waypoint_handler,
 											&central_data.position_estimation,
 											&central_data.ahrs,
@@ -167,7 +170,7 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	
-	// Init stabilisers
+	// Init stabilizers
 	init_success &= stabilisation_copter_init(	&central_data.stabilisation_copter,
 												&stabilisation_copter_default_config,
 												&central_data.controls,
