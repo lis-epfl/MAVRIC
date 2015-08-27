@@ -66,7 +66,16 @@ bool central_data_init()
 	
 	// Init servos
 	//servo_pwm_init(central_data.servos);
+	
+	//--- start - added for the Gimbal use
+	servos_default_config.servos_count = 6;
+	servos_default_config.servo[4] = servo_entry_gimbal;
+	servos_default_config.servo[5] = servo_entry_gimbal;
+	// --- end
+	
 	init_success &= servos_init( &central_data.servos, &servos_default_config);
+	
+	
 	servos_set_value_failsafe( &central_data.servos );
 	pwm_servos_write_to_hardware( &central_data.servos );
 
@@ -87,8 +96,7 @@ bool central_data_init()
 	init_success &= mavlink_communication_init(	&central_data.mavlink_communication, 
 												&mavlink_communication_config, 
 												central_data.telemetry_up_stream, 
-												central_data.telemetry_down_stream,
-												&central_data.state);
+												central_data.telemetry_down_stream);
 	
 	time_keeper_delay_ms(100); 
 
@@ -104,8 +112,7 @@ bool central_data_init()
 										&central_data.state,
 										&central_data.sim_model,
 										&central_data.remote,
-										&central_data.joystick_parsing,
-										&central_data.gps);
+										&central_data.joystick_parsing);
 	time_keeper_delay_ms(100);
 
 	// Init imu
