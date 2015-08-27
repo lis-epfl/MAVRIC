@@ -79,7 +79,7 @@ void imu_lab_b_telemetry_send(const imu_lab_b_t* imu_lab_b, const mavlink_stream
 	send_vect(&imu_lab_b->scaled[3], "SCALED_GYRO", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 
-	time_keeper_delay_ms(10);
+	time_keeper_delay_ms(5);
 	
 	//send_vect(imu_lab_b->filtered, "FILTERED", mavlink_stream, msg);
 	//mavlink_stream_send(mavlink_stream, msg);
@@ -87,7 +87,7 @@ void imu_lab_b_telemetry_send(const imu_lab_b_t* imu_lab_b, const mavlink_stream
 	send_vect(&imu_lab_b->mean[3], "MEAN_GYRO", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
 	
-	time_keeper_delay_ms(10);
+	time_keeper_delay_ms(5);
 
 	send_vect(imu_lab_b->min, "MIN_ACCELERO", mavlink_stream, msg);
 	mavlink_stream_send(mavlink_stream, msg);
