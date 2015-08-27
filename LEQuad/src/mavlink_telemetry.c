@@ -386,7 +386,7 @@ bool mavlink_telemetry_init(void)
 	
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&scheduler_telemetry_send_rt_stats,								&central_data->scheduler, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&pitch_estimator_telemetry_send,										&central_data->pitch_estimator, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  120000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&pitch_estimator_telemetry_send,										&central_data->pitch_estimator, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
 	
 	scheduler_sort_tasks(&central_data->mavlink_communication.scheduler);
 	

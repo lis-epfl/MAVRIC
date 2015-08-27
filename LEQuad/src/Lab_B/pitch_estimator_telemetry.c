@@ -72,8 +72,6 @@ void pitch_estimator_telemetry_send (const pitch_estimator_t* estimator, const m
 									estimator->pitch_fused);
 	mavlink_stream_send(mavlink_stream, msg);
 
-	static int i = 0;
-
-	time_keeper_delay_ms(10);
+	time_keeper_delay_ms(5);
 	imu_lab_b_telemetry_send(&estimator->imu_lab_b, mavlink_stream, msg);
 }

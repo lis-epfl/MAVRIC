@@ -61,11 +61,12 @@
  * \brief	Estimate pitch based on accelerometer data
  * 
  * \param	acc_x 		Acceleration in x-axis [g]
+ * \param	acc_y 		Acceleration in x-axis [g]
  * \param	acc_z	 	Acceleration in x-axis [g]
  *
  * \return 				estimated pitch in rad
  */
-float estimate_pitch_accelerometer(float acc_x, float acc_z);
+float estimate_pitch_accelerometer(float acc_x, float acc_y, float acc_z);
 
 /**
  * \brief	Estimate pitch based on gyro data
@@ -155,7 +156,7 @@ float make_angle_continuous(float phi, float phi_old);
 //------------------------------------------------------------------------------
 
 
-float estimate_pitch_accelerometer(float acc_x, float acc_z)
+float estimate_pitch_accelerometer(float acc_x, float acc_y, float acc_z)
 {
 	return atan2(acc_x, -acc_z);
 }
@@ -264,6 +265,7 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 
 	/* get new measurements */
 	float accelero_x_scaled 				= estimator->imu_lab_b.scaled[0];
+	float accelero_y_scaled 				= estimator->imu_lab_b.scaled[1];
 	float accelero_z_scaled 				= estimator->imu_lab_b.scaled[2];
 	float gyro_y_scaled 					= estimator->imu_lab_b.scaled[4];
 
@@ -278,7 +280,7 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	 * ------------------------------------------------------------------------------*/
 	
 	/* estimate pitch based on SCALED ACCELEROMETER accelerometer data */
-	pitch_accelero = estimate_pitch_accelerometer(accelero_x_scaled, accelero_z_scaled);
+	pitch_accelero = estimate_pitch_accelerometer(accelero_x_scaled, accelero_y_scaled, accelero_z_scaled);
 	
 	/* check if we have to reset the filters and estimations */
 	if(estimator->imu_lab_b.reset_filter <= 0)

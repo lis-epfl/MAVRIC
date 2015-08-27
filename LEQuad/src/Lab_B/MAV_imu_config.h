@@ -44,6 +44,7 @@
 #ifndef CONF_IMU_REV4_H_
 #define CONF_IMU_REV4_H_
 
+#include "bias_scale.h"
 #include "imu.h"
 #include "conf_platform.h"	// To get the MAVLINK_SYS_ID
 
@@ -65,15 +66,15 @@ static imu_conf_t imu_config =
 		},
 		.bias =
 		{
-			0.0f,			//ACC_BIAIS_X
-			0.0f,			//ACC_BIAIS_Y
-			0.0f				//ACC_BIAIS_Z
+			ACC_BIAIS_X,			//ACC_BIAIS_X
+			ACC_BIAIS_Y,			//ACC_BIAIS_Y
+			ACC_BIAIS_Z				//ACC_BIAIS_Z
 		},
 		.scale_factor =
 		{
-			1.0f,			//RAW_ACC_X_SCALE
-			1.0f,			//RAW_ACC_Y_SCALE
-			1.0f			//RAW_ACC_Z_SCALE
+			ACC_SCALE_X,			//RAW_ACC_X_SCALE
+			ACC_SCALE_Y,			//RAW_ACC_Y_SCALE
+			ACC_SCALE_Z				//RAW_ACC_Z_SCALE
 		}
 	},
 	.gyroscope =
@@ -93,7 +94,7 @@ static imu_conf_t imu_config =
 		.bias =
 		{
 			0.0f,				//GYRO_BIAIS_X
-			0.0f,				//GYRO_BIAIS_Y
+			GYRO_BIAIS_Y,		//GYRO_BIAIS_Y
 			0.0f				//GYRO_BIAIS_Z
 		},
 		.scale_factor =
