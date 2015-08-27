@@ -45,7 +45,6 @@
 #include "print_util.h"
 #include "time_keeper.h"
 #include <math.h>
-#include "conf_imu.h"
 
 //------------------------------------------------------------------------------
 // SYMBOLS FOR BIASES AND SCALES OF IMU
@@ -132,14 +131,14 @@ float high_pass_filter(float x, float x_old, float y_old, float deltaT, float ta
 
 
 /**
- * \brief	Make a angle continuous i.e., prevent jumps at +/- PI
+ * \brief	Choose angle phi to be close to phi_ref (i.e. abs(phi - phi_ref) < 2*PI)
  *
  * \param	phi 		current value [rad]
- * \param	phi_old 	value of last iteration [rad]
+ * \param	phi_old 	reference value [rad]
  *
  * \return 				value [rad]
  */
-float make_angle_continuous(float phi, float phi_old);
+float approach_angle(float phi, float phi_ref);
 
 
 /**
@@ -195,11 +194,11 @@ float correct_measurement(float value_raw, float bias, float scale)
 }
 
 
-float make_angle_continuous(float phi, float phi_old)
+float approach_angle(float phi, float phi_ref)
 {
-	while(phi - phi_old > PI)
+	while(phi - phi_ref > PI)
 		phi -= 2*PI;
-	while(phi - phi_old < -PI)
+	while(phi - phi_ref < -PI)
 		phi += 2*PI;
 	return phi;
 }
@@ -283,13 +282,13 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	if(estimator->imu_lab_b.reset_filter <= 0)
 	{
 		/* filter SCALED ACCELEROMETER data */
-		pitch_accelero_filtered_old = make_angle_continuous(pitch_accelero_filtered_old, pitch_accelero);
+		pitch_accelero_filtered_old = approach_angle(pitch_accelero_filtered_old, pitch_accelero);
 		pitch_accelero_filtered = low_pass_filter(pitch_accelero, pitch_accelero_filtered_old, deltaT, tau);
 
 		/* estimate pitch based on gyro data */
 		pitch_gyro = estimate_pitch_gyro(gyro_y_scaled, pitch_gyro_old, deltaT);
 		pitch_gyro = angle_pi(pitch_gyro);
-		pitch_gyro_old = make_angle_continuous(pitch_gyro_old, pitch_gyro);
+		pitch_gyro_old = approach_angle(pitch_gyro_old, pitch_gyro);
 		pitch_gyro_filtered = high_pass_filter(pitch_gyro, pitch_gyro_old, pitch_gyro_filtered_old, deltaT, tau);
 		pitch_gyro_filtered = angle_pi(pitch_gyro_filtered);
 	}else
