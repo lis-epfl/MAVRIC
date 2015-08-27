@@ -164,14 +164,12 @@ float estimate_pitch_fused(float pitch_accelero_filtered, float pitch_gyro_filte
 
 static float low_pass_filter(float x, float y_old, float deltaT, float tau)
 {
-	y_old = make_angle_continuous(y_old, x);
 	return 0;
 }
 
 
 float high_pass_filter(float x, float x_old, float y_old, float deltaT, float tau)
 {
-	x_old = make_angle_continuous(x_old, x);
 	return 0;
 }
 
@@ -235,9 +233,9 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	float pitch_fused;
 
 	/* values of last iteration (this variables are for readability only */
-	const float pitch_accelero_filtered_old = estimator->pitch_accelero_filtered;
-	const float pitch_gyro_old 				= estimator->pitch_gyro;
-	const float pitch_gyro_filtered_old 	= estimator->pitch_gyro_filtered;
+	float pitch_accelero_filtered_old 		= estimator->pitch_accelero_filtered;
+	float pitch_gyro_old 					= estimator->pitch_gyro;
+	float pitch_gyro_filtered_old 			= estimator->pitch_gyro_filtered;
 	const uint32_t timestamp_old 			= estimator->timestamp;	
 
 	/* get new measurements */
@@ -263,11 +261,13 @@ void pitch_estimator_update(pitch_estimator_t* estimator){
 	if(estimator->imu_lab_b.reset_filter <= 0)
 	{
 		/* filter SCALED ACCELEROMETER data */
+		pitch_accelero_filtered_old = make_angle_continuous(pitch_accelero_filtered_old, pitch_accelero);
 		pitch_accelero_filtered = low_pass_filter(pitch_accelero, pitch_accelero_filtered_old, deltaT, tau);
 
 		/* estimate pitch based on gyro data */
 		pitch_gyro = estimate_pitch_gyro(gyro_y_scaled, pitch_gyro_old, deltaT);
 		pitch_gyro = angle_pi(pitch_gyro);
+		pitch_gyro_old = make_angle_continuous(pitch_gyro_old, pitch_gyro);
 		pitch_gyro_filtered = high_pass_filter(pitch_gyro, pitch_gyro_old, pitch_gyro_filtered_old, deltaT, tau);
 		pitch_gyro_filtered = angle_pi(pitch_gyro_filtered);
 	}else
