@@ -30,10 +30,11 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file MAV201_imu_config.h
+ * \file MAV_imu_config.h
  * 
  * \author MAV'RIC Team
- *   
+ * \author Basil Huber
+ *
  * \brief This file defines the mapping between the IMU and the compass and the 
  * frames of the vehicles as well as the scales and the biaises. 
  * The NED frame is used.
