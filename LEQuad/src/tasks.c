@@ -47,12 +47,10 @@
 #include "navigation.h"
 #include "led.h"
 #include "imu.h"
-#include "delay.h"
 #include "sonar_i2cxl.h"
 #include "analog_monitor.h"
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
-#include "stdio_usb.h"
 //#include "data_logging.h"
 
 #include "pwm_servos.h"

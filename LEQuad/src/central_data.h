@@ -89,7 +89,6 @@ extern "C" {
 #include "remote.h"
 
 #include "state_machine.h"
-#include "sd_spi.h"
 #include "joystick_parsing.h"
 #include "data_logging.h"
 #include "fat_fs_mounting.h"
