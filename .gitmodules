@@ -10,3 +10,6 @@
 [submodule "Documentation/Doxygen/html"]
 	path = Documentation/Doxygen/html
 	url = git@github.com:lis-epfl/MAVRIC.git
+[submodule "Utilities/Epuck_interface/library/mavlink"]
+	path = Utilities/Epuck_interface/library/mavlink
+	url = git@github.com:mavlink/mavlink.git
