@@ -111,9 +111,8 @@ Central_data::Central_data():
 	mavlink_communication_config.mavlink_stream_config.sysid = MAVLINK_SYS_ID;
 	init_success &= mavlink_communication_init(	&mavlink_communication, 
 												mavlink_communication_config, 
-												&board.uart0 );
-												// telemetry_up_stream, 
-												// telemetry_down_stream);
+												&board.uart0,
+												&state );
 	
 	time_keeper_delay_ms(100); 
 
@@ -129,7 +128,8 @@ Central_data::Central_data():
 										&state,
 										&sim_model,
 										&remote,
-										&joystick_parsing);
+										&joystick_parsing,
+										&gps);
 	time_keeper_delay_ms(100);
 
 	// Init imu
@@ -158,8 +158,10 @@ Central_data::Central_data():
 													position_estimation_default_config(),
 													&state,
 													&board.bmp085,
+													&sonar.data,
 													&gps,
-													&ahrs);
+													&ahrs,
+													&data_logging);
 	
 	time_keeper_delay_ms(100);
 
