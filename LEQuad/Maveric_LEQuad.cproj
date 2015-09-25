@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>6.1</ProjectVersion>
+    <ProjectVersion>6.2</ProjectVersion>
     <ProjectGuid>{5c41308d-f714-42b2-8fea-988a47ee06ad}</ProjectGuid>
     <avrdevice>AT32UC3C1512C</avrdevice>
     <avrdeviceseries>uc3c</avrdeviceseries>
@@ -220,7 +220,7 @@
         <documentation help="" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.3.0" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.10.1" />
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
@@ -275,6 +275,7 @@
       <ToolNumber>J30200030913</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
+    <preserveEEPROM>true</preserveEEPROM>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputFileName>MegaFly2</OutputFileName>
@@ -599,6 +600,15 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Library\aal\aircraft_api.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\aal\aircraft_api.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\aal\aircraft.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\communication\acoustic.c">
       <SubType>compile</SubType>
     </Compile>
@@ -764,6 +774,21 @@
     <Compile Include="Library\control\servos_mix_quadcopter_diag_default_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\control\servos_mix_wing.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_wing.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_wing_default_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_wing_telemetry.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_wing_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\control\stabilisation_copter.c">
       <SubType>compile</SubType>
     </Compile>
@@ -777,6 +802,15 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\stabilisation_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_wing.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_wing.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_wing_default_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\vector_field_waypoint.c">
@@ -1457,6 +1491,24 @@
     <Compile Include="Library\util\vectors.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\aal\copter\stabilisation_copter_aal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\aal\copter\stabilisation_copter_aal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\aal\aircraft_api.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\aal\aircraft_api.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\aal\wing\stabilisation_wing_aal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\aal\wing\stabilisation_wing_aal.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\central_data.c">
       <SubType>compile</SubType>
     </Compile>
@@ -2019,10 +2071,14 @@
     <Folder Include="Library\libs\mavlink\include\" />
     <Folder Include="Library\libs\mavlink\include\common\" />
     <Folder Include="Library\libs\mavlink\include\mavric\" />
+    <Folder Include="Library\aal" />
     <Folder Include="Library\runtime\" />
     <Folder Include="Library\sensing\" />
     <Folder Include="Library\util\" />
     <Folder Include="src\" />
+    <Folder Include="src\aal\" />
+    <Folder Include="src\aal\copter\" />
+    <Folder Include="src\aal\wing" />
     <Folder Include="src\asf\" />
     <Folder Include="src\asf\avr32\" />
     <Folder Include="src\asf\avr32\drivers\" />
