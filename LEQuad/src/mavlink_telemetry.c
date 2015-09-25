@@ -67,6 +67,7 @@
 #include "simulation_telemetry.h"
 #include "scheduler_telemetry.h"
 #include "sonar_telemetry.h"
+#include "servos_mix_wing_telemetry.h"
 
 central_data_t *central_data;
 
@@ -154,6 +155,9 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 	init_success &= fat_fs_mounting_telemetry_init(	&central_data->fat_fs_mounting,
 	&central_data->mavlink_communication.message_handler);
 	
+	init_success &= servo_mix_wing_telemetry_init(	&central_data->servo_mix,
+	&central_data->mavlink_communication.message_handler);
+	
 	return init_success;
 }
 
@@ -168,7 +172,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	
 	//stabiliser_t* rate_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
 	//stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
-	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.velocity_stabiliser;
+	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser;
 	//stabiliser_t* position_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.position_stabiliser;
 	
 	// System ID
@@ -341,6 +345,11 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters,(int32_t*)&central_data->fat_fs_mounting.log_data, "Log_continue");
 	
+	
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_roll		, "trim_roll"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_pitch		, "trim_pitch"     );
+	
+	
 	return init_success;
 }
 
@@ -357,7 +366,7 @@ bool mavlink_telemetry_init(void)
 	
 	mavlink_communication_t* mavlink_communication = &central_data->mavlink_communication;
 	
-	stabiliser_t* stabiliser_show = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
+	stabiliser_t* stabiliser_show = &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser;
 
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_heartbeat,								&central_data->state, 					MAVLINK_MSG_ID_HEARTBEAT			);// ID 0
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,	 RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_status,									&central_data->state,					MAVLINK_MSG_ID_SYS_STATUS			);// ID 1
