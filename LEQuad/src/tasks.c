@@ -96,7 +96,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 	{
 		if ( mode.AUTO == AUTO_ON )
 		{
-			central_data->controls = central_data->controls_nav;
+			/*central_data->controls = central_data->controls_nav;
 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
 			
 			// if no waypoints are set, we do position hold therefore the yaw mode is absolute
@@ -113,11 +113,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-			}
+			}*/
 		}
 		else if ( mode.GUIDED == GUIDED_ON )
 		{
-			central_data->controls = central_data->controls_nav;
+			/*central_data->controls = central_data->controls_nav;
 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
 			
 			if ((central_data->state.mav_state == MAV_STATE_CRITICAL) && (central_data->navigation.critical_behavior == FLY_TO_HOME_WP))
@@ -132,11 +132,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-			}
+			}*/
 		}
 		else if ( mode.STABILISE == STABILISE_ON )
 		{
-			if (central_data->state.remote_active == 1)
+			/*if (central_data->state.remote_active == 1)
 			{
 				remote_get_velocity_vector_from_remote(&central_data->remote, &central_data->controls);
 			}
@@ -151,11 +151,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-			}		
+			}	*/	
 		}
-		else if ( mode.MANUAL == MANUAL_ON )
+		else if ( mode.MANUAL == MANUAL_ON )// Complete manual mode
 		{
-			if (central_data->state.remote_active == 1)
+			/*if (central_data->state.remote_active == 1)
 			{
 				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
 			}
@@ -167,7 +167,20 @@ task_return_t tasks_run_stabilisation(void* arg)
 			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
 			central_data->controls.yaw_mode=YAW_RELATIVE;
 		
-			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);		
+			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);*/
+			
+			// Get command from remote/joystick
+			if (central_data->state.remote_active == 1)
+			{
+				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+			}
+			else
+			{
+				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
+			}
+			
+			// Directly apply them to the mixer, no stabilisation
+			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
 		}
 		else
 		{
@@ -194,7 +207,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 task_return_t tasks_run_stabilisation_quaternion(void* arg);
 task_return_t tasks_run_stabilisation_quaternion(void* arg)
 {
-	tasks_run_imu_update(0);
+	/*tasks_run_imu_update(0);
 	
 	mav_mode_t mode = central_data->state.mav_mode;
 
@@ -220,7 +233,7 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 	if ( mode.ARMED == ARMED_ON && mode.HIL == HIL_OFF )
 	{
 		pwm_servos_write_to_hardware( &central_data->servos );
-	}
+	}*/
 	
 	return TASK_RUN_SUCCESS;
 } 
@@ -291,7 +304,7 @@ bool tasks_create_tasks()
 	
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
-	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
+	//init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
 	
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 

@@ -57,6 +57,8 @@
 #include "mavlink_communication_default_config.h"
 #include "attitude_controller_p2_default_config.h"
 #include "servos_mix_quadcopter_diag_default_config.h"
+#include "servos_mix_wing_default_config.h"
+#include "stabilisation_wing_default_config.h"
 
 static central_data_t central_data;
 
@@ -66,7 +68,7 @@ bool central_data_init()
 	
 	// Init servos
 	//servo_pwm_init(central_data.servos);
-	init_success &= servos_init( &central_data.servos, &servos_default_config);
+	init_success &= servos_init( &central_data.servos, &servos_default_config_wing);
 	servos_set_value_failsafe( &central_data.servos );
 	pwm_servos_write_to_hardware( &central_data.servos );
 
@@ -171,13 +173,14 @@ bool central_data_init()
 
 	
 	// Init stabilizers
-	init_success &= stabilisation_copter_init(	&central_data.stabilisation_copter,
-												&stabilisation_copter_default_config,
-												&central_data.controls,
-												&central_data.imu,
-												&central_data.ahrs,
-												&central_data.position_estimation,
-												&central_data.servos);
+	init_success &= stabilisation_wing_init(&central_data.stabilisation_wing,
+											&stabilisation_wing_default_config,
+											&central_data.controls,
+											&central_data.imu,
+											&central_data.ahrs,
+											&central_data.position_estimation,
+											&central_data.servos,
+											&central_data.servo_mix);
 	
 	time_keeper_delay_ms(100);
 
@@ -213,7 +216,7 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 	
 	// Init sonar
-	init_success &= sonar_i2cxl_init(&central_data.sonar_i2cxl);
+	//init_success &= sonar_i2cxl_init(&central_data.sonar_i2cxl);
 
 	// Init P^2 attitude controller
 	attitude_controller_p2_init( 	&central_data.attitude_controller,
@@ -223,11 +226,11 @@ bool central_data_init()
 									&central_data.ahrs );
 
 	// Init servo mixing
-	init_success &= servo_mix_quadcotper_diag_init( &central_data.servo_mix, 
-													&servo_mix_quadcopter_diag_default_config, 
-													&central_data.command.torque, 
-													&central_data.command.thrust, 
-													&central_data.servos);
+	init_success &= servo_mix_wing_init(&central_data.servo_mix,
+										&servo_mix_wing_default_config,
+										&central_data.stabilisation_wing.stabiliser_stack.rate_stabiliser.output,
+										&central_data.servos,
+										&central_data.remote);
 
 	// Init remote
 	init_success &= remote_init( 	&central_data.remote, 
