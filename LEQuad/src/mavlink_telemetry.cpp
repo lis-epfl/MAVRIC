@@ -63,7 +63,8 @@
 #include "simulation_telemetry.hpp"
 #include "scheduler_telemetry.hpp"
 #include "sonar_telemetry.hpp"
- 
+#include "fat_fs_mounting_telemetry.hpp"
+
 extern "C"
 {
 	#include "scheduler.h"
@@ -105,9 +106,9 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging,
 	// Add your logging parameters here, name length max = MAVLINK_MSG_PARAM_SET_FIELD_PARAM_ID_LEN = 16
 	// Supported type: all numeric types included in mavlink_message_type_t (i.e. all except MAVLINK_TYPE_CHAR)
 	
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x");
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y");
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z");
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x", 4);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y", 4);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z", 4);
 	
 	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 7);
 	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 7);
@@ -150,6 +151,9 @@ bool mavlink_telemetry_init_communication_module(Central_data* central_data)
 	&central_data->mavlink_communication.message_handler);
 	
 	init_success &= position_estimation_telemetry_init(	&central_data->position_estimation,
+	&central_data->mavlink_communication.message_handler);
+	
+	init_success &= fat_fs_mounting_telemetry_init(	&central_data->fat_fs_mounting,
 	&central_data->mavlink_communication.message_handler);
 	
 	return init_success;
