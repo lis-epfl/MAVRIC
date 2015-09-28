@@ -73,24 +73,6 @@ Central_data::Central_data():
 	// New board initialisation
 	board.init();
 
-	// while(1)
-	// {
-	// 	print_util_dbg_print("Init\r\n");
-	// 	board.uart0.init();
-	// 	print_util_dbg_print("Flush\r\n");
-	// 	board.uart0.flush();
-	// 	print_util_dbg_print("Put\r\n");
-	// 	board.uart0.put(64);
-	// }
-
-	const char* msg = "Hello";
-	print_util_dbg_print("[UART0] WRITING...\r\n");
-	time_keeper_delay_ms(1000);
-	board.uart0.write((uint8_t*)msg, sizeof(msg));
-	time_keeper_delay_ms(1000);
-
-	// board.uart0.flush();
-
 	// Init servos
 	init_success &= servos_init( &servos, servos_default_config());
 	servos_set_value_failsafe( &servos );
