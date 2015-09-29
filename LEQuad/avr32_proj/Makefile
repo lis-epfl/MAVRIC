@@ -11,10 +11,10 @@ PROJ_NAME=LEQuad
 # PROJECT FOLDER
 # ------------------------------------------------------------------------------
 # Project source folder
-MAVRIC_SRC=../src/
+MAVRIC_SRC=../src
 
 # Include paths for project folder
-SRCS_INC += -I${MAVRIC_SRC}
+SRCS_INC += -I${MAVRIC_SRC}/
 SRCS_INC += -I${MAVRIC_SRC}/config/
 SRCS_INC += -I${MAVRIC_SRC}/asf
 SRCS_INC += -I${MAVRIC_SRC}/asf/avr32
@@ -172,7 +172,7 @@ SRCS += asf/common/utils/stdio/stdio_usb/stdio_usb.c
 # MAVRIC LIBRARY
 # ------------------------------------------------------------------------------
 # MAVRIC_Library code directory
-MAVRIC_LIB=../../MAVRIC_Library/
+MAVRIC_LIB=../../MAVRIC_Library
 
 # Include folders for Library
 LIB_INC += -I$(MAVRIC_LIB)/
@@ -310,6 +310,7 @@ ASFLAGS = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax
 ASFLAGS += -I.
 ASFLAGS += ${LIB_INC}
 ASFLAGS += ${SRCS_INC}
+ASFLAGS += -MD -MP
 
 # ------------------------------------------------------------------------------
 # C COMPILER OPTIONS
@@ -318,7 +319,7 @@ CC = avr32-gcc
 
 CFLAGS  = -O3 -mhard-float -fdata-sections -muse-rodata-section -g2 -pg -p -Wall 
 CFLAGS += -mpart=uc3c1512c -c -std=gnu99 -Wstrict-prototypes -Wmissing-prototypes 
-CFLAGS += -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF
+CFLAGS += -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP
 CFLAGS += ${PREPROC_OPT}
 
 # Include files from MAVRIC library and source folder
@@ -333,7 +334,7 @@ CFLAGS += ${SRCS_INC}
 CXX = avr32-g++
 
 CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
-CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MD -MP -MF
+CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MD -MP
 # CXXFLAGS += -D_DEFAULT_SOURCE 
 CXXFLAGS += ${PREPROC_OPT}
 
@@ -374,6 +375,12 @@ BUILD_DIR = build
 OBJS += $(addprefix ${BUILD_DIR}/, $(addsuffix .o, $(basename $(LIB_SRCS))))
 OBJS += $(addprefix ${BUILD_DIR}/, $(addsuffix .o, $(basename $(SRCS))))
 
+
+# ------------------------------------------------------------------------------
+# DEPENDENCY FILES (*.d)
+# ------------------------------------------------------------------------------
+DEPS += $(addsuffix .d, $(basename $(OBJS)))	# create list of dependency files
+-include $(DEPS)								# include existing dependency files
 
 # ------------------------------------------------------------------------------
 # COMMANDS FOR FANCY OUTPUT
@@ -449,5 +456,7 @@ ${BUILD_DIR}/%.o: ${MAVRIC_SRC}/%.cpp
 
 .PHONY: clean
 clean:
-	@rm -f $(OBJS) $(PROJ_NAME).elf $(PROJ_NAME).hex $(PROJ_NAME).bin
+	@rm -f $(OBJS) $(PROJ_NAME).elf $(PROJ_NAME).hex $(PROJ_NAME).bin $(DEPS)
 	@$(PRINT_OK)
+
+.DEFAULT_GOAL := all
