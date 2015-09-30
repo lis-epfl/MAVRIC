@@ -310,7 +310,7 @@ ASFLAGS = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax
 ASFLAGS += -I.
 ASFLAGS += ${LIB_INC}
 ASFLAGS += ${SRCS_INC}
-ASFLAGS += -MD -MP
+ASFLAGS += -MMD -MP
 
 # ------------------------------------------------------------------------------
 # C COMPILER OPTIONS
@@ -319,7 +319,7 @@ CC = avr32-gcc
 
 CFLAGS  = -O3 -mhard-float -fdata-sections -muse-rodata-section -g2 -pg -p -Wall 
 CFLAGS += -mpart=uc3c1512c -c -std=gnu99 -Wstrict-prototypes -Wmissing-prototypes 
-CFLAGS += -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP
+CFLAGS += -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MMD -MP
 CFLAGS += ${PREPROC_OPT}
 
 # Include files from MAVRIC library and source folder
@@ -334,7 +334,7 @@ CFLAGS += ${SRCS_INC}
 CXX = avr32-g++
 
 CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
-CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MD -MP
+CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MMD -MP
 # CXXFLAGS += -D_DEFAULT_SOURCE 
 CXXFLAGS += ${PREPROC_OPT}
 
