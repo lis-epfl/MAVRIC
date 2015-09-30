@@ -76,6 +76,10 @@
 #define M_WING_RIGHT 1		///< Define the index for the control
 #define M_WING_LEFT 2		///< Define the index for the control
 
+#define M_COPTER_AIRCRAFT	0					///< Define flag for a copter
+#define M_WING_AIRCRAFT		1					///< Define flag for a wing
+#define M_AIRCRAFT_TYPE		M_WING_AIRCRAFT		///< Define the current aircraft type
+
 ///< define if servos 7 and 8 are used
 #define USE_SERVOS_7_8 false
 
