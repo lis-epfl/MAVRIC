@@ -1,6 +1,7 @@
 #include "serial_udp.hpp"
 #include "mavlink_communication.hpp"
 #include "time_keeper.h"
+#include "central_data_emu.hpp"
 
 int main()
 {

@@ -11,14 +11,14 @@ PROJ_NAME=LEQuad
 # PROJECT FOLDER
 # ------------------------------------------------------------------------------
 # Project source folder
-MAVRIC_SRC = ./
+MAVRIC_SRC = ../src/
 
 # Include paths for project folder
 SRCS_INC += -I${MAVRIC_SRC}
 
 # Sources files for project folder (*.c and *.cpp)
-SRCS += main.cpp
-# SRCS += central_data.cpp
+SRCS += main_emu.cpp
+SRCS += central_data_emu.cpp
 # SRCS += boardsupport.cpp
 # SRCS += mavlink_telemetry.cpp
 # SRCS += tasks.cpp
@@ -125,11 +125,11 @@ LIB_SRCS += communication/mavlink_stream.cpp
 # LIB_SRCS += communication/state_machine.c
 # LIB_SRCS += communication/state_telemetry.c
 
-# LIB_SRCS += libs/fat_fs/diskio.c  
-# LIB_SRCS += libs/fat_fs/ff.c  
-# LIB_SRCS += libs/fat_fs/option/ccsbcs.c
-# LIB_SRCS += libs/fat_fs/option/syscall.c
-# LIB_SRCS += libs/fat_fs/option/unicode.c
+LIB_SRCS += libs/fat_fs/diskio.c  
+LIB_SRCS += libs/fat_fs/ff.c  
+LIB_SRCS += libs/fat_fs/option/ccsbcs.c
+LIB_SRCS += libs/fat_fs/option/syscall.c
+LIB_SRCS += libs/fat_fs/option/unicode.c
 
 LIB_SRCS += hal/dummy/serial_dummy.cpp
 LIB_SRCS += hal/linux/udp_client_server.cpp
