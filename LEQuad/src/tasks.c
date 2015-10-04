@@ -94,81 +94,8 @@ task_return_t tasks_run_stabilisation(void* arg)
 
 	if( mode.ARMED == ARMED_ON )
 	{
-		if ( mode.AUTO == AUTO_ON )
+		if ( mode.AUTO == AUTO_ON )							// Complete manual mode (in case of bad mode selection)
 		{
-			/*central_data->controls = central_data->controls_nav;
-			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
-			
-			// if no waypoints are set, we do position hold therefore the yaw mode is absolute
-			if (((central_data->state.nav_plan_active&&(!central_data->navigation.auto_takeoff)&&(!central_data->navigation.auto_landing)&&(!central_data->navigation.stop_nav)))||((central_data->state.mav_state == MAV_STATE_CRITICAL)&&(central_data->navigation.critical_behavior == FLY_TO_HOME_WP)))
-			//if (((central_data->state.nav_plan_active&&(!central_data->navigation.auto_takeoff)&&(!central_data->navigation.auto_landing)))||((central_data->state.mav_state == MAV_STATE_CRITICAL)&&(central_data->navigation.critical_behavior == FLY_TO_HOME_WP)))
-			{
-				central_data->controls.yaw_mode = YAW_RELATIVE;
-			}
-			else
-			{
-				central_data->controls.yaw_mode = YAW_ABSOLUTE;
-			}
-		
-			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
-			{
-				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-			}*/
-		}
-		else if ( mode.GUIDED == GUIDED_ON )
-		{
-			/*central_data->controls = central_data->controls_nav;
-			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
-			
-			if ((central_data->state.mav_state == MAV_STATE_CRITICAL) && (central_data->navigation.critical_behavior == FLY_TO_HOME_WP))
-			{
-				central_data->controls.yaw_mode = YAW_RELATIVE;
-			}
-			else
-			{
-				central_data->controls.yaw_mode = YAW_ABSOLUTE;
-			}
-			
-			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
-			{
-				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-			}*/
-		}
-		else if ( mode.STABILISE == STABILISE_ON )
-		{
-			/*if (central_data->state.remote_active == 1)
-			{
-				remote_get_velocity_vector_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
-			
-			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
-			central_data->controls.yaw_mode = YAW_RELATIVE;
-			
-			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
-			{
-				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-			}	*/	
-		}
-		else if ( mode.MANUAL == MANUAL_ON )// Complete manual mode
-		{
-			/*if (central_data->state.remote_active == 1)
-			{
-				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
-			
-			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
-			central_data->controls.yaw_mode=YAW_RELATIVE;
-		
-			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);*/
-			
 			// Get command from remote/joystick
 			if (central_data->state.remote_active == 1)
 			{
@@ -177,6 +104,86 @@ task_return_t tasks_run_stabilisation(void* arg)
 			else
 			{
 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
+			}
+			
+			// Directly apply them to the mixer, no stabilisation
+			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
+		}
+		else if ( mode.GUIDED == GUIDED_ON )				// Complete manual mode (in case of bad mode selection)
+		{
+			// Get command from remote/joystick
+			if (central_data->state.remote_active == 1)
+			{
+				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+			}
+			else
+			{
+				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
+			}
+			
+			// Directly apply them to the mixer, no stabilisation
+			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
+		}
+		else if ( mode.STABILISE == STABILISE_ON )		// Rate mode
+		{
+			if (central_data->state.remote_active == 1)
+			{
+				remote_get_rate_command_from_remote(&central_data->remote, &central_data->controls);
+			}
+			else
+			{
+				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
+			}
+			
+			// Apply step in the reference, overwrite the remote input
+			if(central_data->stabilisation_wing.tuning != 0 && central_data->stabilisation_wing.tuning_steps != 0)
+			{
+				if(central_data->stabilisation_wing.tuning_axis == PITCH)
+				{
+					if(central_data->stabilisation_wing.controls->rpy[PITCH] >= 0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_up;
+					}
+					else if(central_data->stabilisation_wing.controls->rpy[PITCH] <= -0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
+					}
+					else
+					{
+						central_data->stabilisation_wing.controls->rpy[PITCH] = 0.0f;
+					}
+				}
+				else if(central_data->stabilisation_wing.tuning_axis == ROLL)
+				{
+					if(central_data->stabilisation_wing.controls->rpy[ROLL] >= 0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_up;
+					}
+					else if(central_data->stabilisation_wing.controls->rpy[ROLL] <= -0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_down;
+					}
+					else
+					{
+						central_data->stabilisation_wing.controls->rpy[ROLL] = 0.0f;
+					}
+				}
+			}
+			
+			central_data->controls.control_mode = RATE_COMMAND_MODE;
+		
+			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+		}
+		else if ( mode.MANUAL == MANUAL_ON )			// Complete manual mode
+		{
+			// Get command from remote/joystick
+			if (central_data->state.remote_active == 1)
+			{
+				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+			}
+			else
+			{
+				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
 			}
 			
 			// Directly apply them to the mixer, no stabilisation
@@ -300,7 +307,7 @@ bool tasks_create_tasks()
 	init_success &= scheduler_add_task(scheduler, 300000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
 	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&waypoint_handler_control_time_out_waypoint_msg  , (task_argument_t)&central_data->waypoint_handler 		, 8);
 	
-	init_success &= scheduler_add_task(scheduler, 100000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
+	init_success &= scheduler_add_task(scheduler, 25000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
 	
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
