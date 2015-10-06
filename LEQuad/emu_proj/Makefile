@@ -17,8 +17,8 @@ MAVRIC_SRC = ../src/
 SRCS_INC += -I${MAVRIC_SRC}
 
 # Sources files for project folder (*.c and *.cpp)
-SRCS += main_emu.cpp
-SRCS += central_data_emu.cpp
+# SRCS += main_emu.cpp
+# SRCS += central_data_emu.cpp
 # SRCS += boardsupport.cpp
 # SRCS += mavlink_telemetry.cpp
 # SRCS += tasks.cpp
