@@ -142,6 +142,11 @@ bool central_data_init()
 	
 	time_keeper_delay_ms(100);
 
+	// Init launch_detection
+	init_success &= launch_detection_init(&central_data.ld);
+
+	time_keeper_delay_ms(100);
+
 	// Init navigation
 	init_success &= navigation_init(&central_data.navigation,
 									&navigation_default_config,

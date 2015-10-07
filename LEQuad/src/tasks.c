@@ -52,6 +52,8 @@
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
 //#include "data_logging.h"
+#include "launch_detection.h"
+#include "piezo_speaker.h"
 
 #include "pwm_servos.h"
 
@@ -226,6 +228,19 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 } 
 
 
+task_return_t tasks_run_launch_detection_update(void* arg);
+task_return_t tasks_run_launch_detection_update(void* arg)
+{
+	launch_detection_t * ld = (launch_detection_t *)arg;
+	task_return_t res = launch_detection_update(ld, *(&central_data->imu.scaled_accelero.data));
+
+	if (ld->status == LAUNCHING)
+	{
+		piezo_speaker_quick_startup();
+	}
+
+	return res;
+}
 
 task_return_t tasks_run_gps_update(void* arg) 
 {
@@ -293,6 +308,8 @@ bool tasks_create_tasks()
 
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
 	
+	init_success &= scheduler_add_task(scheduler, 4000,		RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL	, (task_function_t)&tasks_run_launch_detection_update				, (task_argument_t)&central_data->ld					, 13);
+
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 
 	scheduler_sort_tasks(scheduler);
