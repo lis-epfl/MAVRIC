@@ -104,22 +104,26 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// Add your logging parameters here, name length max = MAVLINK_MSG_PARAM_SET_FIELD_PARAM_ID_LEN = 16
 	// Supported type: all numeric types included in mavlink_message_type_t (i.e. all except MAVLINK_TYPE_CHAR)
 	
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x", 4);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y", 4);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z", 4);
 	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 7);
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 7);
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude", 3);
+	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 7);
+	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 7);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude", 3);
 	
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x", 3);
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x", 3);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
 	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
+	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
 	
+	// Launch detection logging scheme
+	init_success &= data_logging_add_parameter_int16(data_logging, (int16_t *)(&central_data->ld.status), "launch_status");
+	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->ld.sma->current_avg, "sma");
+
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
 	
@@ -324,6 +328,10 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_pos_gps[2]                            , "Pos_kp_pos2"      );
 	
 
+	//Launch detector
+	// init_success &= onboard_parameters_add_parameter_int32	( onboard_parameters, (int32_t*) &central_data->ld.status 				, "Launch_Status"	);
+	// init_success &= onboard_parameters_add_parameter_int32	( onboard_parameters, (int32_t*) &central_data->ld.sma->current_avg		, "SMA_acc"			);
+
 
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.dist2vel_gain								, "vel_dist2Vel"     );
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.cruise_speed									, "vel_cruiseSpeed"  );
@@ -386,6 +394,8 @@ bool mavlink_telemetry_init(void)
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&acoustic_telemetry_send,										&central_data->audio_data, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
 	
+	// TODO : Create Telemetry functions for launch_status and sma_acc
+
 	scheduler_sort_tasks(&central_data->mavlink_communication.scheduler);
 	
 	print_util_dbg_print("MAVlink telemetry initialiased\r\n");
