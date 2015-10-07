@@ -213,7 +213,7 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 	
 	// Init sonar
-	init_success &= sonar_i2cxl_init(&central_data.sonar_i2cxl);
+	//init_success &= sonar_i2cxl_init(&central_data.sonar_i2cxl);
 
 	// Init P^2 attitude controller
 	attitude_controller_p2_init( 	&central_data.attitude_controller,
