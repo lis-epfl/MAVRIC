@@ -68,6 +68,11 @@ bool central_data_init()
 	//servo_pwm_init(central_data.servos);
 	init_success &= servos_init( &central_data.servos, &servos_default_config);
 	servos_set_value_failsafe( &central_data.servos );
+
+	/* BE CAREFUL! Uncomment this line ONLY with propellers off!
+	 * this line calibrates ESCs (speed controllers) */
+	//pwm_servos_calibrate_esc(&central_data.servos);
+
 	pwm_servos_write_to_hardware( &central_data.servos );
 
 	time_keeper_delay_ms(100);	
