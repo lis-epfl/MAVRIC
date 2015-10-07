@@ -231,12 +231,18 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 task_return_t tasks_run_launch_detection_update(void* arg);
 task_return_t tasks_run_launch_detection_update(void* arg)
 {
-	launch_detection_t * ld = (launch_detection_t *)arg;
-	task_return_t res = launch_detection_update(ld, *(&central_data->imu.scaled_accelero.data));
+	task_return_t res = launch_detection_update(&central_data->ld, *(&central_data->imu.scaled_accelero.data));
 
-	if (ld->status == LAUNCHING)
+	if (*(&central_data->ld.status) == LAUNCHING)
 	{
 		piezo_speaker_quick_startup();
+	}
+
+	if (&central_data->ld.enabled == 0)
+	{
+		scheduler_t* scheduler = &central_data->scheduler;
+		task_entry_t* task = scheduler_get_task_by_id(scheduler, 13); // Warning: id must correspond to the previously used id
+		scheduler_change_run_mode(task, RUN_NEVER);
 	}
 
 	return res;
