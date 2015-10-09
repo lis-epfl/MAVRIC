@@ -49,6 +49,7 @@
 #include "simulation_default_config.hpp"
 #include "remote_default_config.hpp"
 #include "state_default_config.hpp"
+#include "manual_control_default_config.hpp"
 
 extern "C" 
 {
@@ -112,9 +113,8 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	init_success &= state_machine_init( &state_machine,
 										&state,
 										&sim_model,
-										&remote,
-										&joystick_parsing,
-										&gps);
+										&gps,
+										&manual_control);
 	time_keeper_delay_ms(100);
 
 	// Init imu
@@ -158,8 +158,7 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 									&waypoint_handler,
 									&position_estimation,
 									&state,
-									&joystick_parsing,
-									&remote,
+									&manual_control,
 									&mavlink_communication);/*,
 									&sonar_i2cxl);*/
 	
@@ -218,10 +217,6 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	
 	time_keeper_delay_ms(100);
 	
-	init_success &= joystick_parsing_init(	&joystick_parsing,
-											&state);
-	time_keeper_delay_ms(100);
-	
 	// Init sonar
 	// init_success &= sonar_i2cxl_init(&sonar_i2cxl);
 
@@ -233,11 +228,11 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 													&command.thrust,
 													&servos);
 
-	// Init remote
-	init_success &= remote_init( 	&remote,
-									&satellite,
-									remote_default_config());
-
+	// Init manual control
+	init_success &= manual_control_init(&manual_control,
+										&satellite,
+										manual_control_default_config(),
+										remote_default_config());
 
 	//Init data logging
 	//TODO: not working here

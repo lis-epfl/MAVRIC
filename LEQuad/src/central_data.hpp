@@ -56,12 +56,11 @@
 #include "acoustic.hpp" 
 #include "qfilter.hpp"
 #include "imu.hpp"
-#include "remote.hpp"
 #include "mavlink_stream.hpp"
 #include "simulation.hpp"
 #include "position_estimation.hpp"
 #include "state.hpp"
-#include "joystick_parsing.hpp"
+#include "manual_control.hpp"
 #include "gps_ublox.hpp"
 
 extern "C" 
@@ -129,8 +128,6 @@ public:
 	command_t command;
 	servo_mix_quadcotper_diag_t servo_mix;
 	servos_t servos;
-	remote_t remote;
-	remote_mode_t remote_mode;
 
 	analog_monitor_t analog_monitor;							///< The analog to digital converter structure
 
@@ -140,7 +137,7 @@ public:
 	control_command_t controls_nav;								///< The control nav structure used for velocity modes
 	control_command_t controls_joystick;						///< The control structure for the joystick
 
-	joystick_parsing_t joystick_parsing;						///< The joystick parsing structure
+	manual_control_t manual_control;							///< The joystick parsing structure
 	
 	stabilisation_copter_t stabilisation_copter;					///< The stabilisation structure for copter
 

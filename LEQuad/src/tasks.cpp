@@ -133,14 +133,7 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 		}
 		else if ( mode.STABILISE == STABILISE_ON )
 		{
-			if (central_data->state.remote_active == 1)
-			{
-				remote_get_velocity_vector_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
+			manual_control_get_velocity_vector(&central_data->manual_control, &central_data->controls);
 			
 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
 			central_data->controls.yaw_mode = YAW_RELATIVE;
@@ -153,14 +146,7 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 		}
 		else if ( mode.MANUAL == MANUAL_ON )
 		{
-			if (central_data->state.remote_active == 1)
-			{
-				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
+			manual_control_get_control_command(&central_data->manual_control, &central_data->controls);
 			
 			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
 			central_data->controls.yaw_mode=YAW_RELATIVE;
@@ -199,7 +185,7 @@ task_return_t tasks_run_stabilisation_quaternion(Central_data* central_data)
 
 	if( mode.MANUAL == MANUAL_ON && mode.STABILISE == STABILISE_ON )
 	{
-		remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+		manual_control_get_control_command(&central_data->manual_control, &central_data->controls);
 		
 		central_data->command.attitude.rpy[0] 	= 2 * central_data->controls.rpy[0];
 		central_data->command.attitude.rpy[1] 	= 2 * central_data->controls.rpy[1];
@@ -286,7 +272,7 @@ bool tasks_create_tasks(Central_data* central_data)
 	
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 	
-	init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH , (task_function_t)&remote_update 									, (task_argument_t)&central_data->remote				, 12);
+	init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH , (task_function_t)&remote_update 									, (task_argument_t)&central_data->manual_control.remote	, 12);
 
 	// init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar					, 12);
 	
