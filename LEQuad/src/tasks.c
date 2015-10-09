@@ -47,12 +47,10 @@
 #include "navigation.h"
 #include "led.h"
 #include "imu.h"
-#include "delay.h"
 #include "sonar_i2cxl.h"
 #include "analog_monitor.h"
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
-#include "stdio_usb.h"
 //#include "data_logging.h"
 
 #include "pwm_servos.h"
@@ -88,6 +86,20 @@ void tasks_run_imu_update(void* arg)
 	position_estimation_update(&central_data->position_estimation);
 }
 
+void tasks_mix_to_servos(void)
+{
+	// mix to servo outputs depending on configuration
+	if( central_data->stabilisation_copter.motor_layout == QUADCOPTER_MOTOR_LAYOUT_DIAG )
+	{
+		servos_mix_quadcopter_diag_update(&central_data->servo_mix);
+	}
+	// else if( stabilisation_copter->motor_layout == QUADCOPTER_MOTOR_LAYOUT_CROSS )
+	// {
+	// 	servos_mix_quadcopter_cross_update()
+
+	// }
+}
+
 task_return_t tasks_run_stabilisation(void* arg) 
 {
 	tasks_run_imu_update(0);
@@ -115,6 +127,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+				tasks_mix_to_servos();
 			}
 		}
 		else if ( mode.GUIDED == GUIDED_ON )
@@ -134,6 +147,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+				tasks_mix_to_servos();
 			}
 		}
 		else if ( mode.STABILISE == STABILISE_ON )
@@ -153,6 +167,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+				tasks_mix_to_servos();
 			}		
 		}
 		else if ( mode.MANUAL == MANUAL_ON )
@@ -169,7 +184,8 @@ task_return_t tasks_run_stabilisation(void* arg)
 			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
 			central_data->controls.yaw_mode=YAW_RELATIVE;
 		
-			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);		
+			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+			tasks_mix_to_servos();
 		}
 		else
 		{
