@@ -195,9 +195,7 @@ LIB_INC += -I$(MAVRIC_SRC)
 # Library source files (*.c and *.cpp)
 
 LIB_SRCS += boards/megafly_rev4.cpp
-
-LIB_SRCS += communication/acoustic.cpp                      
-LIB_SRCS += communication/acoustic_telemetry.cpp      
+     
 LIB_SRCS += communication/console.c                 
 LIB_SRCS += communication/data_logging.cpp            
 #LIB_SRCS += communication/data_logging_telemetry.cpp  
@@ -259,7 +257,6 @@ LIB_SRCS += hal/avr32/pwm_servos.c
 LIB_SRCS += hal/avr32/serial_avr32.cpp
 LIB_SRCS += hal/avr32/spi_avr32.cpp
 LIB_SRCS += hal/avr32/sd_spi.c
-LIB_SRCS += hal/avr32/spi_buffered.c
 LIB_SRCS += hal/avr32/time_keeper.c
 LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c

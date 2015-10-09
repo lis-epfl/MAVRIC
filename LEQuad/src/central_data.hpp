@@ -53,7 +53,6 @@
 #include "state_machine.hpp"
 #include "data_logging.hpp"
 #include "fat_fs_mounting.hpp"
-#include "acoustic.hpp" 
 #include "qfilter.hpp"
 #include "imu.hpp"
 #include "remote.hpp"
@@ -147,16 +146,12 @@ public:
 	stabilisation_copter_t stabilisation_copter;				///< The stabilisation structure for copter
 
 	gps_t gps;													///< The GPS structure
-	
-	audio_t audio_data;
-	
+		
 	simulation_model_t sim_model;								///< The simulation model structure
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
 	
 	// aliases
-	// byte_stream_t *telemetry_down_stream;						///< The pointer to the downcoming telemetry byte stream
-	// byte_stream_t *telemetry_up_stream;							///< The pointer to the upcoming telemetry byte stream
 	byte_stream_t *debug_out_stream;							///< The pointer to the outgoing debug byte stream
 	byte_stream_t *debug_in_stream;								///< The pointer to the incoming debug byte stream
 	
@@ -166,9 +161,7 @@ public:
 	
 	state_t state;												///< The structure with all state information
 	state_machine_t state_machine;								///< The structure for the state machine
-	
-	//Barometer pressure;											///< The pressure structure
-	
+		
 	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 	
 	sd_spi_t sd_spi;											///< The sd_SPI driver structure

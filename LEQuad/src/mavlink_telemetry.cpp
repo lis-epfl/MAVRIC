@@ -44,7 +44,6 @@
 #include "sonar_i2cxl.hpp"
 #include "onboard_parameters.hpp"
 #include "mavlink_waypoint_handler.hpp"
-#include "acoustic_telemetry.hpp"
 #include "hud_telemetry.hpp"
 #include "stabilisation_telemetry.hpp"
 #include "mavlink_stream.hpp"
