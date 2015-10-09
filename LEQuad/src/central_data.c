@@ -96,7 +96,8 @@ bool central_data_init()
 	init_success &= mavlink_communication_init(	&central_data.mavlink_communication, 
 												&mavlink_communication_config, 
 												central_data.telemetry_up_stream, 
-												central_data.telemetry_down_stream);
+												central_data.telemetry_down_stream,
+												&central_data.state);
 	
 	time_keeper_delay_ms(100); 
 
@@ -112,7 +113,8 @@ bool central_data_init()
 										&central_data.state,
 										&central_data.sim_model,
 										&central_data.remote,
-										&central_data.joystick_parsing);
+										&central_data.joystick_parsing,
+										&central_data.gps);
 	time_keeper_delay_ms(100);
 
 	// Init imu
