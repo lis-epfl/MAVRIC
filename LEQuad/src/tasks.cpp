@@ -71,9 +71,9 @@ void tasks_run_imu_update(Central_data* central_data)
 	} 
 	else 
 	{
-		central_data->board.lsm330dlc.update();
+		central_data->gyroaccelero.update();
 		
-		central_data->board.magnetometer.update();
+		central_data->magnetometer.update();
 	}
 	
 	imu_update(	&central_data->imu);
@@ -108,6 +108,7 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+				servos_mix_quadcopter_diag_update( &central_data->servo_mix );
 			}
 		}
 		else if ( mode.GUIDED == GUIDED_ON )
@@ -127,6 +128,7 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+				servos_mix_quadcopter_diag_update( &central_data->servo_mix );
 			}
 		}
 		else if ( mode.STABILISE == STABILISE_ON )
@@ -146,6 +148,7 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 			if (central_data->state.in_the_air || central_data->navigation.auto_takeoff)
 			{
 				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+				servos_mix_quadcopter_diag_update( &central_data->servo_mix );
 			}		
 		}
 		else if ( mode.MANUAL == MANUAL_ON )
@@ -162,7 +165,8 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
 			central_data->controls.yaw_mode=YAW_RELATIVE;
 		
-			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);		
+			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+			servos_mix_quadcopter_diag_update( &central_data->servo_mix );		
 		}
 		else
 		{
@@ -200,7 +204,6 @@ task_return_t tasks_run_stabilisation_quaternion(Central_data* central_data)
 		central_data->command.attitude.rpy[0] 	= 2 * central_data->controls.rpy[0];
 		central_data->command.attitude.rpy[1] 	= 2 * central_data->controls.rpy[1];
 		central_data->command.attitude.rpy[2] 	= 2 * central_data->controls.rpy[2];
-		central_data->command.attitude.mode 	= ATTITUDE_COMMAND_MODE_RPY;
 		central_data->command.thrust.thrust 	= central_data->controls.thrust;
 	
 		attitude_controller_p2_update( &central_data->attitude_controller );			
@@ -245,7 +248,7 @@ task_return_t tasks_run_barometer_update(Central_data* central_data)
 	} 
 	else
 	{
-		central_data->board.bmp085.update();
+		central_data->barometer.update();
 	}
 
 	return TASK_RUN_SUCCESS;

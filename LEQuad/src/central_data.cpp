@@ -62,16 +62,19 @@ extern "C"
 }
 
 
-Central_data::Central_data():
-	init_success(true),
-	board( Megafly_rev4( imu, megafly_rev4_default_config() ) ),
-	sonar( Sonar_i2cxl(board.i2c1) )
+Central_data::Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto):
+	imu(imu),
+	sonar( Sonar_i2cxl(i2c_sonar) ),
+	barometer(baro),
+	gyroaccelero(gyracc),
+	magnetometer(magneto)
 {	
-	// Legacy board initialisation (TODO: remove)
-	boardsupport_init(this);
+	;
+}
 
-	// New board initialisation
-	board.init();
+bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& satellite )
+{
+	bool init_success = true;
 
 	// Init servos
 	init_success &= servos_init( &servos, servos_default_config());
@@ -93,7 +96,7 @@ Central_data::Central_data():
 	mavlink_communication_config.mavlink_stream_config.sysid = MAVLINK_SYS_ID;
 	init_success &= mavlink_communication_init(	&mavlink_communication, 
 												mavlink_communication_config, 
-												&board.uart0,
+												&uart_mavlink,
 												&state );
 	
 	time_keeper_delay_ms(100); 
@@ -139,7 +142,7 @@ Central_data::Central_data():
 	init_success &= position_estimation_init(   	&position_estimation,
 													position_estimation_default_config(),
 													&state,
-													&board.bmp085,
+													&barometer,
 													&sonar.data,
 													&gps,
 													&ahrs,
@@ -183,7 +186,8 @@ Central_data::Central_data():
 												&controls,
 												&ahrs,
 												&position_estimation,
-												&servos);
+												&command.torque,
+												&command.thrust);
 	
 	time_keeper_delay_ms(100);
 
@@ -197,12 +201,12 @@ Central_data::Central_data():
 									&ahrs,
 									&imu,
 									&position_estimation,
-									&board.bmp085,
+									&barometer,
 									&gps,
 									&sonar.data,
 									&state,
-									&servos,
-									&state.nav_plan_active);
+									&state.nav_plan_active,
+									&servo_mix);
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
@@ -231,7 +235,7 @@ Central_data::Central_data():
 
 	// Init remote
 	init_success &= remote_init( 	&remote,
-									&board.spektrum_satellite,
+									&satellite,
 									remote_default_config());
 
 
@@ -242,4 +246,6 @@ Central_data::Central_data():
 														true,
 														&fat_fs_mounting,
 														mavlink_communication.mavlink_stream.sysid);
+
+	return init_success;
 }

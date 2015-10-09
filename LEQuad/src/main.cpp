@@ -52,13 +52,19 @@ extern "C"
 }
 
 
-void initialisation(Central_data& central_data) 
+void initialisation(Central_data& central_data, Megafly_rev4& board) 
 {	
 	bool init_success = true;
 	
-	// init_success &= boardsupport_init(&central_data);
-	// init_success &= central_data_init(&central_data);
-	
+	// Legacy board initialisation (TODO: remove)
+	init_success &= boardsupport_init(&central_data);
+
+	// New board initialisation
+	init_success &= board.init();
+
+	// Init central data
+	init_success &= central_data.init(board.uart0, board.bmp085, board.spektrum_satellite);
+
 	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
 
 	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data.mavlink_communication.onboard_parameters);
@@ -68,7 +74,7 @@ void initialisation(Central_data& central_data)
 		simulation_switch_from_reality_to_simulation(&central_data.sim_model);
 	}
 
-	init_success &= mavlink_telemetry_init(&central_data);
+	init_success &= mavlink_telemetry_init(&central_data, &board);
 
 	central_data.state.mav_state = MAV_STATE_STANDBY;	
 	
@@ -91,9 +97,15 @@ void initialisation(Central_data& central_data)
 
 int main (void)
 {
-	Central_data cd = Central_data();
+	imu_t imu;
+	Megafly_rev4 board 	= Megafly_rev4(imu);
+	Central_data cd 	= Central_data( imu, 
+										board.i2c1, 
+										board.bmp085,
+										board.lsm330dlc,
+										board.magnetometer);
 
-	initialisation(cd);
+	initialisation(cd, board);
 
 	while (1 == 1) 
 	{

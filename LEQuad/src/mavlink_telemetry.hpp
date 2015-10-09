@@ -52,7 +52,7 @@
  *
  * \return	The initialization status of the module, suceed == true
  */
-bool mavlink_telemetry_init(Central_data* central_data);
+bool mavlink_telemetry_init(Central_data* central_data, Megafly_rev4* board);
 
 /**
  * \brief   Add all onboard parameters to the parameter list

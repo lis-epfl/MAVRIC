@@ -103,23 +103,25 @@ public:
 	/**
 	 * @brief   Constructor
 	 */
-	Central_data();
+	Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto);
 
 	/**
 	 * @brief   Initialisation
 	 * @return [description]
 	 */
-	bool init(void);
+	bool init(Serial& uart_mavlink, Barometer& barometer, Satellite& satellite);
 
 	/**
 	 * Public members
 	 * 
 	 */	
-	bool 			init_success;
-	Megafly_rev4 	board;
+	// Megafly_rev4 	board;
+	imu_t& 			imu;				///< The IMU structure
 	Sonar_i2cxl 	sonar;
-
-
+	// Barometer& 		barometer;
+	Bmp085& 		barometer;			// TODO: use Barometer interface instead
+	Lsm330dlc& 		gyroaccelero;		// TODO: use gyro+accelero interface instead
+	Hmc5883l&		magnetometer;		// TODO: use magnetometer interface instead
 
 	scheduler_t	scheduler;
 	mavlink_communication_t mavlink_communication;
@@ -132,7 +134,6 @@ public:
 
 	analog_monitor_t analog_monitor;							///< The analog to digital converter structure
 
-	imu_t imu;													///< The IMU structure
 	qfilter_t attitude_filter;									///< The qfilter structure
 	ahrs_t ahrs;												///< The attitude estimation structure
 	control_command_t controls;									///< The control structure used for rate and attitude modes
@@ -173,16 +174,6 @@ public:
 	data_logging_t data_logging;								///< The log data structure	
 	fat_fs_mounting_t fat_fs_mounting; 							///< The Fat fs system file mounting structure
 };
-
-
-/**
- * \brief	Initialization of the central data structure
- *
- * \return	The initialization status, succeed == true, failure == false
- */
-// bool central_data_init(central_data_t* p_central_data);
-
-
 
 
 #endif /* CENTRAL_DATA_H_ */

@@ -186,8 +186,7 @@ LIB_INC += -I$(MAVRIC_LIB)/hal/dummy
 LIB_INC += -I$(MAVRIC_LIB)/hal
 LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/common
 LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric
-LIB_INC += -I$(MAVRIC_LIB)/libs/fats
-LIB_INC += -I$(MAVRIC_LIB)/libs
+LIB_INC += -I$(MAVRIC_LIB)/libs/FatFs/src
 LIB_INC += -I$(MAVRIC_LIB)/runtime
 LIB_INC += -I$(MAVRIC_LIB)/sensing
 LIB_INC += -I$(MAVRIC_LIB)/util
@@ -238,6 +237,8 @@ LIB_SRCS += drivers/battery.c
 LIB_SRCS += drivers/bmp085.cpp                   
 LIB_SRCS += drivers/bmp085_telemetry.cpp          
 LIB_SRCS += drivers/curvace.c                   
+# LIB_SRCS += drivers/curvace_telemetry.c                   
+LIB_SRCS += drivers/flow.c                  
 LIB_SRCS += drivers/gps_ublox.cpp                 
 LIB_SRCS += drivers/gps_ublox_telemetry.cpp       
 LIB_SRCS += drivers/hmc5883l.cpp             
@@ -251,6 +252,9 @@ LIB_SRCS += drivers/sonar_i2cxl.cpp
 LIB_SRCS += drivers/sonar_telemetry.cpp
 LIB_SRCS += drivers/spektrum_satellite.cpp
 LIB_SRCS += drivers/xbee.c
+
+LIB_SRCS += hal/common/fat_fs_mounting.cpp
+LIB_SRCS += hal/common/fat_fs_mounting_telemetry.cpp
  
 LIB_SRCS += hal/avr32/adc_int.c          
 LIB_SRCS += hal/avr32/analog_monitor.c            
@@ -259,8 +263,6 @@ LIB_SRCS += hal/avr32/dac_dma.c
 LIB_SRCS += hal/avr32/i2c_avr32.cpp            
 LIB_SRCS += hal/avr32/i2c_driver_int.c             
 LIB_SRCS += hal/avr32/gpio_avr32.cpp
-LIB_SRCS += hal/avr32/fat_fs_mounting.cpp
-LIB_SRCS += hal/avr32/fat_fs_mounting_telemetry.cpp
 LIB_SRCS += hal/avr32/led.c            
 LIB_SRCS += hal/avr32/piezo_speaker.c        
 LIB_SRCS += hal/avr32/pwm_servos.c
@@ -273,12 +275,17 @@ LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c
 
 LIB_SRCS += hal/dummy/i2c_dummy.cpp
+LIB_SRCS += hal/dummy/serial_dummy.cpp
+LIB_SRCS += hal/dummy/gpio_dummy.cpp
 
-LIB_SRCS += libs/fat_fs/diskio.c  
-LIB_SRCS += libs/fat_fs/ff.c  
-LIB_SRCS += libs/fat_fs/option/ccsbcs.c
-LIB_SRCS += libs/fat_fs/option/syscall.c
-LIB_SRCS += libs/fat_fs/option/unicode.c
+LIB_SRCS += hal/avr32/FatFs/atadrive.c
+LIB_SRCS += hal/avr32/FatFs/sdcard.c
+LIB_SRCS += hal/avr32/FatFs/usbdisk.c
+
+LIB_SRCS += libs/FatFs/src/ff.c  
+LIB_SRCS += libs/FatFs/src/diskio.c
+LIB_SRCS += libs/FatFs/src/option/syscall.c
+LIB_SRCS += libs/FatFs/src/option/unicode.c
 
 LIB_SRCS += runtime/scheduler.c  
 LIB_SRCS += runtime/scheduler_telemetry.cpp
