@@ -228,14 +228,26 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 													&command.thrust,
 													&servos);
 
+	time_keeper_delay_ms(100);
+
 	// Init manual control
 	init_success &= manual_control_init(&manual_control,
 										&satellite,
 										manual_control_default_config(),
 										remote_default_config());
 
+	time_keeper_delay_ms(100);
+
 	//Init data logging
 	//TODO: not working here
+
+	init_success &= fat_fs_mounting_init(	&fat_fs_mounting,
+											data_logging_default_config(),
+											&state);
+
+
+	time_keeper_delay_ms(100);
+
 	init_success &= data_logging_create_new_log_file(	&data_logging,
 														"Log_file",
 														true,
