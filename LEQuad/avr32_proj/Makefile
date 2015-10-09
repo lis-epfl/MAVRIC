@@ -200,7 +200,6 @@ LIB_SRCS += communication/acoustic.cpp
 LIB_SRCS += communication/acoustic_telemetry.cpp      
 LIB_SRCS += communication/console.c                 
 LIB_SRCS += communication/data_logging.cpp            
-#LIB_SRCS += communication/data_logging_telemetry.cpp  
 LIB_SRCS += communication/hud_telemetry.cpp           
 LIB_SRCS += communication/mavlink_communication.cpp     
 LIB_SRCS += communication/mavlink_message_handler.cpp   
