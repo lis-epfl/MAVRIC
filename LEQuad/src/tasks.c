@@ -56,6 +56,7 @@
 #include "pwm_servos.h"
 
 #include "remote.h"
+#include "manual_control.h"
 #include "attitude_controller_p2.h"
 
 central_data_t* central_data;
@@ -152,14 +153,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 		}
 		else if ( mode.STABILISE == STABILISE_ON )
 		{
-			if (central_data->state.remote_active == 1)
-			{
-				remote_get_velocity_vector_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
+			manual_control_get_velocity_vector(&central_data->manual_control,&central_data->controls);
 			
 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
 			central_data->controls.yaw_mode = YAW_RELATIVE;
@@ -172,14 +166,8 @@ task_return_t tasks_run_stabilisation(void* arg)
 		}
 		else if ( mode.MANUAL == MANUAL_ON )
 		{
-			if (central_data->state.remote_active == 1)
-			{
-				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
+			manual_control_get_control_command(&central_data->manual_control, &central_data->controls);
+
 			
 			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
 			central_data->controls.yaw_mode=YAW_RELATIVE;
@@ -218,12 +206,11 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 
 	if( mode.MANUAL == MANUAL_ON && mode.STABILISE == STABILISE_ON )
 	{
-		remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-		
+		manual_control_get_control_command(&central_data->manual_control, &central_data->controls);
+
 		central_data->command.attitude.rpy[0] 	= 2 * central_data->controls.rpy[0];
 		central_data->command.attitude.rpy[1] 	= 2 * central_data->controls.rpy[1];
 		central_data->command.attitude.rpy[2] 	= 2 * central_data->controls.rpy[2];
-		central_data->command.attitude.mode 	= ATTITUDE_COMMAND_MODE_RPY;
 		central_data->command.thrust.thrust 	= central_data->controls.thrust;
 	
 		attitude_controller_p2_update( &central_data->attitude_controller );			

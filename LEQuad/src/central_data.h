@@ -57,7 +57,6 @@ extern "C" {
 #include "ahrs.h"
 #include "stabilisation_copter.h"
 
-#include "remote.h"
 #include "pid_controller.h"
 #include "streams.h"
 #include "buffer.h"
@@ -89,7 +88,7 @@ extern "C" {
 #include "remote.h"
 
 #include "state_machine.h"
-#include "joystick_parsing.h"
+#include "manual_control.h"
 #include "data_logging.h"
 #include "fat_fs_mounting.h"
 
@@ -106,8 +105,6 @@ typedef struct  {
 	command_t command;
 	servo_mix_quadcotper_diag_t servo_mix;
 	servos_t servos;
-	remote_t remote;
-	remote_mode_t remote_mode;
 
 	analog_monitor_t analog_monitor;							///< The analog to digital converter structure
 
@@ -118,9 +115,9 @@ typedef struct  {
 	control_command_t controls_nav;								///< The control nav structure used for velocity modes
 	control_command_t controls_joystick;						///< The control structure for the joystick
 
-	joystick_parsing_t joystick_parsing;						///< The joystick parsing structure
+	manual_control_t manual_control;							///< The manual control structure
 	
-	stabilisation_copter_t stabilisation_copter;					///< The stabilisation structure for copter
+	stabilisation_copter_t stabilisation_copter;				///< The stabilisation structure for copter
 
 	gps_t gps;													///< The GPS structure
 	

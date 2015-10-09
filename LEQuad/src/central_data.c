@@ -57,6 +57,7 @@
 #include "mavlink_communication_default_config.h"
 #include "attitude_controller_p2_default_config.h"
 #include "servos_mix_quadcopter_diag_default_config.h"
+#include "manual_control_default_config.h"
 
 static central_data_t central_data;
 
@@ -108,9 +109,8 @@ bool central_data_init()
 	init_success &= state_machine_init( &central_data.state_machine,
 										&central_data.state,
 										&central_data.sim_model,
-										&central_data.remote,
-										&central_data.joystick_parsing,
-										&central_data.gps);
+										&central_data.gps,
+										&central_data.manual_control);
 	time_keeper_delay_ms(100);
 
 	// Init imu
@@ -148,17 +148,15 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	// Init navigation
-	init_success &= navigation_init(&central_data.navigation,
+	init_success &= navigation_init(&central_data.navigation, 
 									&navigation_default_config,
 									&central_data.controls_nav,
-									&central_data.ahrs.qe,
-									&central_data.waypoint_handler,
-									&central_data.position_estimation,
-									&central_data.state,
-									&central_data.joystick_parsing,
-									&central_data.remote,
-									&central_data.mavlink_communication);/*,
-									&central_data.sonar_i2cxl);*/
+									&central_data.ahrs.qe, 
+									&central_data.waypoint_handler, 
+									&central_data.position_estimation, 
+									&central_data.state, 
+									&central_data.manual_control,
+									&central_data.mavlink_communication);
 	
 	time_keeper_delay_ms(100);
 
@@ -214,8 +212,10 @@ bool central_data_init()
 	
 	time_keeper_delay_ms(100);
 	
-	init_success &= joystick_parsing_init(	&central_data.joystick_parsing,
-											&central_data.state);
+	init_success &= manual_control_init(&central_data.manual_control,
+										&manual_control_default_config,
+										&remote_default_config);
+	
 	time_keeper_delay_ms(100);
 	
 	// Init sonar
@@ -234,10 +234,6 @@ bool central_data_init()
 													&central_data.command.torque, 
 													&central_data.command.thrust, 
 													&central_data.servos);
-
-	// Init remote
-	init_success &= remote_init( 	&central_data.remote, 
-									&remote_default_config);
 
 	//Init data logging
 	//data_logging_conf_t data_logging_default_config =
