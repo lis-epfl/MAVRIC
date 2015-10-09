@@ -58,15 +58,11 @@ extern "C" {
 	#include "buffer.h"
 
 	#include "time_keeper.h"
-	#include "i2c_driver_int.h"
 	#include "print_util.h"
-	// #include "mavlink_stream.h"
-	//#include "simulation.h"
 	#include "analog_monitor.h"
 	#include "piezo_speaker.h"
 	#include "gpio.h"
 
-	// #include "xbee.h"
 	#include "console.h"
 	#include "stdio_usb.h"
 
