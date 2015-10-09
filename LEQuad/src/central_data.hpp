@@ -155,8 +155,8 @@ public:
 	position_estimation_t position_estimation;					///< The position estimaton structure
 	
 	// aliases
-	byte_stream_t *telemetry_down_stream;						///< The pointer to the downcoming telemetry byte stream
-	byte_stream_t *telemetry_up_stream;							///< The pointer to the upcoming telemetry byte stream
+	// byte_stream_t *telemetry_down_stream;						///< The pointer to the downcoming telemetry byte stream
+	// byte_stream_t *telemetry_up_stream;							///< The pointer to the upcoming telemetry byte stream
 	byte_stream_t *debug_out_stream;							///< The pointer to the outgoing debug byte stream
 	byte_stream_t *debug_in_stream;								///< The pointer to the incoming debug byte stream
 	

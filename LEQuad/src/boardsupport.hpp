@@ -66,7 +66,7 @@ extern "C" {
 	#include "piezo_speaker.h"
 	#include "gpio.h"
 
-	#include "xbee.h"
+	// #include "xbee.h"
 	#include "console.h"
 	#include "stdio_usb.h"
 
