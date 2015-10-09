@@ -63,6 +63,7 @@
 #include "state.hpp"
 #include "joystick_parsing.hpp"
 #include "gps_ublox.hpp"
+#include "file.hpp"
 
 extern "C" 
 {
@@ -103,7 +104,7 @@ public:
 	/**
 	 * @brief   Constructor
 	 */
-	Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto);
+	Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file);
 
 	/**
 	 * @brief   Initialisation
@@ -122,6 +123,7 @@ public:
 	Bmp085& 		barometer;			// TODO: use Barometer interface instead
 	Lsm330dlc& 		gyroaccelero;		// TODO: use gyro+accelero interface instead
 	Hmc5883l&		magnetometer;		// TODO: use magnetometer interface instead
+	File& 			file_flash;			
 
 	scheduler_t	scheduler;
 	mavlink_communication_t mavlink_communication;
@@ -142,7 +144,7 @@ public:
 
 	joystick_parsing_t joystick_parsing;						///< The joystick parsing structure
 	
-	stabilisation_copter_t stabilisation_copter;					///< The stabilisation structure for copter
+	stabilisation_copter_t stabilisation_copter;				///< The stabilisation structure for copter
 
 	gps_t gps;													///< The GPS structure
 	

@@ -62,12 +62,13 @@ extern "C"
 }
 
 
-Central_data::Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto):
+Central_data::Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file):
 	imu(imu),
 	sonar( Sonar_i2cxl(i2c_sonar) ),
 	barometer(baro),
 	gyroaccelero(gyracc),
-	magnetometer(magneto)
+	magnetometer(magneto),
+	file_flash(file)
 {	
 	;
 }
@@ -97,7 +98,8 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	init_success &= mavlink_communication_init(	&mavlink_communication, 
 												mavlink_communication_config, 
 												&uart_mavlink,
-												&state );
+												&state,
+												&file_flash );
 	
 	time_keeper_delay_ms(100); 
 
