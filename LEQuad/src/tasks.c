@@ -231,9 +231,9 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 task_return_t tasks_run_launch_detection_update(void* arg);
 task_return_t tasks_run_launch_detection_update(void* arg)
 {
-	task_return_t res = launch_detection_update(&central_data->ld, *(&central_data->imu.scaled_accelero.data));
+	task_return_t res = launch_detection_update(&central_data->ld, (central_data->imu.scaled_accelero.data));
 
-	// if (*(&central_data->ld.status) == LAUNCHING)
+	// if (central_data->ld.status) == LAUNCHING)
 	// {
 	// 	piezo_speaker_quick_startup();
 	// }
