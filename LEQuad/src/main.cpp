@@ -43,6 +43,9 @@
 #include "mavlink_telemetry.hpp"
 #include "tasks.hpp"
 
+#include "file_dummy.hpp"
+#include "file_flash_avr32.hpp"
+
 extern "C" 
 {
 	#include "led.h"
@@ -67,7 +70,7 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 
 	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
 
-	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data.mavlink_communication.onboard_parameters);
+	bool read_from_flash_result = onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters);
 
 	if (read_from_flash_result)
 	{
@@ -97,13 +100,17 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 
 int main (void)
 {
+	// File_dummy file("flash.bin");
+	File_flash_avr32 file("flash.bin");
+
 	imu_t imu;
 	Megafly_rev4 board 	= Megafly_rev4(imu);
 	Central_data cd 	= Central_data( imu, 
 										board.i2c1, 
 										board.bmp085,
 										board.lsm330dlc,
-										board.magnetometer);
+										board.magnetometer,
+										file);
 
 	initialisation(cd, board);
 

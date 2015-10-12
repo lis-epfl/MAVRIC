@@ -53,7 +53,6 @@
 #include "state_machine.hpp"
 #include "data_logging.hpp"
 #include "fat_fs_mounting.hpp"
-#include "acoustic.hpp" 
 #include "qfilter.hpp"
 #include "imu.hpp"
 #include "mavlink_stream.hpp"
@@ -62,6 +61,7 @@
 #include "state.hpp"
 #include "manual_control.hpp"
 #include "gps_ublox.hpp"
+#include "file.hpp"
 
 extern "C" 
 {
@@ -102,7 +102,7 @@ public:
 	/**
 	 * @brief   Constructor
 	 */
-	Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto);
+	Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file);
 
 	/**
 	 * @brief   Initialisation
@@ -121,6 +121,7 @@ public:
 	Bmp085& 		barometer;			// TODO: use Barometer interface instead
 	Lsm330dlc& 		gyroaccelero;		// TODO: use gyro+accelero interface instead
 	Hmc5883l&		magnetometer;		// TODO: use magnetometer interface instead
+	File& 			file_flash;			
 
 	scheduler_t	scheduler;
 	mavlink_communication_t mavlink_communication;
@@ -139,19 +140,15 @@ public:
 
 	manual_control_t manual_control;							///< The joystick parsing structure
 	
-	stabilisation_copter_t stabilisation_copter;					///< The stabilisation structure for copter
+	stabilisation_copter_t stabilisation_copter;				///< The stabilisation structure for copter
 
 	gps_t gps;													///< The GPS structure
-	
-	audio_t audio_data;
-	
+		
 	simulation_model_t sim_model;								///< The simulation model structure
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
 	
 	// aliases
-	byte_stream_t *telemetry_down_stream;						///< The pointer to the downcoming telemetry byte stream
-	byte_stream_t *telemetry_up_stream;							///< The pointer to the upcoming telemetry byte stream
 	byte_stream_t *debug_out_stream;							///< The pointer to the outgoing debug byte stream
 	byte_stream_t *debug_in_stream;								///< The pointer to the incoming debug byte stream
 	
@@ -161,9 +158,7 @@ public:
 	
 	state_t state;												///< The structure with all state information
 	state_machine_t state_machine;								///< The structure for the state machine
-	
-	//Barometer pressure;											///< The pressure structure
-	
+		
 	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 	
 	sd_spi_t sd_spi;											///< The sd_SPI driver structure

@@ -131,7 +131,7 @@ SRCS += boardsupport.cpp
 SRCS += mavlink_telemetry.cpp
 SRCS += tasks.cpp
 
-SRCS += asf/avr32/drivers/intc/exception.S
+SRCS += asf/avr32/drivers/intc/exception_noNMI.S
 # SRCS += exception.S
 SRCS += asf/avr32/utils/startup/startup_uc3.S
 SRCS += asf/avr32/utils/startup/trampoline_uc3.S
@@ -195,9 +195,7 @@ LIB_INC += -I$(MAVRIC_SRC)
 # Library source files (*.c and *.cpp)
 
 LIB_SRCS += boards/megafly_rev4.cpp
-
-LIB_SRCS += communication/acoustic.cpp                      
-LIB_SRCS += communication/acoustic_telemetry.cpp      
+     
 LIB_SRCS += communication/console.c                 
 LIB_SRCS += communication/data_logging.cpp            
 LIB_SRCS += communication/hud_telemetry.cpp           
@@ -229,29 +227,20 @@ LIB_SRCS += control/stabilisation_telemetry.cpp
 LIB_SRCS += control/vector_field_waypoint.cpp
 LIB_SRCS += control/velocity_controller_copter.cpp
 
-LIB_SRCS += drivers/ads1274.c                   
-LIB_SRCS += drivers/adxl345_driver.c
-LIB_SRCS += drivers/airspeed_analog.c  
 LIB_SRCS += drivers/barometer.cpp 
 LIB_SRCS += drivers/battery.c                    
 LIB_SRCS += drivers/bmp085.cpp                   
 LIB_SRCS += drivers/bmp085_telemetry.cpp          
-LIB_SRCS += drivers/curvace.c                   
-# LIB_SRCS += drivers/curvace_telemetry.c                   
 LIB_SRCS += drivers/flow.c                  
 LIB_SRCS += drivers/gps_ublox.cpp                 
 LIB_SRCS += drivers/gps_ublox_telemetry.cpp       
 LIB_SRCS += drivers/hmc5883l.cpp             
-LIB_SRCS += drivers/itg3200.c              
 LIB_SRCS += drivers/lsm330dlc.cpp            
-LIB_SRCS += drivers/radar_driver.c         
-LIB_SRCS += drivers/radar_module_driver.cpp
 LIB_SRCS += drivers/servos.c                              
 LIB_SRCS += drivers/servos_telemetry.c
 LIB_SRCS += drivers/sonar_i2cxl.cpp
 LIB_SRCS += drivers/sonar_telemetry.cpp
 LIB_SRCS += drivers/spektrum_satellite.cpp
-LIB_SRCS += drivers/xbee.c
 
 LIB_SRCS += hal/common/fat_fs_mounting.cpp
 LIB_SRCS += hal/common/fat_fs_mounting_telemetry.cpp
@@ -261,7 +250,6 @@ LIB_SRCS += hal/avr32/analog_monitor.c
 LIB_SRCS += hal/avr32/analog_monitor_telemetry.cpp                  
 LIB_SRCS += hal/avr32/dac_dma.c
 LIB_SRCS += hal/avr32/i2c_avr32.cpp            
-LIB_SRCS += hal/avr32/i2c_driver_int.c             
 LIB_SRCS += hal/avr32/gpio_avr32.cpp
 LIB_SRCS += hal/avr32/led.c            
 LIB_SRCS += hal/avr32/piezo_speaker.c        
@@ -269,14 +257,15 @@ LIB_SRCS += hal/avr32/pwm_servos.c
 LIB_SRCS += hal/avr32/serial_avr32.cpp
 LIB_SRCS += hal/avr32/spi_avr32.cpp
 LIB_SRCS += hal/avr32/sd_spi.c
-LIB_SRCS += hal/avr32/spi_buffered.c
 LIB_SRCS += hal/avr32/time_keeper.c
 LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c
+LIB_SRCS += hal/avr32/file_flash_avr32.cpp
 
 LIB_SRCS += hal/dummy/i2c_dummy.cpp
 LIB_SRCS += hal/dummy/serial_dummy.cpp
 LIB_SRCS += hal/dummy/gpio_dummy.cpp
+LIB_SRCS += hal/dummy/file_dummy.cpp
 
 LIB_SRCS += hal/avr32/FatFs/atadrive.c
 LIB_SRCS += hal/avr32/FatFs/sdcard.c

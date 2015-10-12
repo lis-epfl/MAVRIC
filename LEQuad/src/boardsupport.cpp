@@ -87,8 +87,8 @@ bool boardsupport_init(Central_data* central_data)
 	console_init(CONSOLE_USB, usart_default_config_console(), usb_default_config_console());
 		
 	// connect abstracted aliases to hardware ports
-	central_data->telemetry_down_stream = xbee_get_out_stream();
-	central_data->telemetry_up_stream = xbee_get_in_stream();
+	// central_data->telemetry_down_stream = xbee_get_out_stream();
+	// central_data->telemetry_up_stream = xbee_get_in_stream();
 	
 	central_data->debug_out_stream = console_get_out_stream();
 	central_data->debug_in_stream = console_get_in_stream();
