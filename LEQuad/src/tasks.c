@@ -231,19 +231,19 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 task_return_t tasks_run_launch_detection_update(void* arg);
 task_return_t tasks_run_launch_detection_update(void* arg)
 {
-	task_return_t res = launch_detection_update(&central_data->ld, *(&central_data->imu.scaled_accelero.data));
+	task_return_t res = launch_detection_update(&central_data->ld, *(&central_data->imu.scaled_accelero.data);
 
-	if (*(&central_data->ld.status) == LAUNCHING)
-	{
-		piezo_speaker_quick_startup();
-	}
+	// if (*(&central_data->ld.status) == LAUNCHING)
+	// {
+	// 	piezo_speaker_quick_startup();
+	// }
 
-	if (&central_data->ld.enabled == 0)
-	{
-		scheduler_t* scheduler = &central_data->scheduler;
-		task_entry_t* task = scheduler_get_task_by_id(scheduler, 13); // Warning: id must correspond to the previously used id
-		scheduler_change_run_mode(task, RUN_NEVER);
-	}
+	// if (&central_data->ld.enabled == 0)
+	// {
+	// 	scheduler_t* scheduler = &central_data->scheduler;
+	// 	task_entry_t* task = scheduler_get_task_by_id(scheduler, 13); // Warning: id must correspond to the previously used id
+	// 	scheduler_change_run_mode(task, RUN_NEVER);
+	// }
 
 	return res;
 }
@@ -314,7 +314,7 @@ bool tasks_create_tasks()
 
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
 	
-	init_success &= scheduler_add_task(scheduler, 4000,		RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL	, (task_function_t)&tasks_run_launch_detection_update				, (task_argument_t)&central_data->ld					, 13);
+	init_success &= scheduler_add_task(scheduler, 10000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL	, &tasks_run_launch_detection_update								, 0														, 13);
 
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 
