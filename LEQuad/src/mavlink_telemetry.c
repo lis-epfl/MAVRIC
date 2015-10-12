@@ -122,7 +122,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	
 	// Launch detection logging scheme
 	init_success &= data_logging_add_parameter_int16(data_logging, (int16_t *)(&central_data->ld.status), "launch_status");
-	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->ld.sma->current_avg, "sma");
+	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->ld.sma.current_avg, "sma");
 
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
