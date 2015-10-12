@@ -69,6 +69,8 @@
 #include "sonar_telemetry.h"
 #include "servos_mix_wing_telemetry.h"
 
+#include "conf_platform.h"
+
 central_data_t *central_data;
 
 //------------------------------------------------------------------------------
@@ -127,33 +129,71 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_state, "mav_state");
 	//init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
 	
-	/////////////////////
-	// Used for tuning //
-	/////////////////////
+	
+	
+	////////////
+	// TUNING //
+	////////////
 	// Miscellaneous
 	init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].p_gain, "GainPRoll", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].integrator.gain, "GainIRoll", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].differentiator.gain, "GainDRoll", 3);
+	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_mode_custom, "mode_custom");
+	
+	// Global output
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_RIGHT].value, "servo_r", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_LEFT].value, "servo_l", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_THRUST].value, "servo_t", 3);
+	
+	
+	
+	/////////////////////
+	// PID: PITCH RATE //
+	/////////////////////
+	// Gains
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].p_gain, "GainPPitch", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].integrator.gain, "GainIPitch", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].differentiator.gain, "GainDPitch", 3);
-	
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].clip_max, "CMaxPitch", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].clip_min, "CMinPitch", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].integrator.clip_pre, "CPreIPitch", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].integrator.clip, "CIPitch", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].differentiator.clip, "CDPitch", 3);
+			
 	// Error (==> possible to compute reference)
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].error, "ErrRoll", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].error, "ErrPitch", 3);
-	
+			
 	// Feedback
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[ROLL], "GyroRoll", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[PITCH], "GyroPitch", 3);
-	
+			
 	// Command
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[ROLL], "OutRoll", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutIRoll", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevDRoll", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[PITCH], "OutPitch", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].integrator.accumulator, "OutIPitch", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].differentiator.previous, "PrevDPitch", 3);
+	
+	
+	
+	////////////////////
+	// PID: ROLL RATE //
+	////////////////////
+	// Gains
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].p_gain, "GainPRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].integrator.gain, "GainIRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].differentiator.gain, "GainDRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].clip_max, "CMaxRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].clip_min, "CMinRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].integrator.clip_pre, "CPreIRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].integrator.clip, "CIRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].differentiator.clip, "CDRoll", 3);
+			
+	// Error (==> possible to compute reference)
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].error, "ErrRoll", 3);
+			
+	// Feedback
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[ROLL], "GyroRoll", 3);
+			
+	// Command
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[ROLL], "OutRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutIRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevDRoll", 3);
 	
 	return init_success;
 };
@@ -218,14 +258,14 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->attitude_controller.p_gain_rate[YAW]    , "gainR_Yaw"     );
 
 	// Roll rate PID
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].p_gain					, "RollRate_P_G");
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].integrator.gain		, "RollRate_I_G");
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].integrator.clip_pre	, "RollRate_I_CP");
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].integrator.clip		, "RollRate_I_C");
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].differentiator.gain	, "RollRate_D_G");
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].differentiator.clip	, "RollRate_D_C");
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].clip_max				, "RollRate_C_Max");
-	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].clip_max				, "RollRate_C_Min");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].p_gain				, "RollRate_P_G");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].integrator.gain		, "RollRate_I_G");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].integrator.clip_pre	, "RollRate_I_CP");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].integrator.clip		, "RollRate_I_C");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].differentiator.gain	, "RollRate_D_G");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].differentiator.clip	, "RollRate_D_C");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].clip_max				, "RollRate_C_Max");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[ROLL].clip_min				, "RollRate_C_Min");
 	
 	// Roll attitude PID
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].p_gain                     , "RollAPid_P_G"     );
@@ -244,7 +284,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].differentiator.gain	, "PitchRate_D_G");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].differentiator.clip	, "PitchRate_D_C");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].clip_max			, "PitchRate_C_Max");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].clip_max			, "PitchRate_C_Min");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].clip_min			, "PitchRate_C_Min");
 	
 	// Pitch attitude PID
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].p_gain                    , "PitchAPid_P_G"    );

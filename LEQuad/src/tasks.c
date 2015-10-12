@@ -142,11 +142,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 				{
 					if(central_data->stabilisation_wing.controls->rpy[PITCH] >= 0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_up;
+						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
 					}
 					else if(central_data->stabilisation_wing.controls->rpy[PITCH] <= -0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
+						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_up;
 					}
 					else
 					{
@@ -157,11 +157,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 				{
 					if(central_data->stabilisation_wing.controls->rpy[ROLL] >= 0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_up;
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_down;
 					}
 					else if(central_data->stabilisation_wing.controls->rpy[ROLL] <= -0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_down;
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_up;
 					}
 					else
 					{
@@ -307,7 +307,7 @@ bool tasks_create_tasks()
 	init_success &= scheduler_add_task(scheduler, 300000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
 	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&waypoint_handler_control_time_out_waypoint_msg  , (task_argument_t)&central_data->waypoint_handler 		, 8);
 	
-	init_success &= scheduler_add_task(scheduler, 25000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
+	init_success &= scheduler_add_task(scheduler, 50000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
 	
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
