@@ -150,11 +150,7 @@ public:
 	simulation_model_t sim_model;								///< The simulation model structure
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
-	
-	// aliases
-	byte_stream_t *debug_out_stream;							///< The pointer to the outgoing debug byte stream
-	byte_stream_t *debug_in_stream;								///< The pointer to the incoming debug byte stream
-	
+		
 	mavlink_waypoint_handler_t waypoint_handler;
 	
 	navigation_t navigation;									///< The structure to perform GPS navigation

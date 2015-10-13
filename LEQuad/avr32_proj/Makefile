@@ -244,6 +244,8 @@ LIB_SRCS += drivers/spektrum_satellite.cpp
 
 LIB_SRCS += hal/common/fat_fs_mounting.cpp
 LIB_SRCS += hal/common/fat_fs_mounting_telemetry.cpp
+
+# LIB_SRCS += hal/common/dbg.cpp
  
 LIB_SRCS += hal/avr32/adc_int.c          
 LIB_SRCS += hal/avr32/analog_monitor.c            
@@ -255,6 +257,7 @@ LIB_SRCS += hal/avr32/led.c
 LIB_SRCS += hal/avr32/piezo_speaker.c        
 LIB_SRCS += hal/avr32/pwm_servos.c
 LIB_SRCS += hal/avr32/serial_avr32.cpp
+LIB_SRCS += hal/avr32/serial_usb_avr32.cpp
 LIB_SRCS += hal/avr32/spi_avr32.cpp
 LIB_SRCS += hal/avr32/sd_spi.c
 LIB_SRCS += hal/avr32/time_keeper.c
@@ -314,14 +317,7 @@ PREPROC_OPT += -DUDD_ENABLE
 # ------------------------------------------------------------------------------
 # ASSEMBLY COMPILER OPTIONS
 # ------------------------------------------------------------------------------
-UNAME := $(shell uname)
-$(info $$UNAME is [${UNAME}])
-ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
-	WIN32_PATH="C:/Program Files (x86)/Atmel/Atmel Toolchain/AVR32 GCC/Native/3.4.2.1002/avr32-gnu-toolchain/bin"
-	AS = $(WIN32_PATH)/avr32-gcc
-else
-	AS = avr32-gcc
-endif
+AS = avr32-gcc
 ASFLAGS = -x assembler-with-cpp -c -mpart=uc3c1512c -mrelax 
 
 # Include files from MAVRIC library and source folder
@@ -332,12 +328,7 @@ ASFLAGS += ${SRCS_INC}
 # ------------------------------------------------------------------------------
 # C COMPILER OPTIONS
 # ------------------------------------------------------------------------------
-ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
-	CC = $(WIN32_PATH)/avr32-gcc
-else
-	CC = avr32-gcc
-endif
-
+CC = avr32-gcc
 CFLAGS  = -O3 -mhard-float -fdata-sections -muse-rodata-section -g2 -pg -p -Wall 
 CFLAGS += -mpart=uc3c1512c -c -std=gnu99 -Wstrict-prototypes -Wmissing-prototypes 
 CFLAGS += -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF
@@ -352,12 +343,7 @@ CFLAGS += ${SRCS_INC}
 # ------------------------------------------------------------------------------
 # C++ COMPILER OPTIONS
 # ------------------------------------------------------------------------------
-ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
-	CXX = $(WIN32_PATH)/avr32-g++
-else
-	CXX = avr32-g++
-endif
-
+CXX = avr32-g++
 CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
 CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MD -MP -MF
 # CXXFLAGS += -D_DEFAULT_SOURCE 
@@ -371,16 +357,9 @@ CXXFLAGS += ${SRCS_INC}
 # ------------------------------------------------------------------------------
 # LINKER OPTIONS
 # ------------------------------------------------------------------------------
-ifeq ($(UNAME), CYGWIN_NT-6.1-WOW64)
-	LINKER = $(WIN32_PATH)/avr32-g++
-	OBJCOPY = $(WIN32_PATH)/avr32-objcopy
-	SIZER = $(WIN32_PATH)/avr32-size 
-else
-	LINKER = avr32-g++
-	OBJCOPY = avr32-objcopy
-	SIZER = avr32-size
-endif
-
+LINKER = avr32-g++
+OBJCOPY = avr32-objcopy
+SIZER = avr32-size
 
 OBJCOPYFLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 

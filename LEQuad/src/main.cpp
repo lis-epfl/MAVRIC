@@ -45,6 +45,7 @@
 
 #include "file_dummy.hpp"
 #include "file_flash_avr32.hpp"
+#include "serial_usb_avr32.hpp"
 
 extern "C" 
 {
@@ -54,6 +55,8 @@ extern "C"
 	#include "piezo_speaker.h"
 }
 
+#include "dbg.hpp"
+
 
 void initialisation(Central_data& central_data, Megafly_rev4& board) 
 {	
@@ -61,6 +64,43 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 	
 	// Legacy board initialisation (TODO: remove)
 	init_success &= boardsupport_init(&central_data);
+
+
+
+	// piezo_speaker_startup_bumblebot();
+	// Link debug stream to USB serial
+	
+	// Serial_usb_avr32 usb({});
+	// usb.init();
+	// usb_serial = &usb;
+
+	// // usb_serial->init();
+	// debug_stream.get   = NULL; 
+	// debug_stream.flush = NULL; 
+	// debug_stream.buffer_empty = NULL; 
+	// debug_stream.put = &serial_put_stream; 
+	// debug_stream.data = NULL;
+	// central_data.debug_out_stream = &debug_stream;
+
+	// usb_serial = Serial_usb_avr32({});
+	// usb_serial = usb;
+	// usb_serial = Serial_usb_avr32({});
+	// usb_serial.init();
+
+	// debug_stream.get   = NULL; 
+	// debug_stream.flush = NULL; 
+	// debug_stream.buffer_empty = NULL; 
+	// debug_stream.put = &serial_put_stream; 
+	// debug_stream.data = NULL;
+	// central_data.debug_out_stream = &debug_stream;
+
+
+	// print_util_dbg_print_init(central_data.debug_out_stream);
+	// print_util_dbg_print("Debug stream initialised\r\n");
+
+	// piezo_speaker_startup_bumblebot();
+
+
 
 	// New board initialisation
 	init_success &= board.init();
@@ -98,6 +138,7 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 	print_util_dbg_print("OK. Starting up.\r\n");
 }
 
+
 int main (void)
 {
 	// File_dummy file("flash.bin");
@@ -111,8 +152,36 @@ int main (void)
 										board.lsm330dlc,
 										board.magnetometer,
 										file);
-
+	
 	initialisation(cd, board);
+	
+	// Dbg dbg(board.uart_usb);
+
+	// const char* msg = "Here!";
+
+	// board.uart_usb.write( (uint8_t*)msg, 5);
+	// board.uart_usb.flush();
+
+	// uint8_t a = 3;
+
+	// board.uart_usb.write( (uint8_t*)msg, 5);
+	// board.uart_usb.flush();
+
+	// dbg::init(board.uart_usb);
+
+	// board.uart_usb.write( (uint8_t*)msg, 5);
+	// board.uart_usb.flush();
+
+	// dbg::hello();
+
+	// board.uart_usb.write( (uint8_t*)msg, 5);
+	// board.uart_usb.flush();
+
+	// Serial_dummy dummy;
+
+	// dummy.write((uint8_t*)"Hello world!\n\r", 14);
+
+	// Console<Serial_usb_avr32> console(board.uart_usb);
 
 	while (1 == 1) 
 	{

@@ -65,50 +65,8 @@ bool boardsupport_init(Central_data* central_data)
 	// servo_pwm_hardware_init();
 	pwm_servos_init( USE_SERVOS_7_8 );
 	
-	// Init UART 0 for XBEE communication
-	// xbee_init(UART0,usart_default_config_xbee());
-	
-	//Init UART 2 for audio communication
-	//acoustic_init(	&central_data->audio_data,
-					//UART2,
-					//&central_data->ahrs,
-					//&central_data->position_estimation,
-					//&central_data->remote,
-					//&central_data->navigation,
-					//&central_data->stabilisation_copter,
-					//&central_data->controls_nav,
-					//&central_data->waypoint_handler,
-					//xbee_get_out_stream());//central_data->telemetry_down_stream);
-				
-	// Init UART 4 for wired communication
-	//console_init(CONSOLE_UART4, usart_default_config_console, usb_default_config_console);
-	
-	// Init USB for wired communication
-	console_init(CONSOLE_USB, usart_default_config_console(), usb_default_config_console());
-		
-	// connect abstracted aliases to hardware ports
-	// central_data->telemetry_down_stream = xbee_get_out_stream();
-	// central_data->telemetry_up_stream = xbee_get_in_stream();
-	
-	central_data->debug_out_stream = console_get_out_stream();
-	central_data->debug_in_stream = console_get_in_stream();
-	
-	// init debug output
-	print_util_dbg_print_init(central_data->debug_out_stream);
-	print_util_dbg_print("Debug stream initialised\r\n");
-
-	// RC receiver initialization
-	// spektrum_satellite_init(&(central_data->remote.sat), usart_default_config_spektrum());
-
 	// Init analog rails
 	analog_monitor_init(&central_data->analog_monitor, analog_monitor_default_config());
-	
-	// bmp085_init(&central_data->pressure);
-	
-	// Init I2C for ultrasound
-	// i2c_driver_init(I2C1, twim_default_config());
-	
-	
 
 	// init 6V enable
 	gpio_enable_gpio_pin(AVR32_PIN_PA04);
@@ -119,7 +77,7 @@ bool boardsupport_init(Central_data* central_data)
 	// Init piezo speaker
 	piezo_speaker_init_binary();
 	
-	print_util_dbg_print("Board initialised\r\n");
+	// print_util_dbg_print("Board initialised\r\n");
 
 	time_keeper_delay_ms(2000);
 
