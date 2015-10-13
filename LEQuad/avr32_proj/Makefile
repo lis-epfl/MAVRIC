@@ -255,6 +255,7 @@ LIB_SRCS += hal/avr32/led.c
 LIB_SRCS += hal/avr32/piezo_speaker.c        
 LIB_SRCS += hal/avr32/pwm_servos.c
 LIB_SRCS += hal/avr32/serial_avr32.cpp
+LIB_SRCS += hal/avr32/serial_usb_avr32.cpp
 LIB_SRCS += hal/avr32/spi_avr32.cpp
 LIB_SRCS += hal/avr32/sd_spi.c
 LIB_SRCS += hal/avr32/time_keeper.c
