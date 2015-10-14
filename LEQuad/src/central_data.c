@@ -57,6 +57,7 @@
 #include "mavlink_communication_default_config.h"
 #include "attitude_controller_p2_default_config.h"
 #include "servos_mix_quadcopter_diag_default_config.h"
+#include "launch_detection_default_config.h"
 
 static central_data_t central_data;
 
@@ -143,7 +144,7 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	// Init launch_detection
-	init_success &= launch_detection_init(&central_data.ld);
+	init_success &= launch_detection_init(&central_data.ld, &launch_detection_default_config);
 
 	time_keeper_delay_ms(100);
 
