@@ -117,6 +117,7 @@ bool boardsupport_init(central_data_t *central_data)
 				
 	// Init UART 3 for GPS communication
 	gps_ublox_init(&(central_data->gps), UART3, usart_default_config_gps);
+	gps_ublox_init(&(central_data->gps2), UART2, usart_default_config_gps2);
 	
 	// Init UART 4 for wired communication
 	//console_init(CONSOLE_UART4, usart_default_config_console, usb_default_config_console);
@@ -151,7 +152,7 @@ bool boardsupport_init(central_data_t *central_data)
 	bmp085_init(&central_data->pressure);
 	
 	// Init I2C for ultrasound
-	i2c_driver_init(I2C1, twim_default_config);
+	//i2c_driver_init(I2C1, twim_default_config);
 	
 	// init 6V enable
 	gpio_enable_gpio_pin(AVR32_PIN_PA04);
