@@ -76,6 +76,7 @@ extern "C" {
 
 #include "analog_monitor.h"
 #include "sonar_i2cxl.h"
+#include "airspeed_analog.h"
 #include "navigation.h"
 #include "state.h"
 #include "stabilisation.h"
@@ -150,6 +151,8 @@ typedef struct  {
 	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 
 	sonar_i2cxl_t sonar_i2cxl;									///< The i2cxl sonar structure
+	
+	airspeed_analog_t airspeed_analog;							///< Analog airspeed sensor
 	
 	sd_spi_t sd_spi;											///< The sd_SPI driver structure
 	

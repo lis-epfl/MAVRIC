@@ -209,11 +209,15 @@ bool central_data_init()
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
+	// Init airspeed sensor
+	init_success &= airspeed_analog_init(&central_data.airspeed_analog, &central_data.analog_monitor, ANALOG_RAIL_12);
+	
 	// Init hud	
 	init_success &= hud_telemetry_init(	&central_data.hud_structure, 
 										&central_data.position_estimation,
 										&central_data.controls,
-										&central_data.ahrs);
+										&central_data.ahrs,
+										&central_data.airspeed_analog);
 	
 	time_keeper_delay_ms(100);
 	
@@ -243,7 +247,6 @@ bool central_data_init()
 									&remote_default_config);
 
 	//Init data logging
-	//data_logging_conf_t data_logging_default_config =
 	init_success &= fat_fs_mounting_init(	&central_data.fat_fs_mounting,
 											&data_logging_default_config,
 											&central_data.state);

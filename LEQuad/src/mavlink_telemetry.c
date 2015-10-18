@@ -247,6 +247,20 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutIRoll", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevDRoll", 3);
 	
+	
+	
+	//////////////
+	// AIRSPEED //
+	//////////////
+	// Sensor
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_pres_off", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
+	
+	// GPS for comparison
+	
+	
 	return init_success;
 };
 
