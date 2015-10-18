@@ -91,6 +91,8 @@ task_return_t tasks_run_stabilisation(void* arg)
 	tasks_run_imu_update(0);
 	
 	mav_mode_t mode = central_data->state.mav_mode;
+	
+	control_command_t unitary_remote_command;
 
 	if( mode.ARMED == ARMED_ON )
 	{
@@ -109,26 +111,13 @@ task_return_t tasks_run_stabilisation(void* arg)
 			// Directly apply them to the mixer, no stabilisation
 			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
 		}
-		else if ( mode.GUIDED == GUIDED_ON )				// Complete manual mode (in case of bad mode selection)
+		else if ( mode.GUIDED == GUIDED_ON )				// Attitude mode
 		{
-			// Get command from remote/joystick
+			// Read command
 			if (central_data->state.remote_active == 1)
 			{
 				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
-			
-			// Directly apply them to the mixer, no stabilisation
-			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
-		}
-		else if ( mode.STABILISE == STABILISE_ON )		// Rate mode
-		{
-			if (central_data->state.remote_active == 1)
-			{
-				remote_get_rate_command_from_remote(&central_data->remote, &central_data->controls);
+				remote_get_command_from_remote(&central_data->remote, &unitary_remote_command);
 			}
 			else
 			{
@@ -138,30 +127,30 @@ task_return_t tasks_run_stabilisation(void* arg)
 			// Apply step in the reference, overwrite the remote input
 			if(central_data->stabilisation_wing.tuning != 0 && central_data->stabilisation_wing.tuning_steps != 0)
 			{
-				if(central_data->stabilisation_wing.tuning_axis == PITCH)
+				if(central_data->stabilisation_wing.tuning_axis == 1)
 				{
-					if(central_data->stabilisation_wing.controls->rpy[PITCH] >= 0.3f)
-					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
-					}
-					else if(central_data->stabilisation_wing.controls->rpy[PITCH] <= -0.3f)
+					if(unitary_remote_command.rpy[PITCH] >= 0.3f)
 					{
 						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_up;
+					}
+					else if(unitary_remote_command.rpy[PITCH] <= -0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
 					}
 					else
 					{
 						central_data->stabilisation_wing.controls->rpy[PITCH] = 0.0f;
 					}
 				}
-				else if(central_data->stabilisation_wing.tuning_axis == ROLL)
+				else if(central_data->stabilisation_wing.tuning_axis == 2)
 				{
-					if(central_data->stabilisation_wing.controls->rpy[ROLL] >= 0.3f)
+					if(unitary_remote_command.rpy[ROLL] >= 0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_down;
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_right;
 					}
-					else if(central_data->stabilisation_wing.controls->rpy[ROLL] <= -0.3f)
+					else if(unitary_remote_command.rpy[ROLL] <= -0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_up;
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_left;
 					}
 					else
 					{
@@ -170,9 +159,94 @@ task_return_t tasks_run_stabilisation(void* arg)
 				}
 			}
 			
-			central_data->controls.control_mode = RATE_COMMAND_MODE;
-		
+			// Run controller cascade
+			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
 			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+			
+			// Rewrite command on axis to apply manual control on it (used for tuning)
+			if(central_data->stabilisation_wing.tuning != 0)
+			{
+				if(central_data->stabilisation_wing.tuning_axis == 1)
+				{
+					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[ROLL] = unitary_remote_command.rpy[ROLL];
+				}
+				else if(central_data->stabilisation_wing.tuning_axis == 2)
+				{
+					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[PITCH] = unitary_remote_command.rpy[PITCH];
+				}
+			}
+			
+			// Mix to servo outputs
+			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
+		}
+		else if ( mode.STABILISE == STABILISE_ON )		// Rate mode
+		{
+			// Read command
+			if (central_data->state.remote_active == 1)
+			{
+				remote_get_rate_command_from_remote(&central_data->remote, &central_data->controls);
+				remote_get_command_from_remote(&central_data->remote, &unitary_remote_command);
+			}
+			else
+			{
+				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
+			}
+			
+			// Apply step in the reference, overwrite the remote input
+			if(central_data->stabilisation_wing.tuning != 0 && central_data->stabilisation_wing.tuning_steps != 0)
+			{
+				if(central_data->stabilisation_wing.tuning_axis == 1)
+				{
+					if(unitary_remote_command.rpy[PITCH] >= 0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_up;
+					}
+					else if(unitary_remote_command.rpy[PITCH] <= -0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
+					}
+					else
+					{
+						central_data->stabilisation_wing.controls->rpy[PITCH] = 0.0f;
+					}
+				}
+				else if(central_data->stabilisation_wing.tuning_axis == 2)
+				{
+					if(unitary_remote_command.rpy[ROLL] >= 0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_right;
+					}
+					else if(unitary_remote_command.rpy[ROLL] <= -0.3f)
+					{
+						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_left;
+					}
+					else
+					{
+						central_data->stabilisation_wing.controls->rpy[ROLL] = 0.0f;
+					}
+				}
+			}
+			
+			// Run controller cascade
+			central_data->controls.control_mode = RATE_COMMAND_MODE;
+			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+			
+			// Rewrite command on axis to apply manual control on it (used for tuning)
+			if(central_data->stabilisation_wing.tuning != 0)
+			{
+				if(central_data->stabilisation_wing.tuning_axis == 1)
+				{
+					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[ROLL] = unitary_remote_command.rpy[ROLL];
+				}
+				else if(central_data->stabilisation_wing.tuning_axis == 2)
+				{
+					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[PITCH] = unitary_remote_command.rpy[PITCH];
+				}
+			}
+			
+			// Mix to servo outputs
+			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
+			
 		}
 		else if ( mode.MANUAL == MANUAL_ON )			// Complete manual mode
 		{
