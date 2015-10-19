@@ -167,8 +167,8 @@ int main (void)
 	dbg::print(" or a float: ");
 	dbg::print(1.4f);
 	dbg::println(" this ends the line");
-	dbg::dout() << "and we can do it all in a line: int " << 23 << " float " << 1.4f << "and even bools " << false;
-	dbg::dout() << "and end the line " << endl;
+	dbg::dout() << "and we can do it all in a line: int " << 23 << " float " << 1.4f << " and even bools " << false;
+	dbg::dout() << " and end the line " << endl;
 	while (1 == 1) 
 	{
 		scheduler_update(&cd.scheduler);
