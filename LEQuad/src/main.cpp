@@ -154,35 +154,21 @@ int main (void)
 										file);
 	
 	initialisation(cd, board);
-	
-	// Dbg dbg(board.uart_usb);
 
-	// const char* msg = "Here!";
+	/* create console */
+	Console<Serial> console_usb(board.uart_usb);
 
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
+	/* init debug facilities*/
+	dbg::init(console_usb);
 
-	// uint8_t a = 3;
-
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
-
-	// dbg::init(board.uart_usb);
-
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
-
-	// dbg::hello();
-
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
-
-	// Serial_dummy dummy;
-
-	// dummy.write((uint8_t*)"Hello world!\n\r", 14);
-
-	// Console<Serial_usb_avr32> console(board.uart_usb);
-
+	/* examples how to use dbg: */
+	dbg::print("we put an int: ");
+	dbg::print(23);
+	dbg::print(" or a float: ");
+	dbg::print(1.4f);
+	dbg::println(" this ends the line");
+	dbg::dout() << "and we can do it all in a line: int " << 23 << " float " << 1.4f << "and even bools " << false;
+	dbg::dout() << "and end the line " << endl;
 	while (1 == 1) 
 	{
 		scheduler_update(&cd.scheduler);
