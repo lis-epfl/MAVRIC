@@ -57,7 +57,6 @@ extern "C"
 
 #include "dbg.hpp"
 
-
 void initialisation(Central_data& central_data, Megafly_rev4& board) 
 {	
 	bool init_success = true;
@@ -112,10 +111,10 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 
 	bool read_from_flash_result = onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters);
 
-	if (read_from_flash_result)
-	{
-		simulation_switch_from_reality_to_simulation(&central_data.sim_model);
-	}
+	// if (read_from_flash_result)
+	// {
+	// 	simulation_switch_from_reality_to_simulation(&central_data.sim_model);
+	// }
 
 	init_success &= mavlink_telemetry_init(&central_data, &board);
 
@@ -139,49 +138,25 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 }
 
 
+#include "dbg.hpp"
+
+#include <array>
+
 int main (void)
 {
 	// File_dummy file("flash.bin");
 	File_flash_avr32 file("flash.bin");
 
-	imu_t imu;
-	Megafly_rev4 board 	= Megafly_rev4(imu);
-	Central_data cd 	= Central_data( imu, 
+	// Imu imu;
+	Megafly_rev4 board 	= Megafly_rev4();
+	Central_data cd 	= Central_data( board.imu, 
 										board.i2c1, 
 										board.bmp085,
 										board.lsm330dlc,
-										board.magnetometer,
+										board.hmc5883l,
 										file);
 	
 	initialisation(cd, board);
-	
-	// Dbg dbg(board.uart_usb);
-
-	// const char* msg = "Here!";
-
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
-
-	// uint8_t a = 3;
-
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
-
-	// dbg::init(board.uart_usb);
-
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
-
-	// dbg::hello();
-
-	// board.uart_usb.write( (uint8_t*)msg, 5);
-	// board.uart_usb.flush();
-
-	// Serial_dummy dummy;
-
-	// dummy.write((uint8_t*)"Hello world!\n\r", 14);
-
-	// Console<Serial_usb_avr32> console(board.uart_usb);
 
 	while (1 == 1) 
 	{

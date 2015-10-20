@@ -44,9 +44,9 @@
 #include "stabilisation_copter_default_config.hpp"
 #include "data_logging_default_config.hpp"
 #include "mavlink_communication_default_config.hpp"
-#include "conf_imu.hpp"
+// #include "conf_imu.hpp"
 #include "position_estimation_default_config.hpp"
-#include "simulation_default_config.hpp"
+// #include "simulation_default_config.hpp"
 #include "remote_default_config.hpp"
 #include "state_default_config.hpp"
 #include "manual_control_default_config.hpp"
@@ -63,7 +63,7 @@ extern "C"
 }
 
 
-Central_data::Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file):
+Central_data::Central_data(Imu& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file):
 	imu(imu),
 	sonar( Sonar_i2cxl(i2c_sonar) ),
 	barometer(baro),
@@ -114,15 +114,14 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	//Init state_machine	
 	init_success &= state_machine_init( &state_machine,
 										&state,
-										&sim_model,
 										&gps,
 										&manual_control);
 	time_keeper_delay_ms(100);
 
-	// Init imu
-	init_success &= imu_init(   &imu,
-								imu_config(),
-								&state );
+	// // Init imu
+	// init_success &= imu_init(   &imu,
+	// 							imu_config(),
+	// 							&state );
 	
 	time_keeper_delay_ms(100);
 
@@ -145,7 +144,7 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 													position_estimation_default_config(),
 													&state,
 													&barometer,
-													&sonar.data,
+													&sonar,
 													&gps,
 													&ahrs,
 													&data_logging);
@@ -197,17 +196,17 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	time_keeper_delay_ms(100);
 
 	// Init simulation (should be done after position_estimation)
-	init_success &= simulation_init(&sim_model,
-									simulation_default_config(),
-									&ahrs,
-									&imu,
-									&position_estimation,
-									&barometer,
-									&gps,
-									&sonar.data,
-									&state,
-									&state.nav_plan_active,
-									&servo_mix);
+	// init_success &= simulation_init(&sim_model,
+	// 								simulation_default_config(),
+	// 								&ahrs,
+	// 								&imu,
+	// 								&position_estimation,
+	// 								&barometer,
+	// 								&gps,
+	// 								&sonar.data,
+	// 								&state,
+	// 								&state.nav_plan_active,
+	// 								&servo_mix);
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
@@ -224,11 +223,11 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 
 
 	// Init servo mixing
-	init_success &= servo_mix_quadcotper_diag_init( &servo_mix,
-													servo_mix_quadcopter_diag_default_config(),
-													&command.torque,
-													&command.thrust,
-													&servos);
+	init_success &= servos_mix_quadcotper_diag_init( &servo_mix,
+													 servos_mix_quadcopter_diag_default_config(),
+													 &command.torque,
+													 &command.thrust,
+													 &servos);
 
 	time_keeper_delay_ms(100);
 

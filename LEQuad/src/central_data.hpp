@@ -102,7 +102,7 @@ public:
 	/**
 	 * @brief   Constructor
 	 */
-	Central_data(imu_t& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file);
+	Central_data(Imu& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file);
 
 	/**
 	 * @brief   Initialisation
@@ -115,7 +115,7 @@ public:
 	 * 
 	 */	
 	// Megafly_rev4 	board;
-	imu_t& 			imu;				///< The IMU structure
+	Imu& 			imu;				///< The IMU structure
 	Sonar_i2cxl 	sonar;
 	// Barometer& 		barometer;
 	Bmp085& 		barometer;			// TODO: use Barometer interface instead
@@ -127,7 +127,7 @@ public:
 	mavlink_communication_t mavlink_communication;
 	attitude_controller_p2_t attitude_controller;
 	command_t command;
-	servo_mix_quadcotper_diag_t servo_mix;
+	servos_mix_quadcotper_diag_t servo_mix;
 	servos_t servos;
 
 	analog_monitor_t analog_monitor;							///< The analog to digital converter structure
@@ -144,7 +144,7 @@ public:
 
 	gps_t gps;													///< The GPS structure
 		
-	simulation_model_t sim_model;								///< The simulation model structure
+	// simulation_model_t sim_model;								///< The simulation model structure
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
 		

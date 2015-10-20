@@ -189,6 +189,7 @@ LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric
 LIB_INC += -I$(MAVRIC_LIB)/libs/FatFs/src
 LIB_INC += -I$(MAVRIC_LIB)/runtime
 LIB_INC += -I$(MAVRIC_LIB)/sensing
+LIB_INC += -I$(MAVRIC_LIB)/simulation
 LIB_INC += -I$(MAVRIC_LIB)/util
 LIB_INC += -I$(MAVRIC_SRC)
 
@@ -227,7 +228,6 @@ LIB_SRCS += control/stabilisation_telemetry.cpp
 LIB_SRCS += control/vector_field_waypoint.cpp
 LIB_SRCS += control/velocity_controller_copter.cpp
 
-LIB_SRCS += drivers/barometer.cpp 
 LIB_SRCS += drivers/battery.c                    
 LIB_SRCS += drivers/bmp085.cpp                   
 LIB_SRCS += drivers/bmp085_telemetry.cpp          
@@ -289,8 +289,16 @@ LIB_SRCS += sensing/imu_telemetry.cpp
 LIB_SRCS += sensing/position_estimation.cpp            
 LIB_SRCS += sensing/position_estimation_telemetry.cpp
 LIB_SRCS += sensing/qfilter.cpp
-LIB_SRCS += sensing/simulation.cpp
-LIB_SRCS += sensing/simulation_telemetry.cpp   
+# LIB_SRCS += sensing/simulation.cpp
+# LIB_SRCS += sensing/simulation_telemetry.cpp   
+
+LIB_SRCS += simulation/simulation.cpp
+LIB_SRCS += simulation/dynamic_model_quad_diag.cpp
+LIB_SRCS += simulation/accelerometer_sim.cpp
+LIB_SRCS += simulation/gyroscope_sim.cpp
+LIB_SRCS += simulation/magnetometer_sim.cpp
+LIB_SRCS += simulation/barometer_sim.cpp
+LIB_SRCS += simulation/sonar_sim.cpp
 
 LIB_SRCS += util/buffer.c
 LIB_SRCS += util/coord_conventions.c

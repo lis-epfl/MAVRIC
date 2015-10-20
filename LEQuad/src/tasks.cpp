@@ -65,18 +65,11 @@ extern "C"
 
 void tasks_run_imu_update(Central_data* central_data)
 {
-	if (central_data->state.mav_mode.HIL == HIL_ON)
-	{
-		simulation_update(&central_data->sim_model);
-	} 
-	else 
-	{
-		central_data->gyroaccelero.update();
-		
-		central_data->magnetometer.update();
-	}
+	// central_data->gyroaccelero.update();
+	// central_data->magnetometer.update();
+	// imu_update(	&central_data->imu);
 	
-	imu_update(	&central_data->imu);
+	central_data->imu.update();
 	qfilter_update(&central_data->attitude_filter);
 	position_estimation_update(&central_data->position_estimation);
 }
@@ -213,14 +206,8 @@ task_return_t tasks_run_stabilisation_quaternion(Central_data* central_data)
 
 task_return_t tasks_run_gps_update(Central_data* central_data) 
 {
-	if (central_data->state.mav_mode.HIL == HIL_ON)
-	{
-		simulation_simulate_gps(&central_data->sim_model);
-	} 
-	else 
-	{
-		gps_ublox_update(&central_data->gps);
-	}
+
+	gps_ublox_update(&central_data->gps);
 	
 	return TASK_RUN_SUCCESS;
 }
@@ -228,14 +215,8 @@ task_return_t tasks_run_gps_update(Central_data* central_data)
 
 task_return_t tasks_run_barometer_update(Central_data* central_data)
 {
-	if (central_data->state.mav_mode.HIL == HIL_ON)
-	{
-		simulation_simulate_barometer(&central_data->sim_model);
-	} 
-	else
-	{
-		central_data->barometer.update();
-	}
+
+	central_data->barometer.update();
 
 	return TASK_RUN_SUCCESS;
 }
