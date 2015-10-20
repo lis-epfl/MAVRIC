@@ -56,7 +56,7 @@ extern "C"
 }
 
 #include "dbg.hpp"
-
+#include "file_flash_avr32.hpp"
 
 void initialisation(Central_data& central_data, Megafly_rev4& board) 
 {	
@@ -155,22 +155,14 @@ int main (void)
 	
 	initialisation(cd, board);
 
-	/* create console */
-	Console<Serial> console_usb(board.uart_usb);
-
 	/* init debug facilities*/
+	Console<Serial> console_usb(board.uart_usb);
 	dbg::init(console_usb);
-
-	/* examples how to use dbg: */
-	dbg::print("we put an int: ");
-	dbg::print(23);
-	dbg::print(" or a float: ");
-	dbg::print(1.4f);
-	dbg::println(" this ends the line");
-	dbg::dout() << "and we can do it all in a line: int " << 23 << " float " << 1.4f << " and even bools " << false;
-	dbg::dout() << " and end the line " << endl;
 	while (1 == 1) 
 	{
+		//console_file << " example " << 1.244 << "  " << 12345 << "ex " << endl;
+		dbg::dout() << "int " << 23  << " float " << 1.2345f <<  endl;
+
 		scheduler_update(&cd.scheduler);
 	}
 
