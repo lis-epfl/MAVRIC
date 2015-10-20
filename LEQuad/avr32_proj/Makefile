@@ -352,8 +352,7 @@ SIZER = avr32-size
 
 OBJCOPYFLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 
-LDFLAGS  = -nostartfiles -Wl,-Map="mavric.map" -Wl,--start-group -lm  
-LDGLAGS += -Wl,--end-group -L"src/asf/avr32/utils/libs/dsplib/at32ucr3fp/gcc"  
+LDFLAGS  = -nostartfiles -Wl,-Map="mavric.map" -lm
 LDFLAGS += -Wl,--gc-sections -mpart=uc3c1512c -Wl,--relax -Wl,-e,_trampoline
 
 # Include files from MAVRIC library and source folder
