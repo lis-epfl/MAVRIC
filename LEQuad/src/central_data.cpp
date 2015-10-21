@@ -40,7 +40,6 @@
 
 
 #include "central_data.hpp"
-#include "boardsupport.hpp"
 #include "stabilisation_copter_default_config.hpp"
 #include "data_logging_default_config.hpp"
 #include "mavlink_communication_default_config.hpp"
@@ -55,33 +54,31 @@ extern "C"
 {
 	#include "time_keeper.h"
 	#include "navigation_default_config.h"
-	#include "servos_default_config.h"
 	#include "qfilter_default_config.h"
 	#include "scheduler_default_config.h"
 	#include "attitude_controller_p2_default_config.h"
 	#include "servos_mix_quadcopter_diag_default_config.h"
+
+	#include "conf_platform.h"
 }
 
 
-Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, File& file_flash):
+Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, servos_t& servos, analog_monitor_t& analog_monitor):
 	imu( imu ),
 	barometer( barometer ),
 	gps( gps ),
 	sonar( sonar ),
-	file_flash( file_flash )
+	serial_mavlink( serial_mavlink ),
+	satellite( satellite ),
+	file_flash( file_flash ),
+	servos( servos ),
+	analog_monitor( analog_monitor )
 {}
 
 
-bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& satellite )
+bool Central_data::init(void)
 {
 	bool init_success = true;
-
-	// Init servos
-	init_success &= servos_init( &servos, servos_default_config());
-	servos_set_value_failsafe( &servos );
-	pwm_servos_write_to_hardware( &servos );
-
-	time_keeper_delay_ms(100);	
 
 	// Init main sheduler
 	init_success &= scheduler_init(&scheduler, scheduler_default_config());
@@ -93,7 +90,7 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	mavlink_communication_config.mavlink_stream_config.sysid = MAVLINK_SYS_ID;
 	init_success &= mavlink_communication_init(	&mavlink_communication, 
 												mavlink_communication_config, 
-												&uart_mavlink,
+												&serial_mavlink,
 												&state,
 												&file_flash );
 	

@@ -170,7 +170,6 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 
 task_return_t tasks_run_gps_update(Central_data* central_data) 
 {
-
 	central_data->gps.update();
 	
 	return TASK_RUN_SUCCESS;
@@ -181,6 +180,15 @@ task_return_t tasks_run_barometer_update(Central_data* central_data)
 {
 
 	central_data->barometer.update();
+
+	return TASK_RUN_SUCCESS;
+}
+
+
+task_return_t tasks_run_sonar_update(Central_data* central_data)
+{
+
+	central_data->sonar.update();
 
 	return TASK_RUN_SUCCESS;
 }
@@ -200,10 +208,9 @@ bool tasks_create_tasks(Central_data* central_data)
 	scheduler_t* scheduler = &central_data->scheduler;
 
 	init_success &= scheduler_add_task(scheduler, 4000,		RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, (task_function_t)&tasks_run_stabilisation							, (task_argument_t)central_data 						, 0);
-	//init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation_quaternion                               , (task_argument_t)central_data						, 0);
 
 	init_success &= scheduler_add_task(scheduler, 15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , (task_function_t)&tasks_run_barometer_update                      , (task_argument_t)central_data						, 2);
-	// init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&tasks_run_gps_update                            , (task_argument_t)central_data						, 3);
+	init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&tasks_run_gps_update                            , (task_argument_t)central_data						, 3);
 	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&navigation_update								, (task_argument_t)&central_data->navigation			, 4);
 	
 	init_success &= scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
@@ -219,7 +226,7 @@ bool tasks_create_tasks(Central_data* central_data)
 	
 	init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH , (task_function_t)&remote_update 									, (task_argument_t)&central_data->manual_control.remote	, 12);
 
-	// init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar					, 12);
+	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&tasks_run_sonar_update							, (task_argument_t)central_data							, 13);
 	
 	scheduler_sort_tasks(scheduler);
 	

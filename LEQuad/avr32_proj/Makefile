@@ -127,7 +127,6 @@ SRCS_INC += -I${MAVRIC_SRC}/asf/common/boards/user_board
 # Sources files for project folder (*.c and *.cpp)
 SRCS += main.cpp
 SRCS += central_data.cpp
-SRCS += boardsupport.cpp
 SRCS += mavlink_telemetry.cpp
 SRCS += tasks.cpp
 
@@ -229,8 +228,8 @@ LIB_SRCS += control/vector_field_waypoint.cpp
 LIB_SRCS += control/velocity_controller_copter.cpp
 
 LIB_SRCS += drivers/battery.c                    
+LIB_SRCS += drivers/barometer_telemetry.cpp          
 LIB_SRCS += drivers/bmp085.cpp                   
-LIB_SRCS += drivers/bmp085_telemetry.cpp          
 LIB_SRCS += drivers/flow.c                  
 LIB_SRCS += drivers/gps_ublox.cpp                 
 LIB_SRCS += drivers/gps_telemetry.cpp       

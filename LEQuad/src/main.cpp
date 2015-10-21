@@ -38,7 +38,6 @@
  *
  ******************************************************************************/
  
-#include "boardsupport.hpp"
 #include "central_data.hpp"
 #include "mavlink_telemetry.hpp"
 #include "tasks.hpp"
@@ -47,12 +46,18 @@
 #include "file_flash_avr32.hpp"
 #include "serial_usb_avr32.hpp"
 
+#include "dynamic_model_quad_diag.hpp"
+#include "simulation.hpp"
+
 extern "C" 
 {
 	#include "led.h"
 	#include "time_keeper.h"
 	#include "print_util.h"
 	#include "piezo_speaker.h"
+
+	#include "servos.h"
+	#include "servos_default_config.h"
 }
 
 #include "dbg.hpp"
@@ -60,63 +65,18 @@ extern "C"
 void initialisation(Central_data& central_data, Megafly_rev4& board) 
 {	
 	bool init_success = true;
-	
-	// Legacy board initialisation (TODO: remove)
-	init_success &= boardsupport_init(&central_data);
 
-
-
-	// piezo_speaker_startup_bumblebot();
-	// Link debug stream to USB serial
-	
-	// Serial_usb_avr32 usb({});
-	// usb.init();
-	// usb_serial = &usb;
-
-	// // usb_serial->init();
-	// debug_stream.get   = NULL; 
-	// debug_stream.flush = NULL; 
-	// debug_stream.buffer_empty = NULL; 
-	// debug_stream.put = &serial_put_stream; 
-	// debug_stream.data = NULL;
-	// central_data.debug_out_stream = &debug_stream;
-
-	// usb_serial = Serial_usb_avr32({});
-	// usb_serial = usb;
-	// usb_serial = Serial_usb_avr32({});
-	// usb_serial.init();
-
-	// debug_stream.get   = NULL; 
-	// debug_stream.flush = NULL; 
-	// debug_stream.buffer_empty = NULL; 
-	// debug_stream.put = &serial_put_stream; 
-	// debug_stream.data = NULL;
-	// central_data.debug_out_stream = &debug_stream;
-
-
-	// print_util_dbg_print_init(central_data.debug_out_stream);
-	// print_util_dbg_print("Debug stream initialised\r\n");
-
-	// piezo_speaker_startup_bumblebot();
-
-
-
-	// New board initialisation
+	// Board initialisation
 	init_success &= board.init();
 
 	// Init central data
-	init_success &= central_data.init(board.uart0, board.bmp085, board.spektrum_satellite);
+	init_success &= central_data.init();
 
 	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
 
 	onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters);
 
-	// if (read_from_flash_result)
-	// {
-	// 	simulation_switch_from_reality_to_simulation(&central_data.sim_model);
-	// }
-
-	init_success &= mavlink_telemetry_init(&central_data, &board);
+	init_success &= mavlink_telemetry_init(&central_data);
 
 	central_data.state.mav_state = MAV_STATE_STANDBY;	
 	
@@ -144,13 +104,38 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 
 int main (void)
 {
-	Megafly_rev4 board 	= Megafly_rev4();
-	Central_data cd 	= Central_data( board.imu, 
-										board.bmp085,
-										board.gps_ublox, 
-										board.sonar_i2cxl,
-										board.file_flash);
-	
+	// Create board
+	Megafly_rev4 board = Megafly_rev4();
+
+	// Create simulation
+	servos_t sim_servos;
+	servos_init(&sim_servos, servos_default_config() );
+	servos_set_value_failsafe( &sim_servos );
+	Dynamic_model_quad_diag sim_model = Dynamic_model_quad_diag(sim_servos);
+	Simulation sim = Simulation(sim_model);
+	Imu sim_imu = Imu(  sim.accelerometer(),
+						sim.gyroscope(),
+						sim.magnetometer() );
+
+	// Create central data
+	// Central_data cd = Central_data( board.imu, 
+	// 								board.bmp085,
+	// 								board.gps_ublox, 
+	// 								board.sonar_i2cxl,
+	// 								board.file_flash,
+	// 								board.servos );
+
+	// Create central data with simulated sensors
+	Central_data cd = Central_data( sim_imu, 
+									sim.barometer(),
+									sim.gps(), 
+									sim.sonar(),
+									board.uart0, 				// mavlink serial
+									board.spektrum_satellite,
+									board.file_flash,
+									sim_servos,
+									board.analog_monitor );
+
 	initialisation(cd, board);
 
 	while (1 == 1) 

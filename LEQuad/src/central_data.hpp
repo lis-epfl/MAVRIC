@@ -85,7 +85,6 @@ extern "C"
 	#include "stabilisation.h"
 
 	#include "attitude_controller_p2.h"
-	#include "servos.h"
 	#include "pwm_servos.h"
 	#include "servos_mix_quadcopter_diag.h"
 
@@ -101,13 +100,13 @@ public:
 	/**
 	 * @brief   Constructor
 	 */
-	Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, File& file_flash);
+	Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, servos_t& servos, analog_monitor_t& analog_monitor);
 
 	/**
 	 * @brief   Initialisation
 	 * @return [description]
 	 */
-	bool init(Serial& uart_mavlink, Barometer& barometer, Satellite& satellite);
+	bool init(void);
 
 	/**
 	 * Public members
@@ -117,16 +116,18 @@ public:
 	Barometer&		barometer;			///< Reference to barometer
 	Gps& 			gps;				///< Reference to GPS
 	Sonar& 			sonar;				///< Reference to sonar
+	Serial&			serial_mavlink;		///< Reference to telemetry serial
+	Satellite&		satellite;			///< Reference to remote control satellite
 	File& 			file_flash;			///< Reference to flash storage
+	servos_t& 		servos;				///< Reference to servos structure
+	analog_monitor_t& analog_monitor;	///< Reference to analog to digital converter structure
 
 	scheduler_t	scheduler;
 	mavlink_communication_t mavlink_communication;
 	
 	command_t command;
 	servos_mix_quadcotper_diag_t servo_mix;
-	servos_t servos;
 
-	analog_monitor_t analog_monitor;							///< The analog to digital converter structure
 
 	qfilter_t attitude_filter;									///< The qfilter structure
 	ahrs_t ahrs;												///< The attitude estimation structure
