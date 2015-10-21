@@ -52,6 +52,7 @@
 #include "sonar_i2cxl.h"
 
 #include "acoustic_telemetry.h"
+#include "airspeed_analog_telemetry.h"
 #include "fat_fs_mounting_telemetry.h"
 #include "hud_telemetry.h"
 #include "remote_telemetry.h"
@@ -68,6 +69,8 @@
 #include "scheduler_telemetry.h"
 #include "sonar_telemetry.h"
 #include "servos_mix_wing_telemetry.h"
+
+#include "analog_monitor_telemetry.h"
 
 #include "conf_platform.h"
 
@@ -252,13 +255,13 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//////////////
 	// AIRSPEED //
 	//////////////
-	// Sensor
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_pres_off", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
-	
-	// GPS for comparison
+	//// Sensor
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_pres_off", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
+	//
+	//// GPS for comparison
 	
 	
 	return init_success;
@@ -290,6 +293,9 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 	&central_data->mavlink_communication.message_handler);
 	
 	init_success &= servo_mix_wing_telemetry_init(	&central_data->servo_mix,
+	&central_data->mavlink_communication.message_handler);
+	
+	init_success &= airspeed_analog_telemetry_init(	&central_data->airspeed_analog,
 	&central_data->mavlink_communication.message_handler);
 	
 	return init_success;
@@ -537,9 +543,11 @@ bool mavlink_telemetry_init(void)
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
 	
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&scheduler_telemetry_send_rt_stats,								&central_data->scheduler, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
+	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&scheduler_telemetry_send_rt_stats,								&central_data->scheduler, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&acoustic_telemetry_send,										&central_data->audio_data, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&airspeed_analog_telemetry_send,								&central_data->airspeed_analog, 		MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&analog_monitor_telemetry_send_differential_pressure,			&central_data->analog_monitor, 			MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
 	
 	scheduler_sort_tasks(&central_data->mavlink_communication.scheduler);
 	
