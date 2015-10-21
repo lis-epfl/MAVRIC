@@ -109,7 +109,7 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 
 	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
 
-	bool read_from_flash_result = onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters);
+	onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters);
 
 	// if (read_from_flash_result)
 	// {
@@ -144,17 +144,12 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 
 int main (void)
 {
-	// File_dummy file("flash.bin");
-	File_flash_avr32 file("flash.bin");
-
-	// Imu imu;
 	Megafly_rev4 board 	= Megafly_rev4();
 	Central_data cd 	= Central_data( board.imu, 
-										board.i2c1, 
 										board.bmp085,
-										board.lsm330dlc,
-										board.hmc5883l,
-										file);
+										board.gps_ublox, 
+										board.sonar_i2cxl,
+										board.file_flash);
 	
 	initialisation(cd, board);
 

@@ -168,46 +168,10 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 }
 
 
-// new task to test P^2 attutude controller
-task_return_t tasks_run_stabilisation_quaternion(Central_data* central_data);
-task_return_t tasks_run_stabilisation_quaternion(Central_data* central_data)
-{
-	tasks_run_imu_update(central_data);
-	
-	mav_mode_t mode = central_data->state.mav_mode;
-
-	if( mode.MANUAL == MANUAL_ON && mode.STABILISE == STABILISE_ON )
-	{
-		manual_control_get_control_command(&central_data->manual_control, &central_data->controls);
-		
-		central_data->command.attitude.rpy[0] 	= 2 * central_data->controls.rpy[0];
-		central_data->command.attitude.rpy[1] 	= 2 * central_data->controls.rpy[1];
-		central_data->command.attitude.rpy[2] 	= 2 * central_data->controls.rpy[2];
-		central_data->command.thrust.thrust 	= central_data->controls.thrust;
-	
-		attitude_controller_p2_update( &central_data->attitude_controller );			
-		servos_mix_quadcopter_diag_update( &central_data->servo_mix );
-	}
-	else
-	{
-		servos_set_value_failsafe( &central_data->servos );
-	}
-
-	// !!! -- for safety, this should remain the only place where values are written to the servo outputs! --- !!!
-	if ( mode.ARMED == ARMED_ON && mode.HIL == HIL_OFF )
-	{
-		pwm_servos_write_to_hardware( &central_data->servos );
-	}
-	
-	return TASK_RUN_SUCCESS;
-} 
-
-
-
 task_return_t tasks_run_gps_update(Central_data* central_data) 
 {
 
-	gps_ublox_update(&central_data->gps);
+	central_data->gps.update();
 	
 	return TASK_RUN_SUCCESS;
 }

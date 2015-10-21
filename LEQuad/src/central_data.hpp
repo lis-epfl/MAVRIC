@@ -42,8 +42,11 @@
 #ifndef CENTRAL_DATA_H_
 #define CENTRAL_DATA_H_
 
-#include "megafly_rev4.hpp"
-#include "sonar_i2cxl.hpp"
+#include "imu.hpp"
+#include "gps.hpp"
+#include "sonar.hpp"
+#include "file.hpp"
+
 #include "stabilisation_copter.hpp"
 #include "mavlink_communication.hpp"
 #include "onboard_parameters.hpp"
@@ -54,14 +57,12 @@
 #include "data_logging.hpp"
 #include "fat_fs_mounting.hpp"
 #include "qfilter.hpp"
-#include "imu.hpp"
 #include "mavlink_stream.hpp"
 #include "simulation.hpp"
 #include "position_estimation.hpp"
 #include "state.hpp"
 #include "manual_control.hpp"
-#include "gps_ublox.hpp"
-#include "file.hpp"
+
 
 extern "C" 
 {
@@ -83,8 +84,6 @@ extern "C"
 	#include "analog_monitor.h"
 	#include "stabilisation.h"
 
-	#include "sd_spi.h"
-
 	#include "attitude_controller_p2.h"
 	#include "servos.h"
 	#include "pwm_servos.h"
@@ -102,7 +101,7 @@ public:
 	/**
 	 * @brief   Constructor
 	 */
-	Central_data(Imu& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file);
+	Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, File& file_flash);
 
 	/**
 	 * @brief   Initialisation
@@ -114,18 +113,15 @@ public:
 	 * Public members
 	 * 
 	 */	
-	// Megafly_rev4 	board;
-	Imu& 			imu;				///< The IMU structure
-	Sonar_i2cxl 	sonar;
-	// Barometer& 		barometer;
-	Bmp085& 		barometer;			// TODO: use Barometer interface instead
-	Lsm330dlc& 		gyroaccelero;		// TODO: use gyro+accelero interface instead
-	Hmc5883l&		magnetometer;		// TODO: use magnetometer interface instead
-	File& 			file_flash;			
+	Imu& 			imu;				///< Reference to IMU
+	Barometer&		barometer;			///< Reference to barometer
+	Gps& 			gps;				///< Reference to GPS
+	Sonar& 			sonar;				///< Reference to sonar
+	File& 			file_flash;			///< Reference to flash storage
 
 	scheduler_t	scheduler;
 	mavlink_communication_t mavlink_communication;
-	attitude_controller_p2_t attitude_controller;
+	
 	command_t command;
 	servos_mix_quadcotper_diag_t servo_mix;
 	servos_t servos;
@@ -134,6 +130,7 @@ public:
 
 	qfilter_t attitude_filter;									///< The qfilter structure
 	ahrs_t ahrs;												///< The attitude estimation structure
+
 	control_command_t controls;									///< The control structure used for rate and attitude modes
 	control_command_t controls_nav;								///< The control nav structure used for velocity modes
 	control_command_t controls_joystick;						///< The control structure for the joystick
@@ -141,15 +138,9 @@ public:
 	manual_control_t manual_control;							///< The joystick parsing structure
 	
 	stabilisation_copter_t stabilisation_copter;				///< The stabilisation structure for copter
-
-	gps_t gps;													///< The GPS structure
-		
-	// simulation_model_t sim_model;								///< The simulation model structure
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
-		
 	mavlink_waypoint_handler_t waypoint_handler;
-	
 	navigation_t navigation;									///< The structure to perform GPS navigation
 	
 	state_t state;												///< The structure with all state information
@@ -157,8 +148,7 @@ public:
 		
 	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 	
-	sd_spi_t sd_spi;											///< The sd_SPI driver structure
-	
+	sd_spi_t sd_spi;											///< The sd_SPI driver structure	
 	data_logging_t data_logging;								///< The log data structure	
 	fat_fs_mounting_t fat_fs_mounting; 							///< The Fat fs system file mounting structure
 };

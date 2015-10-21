@@ -63,16 +63,14 @@ extern "C"
 }
 
 
-Central_data::Central_data(Imu& imu, I2c& i2c_sonar, Bmp085& baro, Lsm330dlc& gyracc, Hmc5883l& magneto, File& file):
-	imu(imu),
-	sonar( Sonar_i2cxl(i2c_sonar) ),
-	barometer(baro),
-	gyroaccelero(gyracc),
-	magnetometer(magneto),
-	file_flash(file)
-{	
-	;
-}
+Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, File& file_flash):
+	imu( imu ),
+	barometer( barometer ),
+	gps( gps ),
+	sonar( sonar ),
+	file_flash( file_flash )
+{}
+
 
 bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& satellite )
 {
@@ -84,9 +82,6 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	pwm_servos_write_to_hardware( &servos );
 
 	time_keeper_delay_ms(100);	
-
-	// Init GPS
-	// gps_ublox_init( &gps, &board.uart3 );	
 
 	// Init main sheduler
 	init_success &= scheduler_init(&scheduler, scheduler_default_config());
@@ -116,13 +111,7 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 										&state,
 										&gps,
 										&manual_control);
-	time_keeper_delay_ms(100);
 
-	// // Init imu
-	// init_success &= imu_init(   &imu,
-	// 							imu_config(),
-	// 							&state );
-	
 	time_keeper_delay_ms(100);
 
 	// Init ahrs
@@ -166,7 +155,7 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	time_keeper_delay_ms(100);
 
 
-	// Init waypont handler
+	// Init waypoint handler
 	init_success &= waypoint_handler_init(  &waypoint_handler,
 											&position_estimation,
 											&ahrs,
@@ -192,21 +181,6 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	time_keeper_delay_ms(100);
 
 	init_success &= stabilisation_init( &controls);
-	
-	time_keeper_delay_ms(100);
-
-	// Init simulation (should be done after position_estimation)
-	// init_success &= simulation_init(&sim_model,
-	// 								simulation_default_config(),
-	// 								&ahrs,
-	// 								&imu,
-	// 								&position_estimation,
-	// 								&barometer,
-	// 								&gps,
-	// 								&sonar.data,
-	// 								&state,
-	// 								&state.nav_plan_active,
-	// 								&servo_mix);
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
@@ -218,10 +192,6 @@ bool Central_data::init(Serial& uart_mavlink, Barometer& barometer, Satellite& s
 	
 	time_keeper_delay_ms(100);
 	
-	// Init sonar
-	// init_success &= sonar_i2cxl_init(&sonar_i2cxl);
-
-
 	// Init servo mixing
 	init_success &= servos_mix_quadcotper_diag_init( &servo_mix,
 													 servos_mix_quadcopter_diag_default_config(),

@@ -43,6 +43,7 @@
 #define MAVLINK_TELEMETRY_H_
 
 #include "central_data.hpp"
+#include "megafly_rev4.hpp"
 #include "onboard_parameters.hpp"
 #include "mavlink_stream.hpp"
 
