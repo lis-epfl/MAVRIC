@@ -243,8 +243,10 @@ LIB_SRCS += drivers/spektrum_satellite.cpp
 
 LIB_SRCS += hal/common/fat_fs_mounting.cpp
 LIB_SRCS += hal/common/fat_fs_mounting_telemetry.cpp
-
-# LIB_SRCS += hal/common/dbg.cpp
+LIB_SRCS += hal/common/dbg.cpp
+LIB_SRCS += hal/common/file.cpp
+LIB_SRCS += hal/common/serial.cpp
+LIB_SRCS += hal/common/dbg.cpp
  
 LIB_SRCS += hal/avr32/adc_int.c          
 LIB_SRCS += hal/avr32/analog_monitor.c            
@@ -304,6 +306,7 @@ LIB_SRCS += util/kalman.c
 LIB_SRCS += util/linear_algebra.c
 LIB_SRCS += util/print_util.c
 LIB_SRCS += util/quick_trig.c
+LIB_SRCS += util/string_util.c
 
 # ------------------------------------------------------------------------------
 # PREPROCESSOR OPTIONS
