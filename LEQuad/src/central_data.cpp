@@ -45,7 +45,6 @@
 #include "mavlink_communication_default_config.hpp"
 // #include "conf_imu.hpp"
 #include "position_estimation_default_config.hpp"
-// #include "simulation_default_config.hpp"
 #include "remote_default_config.hpp"
 #include "state_default_config.hpp"
 #include "manual_control_default_config.hpp"
@@ -58,6 +57,8 @@ extern "C"
 	#include "scheduler_default_config.h"
 	#include "attitude_controller_p2_default_config.h"
 	#include "servos_mix_quadcopter_diag_default_config.h"
+
+	#include "print_util.h"
 
 	#include "conf_platform.h"
 }
@@ -79,148 +80,218 @@ Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sona
 bool Central_data::init(void)
 {
 	bool init_success = true;
+	bool ret;
 
+	print_util_dbg_sep('%');
+	time_keeper_delay_ms(100); 
+	print_util_dbg_sep('-');
+	time_keeper_delay_ms(100); 
+	print_util_dbg_print("[CENTRAL_DATA] ...\r\n");
+	time_keeper_delay_ms(100); 
+	print_util_dbg_sep('-');
+
+
+	// -------------------------------------------------------------------------
 	// Init main sheduler
-	init_success &= scheduler_init(&scheduler, scheduler_default_config());
-	
+	// -------------------------------------------------------------------------
+	ret = scheduler_init(&scheduler, scheduler_default_config());
+	print_util_dbg_init_msg("[SCHEDULER]", ret);
+	init_success &= ret;
 	time_keeper_delay_ms(100); 
 
+
+	// -------------------------------------------------------------------------
 	// Init mavlink communication
+	// -------------------------------------------------------------------------
 	mavlink_communication_conf_t mavlink_communication_config = mavlink_communication_default_config();
 	mavlink_communication_config.mavlink_stream_config.sysid = MAVLINK_SYS_ID;
-	init_success &= mavlink_communication_init(	&mavlink_communication, 
-												mavlink_communication_config, 
-												&serial_mavlink,
-												&state,
-												&file_flash );
-	
+	ret = mavlink_communication_init(	&mavlink_communication, 
+										mavlink_communication_config, 
+										&serial_mavlink,
+										&state,
+										&file_flash );
+	print_util_dbg_init_msg("[MAVLINK]", ret);
+	init_success &= ret;
 	time_keeper_delay_ms(100); 
 
+
+	// -------------------------------------------------------------------------
 	// Init state structure
-	init_success &= state_init(	&state,
-								state_default_config(),
-								&analog_monitor); 
-	
-	time_keeper_delay_ms(100);
+	// -------------------------------------------------------------------------
+	ret = state_init(	&state,
+						state_default_config(),
+						&analog_monitor); 
+	print_util_dbg_init_msg("[STATE]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 
+
+	// -------------------------------------------------------------------------
 	//Init state_machine	
-	init_success &= state_machine_init( &state_machine,
-										&state,
-										&gps,
-										&manual_control);
+	// -------------------------------------------------------------------------
+	ret = state_machine_init( 	&state_machine,
+								&state,
+								&gps,
+								&manual_control);
+	print_util_dbg_init_msg("[STATE MACHINE]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 
-	time_keeper_delay_ms(100);
 
+	// -------------------------------------------------------------------------
 	// Init ahrs
-	init_success &= ahrs_init(&ahrs);
-
-	time_keeper_delay_ms(100);
-
+	// -------------------------------------------------------------------------
+	ret = ahrs_init(&ahrs);
+	print_util_dbg_init_msg("[AHRS]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 	
+
+	// -------------------------------------------------------------------------
 	// Init qfilter
-	init_success &= qfilter_init(   &attitude_filter,
-									qfilter_default_config(),
-									&imu,
-									&ahrs);
+	// -------------------------------------------------------------------------
+	ret = qfilter_init( &attitude_filter,
+						qfilter_default_config(),
+						&imu,
+						&ahrs);
+	print_util_dbg_init_msg("[QFILTER]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 	
-	time_keeper_delay_ms(100);
-	
+
+	// -------------------------------------------------------------------------
 	// Init position_estimation_init
-	init_success &= position_estimation_init(   	&position_estimation,
-													position_estimation_default_config(),
-													&state,
-													&barometer,
-													&sonar,
-													&gps,
-													&ahrs,
-													&data_logging);
-	
-	time_keeper_delay_ms(100);
-
-	// Init navigation
-	init_success &= navigation_init(&navigation,
-									navigation_default_config(),
-									&controls_nav,
-									&ahrs.qe,
-									&waypoint_handler,
-									&position_estimation,
+	// -------------------------------------------------------------------------
+	ret = position_estimation_init( &position_estimation,
+									position_estimation_default_config(),
 									&state,
-									&manual_control,
-									&mavlink_communication);/*,
-									&sonar_i2cxl);*/
-	
-	time_keeper_delay_ms(100);
+									&barometer,
+									&sonar,
+									&gps,
+									&ahrs,
+									&data_logging);
+	print_util_dbg_init_msg("[POS EST]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 
 
+	// -------------------------------------------------------------------------
+	// Init navigation
+	// -------------------------------------------------------------------------
+	ret = navigation_init(	&navigation,
+							navigation_default_config(),
+							&controls_nav,
+							&ahrs.qe,
+							&waypoint_handler,
+							&position_estimation,
+							&state,
+							&manual_control,
+							&mavlink_communication);/*,
+							&sonar_i2cxl);*/
+	print_util_dbg_init_msg("[NAV]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
+
+
+	// -------------------------------------------------------------------------
 	// Init waypoint handler
-	init_success &= waypoint_handler_init(  &waypoint_handler,
-											&position_estimation,
-											&ahrs,
-											&state,
-											&mavlink_communication,
-											&mavlink_communication.mavlink_stream);
+	// -------------------------------------------------------------------------
+	ret = waypoint_handler_init(	&waypoint_handler,
+									&position_estimation,
+									&ahrs,
+									&state,
+									&mavlink_communication,
+									&mavlink_communication.mavlink_stream);
 	waypoint_handler_init_homing_waypoint(&waypoint_handler);
 	waypoint_handler_nav_plan_init(&waypoint_handler);
-	
+	print_util_dbg_init_msg("[WAYPOINT]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 
-	time_keeper_delay_ms(100);
-
 	
+	// -------------------------------------------------------------------------
 	// Init stabilisers
-	init_success &= stabilisation_copter_init(	&stabilisation_copter,
-												stabilisation_copter_default_config(),
-												&controls,
-												&ahrs,
-												&position_estimation,
-												&command.torque,
-												&command.thrust);
-	
-	time_keeper_delay_ms(100);
-
-	init_success &= stabilisation_init( &controls);
-
-	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
-	
-	// Init hud	
-	init_success &= hud_telemetry_init(	&hud_structure, 
-										&position_estimation,
+	// -------------------------------------------------------------------------
+	ret = stabilisation_copter_init(	&stabilisation_copter,
+										stabilisation_copter_default_config(),
 										&controls,
-										&ahrs);
+										&ahrs,
+										&position_estimation,
+										&command.torque,
+										&command.thrust);
+	print_util_dbg_init_msg("[STABILISATION COPTER]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
+
+
+	// -------------------------------------------------------------------------
+	// Init controls
+	// -------------------------------------------------------------------------
+	ret = stabilisation_init( &controls);
+	print_util_dbg_init_msg("[CONTROLS]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 	
-	time_keeper_delay_ms(100);
 	
+	// -------------------------------------------------------------------------
+	// Init hud	
+	// -------------------------------------------------------------------------
+	ret = hud_telemetry_init(	&hud_structure, 
+								&position_estimation,
+								&controls,
+								&ahrs);
+	print_util_dbg_init_msg("[HUD]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
+	
+
+	// -------------------------------------------------------------------------
 	// Init servo mixing
-	init_success &= servos_mix_quadcotper_diag_init( &servo_mix,
-													 servos_mix_quadcopter_diag_default_config(),
-													 &command.torque,
-													 &command.thrust,
-													 &servos);
+	// -------------------------------------------------------------------------
+	ret = servos_mix_quadcotper_diag_init( 	&servo_mix,
+											servos_mix_quadcopter_diag_default_config(),
+											&command.torque,
+											&command.thrust,
+											&servos);
+	print_util_dbg_init_msg("[SERVOS MIX]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 
-	time_keeper_delay_ms(100);
 
+	// -------------------------------------------------------------------------
 	// Init manual control
-	init_success &= manual_control_init(&manual_control,
-										&satellite,
-										manual_control_default_config(),
-										remote_default_config());
+	// -------------------------------------------------------------------------
+	ret = manual_control_init(	&manual_control,
+								&satellite,
+								manual_control_default_config(),
+								remote_default_config());
+	print_util_dbg_init_msg("[MANUAL CTRL]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 
-	time_keeper_delay_ms(100);
 
-	//Init data logging
+	// -------------------------------------------------------------------------
+	// Init data logging
+	// -------------------------------------------------------------------------
 	//TODO: not working here
+	ret = fat_fs_mounting_init(	&fat_fs_mounting,
+								data_logging_default_config(),
+								&state);
+	ret = data_logging_create_new_log_file(	&data_logging,
+											"Log_file",
+											true,
+											&fat_fs_mounting,
+											mavlink_communication.mavlink_stream.sysid);
+	print_util_dbg_init_msg("[DATA LOGGING]", ret);
+	init_success &= ret;
+	time_keeper_delay_ms(100); 
 
-	init_success &= fat_fs_mounting_init(	&fat_fs_mounting,
-											data_logging_default_config(),
-											&state);
-
-
+	print_util_dbg_sep('-');
+	time_keeper_delay_ms(100); 
+	print_util_dbg_init_msg("[CENTRAL_DATA]", init_success);
+	time_keeper_delay_ms(100); 
+	print_util_dbg_sep('-');
 	time_keeper_delay_ms(100);
-
-	init_success &= data_logging_create_new_log_file(	&data_logging,
-														"Log_file",
-														true,
-														&fat_fs_mounting,
-														mavlink_communication.mavlink_stream.sysid);
-
+	
 	return init_success;
 }

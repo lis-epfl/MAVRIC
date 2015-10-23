@@ -137,8 +137,8 @@ bool mavlink_telemetry_init_communication_module(Central_data* central_data)
 	init_success &= state_telemetry_init(   &central_data->state,
 	&central_data->mavlink_communication.message_handler);
 
-	// init_success &= imu_telemetry_init( &central_data->imu,
-	// &central_data->mavlink_communication.message_handler);
+	init_success &= imu_telemetry_init( &central_data->imu,
+	&central_data->mavlink_communication.message_handler);
 
 	init_success &= remote_telemetry_init(  &central_data->manual_control.remote,
 	&central_data->mavlink_communication.message_handler);
@@ -295,31 +295,32 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t* onboard_para
 	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->attitude_filter.kp_mag                                    , "QF_kp_mag"        );
 	//init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &attitude_stabiliser->rpy_controller[YAW].differentiator.gain         , "YawAPid_D_Gain"   );
 	
-	// Biaises
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_gyro.bias[X]									  , "Bias_Gyro_X"      );
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_gyro.bias[Y]									  , "Bias_Gyro_Y"      );
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_gyro.bias[Z]									  , "Bias_Gyro_Z"      );
+	// Biases
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->gyroscope.bias[X]									  , "Bias_Gyro_X"      );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->gyroscope.bias[Y]									  , "Bias_Gyro_Y"      );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->gyroscope.bias[Z]									  , "Bias_Gyro_Z"      );
 	
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_accelero.bias[X]								  , "Bias_Acc_X"       );
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_accelero.bias[Y]								  , "Bias_Acc_Y"       );
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_accelero.bias[Z]								  , "Bias_Acc_Z"       );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->accelerometer.bias[X]								  , "Bias_Acc_X"       );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->accelerometer.bias[Y]								  , "Bias_Acc_Y"       );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->accelerometer.bias[Z]								  , "Bias_Acc_Z"       );
 	
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_compass.bias[X]								  , "Bias_Mag_X"       );
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_compass.bias[Y]								  , "Bias_Mag_Y"       );
-	// init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_compass.bias[Z]								  , "Bias_Mag_Z"       );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->magnetometer.bias[X]								  , "Bias_Mag_X"       );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->magnetometer.bias[Y]								  , "Bias_Mag_Y"       );
+	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.get_config()->magnetometer.bias[Z]								  , "Bias_Mag_Z"       );
 	
-	// // Scale factor
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_gyro.scale_factor[X]							  , "Scale_Gyro_X"     );
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_gyro.scale_factor[Y]							  , "Scale_Gyro_Y"     );
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_gyro.scale_factor[Z]							  , "Scale_Gyro_Z"     );
+	// Scale factor
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->gyroscope.scale_factor[X]							  , "Scale_Gyro_X"     );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->gyroscope.scale_factor[Y]							  , "Scale_Gyro_Y"     );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->gyroscope.scale_factor[Z]							  , "Scale_Gyro_Z"     );
 	
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_accelero.scale_factor[X]                       , "Scale_Acc_X"      );
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_accelero.scale_factor[Y]                       , "Scale_Acc_Y"      );
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_accelero.scale_factor[Z]                       , "Scale_Acc_Z"      );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->accelerometer.scale_factor[X]                       , "Scale_Acc_X"      );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->accelerometer.scale_factor[Y]                       , "Scale_Acc_Y"      );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->accelerometer.scale_factor[Z]                       , "Scale_Acc_Z"      );
 	
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_compass.scale_factor[X]                        , "Scale_Mag_X"      );
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_compass.scale_factor[Y]                        , "Scale_Mag_Y"      );
-	// init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.calib_compass.scale_factor[Z]                        , "Scale_Mag_Z"      );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->magnetometer.scale_factor[X]                        , "Scale_Mag_X"      );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->magnetometer.scale_factor[Y]                        , "Scale_Mag_Y"      );
+	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->imu.get_config()->magnetometer.scale_factor[Z]                        , "Scale_Mag_Z"      );
+
 
 	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_alt_baro                              , "Pos_kp_alt_baro"       );
 	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_vel_baro                              , "Pos_kp_velb"      );
@@ -364,7 +365,7 @@ bool mavlink_telemetry_init(Central_data* central_data)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_heartbeat,								&central_data->state, 					MAVLINK_MSG_ID_HEARTBEAT			);// ID 0
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,	 RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_status,									&central_data->state,					MAVLINK_MSG_ID_SYS_STATUS			);// ID 1
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&gps_telemetry_send_raw,										&central_data->gps,						MAVLINK_MSG_ID_GPS_RAW_INT			);// ID 24
-	// init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&imu_telemetry_send_scaled,										&central_data->imu, 					MAVLINK_MSG_ID_SCALED_IMU			);// ID 26
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&imu_telemetry_send_scaled,										&central_data->imu, 					MAVLINK_MSG_ID_SCALED_IMU			);// ID 26
 	// init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&imu_telemetry_send_raw,										&central_data->imu, 					MAVLINK_MSG_ID_RAW_IMU				);// ID 27
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&barometer_telemetry_send,										&central_data->barometer,				MAVLINK_MSG_ID_SCALED_PRESSURE		);// ID 29
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&ahrs_telemetry_send_attitude,									&central_data->ahrs,				 	MAVLINK_MSG_ID_ATTITUDE				);// ID 30
@@ -390,7 +391,7 @@ bool mavlink_telemetry_init(Central_data* central_data)
 	
 	scheduler_sort_tasks(&central_data->mavlink_communication.scheduler);
 	
-	print_util_dbg_print("MAVlink telemetry initialiased\r\n");
+	print_util_dbg_init_msg("[TELEMETRY]", init_success);
 	
 	return init_success;
 }

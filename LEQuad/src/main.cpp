@@ -74,7 +74,12 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 
 	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
 
-	onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters);
+	// Try to read from flash, if unsuccessful, write to flash
+	if( onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters) == false )
+	{
+		onboard_parameters_write_parameters_to_storage(&central_data.mavlink_communication.onboard_parameters);
+		init_success = false; 
+	}
 
 	init_success &= mavlink_telemetry_init(&central_data);
 
@@ -94,20 +99,23 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 		piezo_speaker_critical_error_melody();
 	}
 
-	print_util_dbg_print("OK. Starting up.\r\n");
+	print_util_dbg_print("[MAIN] OK. Starting up.\r\n");
 }
-
-
-#include "dbg.hpp"
 
 #include <array>
 
 int main (void)
 {
+	// -------------------------------------------------------------------------
 	// Create board
-	Megafly_rev4 board = Megafly_rev4();
+	// -------------------------------------------------------------------------
+	megafly_rev4_conf_t board_config = megafly_rev4_default_config();
+	Megafly_rev4 board = Megafly_rev4( board_config );
 
+
+	// -------------------------------------------------------------------------
 	// Create simulation
+	// -------------------------------------------------------------------------
 	servos_t sim_servos;
 	servos_init(&sim_servos, servos_default_config() );
 	servos_set_value_failsafe( &sim_servos );
@@ -117,24 +125,32 @@ int main (void)
 						sim.gyroscope(),
 						sim.magnetometer() );
 
-	// Create central data
-	// Central_data cd = Central_data( board.imu, 
-	// 								board.bmp085,
-	// 								board.gps_ublox, 
-	// 								board.sonar_i2cxl,
-	// 								board.file_flash,
-	// 								board.servos );
 
-	// Create central data with simulated sensors
-	Central_data cd = Central_data( sim_imu, 
-									sim.barometer(),
-									sim.gps(), 
-									sim.sonar(),
-									board.uart0, 				// mavlink serial
+	// -------------------------------------------------------------------------
+	// Create central data
+	// -------------------------------------------------------------------------
+	// Create central data using real sensors
+	Central_data cd = Central_data( board.imu, 
+									board.bmp085,
+									board.gps_ublox, 
+									// board.sonar_i2cxl,		// Warning:
+									sim.sonar(),				// this is simulated
+									board.uart0,
 									board.spektrum_satellite,
 									board.file_flash,
-									sim_servos,
+									board.servos,
 									board.analog_monitor );
+
+	// Create central data with simulated sensors
+	// Central_data cd = Central_data( sim_imu, 
+	// 								sim.barometer(),
+	// 								sim.gps(), 
+	// 								sim.sonar(),
+	// 								board.uart0, 				// mavlink serial
+	// 								board.spektrum_satellite,
+	// 								board.file_flash,
+	// 								sim_servos,
+	// 								board.analog_monitor );
 
 	initialisation(cd, board);
 
