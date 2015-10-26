@@ -48,6 +48,7 @@
 
 #include "dynamic_model_quad_diag.hpp"
 #include "simulation.hpp"
+#include "adc_dummy.hpp"
 
 extern "C" 
 {
@@ -116,41 +117,52 @@ int main (void)
 	// -------------------------------------------------------------------------
 	// Create simulation
 	// -------------------------------------------------------------------------
+	// Simulated servos
 	servos_t sim_servos;
 	servos_init(&sim_servos, servos_default_config() );
 	servos_set_value_failsafe( &sim_servos );
-	Dynamic_model_quad_diag sim_model = Dynamic_model_quad_diag(sim_servos);
-	Simulation sim = Simulation(sim_model);
-	Imu sim_imu = Imu(  sim.accelerometer(),
-						sim.gyroscope(),
-						sim.magnetometer() );
+	
+	// Simulated dynamic model
+	Dynamic_model_quad_diag sim_model 	= Dynamic_model_quad_diag(sim_servos);
+	Simulation sim 						= Simulation(sim_model);
+	
+	// Simulated battery
+	Adc_dummy 	sim_adc_battery = Adc_dummy(11.1f);
+	Battery 	sim_battery 	= Battery(sim_adc_battery);
+
+	// Simulated IMU
+	Imu 		sim_imu 		= Imu(  sim.accelerometer(),
+										sim.gyroscope(),
+										sim.magnetometer() );
 
 
 	// -------------------------------------------------------------------------
 	// Create central data
 	// -------------------------------------------------------------------------
 	// Create central data using real sensors
-	Central_data cd = Central_data( board.imu, 
-									board.bmp085,
-									board.gps_ublox, 
-									// board.sonar_i2cxl,		// Warning:
-									sim.sonar(),				// this is simulated
-									board.uart0,
-									board.spektrum_satellite,
-									board.file_flash,
-									board.servos,
-									board.analog_monitor );
-
-	// Create central data with simulated sensors
-	// Central_data cd = Central_data( sim_imu, 
-	// 								sim.barometer(),
-	// 								sim.gps(), 
-	// 								sim.sonar(),
-	// 								board.uart0, 				// mavlink serial
+	// Central_data cd = Central_data( board.imu, 
+	// 								board.bmp085,
+	// 								board.gps_ublox, 
+	// 								// board.sonar_i2cxl,		// Warning:
+	// 								sim.sonar(),				// this is simulated
+	// 								board.uart0,
 	// 								board.spektrum_satellite,
 	// 								board.file_flash,
-	// 								sim_servos,
-	// 								board.analog_monitor );
+	// 								board.battery,
+	// 								// sim_battery,
+	// 								board.servos );
+
+	// Create central data with simulated sensors
+	Central_data cd = Central_data( sim_imu, 
+									sim.barometer(),
+									sim.gps(), 
+									sim.sonar(),
+									board.uart0, 				// mavlink serial
+									board.spektrum_satellite,
+									board.file_flash,
+									// sim_battery,
+									board.battery,
+									sim_servos);
 
 	initialisation(cd, board);
 

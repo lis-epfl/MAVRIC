@@ -248,6 +248,7 @@ LIB_SRCS += hal/common/file.cpp
 LIB_SRCS += hal/common/serial.cpp
 LIB_SRCS += hal/common/dbg.cpp
  
+LIB_SRCS += hal/avr32/adc_avr32.cpp          
 LIB_SRCS += hal/avr32/adc_int.c          
 LIB_SRCS += hal/avr32/analog_monitor.c            
 LIB_SRCS += hal/avr32/analog_monitor_telemetry.cpp                  
@@ -266,6 +267,7 @@ LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c
 LIB_SRCS += hal/avr32/file_flash_avr32.cpp
 
+LIB_SRCS += hal/dummy/adc_dummy.cpp
 LIB_SRCS += hal/dummy/i2c_dummy.cpp
 LIB_SRCS += hal/dummy/serial_dummy.cpp
 LIB_SRCS += hal/dummy/gpio_dummy.cpp

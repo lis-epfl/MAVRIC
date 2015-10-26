@@ -66,9 +66,7 @@
 
 extern "C"
 {
-	#include "scheduler.h"
-	#include "analog_monitor.h"
-
+	// #include "scheduler.h"
 }
 
 //------------------------------------------------------------------------------

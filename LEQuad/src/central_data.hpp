@@ -42,6 +42,10 @@
 #ifndef CENTRAL_DATA_H_
 #define CENTRAL_DATA_H_
 
+#include <stdbool.h>
+#include <stdint.h>
+
+
 #include "imu.hpp"
 #include "gps.hpp"
 #include "sonar.hpp"
@@ -55,38 +59,29 @@
 #include "hud_telemetry.hpp"
 #include "state_machine.hpp"
 #include "data_logging.hpp"
-#include "fat_fs_mounting.hpp"
 #include "qfilter.hpp"
 #include "mavlink_stream.hpp"
 #include "simulation.hpp"
 #include "position_estimation.hpp"
 #include "state.hpp"
 #include "manual_control.hpp"
+#include "battery.hpp"
+
+
+
+#include "fat_fs_mounting.hpp"
 
 
 extern "C" 
 {
-	#include <stdbool.h>
-	#include <stdint.h>
-
-	#include "stdbool.h"
-
 	#include "time_keeper.h"
 	#include "ahrs.h"
-
 	#include "pid_controller.h"
-	#include "streams.h"
-	#include "buffer.h"
 	#include "print_util.h"
-
 	#include "coord_conventions.h"
-
-	#include "analog_monitor.h"
 	#include "stabilisation.h"
-
-	#include "attitude_controller_p2.h"
-	#include "pwm_servos.h"
 	#include "servos_mix_quadcopter_diag.h"
+
 
 	#include "sd_spi.h"
 }
@@ -98,19 +93,20 @@ class Central_data
 {
 public:
 	/**
-	 * @brief   Constructor
+	 * \brief   Constructor
 	 */
-	Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, servos_t& servos, analog_monitor_t& analog_monitor);
+	Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, Battery& battery, servos_t& servos);
+
 
 	/**
-	 * @brief   Initialisation
-	 * @return [description]
+	 * \brief   Initialisation
+	 * \return [description]
 	 */
 	bool init(void);
 
+
 	/**
 	 * Public members
-	 * 
 	 */	
 	Imu& 			imu;				///< Reference to IMU
 	Barometer&		barometer;			///< Reference to barometer
@@ -119,8 +115,8 @@ public:
 	Serial&			serial_mavlink;		///< Reference to telemetry serial
 	Satellite&		satellite;			///< Reference to remote control satellite
 	File& 			file_flash;			///< Reference to flash storage
+	Battery& 		battery;			///< Reference to battery
 	servos_t& 		servos;				///< Reference to servos structure
-	analog_monitor_t& analog_monitor;	///< Reference to analog to digital converter structure
 
 	scheduler_t	scheduler;
 	mavlink_communication_t mavlink_communication;
@@ -134,7 +130,6 @@ public:
 
 	control_command_t controls;									///< The control structure used for rate and attitude modes
 	control_command_t controls_nav;								///< The control nav structure used for velocity modes
-	control_command_t controls_joystick;						///< The control structure for the joystick
 
 	manual_control_t manual_control;							///< The joystick parsing structure
 	

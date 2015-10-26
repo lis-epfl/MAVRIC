@@ -43,12 +43,6 @@
 #define TASKS_H_
 
 #include "central_data.hpp"
-#include "remote.hpp"
-
-extern "C" 
-{
-	#include "scheduler.h"
-}
 
 /**
  * \brief 			Initialises all the tasks
@@ -77,43 +71,37 @@ void tasks_rc_user_channels(uint8_t* chan_switch, signal_quality_t* rc_check, in
 
 
 /**
- * \brief            Updates the state and mode of the UAV
- */
-// task_return_t tasks_set_mav_mode_n_state(void* arg);
-
-
-/**
  * \brief            Run the main stabilisation loop
  */
-task_return_t tasks_run_stabilisation(Central_data* central_data);
+bool tasks_run_stabilisation(Central_data* central_data);
 
 
 /**
  * \brief            Run GPS update
  */
-task_return_t tasks_run_gps_update(Central_data* central_data);
+bool tasks_run_gps_update(Central_data* central_data);
 
 
 /**
  * \brief            Run the navigation task
  */
-task_return_t tasks_run_navigation_update(Central_data* central_data);
+bool tasks_run_navigation_update(Central_data* central_data);
 
 
 /**
  * \brief            Run the barometer task
  */
-task_return_t tasks_run_barometer_update(Central_data* central_data);
+bool tasks_run_barometer_update(Central_data* central_data);
 
 /**
  * \brief            Run the sonar task
  */
-task_return_t sonar_update(Central_data* central_data);
+bool sonar_update(Central_data* central_data);
 
 /**
  * \brief            Run the LED toggle task
  */
-task_return_t tasks_led_toggle(void* arg);
+bool tasks_led_toggle(void* arg);
 
 
 #endif /* TASKS_H_ */

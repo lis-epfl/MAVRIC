@@ -41,40 +41,22 @@
 
 #include "tasks.hpp"
 #include "central_data.hpp"
-#include "sonar_i2cxl.hpp"
-#include "hmc5883l.hpp"
-#include "lsm330dlc.hpp"
-#include "navigation.hpp"
-#include "imu.hpp"
-#include "remote.hpp"
-#include "gps_ublox.hpp"
 
 extern "C"
 {
-	#include "print_util.h"
-	#include "stabilisation.h"
 	#include "led.h"
-	#include "delay.h"
-	#include "analog_monitor.h"
-	#include "stdio_usb.h"
-	//#include "data_logging.h"
 	#include "pwm_servos.h"
-	#include "attitude_controller_p2.h"
 }
 
 
 void tasks_run_imu_update(Central_data* central_data)
 {
-	// central_data->gyroaccelero.update();
-	// central_data->magnetometer.update();
-	// imu_update(	&central_data->imu);
-	
 	central_data->imu.update();
 	qfilter_update(&central_data->attitude_filter);
 	position_estimation_update(&central_data->position_estimation);
 }
 
-task_return_t tasks_run_stabilisation(Central_data* central_data) 
+bool tasks_run_stabilisation(Central_data* central_data) 
 {
 	tasks_run_imu_update(central_data);
 	
@@ -164,40 +146,40 @@ task_return_t tasks_run_stabilisation(Central_data* central_data)
 		pwm_servos_write_to_hardware( &central_data->servos );
 	}
 	
-	return TASK_RUN_SUCCESS;
+	return true;
 }
 
 
-task_return_t tasks_run_gps_update(Central_data* central_data) 
+bool tasks_run_gps_update(Central_data* central_data) 
 {
 	central_data->gps.update();
 	
-	return TASK_RUN_SUCCESS;
+	return true;
 }
 
 
-task_return_t tasks_run_barometer_update(Central_data* central_data)
+bool tasks_run_barometer_update(Central_data* central_data)
 {
 
 	central_data->barometer.update();
 
-	return TASK_RUN_SUCCESS;
+	return true;
 }
 
 
-task_return_t tasks_run_sonar_update(Central_data* central_data)
+bool tasks_run_sonar_update(Central_data* central_data)
 {
 
 	central_data->sonar.update();
 
-	return TASK_RUN_SUCCESS;
+	return true;
 }
 
-task_return_t tasks_led_toggle(void* arg)
+bool tasks_led_toggle(void* arg)
 {
 	LED_Toggle(LED1);
 
-	return TASK_RUN_SUCCESS;
+	return true;
 }
 
 
@@ -216,12 +198,8 @@ bool tasks_create_tasks(Central_data* central_data)
 	init_success &= scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
 
 	init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&mavlink_communication_update                    , (task_argument_t)&central_data->mavlink_communication , 6);
-	init_success &= scheduler_add_task(scheduler, 300000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
 	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&waypoint_handler_control_time_out_waypoint_msg  , (task_argument_t)&central_data->waypoint_handler 		, 8);
-	
-//TODO, not working yet
-//	init_success &= scheduler_add_task(scheduler, 100000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
-	
+		
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 	
 	init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH , (task_function_t)&remote_update 									, (task_argument_t)&central_data->manual_control.remote	, 12);

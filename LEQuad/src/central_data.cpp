@@ -43,7 +43,9 @@
 #include "stabilisation_copter_default_config.hpp"
 #include "data_logging_default_config.hpp"
 #include "mavlink_communication_default_config.hpp"
+
 // #include "conf_imu.hpp"
+
 #include "position_estimation_default_config.hpp"
 #include "remote_default_config.hpp"
 #include "state_default_config.hpp"
@@ -64,7 +66,7 @@ extern "C"
 }
 
 
-Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, servos_t& servos, analog_monitor_t& analog_monitor):
+Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, Battery& battery, servos_t& servos):
 	imu( imu ),
 	barometer( barometer ),
 	gps( gps ),
@@ -72,8 +74,8 @@ Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sona
 	serial_mavlink( serial_mavlink ),
 	satellite( satellite ),
 	file_flash( file_flash ),
-	servos( servos ),
-	analog_monitor( analog_monitor )
+	battery( battery ),
+	servos( servos )
 {}
 
 
@@ -120,7 +122,7 @@ bool Central_data::init(void)
 	// -------------------------------------------------------------------------
 	ret = state_init(	&state,
 						state_default_config(),
-						&analog_monitor); 
+						&battery); 
 	print_util_dbg_init_msg("[STATE]", ret);
 	init_success &= ret;
 	time_keeper_delay_ms(100); 
