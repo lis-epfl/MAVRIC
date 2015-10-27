@@ -161,32 +161,42 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.remote_active == 1)
 			{
 				// up : -0.99318  down : 0.9972 
-				if ((int32_t)(central_data->remote.channels[CHANNEL_AUX1] + 1.0f) > 0)
-				{
-					// Set custom attitude command
-					central_data->controls.rpy[ROLL] = 0.0f;
-					central_data->controls.rpy[PITCH] = 0.0f;
-
+				if ( (int32_t)(central_data->remote.channels[CHANNEL_AUX1] + 1.0f) > 0 )
+				{ //Switch ON
 					if (central_data->ld.status==1)
-					{
+					{ //Launch detected
+
+						// Set custom attitude command
+						central_data->controls.rpy[ROLL] = 0.0f;
+						central_data->controls.rpy[PITCH] = 0.0f;
 						central_data->controls.thrust = central_data->stabilisation_copter.thrust_hover_point;
+						central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
+						central_data->controls.yaw_mode=YAW_RELATIVE;
+		
+						stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+						// YAW is in relative mode so no need to change
 					}
-					// YAW is in relative mode so no need to change
+
+					//Don't stabilise if launch isn't detected
 				}
 				else 
-				{
+				{ //Switch OFF
 					remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+
+					central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
+					central_data->controls.yaw_mode=YAW_RELATIVE;
+		
+					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 				}
 			}
 			else
 			{
 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
-			
-			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
-			central_data->controls.yaw_mode=YAW_RELATIVE;
+				central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
+				central_data->controls.yaw_mode=YAW_RELATIVE;
 		
-			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);	
+				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+			}
 		}
 		else
 		{
