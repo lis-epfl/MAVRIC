@@ -157,9 +157,26 @@ task_return_t tasks_run_stabilisation(void* arg)
 		}
 		else if ( mode.MANUAL == MANUAL_ON )
 		{
+			// Check if switch active
 			if (central_data->state.remote_active == 1)
 			{
-				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+				// up : -0.99318  down : 0.9972 
+				if ((int32_t)(central_data->remote.channels[CHANNEL_AUX1] + 1.0f) > 0)
+				{
+					// Set custom attitude command
+					central_data->controls.rpy[ROLL] = 0.0f;
+					central_data->controls.rpy[PITCH] = 0.0f;
+
+					if (central_data->ld.status==1)
+					{
+						central_data->controls.thrust = central_data->stabilisation_copter.thrust_hover_point;
+					}
+					// YAW is in relative mode so no need to change
+				}
+				else 
+				{
+					remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+				}
 			}
 			else
 			{
@@ -169,7 +186,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
 			central_data->controls.yaw_mode=YAW_RELATIVE;
 		
-			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);		
+			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);	
 		}
 		else
 		{
@@ -178,6 +195,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
+		if (central_data->ld.status == 1)
+		{
+			central_data->ld.status = 0;
+		}
+
 		servos_set_value_failsafe( &central_data->servos );
 	}
 
@@ -232,11 +254,6 @@ task_return_t tasks_run_launch_detection_update(void* arg);
 task_return_t tasks_run_launch_detection_update(void* arg)
 {
 	task_return_t res = launch_detection_update(&central_data->ld, (central_data->imu.scaled_accelero.data));
-
-	// if (central_data->ld.status) == LAUNCHING)
-	// {
-	// 	piezo_speaker_quick_startup();
-	// }
 
 	// if (&central_data->ld.enabled == 0)
 	// {
