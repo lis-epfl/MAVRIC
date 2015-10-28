@@ -104,9 +104,9 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// Add your logging parameters here, name length max = MAVLINK_MSG_PARAM_SET_FIELD_PARAM_ID_LEN = 16
 	// Supported type: all numeric types included in mavlink_message_type_t (i.e. all except MAVLINK_TYPE_CHAR)
 	
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[X], "acc_x", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z", 4);
 
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[0], "roll", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[1], "pitch", 4);
@@ -142,7 +142,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	
 	// Launch detection logging scheme
 	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->ld.status, "launch_status");
-	// init_success &= data_logging_add_parameter_int16(data_logging, &central_data->ld.sma.current_avg, "sma");
+	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->ld.sma.current_avg, "sma");
 
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
