@@ -73,8 +73,8 @@
 #define MAX_THRUST 1.0f		///< Define the maximum thrust to apply
 
 #define M_WING_THRUST 0		///< Define the index for the control
-#define M_WING_RIGHT 1		///< Define the index for the control
-#define M_WING_LEFT 2		///< Define the index for the control
+#define M_WING_RIGHT 2		///< Define the index for the control
+#define M_WING_LEFT 1		///< Define the index for the control
 
 #define M_COPTER_AIRCRAFT	0					///< Define flag for a copter
 #define M_WING_AIRCRAFT		1					///< Define flag for a wing

@@ -62,6 +62,7 @@ void initialisation()
 	
 	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data->mavlink_communication.onboard_parameters);
 
+	//onboard_parameters_write_parameters_to_flashc(&central_data->mavlink_communication.onboard_parameters);
 	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
 
 	if (read_from_flash_result)

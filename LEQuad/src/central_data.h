@@ -53,6 +53,7 @@ extern "C" {
 
 #include "time_keeper.h"
 #include "qfilter.h"
+#include "ahrs_madgwick.h"
 #include "imu.h"
 #include "ahrs.h"
 #include "stabilisation_copter.h"
@@ -116,6 +117,7 @@ typedef struct  {
 
 	imu_t imu;													///< The IMU structure
 	qfilter_t attitude_filter;									///< The qfilter structure
+	ahrs_madgwick_t attitude_filter_madgwick;					///< The Madgwick filter sructure
 	ahrs_t ahrs;												///< The attitude estimation structure
 	control_command_t controls;									///< The control structure used for rate and attitude modes
 	control_command_t controls_nav;								///< The control nav structure used for velocity modes
