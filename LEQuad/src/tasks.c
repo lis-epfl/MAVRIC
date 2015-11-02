@@ -52,7 +52,7 @@
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
 //#include "data_logging.h"
-#include "launch_detection.h"
+#include "state_machine_custom.h"
 #include "piezo_speaker.h"
 
 #include "pwm_servos.h"
@@ -157,30 +157,16 @@ task_return_t tasks_run_stabilisation(void* arg)
 		}
 		else if ( mode.MANUAL == MANUAL_ON )
 		{
-			// Check if switch active
 			if (central_data->state.remote_active == 1)
 			{
-				// up : -0.99318  down : 0.9972 
-				if ( (int32_t)(central_data->remote.channels[CHANNEL_AUX1] + 1.0f) > 0 )
-				{ //Switch ON
-					if (central_data->ld.status==1)
-					{ //Launch detected
+				state_machine_custom_update(&central_data->state_machine_custom, &central_data->controls);
 
-						// Set custom attitude command
-						central_data->controls.rpy[ROLL] = 0.0f;
-						central_data->controls.rpy[PITCH] = 0.0f;
-						central_data->controls.thrust = central_data->stabilisation_copter.thrust_hover_point;
-						central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
-						central_data->controls.yaw_mode=YAW_RELATIVE;
-		
-						stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-						// YAW is in relative mode so no need to change
-					}
-
-					//Don't stabilise if launch isn't detected
+				if (central_data->state_machine_custom.enabled) 
+				{ // Recovery and stabilisation enabled
+					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 				}
-				else 
-				{ //Switch OFF
+				else // Remote control
+				{
 					remote_get_command_from_remote(&central_data->remote, &central_data->controls);
 
 					central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
@@ -205,9 +191,9 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
-		if (central_data->ld.status == 1)
+		if (central_data->state_machine_custom.ld.status == 1 || central_data->state_machine_custom.enabled == 1)
 		{
-			central_data->ld.status = 0;
+			state_machine_custom_reset(&central_data->state_machine_custom);
 		}
 
 		servos_set_value_failsafe( &central_data->servos );
@@ -260,21 +246,6 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 } 
 
 
-task_return_t tasks_run_launch_detection_update(void* arg);
-task_return_t tasks_run_launch_detection_update(void* arg)
-{
-	task_return_t res = launch_detection_update(&central_data->ld, (central_data->imu.scaled_accelero.data));
-
-	// if (&central_data->ld.enabled == 0)
-	// {
-	// 	scheduler_t* scheduler = &central_data->scheduler;
-	// 	task_entry_t* task = scheduler_get_task_by_id(scheduler, 13); // Warning: id must correspond to the previously used id
-	// 	scheduler_change_run_mode(task, RUN_NEVER);
-	// }
-
-	return res;
-}
-
 task_return_t tasks_run_gps_update(void* arg) 
 {
 	if (central_data->state.mav_mode.HIL == HIL_ON)
@@ -320,7 +291,7 @@ bool tasks_create_tasks()
 	
 	scheduler_t* scheduler = &central_data->scheduler;
 
-	init_success &= scheduler_add_task(scheduler, 4000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation												, 0                                                    , 0);
+	init_success &= scheduler_add_task(scheduler, 5000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation												, 0                                                    , 0);
 	//init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation_quaternion                               , 0 													, 0);
 
 	//init_success &= scheduler_add_task(scheduler, 20000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , (task_function_t)&remote_update                                   , 0 													, 1);
@@ -341,8 +312,6 @@ bool tasks_create_tasks()
 
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
 	
-	init_success &= scheduler_add_task(scheduler, 5000,		RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL	, &tasks_run_launch_detection_update								, 0														, 13);
-
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 
 	scheduler_sort_tasks(scheduler);
