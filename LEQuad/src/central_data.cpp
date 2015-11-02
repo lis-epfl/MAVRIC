@@ -170,8 +170,7 @@ bool Central_data::init(void)
 									&barometer,
 									&sonar,
 									&gps,
-									&ahrs,
-									&data_logging);
+									&ahrs);
 	print_util_dbg_init_msg("[POS EST]", ret);
 	init_success &= ret;
 	time_keeper_delay_ms(100); 

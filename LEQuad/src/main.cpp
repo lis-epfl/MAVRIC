@@ -140,29 +140,29 @@ int main (void)
 	// Create central data
 	// -------------------------------------------------------------------------
 	// Create central data using real sensors
-	// Central_data cd = Central_data( board.imu, 
-	// 								board.bmp085,
-	// 								board.gps_ublox, 
-	// 								// board.sonar_i2cxl,		// Warning:
-	// 								sim.sonar(),				// this is simulated
-	// 								board.uart0,
-	// 								board.spektrum_satellite,
-	// 								board.file_flash,
-	// 								board.battery,
-	// 								// sim_battery,
-	// 								board.servos );
-
-	// Create central data with simulated sensors
-	Central_data cd = Central_data( sim_imu, 
-									sim.barometer(),
-									sim.gps(), 
-									sim.sonar(),
-									board.uart0, 				// mavlink serial
+	Central_data cd = Central_data( board.imu, 
+									board.bmp085,
+									board.gps_ublox, 
+									// board.sonar_i2cxl,		// Warning:
+									sim.sonar(),				// this is simulated
+									board.uart0,
 									board.spektrum_satellite,
 									board.file_flash,
-									// sim_battery,
 									board.battery,
-									sim_servos);
+									// sim_battery,
+									board.servos );
+
+
+	// Create central data with simulated sensors
+	// Central_data cd = Central_data( sim_imu, 
+	// 								sim.barometer(),
+	// 								sim.gps(), 
+	// 								sim.sonar(),
+	// 								board.uart0, 				// mavlink serial
+	// 								board.spektrum_satellite,
+	// 								board.file_flash,
+	// 								sim_battery,
+	// 								sim_servos);
 
 	initialisation(cd, board);
 

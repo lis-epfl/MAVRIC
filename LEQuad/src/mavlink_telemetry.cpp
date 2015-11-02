@@ -360,7 +360,7 @@ bool mavlink_telemetry_init(Central_data* central_data)
 	
 	stabiliser_t* stabiliser_show = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
 
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_heartbeat,								&central_data->state, 					MAVLINK_MSG_ID_HEARTBEAT			);// ID 0
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, (mavlink_send_msg_function_t)&state_telemetry_send_heartbeat,								&central_data->state, 					MAVLINK_MSG_ID_HEARTBEAT			);// ID 0
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,	 RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_status,									&central_data->state,					MAVLINK_MSG_ID_SYS_STATUS			);// ID 1
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&gps_telemetry_send_raw,										&central_data->gps,						MAVLINK_MSG_ID_GPS_RAW_INT			);// ID 24
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&imu_telemetry_send_scaled,										&central_data->imu, 					MAVLINK_MSG_ID_SCALED_IMU			);// ID 26

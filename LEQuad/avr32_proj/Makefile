@@ -196,7 +196,6 @@ LIB_INC += -I$(MAVRIC_SRC)
 
 LIB_SRCS += boards/megafly_rev4.cpp
      
-LIB_SRCS += communication/console.c                 
 LIB_SRCS += communication/data_logging.cpp            
 LIB_SRCS += communication/hud_telemetry.cpp           
 LIB_SRCS += communication/mavlink_communication.cpp     
@@ -263,8 +262,6 @@ LIB_SRCS += hal/avr32/serial_usb_avr32.cpp
 LIB_SRCS += hal/avr32/spi_avr32.cpp
 LIB_SRCS += hal/avr32/sd_spi.c
 LIB_SRCS += hal/avr32/time_keeper.c
-LIB_SRCS += hal/avr32/uart_int.c
-LIB_SRCS += hal/avr32/usb_int.c
 LIB_SRCS += hal/avr32/file_flash_avr32.cpp
 
 LIB_SRCS += hal/dummy/adc_dummy.cpp
@@ -302,7 +299,6 @@ LIB_SRCS += simulation/barometer_sim.cpp
 LIB_SRCS += simulation/sonar_sim.cpp
 LIB_SRCS += simulation/gps_sim.cpp
 
-LIB_SRCS += util/buffer.c
 LIB_SRCS += util/coord_conventions.c
 LIB_SRCS += util/kalman.c
 LIB_SRCS += util/linear_algebra.c
