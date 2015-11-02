@@ -178,7 +178,8 @@ MAVRIC_LIB=../../MAVRIC_Library
 LIB_INC += -I$(MAVRIC_LIB)/
 LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/common/
 LIB_INC += -I$(MAVRIC_LIB)/libs/mavlink/include/mavric/
-LIB_INC += -I$(MAVRIC_LIB)/libs/fats/
+LIB_INC += -I$(MAVRIC_LIB)/libs/fat_fs/
+LIB_INC += -I$(MAVRIC_LIB)/libs/fat_fs/option
 LIB_INC += -I$(MAVRIC_LIB)/libs/
 LIB_INC += -I$(MAVRIC_LIB)/util/
 LIB_INC += -I$(MAVRIC_LIB)/hal/include
@@ -326,7 +327,6 @@ CFLAGS += ${PREPROC_OPT}
 CFLAGS += -I.
 CFLAGS += ${LIB_INC}
 CFLAGS += ${SRCS_INC}
-
 
 # ------------------------------------------------------------------------------
 # C++ COMPILER OPTIONS
