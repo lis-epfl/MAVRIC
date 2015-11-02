@@ -278,6 +278,7 @@ LIB_SRCS += communication/remote.c
 LIB_SRCS += communication/remote_telemetry.c
 LIB_SRCS += communication/state.c
 LIB_SRCS += communication/state_machine.c
+LIB_SRCS += communication/state_machine_custom.c
 LIB_SRCS += communication/state_telemetry.c
 
 LIB_SRCS += libs/fat_fs/diskio.c  
