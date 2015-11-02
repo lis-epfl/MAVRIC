@@ -113,20 +113,28 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[2], "yaw", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.s, "rot", 4);
 
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[0], "up_vec0", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[1], "up_vec1", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[2], "up_vec2", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.s, 	"up_vecs", 4);
+
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[0], 	"ang_speed_R", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[1], 	"ang_speed_P", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[2], 	"ang_speed_Y", 4);
+
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_AUX1], "recovery_mode", 4);
 
 	stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
 
 	init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[ROLL].output, "roll_attitude_pid_output", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[PITCH].output, "pitch_attitude_pid_output", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[YAW].output, "yaw_attitude_pid_output", 4);
-
+	// init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[YAW].output, "yaw_attitude_pid_output", 4);
 
 	stabiliser_t* rate_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
 	
 	init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[ROLL].output, "roll_rate_pid_output", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[PITCH].output, "pitch_rate_pid_output", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[YAW].output, "yaw_rate_pid_output", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[YAW].output, "yaw_rate_pid_output", 4);
 
 	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 7);
 	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 7);
