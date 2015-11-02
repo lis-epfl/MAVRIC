@@ -57,6 +57,7 @@ extern "C" {
 #include "ahrs.h"
 #include "stabilisation_copter.h"
 
+
 #include "remote.h"
 #include "pid_controller.h"
 #include "streams.h"
@@ -72,7 +73,7 @@ extern "C" {
 #include "simulation.h"
 #include "bmp085.h"
 #include "position_estimation.h"
-#include "launch_detection.h"
+#include "state_machine_custom.h"
 
 #include "analog_monitor.h"
 #include "sonar_i2cxl.h"
@@ -131,7 +132,7 @@ typedef struct  {
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
 
-	launch_detection_t ld;										///< The launch detection structure
+	state_machine_custom_t state_machine_custom;				///< The custom state machine for stabilisation algorithm
 	
 	// aliases
 	byte_stream_t *telemetry_down_stream;						///< The pointer to the downcoming telemetry byte stream
