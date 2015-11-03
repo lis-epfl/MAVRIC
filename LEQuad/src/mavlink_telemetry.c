@@ -110,8 +110,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[0], "roll", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[1], "pitch", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[2], "yaw", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.s, "rot", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[2], "yaw", 4);
 
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[0], "up_vec0", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[1], "up_vec1", 4);
@@ -124,16 +123,19 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_AUX1], "recovery_mode", 4);
 
-	stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_distance, "current_distance", 4);
 
-	init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[ROLL].output, "roll_attitude_pid_output", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[PITCH].output, "pitch_attitude_pid_output", 4);
+
+	// stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
+
+	// init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[ROLL].output, "roll_attitude_pid_output", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[PITCH].output, "pitch_attitude_pid_output", 4);
 	// init_success &= data_logging_add_parameter_float(data_logging, &attitude_stabiliser->rpy_controller[YAW].output, "yaw_attitude_pid_output", 4);
 
-	stabiliser_t* rate_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
+	// stabiliser_t* rate_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
 	
-	init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[ROLL].output, "roll_rate_pid_output", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[PITCH].output, "pitch_rate_pid_output", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[ROLL].output, "roll_rate_pid_output", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[PITCH].output, "pitch_rate_pid_output", 4);
 	// init_success &= data_logging_add_parameter_float(data_logging, &rate_stabiliser->rpy_controller[YAW].output, "yaw_rate_pid_output", 4);
 
 	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 7);
@@ -144,9 +146,9 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
 	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
 	
-	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
-	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
-	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
 	
 	// Launch detection logging scheme
 	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->state_machine_custom.ld.status, "launch_status");
@@ -414,7 +416,7 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&scheduler_telemetry_send_rt_stats,								&central_data->scheduler, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
-	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
+	// init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&acoustic_telemetry_send,										&central_data->audio_data, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
 	
 	// TODO : Create Telemetry functions for launch_status and sma_acc
