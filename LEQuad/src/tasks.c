@@ -90,6 +90,23 @@ void tasks_run_imu_update(void* arg)
 
 task_return_t tasks_run_stabilisation(void* arg) 
 {
+	//DEBUG !!!!!!!!!!!!!!!!!!
+	if (central_data->state_machine_custom.debug)
+	{
+		state_machine_custom_update(&central_data->state_machine_custom, &central_data->controls);
+		print_util_dbg_print("[CUSTOM SM UPDATE] ");
+		print_util_dbg_print("ld_status : ");
+		print_util_dbg_print_num((int32_t)central_data->state_machine_custom.ld.status,10);
+		print_util_dbg_print("; state_machine_enabled : ");
+		print_util_dbg_print_num((int32_t)central_data->state_machine_custom.enabled,10);
+		print_util_dbg_print("; state :");
+		print_util_dbg_print_num((int32_t)central_data->state_machine_custom.state,10);
+		print_util_dbg_print("; remote :");
+		print_util_dbg_putfloat(central_data->state_machine_custom.stabilisation_copter_conf->thrust_hover_point,4);
+		print_util_dbg_print("\r\n");
+	}
+	//DEBUG_END !!!!!!!!!!!!!!
+
 	tasks_run_imu_update(0);
 	
 	mav_mode_t mode = central_data->state.mav_mode;
@@ -191,7 +208,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
-		if (central_data->state_machine_custom.ld.status == 1 || central_data->state_machine_custom.enabled == 1)
+		if ((central_data->state_machine_custom.ld.status == 1 || central_data->state_machine_custom.enabled == 1) && central_data->state_machine_custom.debug != 1)
 		{
 			state_machine_custom_reset(&central_data->state_machine_custom);
 		}
