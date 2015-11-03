@@ -143,7 +143,10 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	// Init custom state machine
-	init_success &= state_machine_custom_init(&central_data.state_machine_custom, &central_data.remote, &central_data.imu);
+	init_success &= state_machine_custom_init(	&central_data.state_machine_custom,
+												&central_data.remote, 
+												&central_data.imu,
+												&central_data.ahrs);
 	
 	time_keeper_delay_ms(100);
 
