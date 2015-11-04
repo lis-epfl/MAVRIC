@@ -321,7 +321,7 @@ ASFLAGS += -MMD -MP
 # ------------------------------------------------------------------------------
 CC = avr32-gcc
 
-CFLAGS  = -O3 -mhard-float -fdata-sections -muse-rodata-section -g2 -pg -p -Wall 
+CFLAGS  = -O3 -mhard-float -fdata-sections -muse-rodata-section -g2 -Wall 
 CFLAGS += -mpart=uc3c1512c -c -std=gnu99 -Wstrict-prototypes -Wmissing-prototypes 
 CFLAGS += -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MMD -MP
 CFLAGS += ${PREPROC_OPT}
@@ -338,7 +338,7 @@ CFLAGS += ${SRCS_INC}
 CXX = avr32-g++
 
 CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
-CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MMD -MP
+CXXFLAGS += -g2 -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MMD -MP
 # CXXFLAGS += -D_DEFAULT_SOURCE 
 CXXFLAGS += ${PREPROC_OPT}
 
@@ -356,8 +356,7 @@ SIZER = avr32-size
 
 OBJCOPYFLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 
-LDFLAGS  = -nostartfiles -Wl,-Map="mavric.map" -Wl,--start-group -lm  
-LDGLAGS += -Wl,--end-group -L"src/asf/avr32/utils/libs/dsplib/at32ucr3fp/gcc"  
+LDFLAGS  = -nostartfiles -Wl,-Map="mavric.map" -lm
 LDFLAGS += -Wl,--gc-sections -mpart=uc3c1512c -Wl,--relax -Wl,-e,_trampoline
 
 # Include files from MAVRIC library and source folder

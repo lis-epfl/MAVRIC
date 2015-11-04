@@ -190,6 +190,9 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 	init_success &= fat_fs_mounting_telemetry_init(	&central_data->fat_fs_mounting,
 	&central_data->mavlink_communication.message_handler);
 	
+	init_success &= gps_ublox_telemetry_init( &central_data->gps,
+	&central_data->mavlink_communication.message_handler);
+	
 	return init_success;
 }
 
