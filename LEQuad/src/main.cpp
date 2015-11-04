@@ -59,9 +59,12 @@ extern "C"
 
 	#include "servos.h"
 	#include "servos_default_config.h"
+
+	#include "conf_imu.hpp"
 }
 
 #include "dbg.hpp"
+
 
 void initialisation(Central_data& central_data, Megafly_rev4& board) 
 {	
@@ -103,7 +106,6 @@ void initialisation(Central_data& central_data, Megafly_rev4& board)
 	print_util_dbg_print("[MAIN] OK. Starting up.\r\n");
 }
 
-#include <array>
 
 int main (void)
 {
@@ -111,6 +113,7 @@ int main (void)
 	// Create board
 	// -------------------------------------------------------------------------
 	megafly_rev4_conf_t board_config = megafly_rev4_default_config();
+	board_config.imu_config = imu_config();								// Load custom imu config (cf conf_imu.h)
 	Megafly_rev4 board = Megafly_rev4( board_config );
 
 
