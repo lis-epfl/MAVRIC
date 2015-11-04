@@ -124,7 +124,9 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_AUX1], "recovery_mode", 4);
 
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_distance, "current_distance", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_velocity, "sonar_speed", 4);
 
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.vertical_speed, "gps_speed", 7);
 
 	// stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
 
