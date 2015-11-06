@@ -72,6 +72,11 @@ bool central_data_init()
 	//servo_pwm_init(central_data.servos);
 	init_success &= servos_init( &central_data.servos, &servos_default_config_wing);
 	servos_set_value_failsafe( &central_data.servos );
+
+	/* BE CAREFUL! Uncomment this line ONLY with propellers off!
+	 * this line calibrates ESCs (speed controllers) */
+	//pwm_servos_calibrate_esc(&central_data.servos);
+
 	pwm_servos_write_to_hardware( &central_data.servos );
 
 	time_keeper_delay_ms(100);	
@@ -206,8 +211,8 @@ bool central_data_init()
 									&central_data.gps,
 									&central_data.sonar_i2cxl.data,
 									&central_data.state,
-									&central_data.servos,
-									&central_data.state.nav_plan_active);
+									&central_data.state.nav_plan_active,
+									&central_data.quad_mix);
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	

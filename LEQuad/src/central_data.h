@@ -109,6 +109,7 @@ typedef struct  {
 	attitude_controller_p2_t attitude_controller;
 	command_t command;
 	servo_mix_wing_t servo_mix;
+	servo_mix_quadcotper_diag_t quad_mix;
 	servos_t servos;
 	remote_t remote;
 	remote_mode_t remote_mode;

@@ -300,7 +300,6 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 		central_data->command.attitude.rpy[0] 	= 2 * central_data->controls.rpy[0];
 		central_data->command.attitude.rpy[1] 	= 2 * central_data->controls.rpy[1];
 		central_data->command.attitude.rpy[2] 	= 2 * central_data->controls.rpy[2];
-		central_data->command.attitude.mode 	= ATTITUDE_COMMAND_MODE_RPY;
 		central_data->command.thrust.thrust 	= central_data->controls.thrust;
 	
 		attitude_controller_p2_update( &central_data->attitude_controller );			
