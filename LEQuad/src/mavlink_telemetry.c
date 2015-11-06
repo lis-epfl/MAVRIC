@@ -257,10 +257,10 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//////////////
 	// Sensor
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_pres_off", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed_offset, "Ai_off", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
-	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->airspeed_analog.currently_turning, "Ai_turn");
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.scaled_airspeed, "Ai_spd_sca", 3);
 	
 	// GPS
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_spd", 3);
@@ -510,8 +510,6 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->attitude_filter_madgwick.beta,		"Mad_beta");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->attitude_filter_madgwick.zeta,		"Mad_zeta");
-	
-	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->airspeed_analog.currently_turning,	"Ai_turn");
 	
 	
 	return init_success;
