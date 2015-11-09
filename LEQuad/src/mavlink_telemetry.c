@@ -112,14 +112,15 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[1], "pitch", 4);
 	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[2], "yaw", 4);
 
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[0], "up_vec0", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[1], "up_vec1", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[2], "up_vec2", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.s, 	"up_vecs", 4);
 
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[0], 	"ang_speed_R", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[1], 	"ang_speed_P", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[2], 	"ang_speed_Y", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[0], "up_vec0", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[1], "up_vec1", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[2], "up_vec2", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.s, 	"up_vecs", 4);
+
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[0], 	"ang_speed_R", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[1], 	"ang_speed_P", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[2], 	"ang_speed_Y", 4);
 
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_AUX1], "recovery_mode", 4);
 
@@ -127,6 +128,8 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_velocity, "sonar_speed", 4);
 
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.vertical_speed, "gps_speed", 7);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->pressure.vario_vz, "baro_speed", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[2], "est_speed", 4);
 
 	// stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
 
@@ -148,13 +151,15 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
 	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
 	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
+	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
 	
 	// Launch detection logging scheme
 	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->state_machine_custom.ld.status, "launch_status");
 	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->state_machine_custom.ld.sma.current_avg, "sma");
+	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine_custom.state, "state");
+
 
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
@@ -246,18 +251,18 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].p_gain                        , "PitchRPid_P_G"    );
 	//init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].integrator.maths_clip         , "PitchRPid_I_CLip" );
 	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].integrator.postgain           , "PitchRPid_I_PstG" );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].integrator.gain            	, "PitchRPid_I_PreG" );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].integrator.gain            	, "PtchRPid_I_PreG" );
 	//init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].differentiator.maths_clip     , "PitchRPid_D_Clip" );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].differentiator.gain           , "PitchRPid_D_Gain" );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].differentiator.gain           , "PtchRPid_D_Gain" );
 	//init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].differentiator.LPF            , "PitchRPid_D_LPF"  );
 	
 	// Pitch attitude PID
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].p_gain                    , "PitchAPid_P_G"    );
 	//init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.maths_clip     , "PitchAPid_I_CLip" );
 	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.postgain       , "PitchAPid_I_PstG" );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.gain        	, "PitchAPid_I_PreG" );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.gain        	, "PtchAPid_I_PreG" );
 	//init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].differentiator.maths_clip , "PitchAPid_D_Clip" );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].differentiator.gain       , "PitchAPid_D_Gain" );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].differentiator.gain       , "PtchAPid_D_Gain" );
 	//init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].differentiator.LPF        , "PitchAPid_D_LPF"  );
 
 	// Yaw rate PID
