@@ -198,6 +198,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 				if (central_data->state_machine_custom.enabled) 
 				{ // Recovery and stabilisation enabled
 					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+					tasks_mix_to_servos();
 				}
 				else // Remote control
 				{
