@@ -151,7 +151,9 @@ bool central_data_init()
 	init_success &= state_machine_custom_init(	&central_data.state_machine_custom,
 												&central_data.remote, 
 												&central_data.imu,
-												&central_data.ahrs);
+												&central_data.ahrs,
+												&central_data.pressure,
+												&central_data.position_estimation);
 	
 	time_keeper_delay_ms(100);
 
