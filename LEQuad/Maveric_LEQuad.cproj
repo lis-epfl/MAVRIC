@@ -600,15 +600,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Library\aal\aircraft_api.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\aal\aircraft_api.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\aal\aircraft.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Library\communication\acoustic.c">
       <SubType>compile</SubType>
     </Compile>
@@ -825,7 +816,13 @@
     <Compile Include="Library\control\velocity_controller_copter_default_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\hal\avr32\airspeed_analog_telemetry.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\hal\include\accelerometer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\include\airspeed_analog_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\hal\include\analog_monitor_default_config.h">
@@ -846,6 +843,12 @@
     <Compile Include="Library\hal\include\battery.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\hal\include\airspeed_analog.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\avr32\airspeed_analog.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\hal\include\analog_monitor.h">
       <SubType>compile</SubType>
     </Compile>
@@ -862,6 +865,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\hal\include\curvace_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\include\airspeed_analog_default_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\libs\fat_fs\diskio.c">
@@ -1419,6 +1425,9 @@
     <Compile Include="Library\sensing\altitude_estimation_default_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\sensing\ahrs_madgwick.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\sensing\imu_default_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1426,6 +1435,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\sensing\imu_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\sensing\ahrs_madgwick.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\sensing\ahrs_madgwick_default_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\sensing\position_estimation.c">
@@ -1489,24 +1504,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\util\vectors.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\aal\copter\stabilisation_copter_aal.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\aal\copter\stabilisation_copter_aal.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\aal\aircraft_api.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\aal\aircraft_api.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\aal\wing\stabilisation_wing_aal.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\aal\wing\stabilisation_wing_aal.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\central_data.c">
@@ -1609,6 +1606,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\config\MAVcalib\MAV206_imu_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\config\MAVcalib\MAV208_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\mavlink_telemetry.c">
@@ -2071,14 +2071,10 @@
     <Folder Include="Library\libs\mavlink\include\" />
     <Folder Include="Library\libs\mavlink\include\common\" />
     <Folder Include="Library\libs\mavlink\include\mavric\" />
-    <Folder Include="Library\aal" />
     <Folder Include="Library\runtime\" />
     <Folder Include="Library\sensing\" />
     <Folder Include="Library\util\" />
     <Folder Include="src\" />
-    <Folder Include="src\aal\" />
-    <Folder Include="src\aal\copter\" />
-    <Folder Include="src\aal\wing" />
     <Folder Include="src\asf\" />
     <Folder Include="src\asf\avr32\" />
     <Folder Include="src\asf\avr32\drivers\" />

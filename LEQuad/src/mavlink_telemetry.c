@@ -142,9 +142,9 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_mode_custom, "mode_custom");
 	
 	// Global output
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_RIGHT].value, "servo_r", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_LEFT].value, "servo_l", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_THRUST].value, "servo_t", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_RIGHT].value, "servo_r", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_LEFT].value, "servo_l", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_THRUST].value, "servo_t", 3);
 	
 	
 	
@@ -204,14 +204,14 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// PID: PITCH ANGLE //
 	//////////////////////
 	// Gains
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].p_gain, "GainPPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.gain, "GainIPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].differentiator.gain, "GainDPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].clip_max, "CMaxPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].clip_min, "CMinPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.clip_pre, "CPreIPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.clip, "CIPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].differentiator.clip, "CDPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].p_gain, "GainPPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.gain, "GainIPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].differentiator.gain, "GainDPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].clip_max, "CMaxPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].clip_min, "CMinPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.clip_pre, "CPreIPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.clip, "CIPitch", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].differentiator.clip, "CDPitch", 3);
 	
 	// Error (==> possible to compute reference)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].error, "ErrPitch", 3);
@@ -230,14 +230,14 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// PID: ROLL ANGLE //
 	/////////////////////
 	// Gains
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].p_gain, "GainPRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.gain, "GainIRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.gain, "GainDRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].clip_max, "CMaxRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].clip_min, "CMinRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.clip_pre, "CPreIRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.clip, "CIRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.clip, "CDRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].p_gain, "GainPRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.gain, "GainIRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.gain, "GainDRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].clip_max, "CMaxRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].clip_min, "CMinRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.clip_pre, "CPreIRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.clip, "CIRoll", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.clip, "CDRoll", 3);
 	
 	// Error (==> possible to compute reference)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].error, "ErrRoll", 3);
@@ -252,19 +252,46 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	
 	
 	
+	//////////////////////////
+	// PID: THRUST VELOCITY //
+	//////////////////////////
+	// Gains
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.p_gain, "GainP_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.integrator.gain, "GainI_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.differentiator.gain, "GainD_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.clip_max, "CMax_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.clip_min, "CMin_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.integrator.clip_pre, "CPreI_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.integrator.clip, "CI_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.differentiator.clip, "CD_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.thrust_apriori, "Apriori_thr", 3);
+// 	
+// 	// Error (==> possible to compute reference)
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.error, "Err_thr", 3);
+// 	
+// 	// Feedback
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "fee_thr", 3);
+// 	
+// 	// Command
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.output.thrust, "Out_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.integrator.accumulator, "OutI_thr", 3);
+// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.thrust_controller.differentiator.previous, "PrevD_thr", 3);
+	
+	
+	
 	//////////////
 	// AIRSPEED //
 	//////////////
 	// Sensor
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed_offset, "Ai_off", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_off", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.scaled_airspeed, "Ai_spd_sca", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.scaled_airspeed, "Ai_spd_sca", 3);
 	
 	// GPS
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_spd", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.ground_speed, "gps_grdspd", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_3d", 3);
 	
 
 	
@@ -318,7 +345,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	bool init_success = true;
 	stabiliser_t* rate_stabiliser = &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser;
 	stabiliser_t* attitude_stabiliser = &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser;
-	//stabiliser_t* velocity_stabiliser= &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser;
+	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser;
 	//stabiliser_t* position_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.position_stabiliser;
 	
 	// System ID
@@ -348,12 +375,12 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	//// Roll attitude PID
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].p_gain					, "RollAtti_P_G");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].integrator.gain		, "RollAtti_I_G");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].integrator.clip_pre	, "RollAtti_I_CP");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].integrator.clip		, "RollAtti_I_C");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].integrator.clip_pre	, "RollAtti_I_CP");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].integrator.clip		, "RollAtti_I_C");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].differentiator.gain	, "RollAtti_D_G");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].differentiator.clip	, "RollAtti_D_C");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].clip_max				, "RollAtti_C_Max");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].clip_min				, "RollAtti_C_Min");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].differentiator.clip	, "RollAtti_D_C");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].clip_max				, "RollAtti_C_Max");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[ROLL].clip_min				, "RollAtti_C_Min");
 
 	// Pitch rate PID
 	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &rate_stabiliser->rpy_controller[PITCH].p_gain				, "PitchRate_P_G");
@@ -368,12 +395,23 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	//// Pitch attitude PID
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].p_gain				, "PitchAtti_P_G");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.gain		, "PitchAtti_I_G");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.clip_pre	, "PitchAtti_I_CP");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.clip		, "PitchAtti_I_C");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.clip_pre	, "PitchAtti_I_CP");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].integrator.clip		, "PitchAtti_I_C");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].differentiator.gain	, "PitchAtti_D_G");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].differentiator.clip	, "PitchAtti_D_C");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].clip_max				, "PitchAtti_C_Max");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].clip_min				, "PitchAtti_C_Min");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].differentiator.clip	, "PitchAtti_D_C");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].clip_max				, "PitchAtti_C_Max");
+	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &attitude_stabiliser->rpy_controller[PITCH].clip_min				, "PitchAtti_C_Min");
+	
+	//// Thrust velocity PID
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.p_gain					, "ThruVel_P_G");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.gain			, "ThruVel_I_G");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.clip_pre		, "ThruVel_I_CP");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.clip			, "ThruVel_I_C");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.differentiator.gain		, "ThruVel_D_G");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.differentiator.clip		, "ThruVel_D_C");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.clip_max				, "ThruVel_C_Max");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->thrust_controller.clip_min				, "ThruVel_C_Min");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &central_data->stabilisation_wing.thrust_apriori				, "ThruVel_aprio");
 
 	// Yaw rate PID
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &rate_stabiliser->rpy_controller[YAW].p_gain                          , "YawRPid_P_G"      );
@@ -503,16 +541,21 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_roll		, "trim_roll"     );
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_pitch		, "trim_pitch"     );
 	
-	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning,		"tuning");
-	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning_axis,	"tun_axis");
-	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning_steps,	"tun_steps");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_up,		"tun_p_up");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_down,	"tun_p_down");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.roll_right,	"tun_r_r");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.roll_left,		"tun_r_l");
-	
+// 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning,		"tuning");
+// 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning_axis,	"tun_axis");
+// 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning_steps,	"tun_steps");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_up,		"tun_p_up");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_down,	"tun_p_down");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.roll_right,	"tun_r_r");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.roll_left,		"tun_r_l");
+// 	
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->attitude_filter_madgwick.beta,		"Mad_beta");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->attitude_filter_madgwick.zeta,		"Mad_zeta");
+	
+	// Airspeed
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.conversion_factor,	"Ai_conv_fact");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_gain,		"Ai_corr_gain");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_offset,	"Ai_corr_off");
 	
 	
 	return init_success;

@@ -97,8 +97,27 @@ task_return_t tasks_run_stabilisation(void* arg)
 
 	if( mode.ARMED == ARMED_ON )
 	{
-		if ( mode.AUTO == AUTO_ON )							// Complete manual mode (in case of bad mode selection)
+		if ( mode.AUTO == AUTO_ON )							// Attitude mode with velocity control on the thrust
 		{
+// 			// Get command from remote/joystick
+// 			if (central_data->state.remote_active == 1)
+// 			{
+// 				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+// 				remote_get_velocity_vector_from_remote_wing(&central_data->remote, &central_data->controls);
+// 			}
+// 			else
+// 			{
+// 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+// 				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+// 			}
+// 			
+// 			// Run controller cascade
+// 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
+// 			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+// 			
+// 			// Mix to servo outputs
+// 			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
+
 			// Get command from remote/joystick
 			if (central_data->state.remote_active == 1)
 			{
@@ -106,11 +125,33 @@ task_return_t tasks_run_stabilisation(void* arg)
 			}
 			else
 			{
-				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
+				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
 			}
-			
+
 			// Directly apply them to the mixer, no stabilisation
 			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
+			
+			
+			
+			
+			////Read command
+			//if (central_data->state.remote_active == 1)
+			//{
+				//remote_get_rate_command_from_remote(&central_data->remote, &central_data->controls);
+				//remote_get_command_from_remote(&central_data->remote, &unitary_remote_command);
+				//remote_get_velocity_vector_from_remote_wing(&central_data->remote, &central_data->controls);
+			//}
+			//else
+			//{
+				//joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
+			//}
+						//
+			//// Run controller cascade
+			//central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
+			//stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+						//
+			//// Mix to servo outputs
+			//servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
 		}
 		else if ( mode.GUIDED == GUIDED_ON )				// Attitude mode
 		{

@@ -136,7 +136,8 @@ bool central_data_init()
 	init_success &= ahrs_madgwick_init(	&central_data.attitude_filter_madgwick,
 										&ahrs_madgwick_default_config,
 										&central_data.imu,
-										&central_data.ahrs);
+										&central_data.ahrs,
+										&central_data.airspeed_analog);
 	
 	time_keeper_delay_ms(100);
 	
@@ -192,6 +193,7 @@ bool central_data_init()
 											&central_data.imu,
 											&central_data.ahrs,
 											&central_data.position_estimation,
+											&central_data.airspeed_analog,
 											&central_data.servos,
 											&central_data.servo_mix);
 	
@@ -257,7 +259,7 @@ bool central_data_init()
 
 	//Init data logging
 	data_logging_conf_t logging_conf = data_logging_default_config;
-	logging_conf.log_data = 1;
+	logging_conf.log_data = 0;
 	init_success &= fat_fs_mounting_init(	&central_data.fat_fs_mounting,
 											&logging_conf,
 											&central_data.state);
