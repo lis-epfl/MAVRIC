@@ -75,7 +75,8 @@ Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sona
 	satellite( satellite ),
 	file_flash( file_flash ),
 	battery( battery ),
-	servos( servos )
+	servos( servos ),
+	state()
 {}
 
 
@@ -123,9 +124,8 @@ bool Central_data::init(void)
 	// -------------------------------------------------------------------------
 	// Init state structure
 	// -------------------------------------------------------------------------
-	ret = state_init(	&state,
-						state_default_config(),
-						&battery); 
+	ret = state.state_init( state_default_config(),
+							&battery); 
 	print_util_dbg_init_msg("[STATE]", ret);
 	init_success &= ret;
 	time_keeper_delay_ms(100); 
