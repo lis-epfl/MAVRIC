@@ -108,8 +108,8 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y", 4);
 	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z", 4);
 
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[0], "roll", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[1], "pitch", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[0], "roll", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[1], "pitch", 4);
 	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.qe.v[2], "yaw", 4);
 
 
@@ -122,14 +122,28 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[1], 	"ang_speed_P", 4);
 	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[2], 	"ang_speed_Y", 4);
 
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_AUX1], "recovery_mode", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "est_altitude", 3);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->pressure.altitude, "baro_altitude", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "gps_altitude", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_distance, "sonar_altitude", 4);
 
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_distance, "current_distance", 4);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_velocity, "sonar_speed", 4);
-
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.vertical_speed, "gps_speed", 7);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->pressure.vario_vz, "baro_speed", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[2], "est_speed", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->pressure.vario_vz, "baro_speed", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.vertical_speed, "gps_speed", 4);
+
+	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.velocity_stabiliser;
+	init_success &= data_logging_add_parameter_float(data_logging, &velocity_stabiliser->thrust_controller.output, "vel_z_pid_output", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &velocity_stabiliser->thrust_controller.error, "vel_z_pid_err", 4);
+	init_success &= data_logging_add_parameter_float(data_logging, &velocity_stabiliser->thrust_controller.integrator.accumulator, "vel_z_I", 4);
+
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_AUX1], "recovery_mode", 4);
+
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_distance, "sonar_altitude", 4);
+	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude", 3);
+
+
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_velocity, "sonar_speed", 4);
+
 
 	// stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
 
@@ -145,20 +159,27 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 
 	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 7);
 	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 7);
-	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude", 3);
 	
 	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x", 3);
 	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
-	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
 	
+	//GPS
 	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
 	// init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
-	// init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
-	
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed_accuracy, "speed_accuracy", 4);
+	init_success &= data_logging_add_parameter_uint8(data_logging, (uint8_t *)&central_data->gps.status, "gps_status");
+	// init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->gps.num_sats, "num_sats");
+
+	//SONAR
+	// init_success &= data_logging_add_parameter_bool(data_logging, &central_data->sonar_i2cxl.data.healthy_vel, "healthy_vel");
+	init_success &= data_logging_add_parameter_bool(data_logging, &central_data->sonar_i2cxl.data.healthy, "healthy");
+	// init_success &= data_logging_add_parameter_uint32(data_logging, &central_data->sonar_i2cxl.data.last_update, "last_update");
+	// init_success &= data_logging_add_parameter_float(data_logging, &central_data->sonar_i2cxl.data.current_velocity, "sonar_velocity", 4);
+
 	// Launch detection logging scheme
-	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->state_machine_custom.ld.status, "launch_status");
-	init_success &= data_logging_add_parameter_int16(data_logging, &central_data->state_machine_custom.ld.sma.current_avg, "sma");
-	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine_custom.state, "state");
+	// init_success &= data_logging_add_parameter_int16(data_logging, &central_data->state_machine_custom.ld.status, "launch_status");
+	// init_success &= data_logging_add_parameter_int16(data_logging, &central_data->state_machine_custom.ld.sma.current_avg, "sma");
+	init_success &= data_logging_add_parameter_enum(data_logging, &central_data->state_machine_custom.state, "state");
 
 
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
@@ -212,7 +233,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	
 	stabiliser_t* rate_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.rate_stabiliser;
 	stabiliser_t* attitude_stabiliser = &central_data->stabilisation_copter.stabiliser_stack.attitude_stabiliser;
-	// stabiliser_t* velocity_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.velocity_stabiliser;
+	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.velocity_stabiliser;
 	//stabiliser_t* position_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.position_stabiliser;
 	
 	// System ID
@@ -304,9 +325,10 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->rpy_controller[PITCH].differentiator.gain       , "PitchVPid_D_Gain" );
 
 	// Thrust velocity PID
-	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.p_gain                        , "ThrVPid_P_G"      );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.p_gain                        , "ThrVPid_P_G"      );
 	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.clip_pre            , "ThrVPid_I_PreG"   );
-	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.differentiator.gain           , "ThrVPid_D_Gain"   );
+	init_success &= onboard_parameters_add_parameter_float 	  ( onboard_parameters , &velocity_stabiliser->thrust_controller.integrator.gain 			   , "ThrVPid_I_G"		);
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.differentiator.gain           , "ThrVPid_D_Gain"   );
 	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &velocity_stabiliser->thrust_controller.soft_zone_width               , "ThrVPid_soft"     );
 
 	// Roll position PID
@@ -322,10 +344,10 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->rpy_controller[PITCH].differentiator.gain       , "PitchPPid_D_Gain" );
 
 	// Thrust position PID
-	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.p_gain                        , "ThrPPid_P_G"      );
+	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.p_gain                        , "ThrPPid_P_G"      );
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.integrator.postgain           , "ThrPPid_I_PstG"   );
-	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.integrator.pregain            , "ThrPPid_I_PreG"   );
-	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.differentiator.gain           , "ThrPPid_D_Gain"   );
+	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.integrator.pregain            , "ThrPPid_I_PreG"   );
+	// init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.differentiator.gain           , "ThrPPid_D_Gain"   );
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.differentiator.LPF            , "ThrPPid_D_LPF"    );
 	//init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &position_stabiliser->thrust_controller.soft_zone_width               , "ThrPPid_soft"     );
 
@@ -426,10 +448,6 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&scheduler_telemetry_send_rt_stats,								&central_data->scheduler, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
-	// init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
-	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&acoustic_telemetry_send,										&central_data->audio_data, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
-	
-	// TODO : Create Telemetry functions for launch_status and sma_acc
 
 	scheduler_sort_tasks(&central_data->mavlink_communication.scheduler);
 	
