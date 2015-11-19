@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>6.2</ProjectVersion>
+    <ProjectVersion>6.1</ProjectVersion>
     <ProjectGuid>{5c41308d-f714-42b2-8fea-988a47ee06ad}</ProjectGuid>
     <avrdevice>AT32UC3C1512C</avrdevice>
     <avrdeviceseries>uc3c</avrdeviceseries>
@@ -220,7 +220,7 @@
         <documentation help="" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.10.1" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.3.0" />
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
@@ -275,7 +275,6 @@
       <ToolNumber>J30200030913</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
-    <preserveEEPROM>true</preserveEEPROM>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputFileName>MegaFly2</OutputFileName>
@@ -778,6 +777,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\servos_mix_wing_telemetry.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_adaptive_morph.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_adaptive_morph.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_adaptive_morph_default_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\servos_mix_adaptive_morph_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\stabilisation_copter.c">
@@ -1606,9 +1617,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\config\MAVcalib\MAV206_imu_config.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\config\MAVcalib\MAV208_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\mavlink_telemetry.c">
