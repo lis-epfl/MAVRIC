@@ -90,6 +90,7 @@ extern "C" {
 #include "pwm_servos.h"
 #include "servos_mix_quadcopter_diag.h"
 #include "servos_mix_wing.h"
+#include "servos_mix_adaptive_morph.h"
 #include "remote.h"
 
 #include "state_machine.h"
@@ -109,6 +110,7 @@ typedef struct  {
 	attitude_controller_p2_t attitude_controller;
 	command_t command;
 	servo_mix_wing_t servo_mix;
+	servo_mix_adaptive_morph_t servo_mix_adaptive_morph;
 	servo_mix_quadcotper_diag_t quad_mix;
 	servos_t servos;
 	remote_t remote;

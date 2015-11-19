@@ -59,6 +59,7 @@
 #include "attitude_controller_p2_default_config.h"
 #include "servos_mix_quadcopter_diag_default_config.h"
 #include "servos_mix_wing_default_config.h"
+#include "servos_mix_adaptive_morph_default_config.h"
 #include "stabilisation_wing_default_config.h"
 #include "airspeed_analog_default_config.h"
 
@@ -70,7 +71,7 @@ bool central_data_init()
 	
 	// Init servos
 	//servo_pwm_init(central_data.servos);
-	init_success &= servos_init( &central_data.servos, &servos_default_config_wing);
+	init_success &= servos_init( &central_data.servos, &servos_default_config_adaptive_morph);
 	servos_set_value_failsafe( &central_data.servos );
 
 	/* BE CAREFUL! Uncomment this line ONLY with propellers off!

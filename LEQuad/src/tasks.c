@@ -59,6 +59,8 @@
 #include "remote.h"
 #include "attitude_controller_p2.h"
 
+#include "servos_mix_adaptive_morph.h"
+
 central_data_t* central_data;
 
 
@@ -303,7 +305,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			}
 			
 			// Directly apply them to the mixer, no stabilisation
-			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
+			servos_mix_adaptive_morph_update_command(&central_data->servo_mix_adaptive_morph, &central_data->controls);
 		}
 		else
 		{
