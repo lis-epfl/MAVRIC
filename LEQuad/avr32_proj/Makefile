@@ -232,6 +232,8 @@ LIB_SRCS += hal/avr32/time_keeper.c
 LIB_SRCS += hal/avr32/uart_int.c
 LIB_SRCS += hal/avr32/usb_int.c
 LIB_SRCS += hal/avr32/xbee.c
+LIB_SRCS += hal/avr32/airspeed_analog.c
+LIB_SRCS += hal/avr32/airspeed_analog_telemetry.c
 
 LIB_SRCS += control/adaptive_parameter.c          
 LIB_SRCS += control/attitude_controller.c         
@@ -243,14 +245,18 @@ LIB_SRCS += control/navigation.c
 LIB_SRCS += control/pid_controller.c               
 LIB_SRCS += control/servos_mix_quadcopter_cross.c  
 LIB_SRCS += control/servos_mix_quadcopter_diag.c   
+LIB_SRCS += control/servos_mix_wing.c
+LIB_SRCS += control/servos_mix_wing_telemetry.c
 LIB_SRCS += control/stabilisation.c
 LIB_SRCS += control/stabilisation_copter.c
 LIB_SRCS += control/stabilisation_telemetry.c
+LIB_SRCS += control/stabilisation_wing.c
 LIB_SRCS += control/vector_field_waypoint.c
 LIB_SRCS += control/velocity_controller_copter.c
 
 LIB_SRCS += sensing/ahrs.c            
 LIB_SRCS += sensing/ahrs_telemetry.c  
+LIB_SRCS += sensing/ahrs_madgwick.c
 LIB_SRCS += sensing/imu.c             
 LIB_SRCS += sensing/imu_telemetry.c                  
 LIB_SRCS += sensing/position_estimation.c            
