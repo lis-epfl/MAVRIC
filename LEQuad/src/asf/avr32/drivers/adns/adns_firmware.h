@@ -50,7 +50,8 @@
 //----- SPI Definitions
 #define SPI_0_PORT              (&AVR32_SPI0)
 #define SPI_SLAVECHIP_NUMBER    (0)
-#define ADNS_PIN				AVR32_SPI0_NPCS_0_0_PIN
+#define ADNS_PIN				AVR32_SPI0_SCK_0_0_PIN
+
 
 // Apparently mode 3 has no definition. What we need for ADNS is mode 3
 #define SPI_MODE_3				3

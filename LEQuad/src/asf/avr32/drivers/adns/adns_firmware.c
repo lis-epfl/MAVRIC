@@ -46,28 +46,31 @@ void spi_init_module(void)
 	//Todo: Move this to board init?
 	static const gpio_map_t SPI_GPIO_MAP =
 	{
-		//{AVR32_SPI0_NPCS_0_0_PIN , AVR32_SPI0_NPCS_0_0_FUNCTION},
+		// {AVR32_SPI0_NPCS_0_0_PIN , AVR32_SPI0_NPCS_0_0_FUNCTION},
 		{AVR32_SPI0_SCK_0_0_PIN  , AVR32_SPI0_SCK_0_0_FUNCTION },
 		{AVR32_SPI0_MISO_0_0_PIN , AVR32_SPI0_MISO_0_0_FUNCTION},
 		{AVR32_SPI0_MOSI_0_0_PIN , AVR32_SPI0_MOSI_0_0_FUNCTION}
 	};
 
-	gpio_enable_module(SPI_GPIO_MAP , sizeof(SPI_GPIO_MAP)/sizeof(SPI_GPIO_MAP[0]));
+	gpio_enable_module(SPI_GPIO_MAP , sizeof(SPI_GPIO_MAP) / sizeof(SPI_GPIO_MAP[0]));
 	
 	// No need to do this. Board init does it!
-	//sysclk_init();
-	//sysclk_enable_peripheral_clock(&AVR32_SPI0);
-	//sysclk_enable_pba_module(SYSCLK_SPI0);
+	// sysclk_init();
+	// sysclk_enable_peripheral_clock(&AVR32_SPI0);
+	// sysclk_enable_pba_module(SYSCLK_SPI0);
 	
 	//Init SPI module as master
-	spi_initMaster(SPI_0_PORT,&adns_spi_options);
-	spi_selectionMode( &AVR32_SPI0, 0, 0, 0);
-	
+	spi_initMaster((&AVR32_SPI0), &adns_spi_options);
+	spi_selectionMode((&AVR32_SPI0), 0, 0, 0);
 	
 	//Setup configuration for chip connected to CS1
-	spi_setupChipReg(SPI_0_PORT,&adns_spi_options,sysclk_get_pba_hz());
+	spi_setupChipReg((&AVR32_SPI0), &adns_spi_options, sysclk_get_pba_hz());
+
 	//Allow the module to transfer data
-	spi_enable(SPI_0_PORT);	
+	spi_enable(SPI_0_PORT);
+
+	spi_selectChip(&AVR32_SPI0, 0);
+
 	cpu_clkhz = sysclk_get_cpu_hz();
 }
 
@@ -89,9 +92,9 @@ void adns_write(uint8_t regaddr, uint8_t txdata) {
 	spi_selectChip(SPI_0_PORT, SPI_SLAVECHIP_NUMBER);
 	//spi_write_packet(SPI_0_PORT, 0xaa , 1);
 	while (!spi_is_tx_ready(SPI_0_PORT));
-	spi_write_single(SPI_0_PORT,txreg);
+	spi_write_single(SPI_0_PORT, txreg);
 	while (!spi_is_tx_ready(SPI_0_PORT))
-	spi_write_single(SPI_0_PORT,txdata);
+	spi_write_single(SPI_0_PORT, txdata);
 	while(!spi_is_tx_empty(SPI_0_PORT));
 	spi_unselectChip(SPI_0_PORT, SPI_SLAVECHIP_NUMBER);
 	usdelay(20);
@@ -123,16 +126,20 @@ uint8_t adns_read(uint8_t regaddr){
 	spi_unselectChip(SPI_0_PORT,SPI_SLAVECHIP_NUMBER);
 
 	adns_ss_deassert();
+
 	//print
-// 	dbg_print("ADNS: Received data: ");
-// 	dbg_print_num(rxdata, 16);
-// 	dbg_print(" ### From register: ");
-// 	dbg_print_num(regaddr, 16);
-// 	dbg_print(" \n");
+	// print_util_dbg_print("ADNS: Received data: ");
+	// print_util_dbg_print_num(rxdata, 16);
+	// print_util_dbg_print(" ### From register: ");
+	// print_util_dbg_print_num(regaddr, 16);
+	// print_util_dbg_print(" \r\n");
+	// delay_ms(50);
+
 	return rxdata;
 }
 
-motion_burst_t adns_burstread(){
+motion_burst_t adns_burstread()
+{
 	
 	static int8_t motion_burst[14];
 	static int16_t x,y,squal;
@@ -146,9 +153,9 @@ motion_burst_t adns_burstread(){
 	adns_ss_assert();
 	spi_selectChip(SPI_0_PORT, SPI_SLAVECHIP_NUMBER);
 	while (!spi_is_tx_ready(SPI_0_PORT));
-	spi_write_single(SPI_0_PORT,regaddr);
+	spi_write_single(SPI_0_PORT, regaddr);
 	while(!spi_is_tx_empty(SPI_0_PORT));
-	spi_unselectChip(SPI_0_PORT,SPI_SLAVECHIP_NUMBER);
+	spi_unselectChip(SPI_0_PORT, SPI_SLAVECHIP_NUMBER);
 	
 	//eh, isn't this dirty? todo: make it neater
 	//t_sRAD delay for adns
@@ -174,6 +181,14 @@ motion_burst_t adns_burstread(){
 	motion_data.flowx = x;
 	motion_data.flowy = y;
 	motion_data.squal = squal;
+
+	// print_util_dbg_print("x, y, squal : ");
+	// print_util_dbg_print_num(x, 10);
+	// print_util_dbg_print(" ; ");
+	// print_util_dbg_print_num(y, 10);
+	// print_util_dbg_print(" ; ");
+	// print_util_dbg_print_num(squal, 10);
+	// print_util_dbg_print(" \r\n");
 	
 	//clear residual motion.
 	//adns_write(ADNS_MOTION,0x00);
@@ -213,60 +228,74 @@ void adns_init(){
 	
 	//1. Reset
 	adns_reset();
-	
-	//2. Write to powerup reg
-	adns_write(ADNS_POWER_UP, ADNS_POWER_UP_CMD);
-	print_util_dbg_print("[ADNS] Power on reg written. waiting 50ms now. \r\n");
-	
-	//3. wait at least 50ms
-	delay_ms(80);
-	
-	//4. Read motion regs
-	adns_burstread();
-	
-	//5. SROM download. Doesn't seem to be necessary.
-	//usdelay(100);
-	//adns_upload_firmware();
-	//delay_ms(15);
-	
-	//6.  Enable laser by writing 0x00 to 0x20
-	print_util_dbg_print("[ADNS] Enabling laser.. reading laser_ctrl \r\n");
-	uint8_t dat = adns_read(ADNS_LASER_CTRL0);
-	usdelay(100);
-	uint16_t dat2 = dat & 0b11110000;
-	print_util_dbg_print("[ADNS] Writing to laser register:  ");
-	print_util_dbg_print_num(dat2, 16);
-	print_util_dbg_print("  \r\n");
-	adns_write(ADNS_LASER_CTRL0, dat2);
-	usdelay(100);
-	// ---- End ADNS Powerup sequence
 
-	// Write to 0x0f config reg and then read it. Should be 45(dec)
-	adns_write(ADNS_CONF1, 0x20);
-	usdelay(100);
-	adns_read(ADNS_CONF1);
-	usdelay(100);
-	
-	dat = adns_read(ADNS_PRODUCT_ID);
-	if (dat == 0x33){
-		print_util_dbg_print("[ADNS] Initialized. \r\n");	
-	}
-	else
+	// Test write
+	uint8_t testbyte = 0x17;
+
+	for (int i = 0 ; i < 100 ; i++) 
 	{
-		print_util_dbg_print("[ADNS] Initialization error : ");	
-		print_util_dbg_print_num(dat, 16);
-		print_util_dbg_print(" \r\n");
+		spi_write_packet((&AVR32_SPI0), &testbyte, 1);
+		delay_ms(10);
 	}
 	
 	
-	//adns_write(0x20,0x80);
-	//adns_write(0x21,0x42);
-	//adns_read(0x10);
+	// //2. Write to powerup reg
+	// adns_write(ADNS_POWER_UP, ADNS_POWER_UP_CMD);
+	// print_util_dbg_print("[ADNS] Power on reg written. waiting 50ms now : ");
+	// print_util_dbg_print_num(adns_read(ADNS_POWER_UP), 16);
+	// print_util_dbg_print(" ==? ");
+	// print_util_dbg_print_num(ADNS_POWER_UP_CMD, 16);
+	// print_util_dbg_print(" \r\n");
+
+	// //3. wait at least 50ms
+	// delay_ms(80);
 	
-	adns_read(ADNS_LASER_CTRL0);
-	adns_read(0x21);
-	//adns_read(0x22);
-	//adns_read(0x23);
+	// //4. Read motion regs
+	// adns_burstread();
+	
+	// //5. SROM download. Doesn't seem to be necessary.
+	// //usdelay(100);
+	// //adns_upload_firmware();
+	// //delay_ms(15);
+	
+	// //6.  Enable laser by writing 0x00 to 0x20
+	// print_util_dbg_print("[ADNS] Enabling laser.. reading laser_ctrl \r\n");
+	// uint8_t dat = adns_read(ADNS_LASER_CTRL0);
+	// usdelay(100);
+	// uint16_t dat2 = dat & 0b11110000;
+	// print_util_dbg_print("[ADNS] Writing to laser register:  ");
+	// print_util_dbg_print_num(dat2, 16);
+	// print_util_dbg_print("  \r\n");
+	// adns_write(ADNS_LASER_CTRL0, dat2);
+	// usdelay(100);
+	// // ---- End ADNS Powerup sequence
+
+	// // Write to 0x0f config reg and then read it. Should be 45(dec)
+	// adns_write(ADNS_CONF1, 0x20);
+	// usdelay(100);
+	// adns_read(ADNS_CONF1);
+	// usdelay(100);
+	
+	// dat = adns_read(ADNS_PRODUCT_ID);
+	// if (dat == 0x33){
+	// 	print_util_dbg_print("[ADNS] Initialized. \r\n");	
+	// }
+	// else
+	// {
+	// 	print_util_dbg_print("[ADNS] Initialization error : ");	
+	// 	print_util_dbg_print_num(dat, 16);
+	// 	print_util_dbg_print(" \r\n");
+	// }
+	
+	
+	// //adns_write(0x20,0x80);
+	// //adns_write(0x21,0x42);
+	// //adns_read(0x10);
+	
+	// adns_read(ADNS_LASER_CTRL0);
+	// adns_read(0x21);
+	// //adns_read(0x22);
+	// //adns_read(0x23);
 }
 
 
