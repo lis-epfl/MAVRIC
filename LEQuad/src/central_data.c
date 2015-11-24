@@ -152,7 +152,8 @@ bool central_data_init()
 												&central_data.remote, 
 												&central_data.imu,
 												&central_data.ahrs,
-												&central_data.position_estimation);
+												&central_data.position_estimation,
+												&central_data.stabilisation_copter);
 	
 	time_keeper_delay_ms(100);
 
