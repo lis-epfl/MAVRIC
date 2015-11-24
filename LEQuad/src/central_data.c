@@ -247,11 +247,11 @@ bool central_data_init()
 	// Init remote
 	init_success &= remote_init( 	&central_data.remote, 
 									&remote_default_config);
+	
 
 	// Init ADNS
-	spi_init_module();
-	adns_init();
-	
+	// adns_init();
+
 	//Init data logging
 	//data_logging_conf_t data_logging_default_config =
 	init_success &= fat_fs_mounting_init(	&central_data.fat_fs_mounting,
