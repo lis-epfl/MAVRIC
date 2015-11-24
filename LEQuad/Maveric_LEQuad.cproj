@@ -1572,6 +1572,9 @@
     <Compile Include="src\config\MAVcalib\MAV051_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\config\MAVcalib\MAV060_imu_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\config\MAVcalib\MAV072_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
