@@ -177,8 +177,9 @@ task_return_t tasks_run_stabilisation(void* arg)
 			if (central_data->state.remote_active == 1)
 			{
 				state_machine_custom_update(&central_data->state_machine_custom, &central_data->controls);
+				bool switch_enabled = central_data->state_machine_custom.debug ? 1 : ((int32_t)(central_data->state_machine_custom.remote->channels[CHANNEL_AUX1] + 1.0f) > 0);
 
-				if (central_data->state_machine_custom.enabled) 
+				if (switch_enabled) 
 				{ // Recovery and stabilisation enabled
 					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 					tasks_mix_to_servos();
@@ -211,7 +212,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
-		if ((central_data->state_machine_custom.ld.status == 1 || central_data->state_machine_custom.enabled == 1) && central_data->state_machine_custom.debug != 1)
+		if ((central_data->state_machine_custom.enabled == 1) && (central_data->state_machine_custom.debug != 1))
 		{
 			state_machine_custom_reset(&central_data->state_machine_custom);
 		}
