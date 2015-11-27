@@ -144,6 +144,9 @@ bool mavlink_telemetry_init_communication_module(Central_data* central_data)
 	init_success &= joystick_telemetry_init(&central_data->manual_control.joystick,
 	&central_data->mavlink_communication.message_handler);
 
+	init_success &= manual_control_telemetry_init(&central_data->manual_control,
+	&central_data->mavlink_communication.message_handler);
+
 	// init_success &= simulation_telemetry_init(  &central_data->sim_model,
 	// &central_data->mavlink_communication.message_handler);
 	
