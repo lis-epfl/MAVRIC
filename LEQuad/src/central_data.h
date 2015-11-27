@@ -123,7 +123,7 @@ typedef struct  {
 	stabilisation_copter_t stabilisation_copter;					///< The stabilisation structure for copter
 
 	gps_t gps;													///< The GPS structure
-	gps_t gps2;													///< The GPS structure
+	//gps_t gps2;													///< The GPS structure
 	
 	audio_t audio_data;
 	
