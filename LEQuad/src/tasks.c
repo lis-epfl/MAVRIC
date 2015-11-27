@@ -253,7 +253,7 @@ task_return_t tasks_run_gps_update(void* arg)
 	else 
 	{
 		gps_ublox_update(&central_data->gps);
-		gps_ublox_update(&central_data->gps2);
+		//gps_ublox_update(&central_data->gps2);
 	}
 	
 	return TASK_RUN_SUCCESS;

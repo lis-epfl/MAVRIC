@@ -120,9 +120,9 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 10);
 	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
 	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.latitude, "latitude2", 10);
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.longitude, "longitude2", 10);
-	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps2.altitude, "altitude2", 3);
+	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.latitude, "latitude2", 10);
+	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.longitude, "longitude2", 10);
+	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps2.altitude, "altitude2", 3);
 	
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
