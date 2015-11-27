@@ -48,6 +48,7 @@
 #include "led.h"
 #include "imu.h"
 #include "sonar_i2cxl.h"
+#include "airspeed_i2cxl.h"
 #include "analog_monitor.h"
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
@@ -308,7 +309,9 @@ bool tasks_create_tasks()
 	
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
-	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
+	init_success &= scheduler_add_task(scheduler, 500000,	RUN_NEVER, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
+	
+	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&airspeed_i2cxl_update								, (task_argument_t)&central_data->airspeed_i2cxl			, 13);
 	
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 

@@ -50,6 +50,7 @@
 #include "state.h"
 #include "position_estimation.h"
 #include "sonar_i2cxl.h"
+#include "airspeed_i2cxl.h"
 
 #include "acoustic_telemetry.h"
 #include "fat_fs_mounting_telemetry.h"
@@ -67,6 +68,7 @@
 #include "simulation_telemetry.h"
 #include "scheduler_telemetry.h"
 #include "sonar_telemetry.h"
+#include "airspeed_telemetry.h"
 
 central_data_t *central_data;
 
@@ -382,6 +384,8 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_state,								&central_data->sim_model, 				MAVLINK_MSG_ID_HIL_STATE			);// ID 90
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,	 RUN_NEVER,	   PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_quaternions,							&central_data->sim_model,				MAVLINK_MSG_ID_HIL_STATE_QUATERNION	);// ID 115
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,											&central_data->sonar_i2cxl.data, 		MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 119
+	
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&airspeed_telemetry_send,										&central_data->airspeed_i2cxl.data, 	MAVLINK_MSG_ID_DEBUG_VECT	);// ID 250
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
 	

@@ -73,6 +73,7 @@ extern "C" {
 #include "bmp085.h"
 #include "position_estimation.h"
 
+#include "airspeed_i2cxl.h"
 #include "analog_monitor.h"
 #include "sonar_i2cxl.h"
 #include "navigation.h"
@@ -147,6 +148,7 @@ typedef struct  {
 	
 	hud_telemetry_structure_t hud_structure;					///< The HUD structure
 
+	airspeed_i2cxl_t airspeed_i2cxl;							///< The i2cxl pitot tube airspeed structure
 	sonar_i2cxl_t sonar_i2cxl;									///< The i2cxl sonar structure
 	
 	sd_spi_t sd_spi;											///< The sd_SPI driver structure
