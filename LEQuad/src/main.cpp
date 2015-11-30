@@ -49,6 +49,7 @@
 #include "dynamic_model_quad_diag.hpp"
 #include "simulation.hpp"
 #include "adc_dummy.hpp"
+#include "pwm_dummy.hpp"
 
 extern "C" 
 {
@@ -56,9 +57,6 @@ extern "C"
 	#include "time_keeper.h"
 	#include "print_util.h"
 	#include "piezo_speaker.h"
-
-	#include "servos.h"
-	#include "servos_default_config.h"
 
 	#include "conf_imu.hpp"
 }
@@ -121,12 +119,14 @@ int main (void)
 	// Create simulation
 	// -------------------------------------------------------------------------
 	// Simulated servos
-	servos_t sim_servos;
-	servos_init(&sim_servos, servos_default_config() );
-	servos_set_value_failsafe( &sim_servos );
+	Pwm_dummy pwm[4];
+	Servo sim_servo_0(pwm[0], servo_default_config_esc());
+	Servo sim_servo_1(pwm[1], servo_default_config_esc());
+	Servo sim_servo_2(pwm[2], servo_default_config_esc());
+	Servo sim_servo_3(pwm[3], servo_default_config_esc());
 	
 	// Simulated dynamic model
-	Dynamic_model_quad_diag sim_model 	= Dynamic_model_quad_diag(sim_servos);
+	Dynamic_model_quad_diag sim_model 	= Dynamic_model_quad_diag(sim_servo_0, sim_servo_1, sim_servo_2, sim_servo_3);
 	Simulation sim 						= Simulation(sim_model);
 	
 	// Simulated battery
@@ -146,6 +146,7 @@ int main (void)
 	Central_data cd = Central_data( board.imu, 
 									board.bmp085,
 									board.gps_ublox, 
+									// sim.gps(), 
 									// board.sonar_i2cxl,		// Warning:
 									sim.sonar(),				// this is simulated
 									board.uart0,
@@ -153,8 +154,10 @@ int main (void)
 									board.file_flash,
 									board.battery,
 									// sim_battery,
-									board.servos,
-									board.pwm_servos );
+									board.servo_0,
+									board.servo_1,
+									board.servo_2,
+									board.servo_3 );
 
 
 	// Create central data with simulated sensors
