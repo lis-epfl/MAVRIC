@@ -181,7 +181,18 @@ task_return_t tasks_run_stabilisation(void* arg)
 
 				if (switch_enabled) 
 				{ // Recovery and stabilisation enabled
-					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+					if (central_data->state_machine_custom.state == STATE_HEIGHT_CONTROL)
+					{
+						stabilisation_copter_position_hold(	&central_data->stabilisation_copter,
+															&central_data->controls, 
+															&central_data->waypoint_handler, 
+															&central_data->position_estimation);
+					}
+					else
+					{
+						stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+					}
+					
 					tasks_mix_to_servos();
 				}
 				else // Remote control
