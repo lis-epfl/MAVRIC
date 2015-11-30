@@ -41,11 +41,11 @@
 
 #include "tasks.hpp"
 #include "central_data.hpp"
+#include "pwm_servos.hpp"
 
 extern "C"
 {
 	#include "led.h"
-	#include "pwm_servos.h"
 }
 
 
@@ -143,7 +143,7 @@ bool tasks_run_stabilisation(Central_data* central_data)
 	// !!! -- for safety, this should remain the only place where values are written to the servo outputs! --- !!!
 	if ( !mav_modes_is_hil(mode) )
 	{
-		pwm_servos_write_to_hardware( &central_data->servos );
+		central_data->pwm_servos.pwm_servos_write_to_hardware( &central_data->servos );
 	}
 	
 	return true;

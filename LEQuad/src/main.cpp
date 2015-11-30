@@ -153,7 +153,8 @@ int main (void)
 									board.file_flash,
 									board.battery,
 									// sim_battery,
-									board.servos );
+									board.servos,
+									board.pwm_servos );
 
 
 	// Create central data with simulated sensors

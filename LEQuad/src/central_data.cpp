@@ -65,7 +65,7 @@ extern "C"
 }
 
 
-Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, Battery& battery, servos_t& servos):
+Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, Battery& battery, servos_t& servos, Pwm_servos& pwm_servos):
 	imu( imu ),
 	barometer( barometer ),
 	gps( gps ),
@@ -75,6 +75,7 @@ Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sona
 	file_flash( file_flash ),
 	battery( battery ),
 	servos( servos ),
+	pwm_servos(pwm_servos),
 	state( battery, state_default_config() )
 {}
 
