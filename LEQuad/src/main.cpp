@@ -145,8 +145,8 @@ int main (void)
 	// Create central data using real sensors
 	Central_data cd = Central_data( board.imu, 
 									board.bmp085,
-									board.gps_ublox, 
-									// sim.gps(), 
+									// board.gps_ublox, 
+									sim.gps(), 
 									// board.sonar_i2cxl,		// Warning:
 									sim.sonar(),				// this is simulated
 									board.uart0,
