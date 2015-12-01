@@ -64,15 +64,15 @@ static imu_conf_t imu_config =
 		},
 		.bias =
 		{
-			25.0f,				//ACC_BIAIS_X
-			-25.0f,				//ACC_BIAIS_Y
-			415.0f				//ACC_BIAIS_Z
+			83.0f,			//ACC_BIAIS_X
+			 152.0f,			//ACC_BIAIS_Y
+			 0.0f				//ACC_BIAIS_Z
 		},
 		.scale_factor =
 		{
-			3960.49f,			//RAW_ACC_X_SCALE
-			3986.12f,			//RAW_ACC_Y_SCALE
-			4075.72f			//RAW_ACC_Z_SCALE
+			3999.9f,			//RAW_ACC_X_SCALE
+			3940.6f,			//RAW_ACC_Y_SCALE
+			4074.3f				//RAW_ACC_Z_SCALE
 		}
 	},
 	.gyroscope =
@@ -118,15 +118,15 @@ static imu_conf_t imu_config =
 		},
 		.bias =
 		{
-			-60.0f,			//MAG_BIAIS_X
-			-280.0f,			//MAG_BIAIS_Y
+			100.0f,			//MAG_BIAIS_X
+			-350.0f,			//MAG_BIAIS_Y
 			  2.47f				//MAG_BIAIS_Z
 		},
 		.scale_factor =
 		{
-			415.31f,			//RAW_MAG_X_SCALE
-			394.57f,			//RAW_MAG_Y_SCALE
-			430.02f				//RAW_MAG_Z_SCALE
+			426.92f,			//RAW_MAG_X_SCALE
+			433.64f,			//RAW_MAG_Y_SCALE
+			431.87f			//RAW_MAG_Z_SCALE
 		}
 	}
 };
