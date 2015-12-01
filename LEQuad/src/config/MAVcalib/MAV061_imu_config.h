@@ -30,7 +30,7 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file MAV051_imu_config.h
+ * \file MAV061_imu_config.h
  * 
  * \author MAV'RIC Team
  *   
@@ -118,8 +118,8 @@ static imu_conf_t imu_config =
 		},
 		.bias =
 		{
-			-60.0f,			//MAG_BIAIS_X
-			-280.0f,			//MAG_BIAIS_Y
+			25.0f,				//MAG_BIAIS_X
+			22.0f,				//MAG_BIAIS_Y
 			  2.47f				//MAG_BIAIS_Z
 		},
 		.scale_factor =
