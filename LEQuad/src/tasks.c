@@ -118,7 +118,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 // 			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
 // 			
 // 			// Mix to servo outputs
-// 			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
+// 			servos_mix_wing_update(central_data->stabilisation_adaptive_morph.servo_mix);
 
 			// Get command from remote/joystick
 			if (central_data->state.remote_active == 1)
@@ -131,7 +131,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			}
 
 			// Directly apply them to the mixer, no stabilisation
-			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
+			servos_mix_adaptive_morph_update_command(&central_data->servo_mix_adaptive_morph, &central_data->controls);
 			
 			
 			
@@ -169,59 +169,59 @@ task_return_t tasks_run_stabilisation(void* arg)
 			}
 			
 			// Apply step in the reference, overwrite the remote input
-			if(central_data->stabilisation_wing.tuning != 0 && central_data->stabilisation_wing.tuning_steps != 0)
+			if(central_data->stabilisation_adaptive_morph.tuning != 0 && central_data->stabilisation_adaptive_morph.tuning_steps != 0)
 			{
-				if(central_data->stabilisation_wing.tuning_axis == 1)
+				if(central_data->stabilisation_adaptive_morph.tuning_axis == 1)
 				{
 					if(unitary_remote_command.rpy[PITCH] >= 0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_up;
+						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = central_data->stabilisation_adaptive_morph.pitch_up;
 					}
 					else if(unitary_remote_command.rpy[PITCH] <= -0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
+						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = central_data->stabilisation_adaptive_morph.pitch_down;
 					}
 					else
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = 0.0f;
+						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = 0.0f;
 					}
 				}
-				else if(central_data->stabilisation_wing.tuning_axis == 2)
+				else if(central_data->stabilisation_adaptive_morph.tuning_axis == 2)
 				{
 					if(unitary_remote_command.rpy[ROLL] >= 0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_right;
+						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = central_data->stabilisation_adaptive_morph.roll_right;
 					}
 					else if(unitary_remote_command.rpy[ROLL] <= -0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_left;
+						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = central_data->stabilisation_adaptive_morph.roll_left;
 					}
 					else
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = 0.0f;
+						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = 0.0f;
 					}
 				}
 			}
 			
 			// Run controller cascade
 			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
-			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+			stabilisation_adaptive_morph_cascade_stabilise(&central_data->stabilisation_adaptive_morph);
 			
 			// Rewrite command on axis to apply manual control on it (used for tuning)
-			if(central_data->stabilisation_wing.tuning != 0)
+			if(central_data->stabilisation_adaptive_morph.tuning != 0)
 			{
-				if(central_data->stabilisation_wing.tuning_axis == 1)
+				if(central_data->stabilisation_adaptive_morph.tuning_axis == 1)
 				{
-					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[ROLL] = unitary_remote_command.rpy[ROLL];
+					central_data->stabilisation_adaptive_morph.stabiliser_stack.rate_stabiliser.output.rpy[ROLL] = unitary_remote_command.rpy[ROLL];
 				}
-				else if(central_data->stabilisation_wing.tuning_axis == 2)
+				else if(central_data->stabilisation_adaptive_morph.tuning_axis == 2)
 				{
-					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[PITCH] = unitary_remote_command.rpy[PITCH];
+					central_data->stabilisation_adaptive_morph.stabiliser_stack.rate_stabiliser.output.rpy[PITCH] = unitary_remote_command.rpy[PITCH];
 				}
 			}
 			
 			// Mix to servo outputs
-			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
+			servos_mix_adaptive_morph_update(central_data->stabilisation_adaptive_morph.servo_mix);
 		}
 		else if ( mode.STABILISE == STABILISE_ON )		// Rate mode
 		{
@@ -237,59 +237,59 @@ task_return_t tasks_run_stabilisation(void* arg)
 			}
 			
 			// Apply step in the reference, overwrite the remote input
-			if(central_data->stabilisation_wing.tuning != 0 && central_data->stabilisation_wing.tuning_steps != 0)
+			if(central_data->stabilisation_adaptive_morph.tuning != 0 && central_data->stabilisation_adaptive_morph.tuning_steps != 0)
 			{
-				if(central_data->stabilisation_wing.tuning_axis == 1)
+				if(central_data->stabilisation_adaptive_morph.tuning_axis == 1)
 				{
 					if(unitary_remote_command.rpy[PITCH] >= 0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_up;
+						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = central_data->stabilisation_adaptive_morph.pitch_up;
 					}
 					else if(unitary_remote_command.rpy[PITCH] <= -0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = central_data->stabilisation_wing.pitch_down;
+						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = central_data->stabilisation_adaptive_morph.pitch_down;
 					}
 					else
 					{
-						central_data->stabilisation_wing.controls->rpy[PITCH] = 0.0f;
+						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = 0.0f;
 					}
 				}
-				else if(central_data->stabilisation_wing.tuning_axis == 2)
+				else if(central_data->stabilisation_adaptive_morph.tuning_axis == 2)
 				{
 					if(unitary_remote_command.rpy[ROLL] >= 0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_right;
+						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = central_data->stabilisation_adaptive_morph.roll_right;
 					}
 					else if(unitary_remote_command.rpy[ROLL] <= -0.3f)
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = central_data->stabilisation_wing.roll_left;
+						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = central_data->stabilisation_adaptive_morph.roll_left;
 					}
 					else
 					{
-						central_data->stabilisation_wing.controls->rpy[ROLL] = 0.0f;
+						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = 0.0f;
 					}
 				}
 			}
 			
 			// Run controller cascade
 			central_data->controls.control_mode = RATE_COMMAND_MODE;
-			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+			stabilisation_adaptive_morph_cascade_stabilise(&central_data->stabilisation_adaptive_morph);
 			
 			// Rewrite command on axis to apply manual control on it (used for tuning)
-			if(central_data->stabilisation_wing.tuning != 0)
+			if(central_data->stabilisation_adaptive_morph.tuning != 0)
 			{
-				if(central_data->stabilisation_wing.tuning_axis == 1)
+				if(central_data->stabilisation_adaptive_morph.tuning_axis == 1)
 				{
-					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[ROLL] = unitary_remote_command.rpy[ROLL];
+					central_data->stabilisation_adaptive_morph.stabiliser_stack.rate_stabiliser.output.rpy[ROLL] = unitary_remote_command.rpy[ROLL];
 				}
-				else if(central_data->stabilisation_wing.tuning_axis == 2)
+				else if(central_data->stabilisation_adaptive_morph.tuning_axis == 2)
 				{
-					central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[PITCH] = unitary_remote_command.rpy[PITCH];
+					central_data->stabilisation_adaptive_morph.stabiliser_stack.rate_stabiliser.output.rpy[PITCH] = unitary_remote_command.rpy[PITCH];
 				}
 			}
 			
 			// Mix to servo outputs
-			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
+			servos_mix_adaptive_morph_update(central_data->stabilisation_adaptive_morph.servo_mix);
 			
 		}
 		else if ( mode.MANUAL == MANUAL_ON )			// Complete manual mode

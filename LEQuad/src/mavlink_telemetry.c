@@ -68,7 +68,7 @@
 #include "simulation_telemetry.h"
 #include "scheduler_telemetry.h"
 #include "sonar_telemetry.h"
-#include "servos_mix_wing_telemetry.h"
+#include "servos_mix_adaptive_morph_telemetry.h"
 
 #include "analog_monitor_telemetry.h"
 
@@ -142,10 +142,12 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_mode_custom, "mode_custom");
 	
 	// Global output
-// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_RIGHT].value, "servo_r", 3);
-// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_LEFT].value, "servo_l", 3);
-// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_THRUST].value, "servo_t", 3);
-	
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_PITCH].value, "servo_p", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_ROLL_LEFT].value, "servo_r_l", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_ROLL_RIGHT].value, "servo_r_r", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_TAIL].value, "servo_ta", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_THRUST].value, "servo_th", 3);
+ 	
 	
 	
 	///////////////////////
@@ -165,7 +167,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[PITCH].error, "ErrPitch", 3);
 			//
 	//// Feedback
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[PITCH], "GyroPitch", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[PITCH], "GyroPitch", 3);
 			//
 	//// Command
 	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[PITCH], "OutPitch", 3);
@@ -191,13 +193,14 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].error, "ErrRoll", 3);
 			//
 	//// Feedback
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[ROLL], "GyroRoll", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[ROLL], "GyroRoll", 3);
 			//
 	//// Command
 	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.output.rpy[ROLL], "OutRoll", 3);
 	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutIRoll", 3);
 	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevDRoll", 3);
 	
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.angular_speed[YAW], "GyroYaw", 3);
 	
 	
 	//////////////////////
@@ -214,15 +217,15 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 // 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].differentiator.clip, "CDPitch", 3);
 	
 	// Error (==> possible to compute reference)
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].error, "ErrPitch", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].error, "ErrPitch", 3);
 	
 	// Feedback
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[0], "UpVectPitch", 3);
 	
 	// Command
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.output.rpy[PITCH], "OutPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.accumulator, "OutIPitch", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].differentiator.previous, "PrevDPitch", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.output.rpy[PITCH], "OutPitch", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].integrator.accumulator, "OutIPitch", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[PITCH].differentiator.previous, "PrevDPitch", 3);
 	
 	
 	
@@ -240,16 +243,17 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 // 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.clip, "CDRoll", 3);
 	
 	// Error (==> possible to compute reference)
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].error, "ErrRoll", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].error, "ErrRoll", 3);
 	
 	// Feedback
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[1], "UpVectRoll", 3);
 	
 	// Command
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.output.rpy[ROLL], "OutRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutIRoll", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevDRoll", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.output.rpy[ROLL], "OutRoll", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutIRoll", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevDRoll", 3);
 	
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->ahrs.up_vec.v[2], "UpVectZ", 3);
 	
 	
 	//////////////////////////
@@ -283,15 +287,15 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// AIRSPEED //
 	//////////////
 	// Sensor
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_off", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_off", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
 //	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.scaled_airspeed, "Ai_spd_sca", 3);
 	
 	// GPS
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.ground_speed, "gps_grdspd", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_3d", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.ground_speed, "gps_grdspd", 3);
+//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_3d", 3);
 	
 
 	
@@ -326,7 +330,7 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 	init_success &= gps_ublox_telemetry_init( &central_data->gps,
 	&central_data->mavlink_communication.message_handler);
 
-	init_success &= servo_mix_wing_telemetry_init(	&central_data->servo_mix,
+	init_success &= servo_mix_adaptive_morph_telemetry_init(	&central_data->servo_mix_adaptive_morph,
 	&central_data->mavlink_communication.message_handler);
 
 	init_success &= airspeed_analog_telemetry_init(	&central_data->airspeed_analog,
@@ -343,9 +347,9 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_parameters)
 {
 	bool init_success = true;
-	stabiliser_t* rate_stabiliser = &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser;
-	stabiliser_t* attitude_stabiliser = &central_data->stabilisation_wing.stabiliser_stack.attitude_stabiliser;
-	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser;
+	stabiliser_t* rate_stabiliser = &central_data->stabilisation_adaptive_morph.stabiliser_stack.rate_stabiliser;
+	stabiliser_t* attitude_stabiliser = &central_data->stabilisation_adaptive_morph.stabiliser_stack.attitude_stabiliser;
+	stabiliser_t* velocity_stabiliser= &central_data->stabilisation_adaptive_morph.stabiliser_stack.velocity_stabiliser;
 	//stabiliser_t* position_stabiliser= &central_data->stabilisation_copter.stabiliser_stack.position_stabiliser;
 	
 	// System ID
@@ -484,7 +488,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	//init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &attitude_stabiliser->rpy_controller[YAW].differentiator.gain         , "YawAPid_D_Gain"   );
 	
 	// Biaises
-	/*
+	
 	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_gyro.bias[X]									  , "Bias_Gyro_X"      );
 	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_gyro.bias[Y]									  , "Bias_Gyro_Y"      );
 	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_gyro.bias[Z]									  , "Bias_Gyro_Z"      );
@@ -496,7 +500,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_compass.bias[X]								  , "Bias_Mag_X"       );
 	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_compass.bias[Y]								  , "Bias_Mag_Y"       );
 	init_success &= onboard_parameters_add_parameter_float ( onboard_parameters , &central_data->imu.calib_compass.bias[Z]								  , "Bias_Mag_Z"       );
-	*/
+	
 	
 	// Scale factor
 	/*
@@ -538,8 +542,10 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	//init_success &= onboard_parameters_add_parameter_int32(onboard_parameters,(int32_t*)&central_data->fat_fs_mounting.log_data, "Log_continue");
 	
 	
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_roll		, "trim_roll"     );
-	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_pitch		, "trim_pitch"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix_adaptive_morph.config.trim_roll_left		, "trim_roll_left"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix_adaptive_morph.config.trim_roll_right		, "trim_roll_right"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix_adaptive_morph.config.trim_pitch			, "trim_pitch"     );
+	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix_adaptive_morph.config.trim_tail			, "trim_tail"     );
 	
 // 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning,		"tuning");
 // 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning_axis,	"tun_axis");
@@ -574,7 +580,7 @@ bool mavlink_telemetry_init(void)
 	
 	mavlink_communication_t* mavlink_communication = &central_data->mavlink_communication;
 	
-	stabiliser_t* stabiliser_show = &central_data->stabilisation_wing.stabiliser_stack.rate_stabiliser;
+	stabiliser_t* stabiliser_show = &central_data->stabilisation_adaptive_morph.stabiliser_stack.rate_stabiliser;
 
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_heartbeat,								&central_data->state, 					MAVLINK_MSG_ID_HEARTBEAT			);// ID 0
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,	 RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_status,									&central_data->state,					MAVLINK_MSG_ID_SYS_STATUS			);// ID 1

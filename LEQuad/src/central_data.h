@@ -57,7 +57,8 @@ extern "C" {
 #include "imu.h"
 #include "ahrs.h"
 #include "stabilisation_copter.h"
-#include "stabilisation_wing.h"
+//#include "stabilisation_wing.h"
+#include "stabilisation_adaptive_morph.h"
 
 #include "remote.h"
 #include "pid_controller.h"
@@ -89,7 +90,7 @@ extern "C" {
 #include "servos.h"
 #include "pwm_servos.h"
 #include "servos_mix_quadcopter_diag.h"
-#include "servos_mix_wing.h"
+//#include "servos_mix_wing.h"
 #include "servos_mix_adaptive_morph.h"
 #include "remote.h"
 
@@ -109,7 +110,7 @@ typedef struct  {
 	mavlink_communication_t mavlink_communication;
 	attitude_controller_p2_t attitude_controller;
 	command_t command;
-	servo_mix_wing_t servo_mix;
+	//servo_mix_wing_t servo_mix;
 	servo_mix_adaptive_morph_t servo_mix_adaptive_morph;
 	servo_mix_quadcotper_diag_t quad_mix;
 	servos_t servos;
@@ -128,7 +129,8 @@ typedef struct  {
 
 	joystick_parsing_t joystick_parsing;						///< The joystick parsing structure
 	
-	stabilisation_wing_t stabilisation_wing;					///< The stabilisation structure for wing
+	//stabilisation_wing_t stabilisation_wing;					///< The stabilisation structure for wing
+	stabilisation_adaptive_morph_t stabilisation_adaptive_morph;	///< The stabilisation structure for adaptive_morph
 
 	gps_t gps;													///< The GPS structure
 	

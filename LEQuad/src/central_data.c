@@ -60,7 +60,8 @@
 #include "servos_mix_quadcopter_diag_default_config.h"
 #include "servos_mix_wing_default_config.h"
 #include "servos_mix_adaptive_morph_default_config.h"
-#include "stabilisation_wing_default_config.h"
+//#include "stabilisation_wing_default_config.h"
+#include "stabilisation_adaptive_morph_default_config.h"
 #include "airspeed_analog_default_config.h"
 
 static central_data_t central_data;
@@ -184,19 +185,19 @@ bool central_data_init()
 
 	
 	// Init stabilizers
-	stabilisation_wing_conf_t stabilisation_wing_config = stabilisation_wing_default_config;
-	stabilisation_wing_config.tuning = 0;
-	stabilisation_wing_config.tuning_axis = PITCH;
-	stabilisation_wing_config.tuning_steps = 0;
-	init_success &= stabilisation_wing_init(&central_data.stabilisation_wing,
-											&stabilisation_wing_config,
-											&central_data.controls,
-											&central_data.imu,
-											&central_data.ahrs,
-											&central_data.position_estimation,
-											&central_data.airspeed_analog,
-											&central_data.servos,
-											&central_data.servo_mix);
+	stabilisation_adaptive_morph_conf_t stabilisation_adaptive_morph_config = stabilisation_adaptive_morph_default_config;
+	stabilisation_adaptive_morph_config.tuning = 0;
+	stabilisation_adaptive_morph_config.tuning_axis = PITCH;
+	stabilisation_adaptive_morph_config.tuning_steps = 0;
+	init_success &= stabilisation_adaptive_morph_init(&central_data.stabilisation_adaptive_morph,
+	&stabilisation_adaptive_morph_config,
+	&central_data.controls,
+	&central_data.imu,
+	&central_data.ahrs,
+	&central_data.position_estimation,
+	&central_data.airspeed_analog,
+	&central_data.servos,
+	&central_data.servo_mix_adaptive_morph);
 	
 	time_keeper_delay_ms(100);
 
@@ -248,11 +249,11 @@ bool central_data_init()
 									&central_data.ahrs );
 
 	// Init servo mixing
-	init_success &= servo_mix_wing_init(&central_data.servo_mix,
-										&servo_mix_wing_default_config,
-										&central_data.stabilisation_wing.stabiliser_stack.rate_stabiliser.output,
-										&central_data.servos,
-										&central_data.remote);
+	init_success &= servo_mix_adaptive_morph_init(	&central_data.servo_mix_adaptive_morph,
+													&servo_mix_adaptive_morph_default_config,
+													&central_data.stabilisation_adaptive_morph.stabiliser_stack.rate_stabiliser.output,
+													&central_data.servos,
+													&central_data.remote);
 
 	// Init remote
 	init_success &= remote_init( 	&central_data.remote, 

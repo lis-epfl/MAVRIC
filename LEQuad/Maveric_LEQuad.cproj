@@ -788,7 +788,10 @@
     <Compile Include="Library\control\servos_mix_adaptive_morph_default_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Library\control\servos_mix_adaptive_morph_telemetry.h">
+    <Compile Include="Library\control\servos_mix_adaptive_morph_telemetry.c">
+      <SubType>compile</SubType>
+    </Compile>
+	<Compile Include="Library\control\servos_mix_adaptive_morph_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\stabilisation_copter.c">
@@ -813,6 +816,15 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\stabilisation_wing_default_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+	<Compile Include="Library\control\stabilisation_adaptive_morph.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_adaptive_morph.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\stabilisation_adaptive_morph_default_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\control\vector_field_waypoint.c">
