@@ -61,6 +61,7 @@
 #include "servos_mix_wing_default_config.h"
 #include "stabilisation_wing_default_config.h"
 #include "airspeed_analog_default_config.h"
+#include "vector_field_waypoint_default_config.h"
 
 static central_data_t central_data;
 
@@ -196,6 +197,14 @@ bool central_data_init()
 											&central_data.airspeed_analog,
 											&central_data.servos,
 											&central_data.servo_mix);
+											
+	// Init vector field navigation
+	vector_field_waypoint_init( &central_data.vector_field_waypoint,
+								&vector_field_waypoint_config,
+								&central_data.waypoint_handler,
+								&central_data.position_estimation,
+								&central_data.command.velocity,
+								&central_data.ahrs );
 	
 	time_keeper_delay_ms(100);
 

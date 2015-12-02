@@ -119,9 +119,9 @@ bool boardsupport_init(central_data_t *central_data)
 	gps_ublox_init(&(central_data->gps), UART3, usart_default_config_gps);
 	
 	// Init UART 4 for wired communication
-	//console_init(CONSOLE_UART4, usart_default_config_console, usb_default_config_console);
+	console_init(CONSOLE_UART4, usart_default_config_console, usb_default_config_console);
 	// Init USB for wired communication
-	console_init(CONSOLE_USB, usart_default_config_console, usb_default_config_console);
+	//console_init(CONSOLE_USB, usart_default_config_console, usb_default_config_console);
 		
 	// connect abstracted aliases to hardware ports
 	central_data->telemetry_down_stream = xbee_get_out_stream();
@@ -151,7 +151,7 @@ bool boardsupport_init(central_data_t *central_data)
 	bmp085_init(&central_data->pressure);
 	
 	// Init I2C for ultrasound
-	i2c_driver_init(I2C1, twim_default_config);
+	//i2c_driver_init(I2C1, twim_default_config);
 	
 	// init 6V enable
 	gpio_enable_gpio_pin(AVR32_PIN_PA04);
