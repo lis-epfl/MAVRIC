@@ -99,37 +99,37 @@ task_return_t tasks_run_stabilisation(void* arg)
 	{
 		if ( mode.AUTO == AUTO_ON )							// Attitude mode with velocity control on the thrust
 		{
-// 			// Get command from remote/joystick
-// 			if (central_data->state.remote_active == 1)
-// 			{
-// 				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-// 				remote_get_velocity_vector_from_remote_wing(&central_data->remote, &central_data->controls);
-// 			}
-// 			else
-// 			{
-// 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
-// 				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing, &central_data->controls);
-// 			}
-// 			
-// 			// Run controller cascade
-// 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
-// 			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
-// 			
-// 			// Mix to servo outputs
-// 			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
-
-			// Get command from remote/joystick
-			if (central_data->state.remote_active == 1)
-			{
+ 			// Get command from remote/joystick
+ 			if (central_data->state.remote_active == 1)
+ 			{
 				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-			}
-			else
-			{
-				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
-			}
+ 				remote_get_velocity_vector_from_remote_wing(&central_data->remote, &central_data->controls);
+ 			}
+ 			else
+ 			{
+ 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+ 				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+ 			}
+ 			
+ 			// Run controller cascade
+ 			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
+ 			stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
+ 			
+ 			// Mix to servo outputs
+ 			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
 
-			// Directly apply them to the mixer, no stabilisation
-			servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
+			//// Get command from remote/joystick
+			//if (central_data->state.remote_active == 1)
+			//{
+				//remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+			//}
+			//else
+			//{
+				//joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+			//}
+//
+			//// Directly apply them to the mixer, no stabilisation
+			//servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
 			
 			
 			
@@ -419,7 +419,7 @@ bool tasks_create_tasks()
 	init_success &= scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
 
 	init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&mavlink_communication_update                    , (task_argument_t)&central_data->mavlink_communication , 6);
-	init_success &= scheduler_add_task(scheduler, 300000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
+	init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
 	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&waypoint_handler_control_time_out_waypoint_msg  , (task_argument_t)&central_data->waypoint_handler 		, 8);
 	
 	init_success &= scheduler_add_task(scheduler, 50000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
@@ -430,7 +430,7 @@ bool tasks_create_tasks()
 	
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 	
-	init_success &= scheduler_add_task(scheduler, 300000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&airspeed_analog_update							, (task_argument_t)&central_data->airspeed_analog		, 14);
+	init_success &= scheduler_add_task(scheduler, 100000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&airspeed_analog_update							, (task_argument_t)&central_data->airspeed_analog		, 14);
 
 	scheduler_sort_tasks(scheduler);
 	
