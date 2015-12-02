@@ -49,6 +49,7 @@
 #include "dynamic_model_quad_diag.hpp"
 #include "simulation.hpp"
 #include "adc_dummy.hpp"
+#include "pwm_dummy.hpp"
 
 extern "C" 
 {
@@ -57,55 +58,10 @@ extern "C"
 	#include "print_util.h"
 	#include "piezo_speaker.h"
 
-	#include "servos.h"
-	#include "servos_default_config.h"
-
 	#include "conf_imu.hpp"
 }
 
 #include "dbg.hpp"
-
-
-void initialisation(Central_data& central_data, Megafly_rev4& board) 
-{	
-	bool init_success = true;
-
-	// Board initialisation
-	init_success &= board.init();
-
-	// Init central data
-	init_success &= central_data.init();
-
-	init_success &= mavlink_telemetry_add_onboard_parameters(&central_data.mavlink_communication.onboard_parameters, &central_data);
-
-	// Try to read from flash, if unsuccessful, write to flash
-	if( onboard_parameters_read_parameters_from_storage(&central_data.mavlink_communication.onboard_parameters) == false )
-	{
-		onboard_parameters_write_parameters_to_storage(&central_data.mavlink_communication.onboard_parameters);
-		init_success = false; 
-	}
-
-	init_success &= mavlink_telemetry_init(&central_data);
-
-	central_data.state.mav_state = MAV_STATE_STANDBY;	
-	
-	init_success &= tasks_create_tasks(&central_data);	
-
-	if (init_success)
-	{
-		piezo_speaker_quick_startup();
-		
-		// Switch off red LED
-		LED_Off(LED2);
-	}
-	else
-	{
-		piezo_speaker_critical_error_melody();
-	}
-
-	print_util_dbg_print("[MAIN] OK. Starting up.\r\n");
-}
-
 
 int main (void)
 {
@@ -121,12 +77,14 @@ int main (void)
 	// Create simulation
 	// -------------------------------------------------------------------------
 	// Simulated servos
-	servos_t sim_servos;
-	servos_init(&sim_servos, servos_default_config() );
-	servos_set_value_failsafe( &sim_servos );
+	Pwm_dummy pwm[4];
+	Servo sim_servo_0(pwm[0], servo_default_config_esc());
+	Servo sim_servo_1(pwm[1], servo_default_config_esc());
+	Servo sim_servo_2(pwm[2], servo_default_config_esc());
+	Servo sim_servo_3(pwm[3], servo_default_config_esc());
 	
 	// Simulated dynamic model
-	Dynamic_model_quad_diag sim_model 	= Dynamic_model_quad_diag(sim_servos);
+	Dynamic_model_quad_diag sim_model 	= Dynamic_model_quad_diag(sim_servo_0, sim_servo_1, sim_servo_2, sim_servo_3);
 	Simulation sim 						= Simulation(sim_model);
 	
 	// Simulated battery
@@ -145,7 +103,8 @@ int main (void)
 	// Create central data using real sensors
 	Central_data cd = Central_data( board.imu, 
 									board.bmp085,
-									board.gps_ublox, 
+									// board.gps_ublox, 
+									sim.gps(), 
 									// board.sonar_i2cxl,		// Warning:
 									sim.sonar(),				// this is simulated
 									board.uart0,
@@ -153,7 +112,10 @@ int main (void)
 									board.file_flash,
 									board.battery,
 									// sim_battery,
-									board.servos );
+									board.servo_0,
+									board.servo_1,
+									board.servo_2,
+									board.servo_3 );
 
 
 	// Create central data with simulated sensors
@@ -165,10 +127,54 @@ int main (void)
 	// 								board.spektrum_satellite,
 	// 								board.file_flash,
 	// 								sim_battery,
-	// 								sim_servos);
+	// 								board.servo_0,
+	// 								board.servo_1,
+	// 								board.servo_2,
+	// 								board.servo_3 );
 
-	initialisation(cd, board);
+	// -------------------------------------------------------------------------
+	// Initialisation
+	// -------------------------------------------------------------------------
+	bool init_success = true;
 
+	// Board initialisation
+	init_success &= board.init();
+
+	// Init central data
+	init_success &= cd.init();
+
+	init_success &= mavlink_telemetry_add_onboard_parameters(&cd.mavlink_communication.onboard_parameters, &cd);
+
+	// Try to read from flash, if unsuccessful, write to flash
+	if( onboard_parameters_read_parameters_from_storage(&cd.mavlink_communication.onboard_parameters) == false )
+	{
+		onboard_parameters_write_parameters_to_storage(&cd.mavlink_communication.onboard_parameters);
+		init_success = false; 
+	}
+
+	init_success &= mavlink_telemetry_init(&cd);
+
+	cd.state.mav_state = MAV_STATE_STANDBY;	
+	
+	init_success &= tasks_create_tasks(&cd);	
+
+	if (init_success)
+	{
+		piezo_speaker_quick_startup();
+		
+		// Switch off red LED
+		LED_Off(LED2);
+	}
+	else
+	{
+		piezo_speaker_critical_error_melody();
+	}
+
+	print_util_dbg_print("[MAIN] OK. Starting up.\r\n");
+
+	// -------------------------------------------------------------------------
+	// Main loop
+	// -------------------------------------------------------------------------
 	while (1 == 1) 
 	{
 		scheduler_update(&cd.scheduler);

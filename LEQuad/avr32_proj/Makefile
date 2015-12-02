@@ -235,8 +235,8 @@ LIB_SRCS += drivers/gps_ublox.cpp
 LIB_SRCS += drivers/gps_telemetry.cpp       
 LIB_SRCS += drivers/hmc5883l.cpp             
 LIB_SRCS += drivers/lsm330dlc.cpp            
-LIB_SRCS += drivers/servos.c                              
-LIB_SRCS += drivers/servos_telemetry.c
+LIB_SRCS += drivers/servo.cpp                              
+# LIB_SRCS += drivers/servos_telemetry.c
 LIB_SRCS += drivers/sonar_i2cxl.cpp
 LIB_SRCS += drivers/sonar_telemetry.cpp
 LIB_SRCS += drivers/spektrum_satellite.cpp
@@ -257,7 +257,7 @@ LIB_SRCS += hal/avr32/i2c_avr32.cpp
 LIB_SRCS += hal/avr32/gpio_avr32.cpp
 LIB_SRCS += hal/avr32/led.c            
 LIB_SRCS += hal/avr32/piezo_speaker.c        
-LIB_SRCS += hal/avr32/pwm_servos.c
+LIB_SRCS += hal/avr32/pwm_avr32.cpp
 LIB_SRCS += hal/avr32/serial_avr32.cpp
 LIB_SRCS += hal/avr32/serial_usb_avr32.cpp
 LIB_SRCS += hal/avr32/spi_avr32.cpp
@@ -353,7 +353,8 @@ CFLAGS += ${SRCS_INC}
 # C++ COMPILER OPTIONS
 # ------------------------------------------------------------------------------
 CXX = avr32-g++
-CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
+# CXXFLAGS  = -O3 -std=gnu++0x -mhard-float -fdata-sections -muse-rodata-section 
+CXXFLAGS  = -O3 -std=c++0x -mhard-float -fdata-sections -muse-rodata-section 
 CXXFLAGS += -g2 -pg -p -Wall -mpart=uc3c1512c -c -Wpointer-arith -mrelax -MD -MP -MF
 # CXXFLAGS += -D_DEFAULT_SOURCE 
 CXXFLAGS += ${PREPROC_OPT}

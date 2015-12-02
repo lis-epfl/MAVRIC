@@ -49,6 +49,7 @@
 #include "position_estimation_default_config.hpp"
 #include "remote_default_config.hpp"
 #include "manual_control_default_config.hpp"
+#include "servos_mix_quadcopter_diag_default_config.hpp"
 
 extern "C" 
 {
@@ -57,7 +58,6 @@ extern "C"
 	#include "qfilter_default_config.h"
 	#include "scheduler_default_config.h"
 	#include "attitude_controller_p2_default_config.h"
-	#include "servos_mix_quadcopter_diag_default_config.h"
 
 	#include "print_util.h"
 
@@ -65,7 +65,7 @@ extern "C"
 }
 
 
-Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, Battery& battery, servos_t& servos):
+Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sonar, Serial& serial_mavlink, Satellite& satellite, File& file_flash, Battery& battery,  Servo& servo_0, Servo& servo_1, Servo& servo_2, Servo& servo_3):
 	imu( imu ),
 	barometer( barometer ),
 	gps( gps ),
@@ -74,7 +74,10 @@ Central_data::Central_data(Imu& imu, Barometer& barometer, Gps& gps, Sonar& sona
 	satellite( satellite ),
 	file_flash( file_flash ),
 	battery( battery ),
-	servos( servos ),
+	servo_0( servo_0 ),
+	servo_1( servo_1 ),
+	servo_2( servo_2 ),
+	servo_3( servo_3 ),
 	state( battery, state_default_config() )
 {}
 
@@ -244,7 +247,10 @@ bool Central_data::init(void)
 											servos_mix_quadcopter_diag_default_config(),
 											&command.torque,
 											&command.thrust,
-											&servos);
+											&servo_0,
+											&servo_1,
+											&servo_2,
+											&servo_3);
 	print_util_dbg_init_msg("[SERVOS MIX]", ret);
 	init_success &= ret;
 	time_keeper_delay_ms(100); 

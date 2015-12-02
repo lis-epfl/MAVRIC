@@ -45,7 +45,6 @@
 extern "C"
 {
 	#include "led.h"
-	#include "pwm_servos.h"
 }
 
 
@@ -131,19 +130,18 @@ bool tasks_run_stabilisation(Central_data* central_data)
 		}
 		else
 		{
-			servos_set_value_failsafe( &central_data->servos );
+			central_data->servo_0.failsafe();
+			central_data->servo_1.failsafe();
+			central_data->servo_2.failsafe();
+			central_data->servo_3.failsafe();
 		}
 	}
 	else
 	{
-		servos_set_value_failsafe( &central_data->servos );
-	}
-
-		
-	// !!! -- for safety, this should remain the only place where values are written to the servo outputs! --- !!!
-	if ( !mav_modes_is_hil(mode) )
-	{
-		pwm_servos_write_to_hardware( &central_data->servos );
+		central_data->servo_0.failsafe();
+		central_data->servo_1.failsafe();
+		central_data->servo_2.failsafe();
+		central_data->servo_3.failsafe();
 	}
 	
 	return true;
