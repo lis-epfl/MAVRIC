@@ -100,7 +100,9 @@ task_return_t tasks_run_stabilisation(void* arg)
 		if ( mode.AUTO == AUTO_ON )							// Velocity mode
 		{
 			// Get command from the vector field
-			//central_data->controls.tvel = central_data->vector_field_waypoint.velocity_command->xyz;
+			//central_data->controls.tvel[0] = central_data->vector_field_waypoint.velocity_command->xyz[0];
+			//central_data->controls.tvel[1] = central_data->vector_field_waypoint.velocity_command->xyz[1];
+			//central_data->controls.tvel[2] = central_data->vector_field_waypoint.velocity_command->xyz[2];
 			
  			// Get command from remote/joystick
  			if (central_data->state.remote_active == 1)
