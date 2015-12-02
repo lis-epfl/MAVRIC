@@ -74,6 +74,8 @@
 #include "MAVcalib/MAV026_imu_config.h"
 #elif MAVLINK_SYS_ID == 42
 #include "MAVcalib/MAV042_imu_config.h"
+#elif MAVLINK_SYS_ID == 50
+#include "MAVcalib/MAV050_imu_config.h"
 #elif MAVLINK_SYS_ID == 51
 #include "MAVcalib/MAV051_imu_config.h"
 #elif MAVLINK_SYS_ID == 52
@@ -82,6 +84,8 @@
 #include "MAVcalib/MAV053_imu_config.h"
 #elif MAVLINK_SYS_ID == 54
 #include "MAVcalib/MAV054_imu_config.h"
+#elif MAVLINK_SYS_ID == 59
+#include "MAVcalib/MAV059_imu_config.h"
 #elif MAVLINK_SYS_ID == 61
 #include "MAVcalib/MAV061_imu_config.h"
 #elif MAVLINK_SYS_ID == 62
