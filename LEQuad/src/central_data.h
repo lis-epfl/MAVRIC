@@ -73,7 +73,7 @@ extern "C" {
 #include "bmp085.h"
 #include "position_estimation.h"
 #include "state_machine_custom.h"
-#include "adns_firmware.h"
+// #include "adns_firmware.h"
 
 #include "analog_monitor.h"
 #include "sonar_i2cxl.h"

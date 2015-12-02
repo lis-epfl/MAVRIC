@@ -154,7 +154,7 @@ bool central_data_init()
 												&central_data.ahrs,
 												&central_data.position_estimation,
 												&central_data.stabilisation_copter,
-												&central_data.waypoint_handler);
+												&central_data.navigation);
 	
 	time_keeper_delay_ms(100);
 
