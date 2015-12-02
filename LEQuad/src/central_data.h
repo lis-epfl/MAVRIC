@@ -96,6 +96,7 @@ extern "C" {
 #include "joystick_parsing.h"
 #include "data_logging.h"
 #include "fat_fs_mounting.h"
+#include "vector_field_waypoint.h"
 
 #include "acoustic.h" 
 // TODO : update documentation
@@ -127,6 +128,7 @@ typedef struct  {
 	joystick_parsing_t joystick_parsing;						///< The joystick parsing structure
 	
 	stabilisation_wing_t stabilisation_wing;					///< The stabilisation structure for wing
+	vector_field_waypoint_t vector_field_waypoint;				///< The vector field structure
 
 	gps_t gps;													///< The GPS structure
 	

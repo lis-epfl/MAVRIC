@@ -810,6 +810,9 @@
     <Compile Include="Library\control\vector_field_waypoint.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\control\vector_field_waypoint_default_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\control\velocity_controller_copter.h">
       <SubType>compile</SubType>
     </Compile>

@@ -567,6 +567,15 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_offset,	"Ai_corr_off");
 	
 	
+	// Vector field
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->vector_field_waypoint.floor_altitude,	"Vect_floor");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->vector_field_waypoint.velocity_max,	"Vect_velo");
+	
+	// A priori on the input
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori,		"Pit_ang_ap");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori_gain,	"Pit_ang_ap_g");
+	
+	
 	return init_success;
 }
 

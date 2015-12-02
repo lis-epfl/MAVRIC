@@ -97,8 +97,13 @@ task_return_t tasks_run_stabilisation(void* arg)
 
 	if( mode.ARMED == ARMED_ON )
 	{
-		if ( mode.AUTO == AUTO_ON )							// Attitude mode with velocity control on the thrust
+		if ( mode.AUTO == AUTO_ON )							// Velocity mode
 		{
+			// Get command from the vector field
+			//central_data->controls.tvel[0] = central_data->vector_field_waypoint.velocity_command->xyz[0];
+			//central_data->controls.tvel[1] = central_data->vector_field_waypoint.velocity_command->xyz[1];
+			//central_data->controls.tvel[2] = central_data->vector_field_waypoint.velocity_command->xyz[2];
+			
  			// Get command from remote/joystick
  			if (central_data->state.remote_active == 1)
  			{
@@ -117,48 +122,13 @@ task_return_t tasks_run_stabilisation(void* arg)
  			
  			// Mix to servo outputs
  			servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
-
-			//// Get command from remote/joystick
-			//if (central_data->state.remote_active == 1)
-			//{
-				//remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-			//}
-			//else
-			//{
-				//joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
-			//}
-//
-			//// Directly apply them to the mixer, no stabilisation
-			//servos_mix_wing_update_command(&central_data->servo_mix, &central_data->controls);
-			
-			
-			
-			
-			////Read command
-			//if (central_data->state.remote_active == 1)
-			//{
-				//remote_get_rate_command_from_remote(&central_data->remote, &central_data->controls);
-				//remote_get_command_from_remote(&central_data->remote, &unitary_remote_command);
-				//remote_get_velocity_vector_from_remote_wing(&central_data->remote, &central_data->controls);
-			//}
-			//else
-			//{
-				//joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			//}
-						//
-			//// Run controller cascade
-			//central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
-			//stabilisation_wing_cascade_stabilise(&central_data->stabilisation_wing);
-						//
-			//// Mix to servo outputs
-			//servos_mix_wing_update(central_data->stabilisation_wing.servo_mix);
 		}
 		else if ( mode.GUIDED == GUIDED_ON )				// Attitude mode
 		{
 			// Read command
 			if (central_data->state.remote_active == 1)
 			{
-				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+				remote_get_angle_command_from_remote(&central_data->remote, &central_data->controls);
 				remote_get_command_from_remote(&central_data->remote, &unitary_remote_command);
 			}
 			else
@@ -414,7 +384,7 @@ bool tasks_create_tasks()
 	
 	init_success &= scheduler_add_task(scheduler, 15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , &tasks_run_barometer_update                                       , 0 													, 2);
 	init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , &tasks_run_gps_update                                             , 0 													, 3);
-	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&navigation_update								, (task_argument_t)&central_data->navigation			, 4);
+	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&vector_field_waypoint_update					, (task_argument_t)&central_data->vector_field_waypoint	, 4);
 	
 	init_success &= scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
 
