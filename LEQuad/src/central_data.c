@@ -156,8 +156,10 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	// Init navigation
+	navigation_config_t nav_config = navigation_default_config;
+	nav_config.cruise_speed = 12.0f;
 	init_success &= navigation_init(&central_data.navigation,
-									&navigation_default_config,
+									&nav_config,
 									&central_data.controls_nav,
 									&central_data.ahrs.qe,
 									&central_data.waypoint_handler,
@@ -204,7 +206,8 @@ bool central_data_init()
 								&central_data.waypoint_handler,
 								&central_data.position_estimation,
 								&central_data.command.velocity,
-								&central_data.ahrs );
+								&central_data.ahrs,
+								&central_data.controls_nav );
 	
 	time_keeper_delay_ms(100);
 
