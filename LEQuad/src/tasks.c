@@ -97,8 +97,41 @@ void tasks_mix_to_servos(void)
 	// else if( stabilisation_copter->motor_layout == QUADCOPTER_MOTOR_LAYOUT_CROSS )
 	// {
 	// 	servos_mix_quadcopter_cross_update()
-
 	// }
+}
+
+task_return_t tasks_run_throw_recovery_update(void);
+task_return_t tasks_run_throw_recovery_update(void)
+{
+	throw_recovery_state_machine_update(&central_data->throw_recovery_state_machine, &central_data->controls);
+
+	bool switch_enabled = throw_recovery_state_machine_switch_enabled(&central_data->throw_recovery_state_machine);
+
+	if (switch_enabled)
+	{ // Recovery and stabilisation enabled
+		if (central_data->throw_recovery_state_machine.state == STATE_HEIGHT_CONTROL)
+		{
+			central_data->controls = central_data->controls_nav;
+		}
+
+		if (central_data->throw_recovery_state_machine.state != STATE_LAUNCH_DETECTION)
+		{
+			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+			tasks_mix_to_servos();
+		}
+	}
+	else
+	{ // Manual Control
+		remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+
+		central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
+		central_data->controls.yaw_mode = YAW_RELATIVE;
+
+		stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+		tasks_mix_to_servos();
+	}
+
+	return TASK_RUN_SUCCESS;
 }
 
 task_return_t tasks_run_stabilisation(void* arg) 
@@ -175,21 +208,9 @@ task_return_t tasks_run_stabilisation(void* arg)
 		{
 			if (central_data->state.remote_active == 1)
 			{
-				throw_recovery_state_machine_update(&central_data->throw_recovery_state_machine, &central_data->controls);
-				bool switch_enabled = central_data->throw_recovery_state_machine.debug ? 1 : ((int32_t)(central_data->throw_recovery_state_machine.remote->channels[CHANNEL_AUX1] + 1.0f) > 0);
-
-				if (switch_enabled) 
-				{ // Recovery and stabilisation enabled
-					if (central_data->throw_recovery_state_machine.state == STATE_HEIGHT_CONTROL)
-					{
-						central_data->controls = central_data->controls_nav;
-					}
-
-					if (central_data->throw_recovery_state_machine.state != STATE_LAUNCH_DETECTION)
-					{
-						stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-						tasks_mix_to_servos();
-					}
+				if (central_data->throw_recovery_state_machine.enabled == 1)
+				{
+					tasks_run_throw_recovery_update();
 				}
 				else
 				{
@@ -219,7 +240,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
-		if ((central_data->throw_recovery_state_machine.enabled == 1) && (central_data->throw_recovery_state_machine.debug != 1))
+		if (throw_recovery_state_machine_should_reset(&central_data->throw_recovery_state_machine))
 		{
 			throw_recovery_state_machine_reset(&central_data->throw_recovery_state_machine);
 		}
@@ -236,7 +257,6 @@ task_return_t tasks_run_stabilisation(void* arg)
 	
 	return TASK_RUN_SUCCESS;
 }
-
 
 // new task to test P^2 attutude controller
 task_return_t tasks_run_stabilisation_quaternion(void* arg);
