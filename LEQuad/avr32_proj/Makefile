@@ -246,7 +246,6 @@ LIB_SRCS += control/servos_mix_quadcopter_cross.c
 LIB_SRCS += control/servos_mix_quadcopter_diag.c   
 LIB_SRCS += control/stabilisation.c
 LIB_SRCS += control/stabilisation_copter.c
-LIB_SRCS += control/stabilisation_copter_default_config.c
 LIB_SRCS += control/stabilisation_telemetry.c
 LIB_SRCS += control/vector_field_waypoint.c
 LIB_SRCS += control/velocity_controller_copter.c
