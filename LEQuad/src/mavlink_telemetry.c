@@ -573,7 +573,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	
 	// A priori on the input
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori,		"Pit_ang_ap");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori_gain,	"Pit_ang_ap_g");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori_gain,	"Pit_ap_g");
 	
 	
 	return init_success;

@@ -100,9 +100,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 		if ( mode.AUTO == AUTO_ON )							// Velocity mode
 		{
 			// Get command from the vector field
-			//central_data->controls.tvel[0] = central_data->vector_field_waypoint.velocity_command->xyz[0];
-			//central_data->controls.tvel[1] = central_data->vector_field_waypoint.velocity_command->xyz[1];
-			//central_data->controls.tvel[2] = central_data->vector_field_waypoint.velocity_command->xyz[2];
+			//central_data->controls = central_data->controls_nav;
 			
  			// Get command from remote/joystick
  			if (central_data->state.remote_active == 1)
@@ -384,7 +382,7 @@ bool tasks_create_tasks()
 	
 	init_success &= scheduler_add_task(scheduler, 15000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , &tasks_run_barometer_update                                       , 0 													, 2);
 	init_success &= scheduler_add_task(scheduler, 100000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , &tasks_run_gps_update                                             , 0 													, 3);
-	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&vector_field_waypoint_update					, (task_argument_t)&central_data->vector_field_waypoint	, 4);
+	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGH   , (task_function_t)&navigation_update								, (task_argument_t)&central_data->navigation			, 4);
 	
 	init_success &= scheduler_add_task(scheduler, 200000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_NORMAL , (task_function_t)&state_machine_update              				, (task_argument_t)&central_data->state_machine         , 5);
 

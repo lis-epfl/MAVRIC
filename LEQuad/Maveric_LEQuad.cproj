@@ -873,6 +873,9 @@
     <Compile Include="Library\hal\include\airspeed_analog_default_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\hal\include\linear_algebra.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\libs\fat_fs\diskio.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1480,9 +1483,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\util\linear_algebra.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Library\util\linear_algebra.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\util\maths.h">
