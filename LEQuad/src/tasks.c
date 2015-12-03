@@ -52,8 +52,7 @@
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
 //#include "data_logging.h"
-#include "state_machine_custom.h"
-#include "piezo_speaker.h"
+#include "throw_recovery_state_machine.h"
 
 #include "pwm_servos.h"
 
@@ -176,27 +175,28 @@ task_return_t tasks_run_stabilisation(void* arg)
 		{
 			if (central_data->state.remote_active == 1)
 			{
-				state_machine_custom_update(&central_data->state_machine_custom, &central_data->controls);
-				bool switch_enabled = central_data->state_machine_custom.debug ? 1 : ((int32_t)(central_data->state_machine_custom.remote->channels[CHANNEL_AUX1] + 1.0f) > 0);
+				throw_recovery_state_machine_update(&central_data->throw_recovery_state_machine, &central_data->controls);
+				bool switch_enabled = central_data->throw_recovery_state_machine.debug ? 1 : ((int32_t)(central_data->throw_recovery_state_machine.remote->channels[CHANNEL_AUX1] + 1.0f) > 0);
 
 				if (switch_enabled) 
 				{ // Recovery and stabilisation enabled
-
-					// central_data->state_machine_custom.state = STATE_HEIGHT_CONTROL;
-					if (central_data->state_machine_custom.state == STATE_HEIGHT_CONTROL)
+					if (central_data->throw_recovery_state_machine.state == STATE_HEIGHT_CONTROL)
 					{
 						central_data->controls = central_data->controls_nav;
 					}
 
-					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-					tasks_mix_to_servos();
+					if (central_data->throw_recovery_state_machine.state != STATE_LAUNCH_DETECTION)
+					{
+						stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+						tasks_mix_to_servos();
+					}
 				}
-				else // Remote control
+				else
 				{
 					remote_get_command_from_remote(&central_data->remote, &central_data->controls);
 
 					central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
-					central_data->controls.yaw_mode=YAW_RELATIVE;
+					central_data->controls.yaw_mode = YAW_RELATIVE;
 		
 					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 					tasks_mix_to_servos();
@@ -219,9 +219,9 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
-		if ((central_data->state_machine_custom.enabled == 1) && (central_data->state_machine_custom.debug != 1))
+		if ((central_data->throw_recovery_state_machine.enabled == 1) && (central_data->throw_recovery_state_machine.debug != 1))
 		{
-			state_machine_custom_reset(&central_data->state_machine_custom);
+			throw_recovery_state_machine_reset(&central_data->throw_recovery_state_machine);
 		}
 
 		servos_set_value_failsafe( &central_data->servos );

@@ -148,13 +148,13 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	// Init custom state machine
-	init_success &= state_machine_custom_init(	&central_data.state_machine_custom,
-												&central_data.remote, 
-												&central_data.imu,
-												&central_data.ahrs,
-												&central_data.position_estimation,
-												&central_data.stabilisation_copter,
-												&central_data.navigation);
+	init_success &= throw_recovery_state_machine_init(	&central_data.throw_recovery_state_machine,
+														&central_data.remote, 
+														&central_data.imu,
+														&central_data.ahrs,
+														&central_data.position_estimation,
+														&central_data.stabilisation_copter,
+														&central_data.navigation);
 	
 	time_keeper_delay_ms(100);
 

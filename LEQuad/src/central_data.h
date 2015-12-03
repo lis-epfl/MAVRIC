@@ -72,8 +72,7 @@ extern "C" {
 #include "simulation.h"
 #include "bmp085.h"
 #include "position_estimation.h"
-#include "state_machine_custom.h"
-// #include "adns_firmware.h"
+#include "throw_recovery_state_machine.h"
 
 #include "analog_monitor.h"
 #include "sonar_i2cxl.h"
@@ -132,7 +131,7 @@ typedef struct  {
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
 
-	state_machine_custom_t state_machine_custom;				///< The custom state machine for stabilisation algorithm
+	throw_recovery_state_machine_t throw_recovery_state_machine;				///< The custom state machine for stabilisation algorithm
 	
 	// aliases
 	byte_stream_t *telemetry_down_stream;						///< The pointer to the downcoming telemetry byte stream
