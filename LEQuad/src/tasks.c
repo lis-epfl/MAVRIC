@@ -99,20 +99,26 @@ task_return_t tasks_run_stabilisation(void* arg)
 	{
 		if ( mode.AUTO == AUTO_ON )							// Velocity mode
 		{
-			// Get command from the vector field
-			//central_data->controls = central_data->controls_nav;
-			
- 			// Get command from remote/joystick
- 			if (central_data->state.remote_active == 1)
- 			{
-				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
- 				remote_get_velocity_vector_from_remote_wing(&central_data->remote, &central_data->controls);
- 			}
- 			else
- 			{
- 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
- 				joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing, &central_data->controls);
- 			}
+			if (mode.CUSTOM == CUSTOM_ON)
+			{
+				// Get command from remote/joystick
+				central_data->stabilisation_wing.controls->yaw_mode = YAW_RELATIVE;
+				if (central_data->state.remote_active == 1)
+				{
+					remote_get_velocity_vector_from_remote_wing(&central_data->remote, &central_data->controls);
+				}
+				else
+				{
+					joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+					joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+				}
+			}
+			else
+			{
+				// Get command from the vector field
+				central_data->controls = central_data->controls_nav;
+				central_data->stabilisation_wing.controls->yaw_mode = YAW_ABSOLUTE;
+			}
  			
  			// Run controller cascade
  			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
