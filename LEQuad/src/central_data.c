@@ -105,6 +105,10 @@ bool central_data_init()
 	// Init state structure
 	state_t state_config = state_default_config;
 	state_config.autopilot_type = MAV_TYPE_FIXED_WING;
+	state_config.fence_1_xy = 400.0f;
+	state_config.fence_1_z = 150.0f;
+	state_config.fence_2_xy = 500.0f;
+	state_config.fence_2_z = 300.0f;
 	init_success &= state_init(	&central_data.state,
 								&state_config,
 								&central_data.analog_monitor,
