@@ -30,7 +30,7 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file MAV061_imu_config.h
+ * \file MAV072_imu_config.h
  * 
  * \author MAV'RIC Team
  *   
@@ -64,15 +64,15 @@ static imu_conf_t imu_config =
 		},
 		.bias =
 		{
-			25.0f,				//ACC_BIAIS_X
-			-25.0f,				//ACC_BIAIS_Y
-			415.0f				//ACC_BIAIS_Z
+			45.0f,				//ACC_BIAIS_X
+			-130.0f,				//ACC_BIAIS_Y
+			145.0f				//ACC_BIAIS_Z
 		},
 		.scale_factor =
 		{
-			3960.49f,			//RAW_ACC_X_SCALE
-			3986.12f,			//RAW_ACC_Y_SCALE
-			4075.72f			//RAW_ACC_Z_SCALE
+			4077.6f,			//RAW_ACC_X_SCALE
+			3961.9f,			//RAW_ACC_Y_SCALE
+			3972.2f				//RAW_ACC_Z_SCALE
 		}
 	},
 	.gyroscope =
@@ -91,9 +91,9 @@ static imu_conf_t imu_config =
 		},
 		.bias =
 		{
-			0.0f,				//GYRO_BIAIS_X
-			0.0f,				//GYRO_BIAIS_Y
-			0.0f				//GYRO_BIAIS_Z
+			12.0f,			//GYRO_BIAIS_X
+			-8.0f,			//GYRO_BIAIS_Y
+			0.0f			//GYRO_BIAIS_Z
 		},
 		.scale_factor =
 		{
@@ -118,15 +118,15 @@ static imu_conf_t imu_config =
 		},
 		.bias =
 		{
-			25.0f,				//MAG_BIAIS_X
-			22.0f,				//MAG_BIAIS_Y
-			  2.47f				//MAG_BIAIS_Z
+			-60.0f,			//MAG_BIAIS_X
+			 -250.0f,			//MAG_BIAIS_Y
+			  -4.0f				//MAG_BIAIS_Z
 		},
 		.scale_factor =
 		{
-			415.31f,			//RAW_MAG_X_SCALE
-			394.57f,			//RAW_MAG_Y_SCALE
-			430.02f				//RAW_MAG_Z_SCALE
+			441.89f,			//RAW_MAG_X_SCALE
+			445.81f,			//RAW_MAG_Y_SCALE
+			436.58f				//RAW_MAG_Z_SCALE
 		}
 	}
 };
