@@ -22,6 +22,11 @@
 # Python
 *.pyc
 
+#Inventor
+/Mechanics/myCopter_CAD/Inventor/OldVersions/*
+/Mechanics/myCopter_CAD/Inventor/Misc/OldVersions/*
+*.lck
+
 # Codelite
 *.mk
 *mavric.map
@@ -29,3 +34,6 @@
 *.codelite
 *Debug_Linux
 *Release_Linux
+
+#Atmel Studio
+/LEQuad/Release/*
