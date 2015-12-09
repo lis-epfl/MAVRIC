@@ -109,13 +109,26 @@ task_return_t tasks_run_throw_recovery_update(void)
 
 	if (switch_enabled)
 	{ // Recovery and stabilisation enabled
-		if (central_data->throw_recovery_state_machine.state == STATE_HEIGHT_CONTROL)
-		{
-			central_data->controls = central_data->controls_nav;
-		}
 
 		if (central_data->throw_recovery_state_machine.state != STATE_LAUNCH_DETECTION)
 		{
+			if (central_data->throw_recovery_state_machine.state == STATE_HEIGHT_CONTROL)
+			{
+				central_data->controls = central_data->controls_nav;
+			}
+
+			else if (central_data->throw_recovery_state_machine.state == STATE_HORIZONTAL_VELOCITY)
+			{
+				central_data->controls.tvel[Z] = central_data->controls_nav.tvel[Z];
+			}
+
+			else if (central_data->throw_recovery_state_machine.state == STATE_POSITION_LOCKING)
+			{
+				central_data->controls = central_data->controls_nav;
+				central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
+				central_data->controls.velocity_control_mode = VELOCITY_MODE;
+			}
+
 			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
 			tasks_mix_to_servos();
 		}
