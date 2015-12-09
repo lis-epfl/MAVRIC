@@ -196,6 +196,7 @@ LIB_SRCS += util/kalman.c
 LIB_SRCS += util/linear_algebra.c
 LIB_SRCS += util/print_util.c
 LIB_SRCS += util/quick_trig.c
+LIB_SRCS += util/sma.c
 
 LIB_SRCS += hal/avr32/adc_int.c                   
 LIB_SRCS += hal/avr32/ads1274.c                   
@@ -258,6 +259,7 @@ LIB_SRCS += sensing/position_estimation_telemetry.c
 LIB_SRCS += sensing/qfilter.c
 LIB_SRCS += sensing/simulation.c
 LIB_SRCS += sensing/simulation_telemetry.c   
+LIB_SRCS += sensing/launch_detection.c
 
 LIB_SRCS += runtime/scheduler.c  
 LIB_SRCS += runtime/scheduler_telemetry.c
@@ -276,6 +278,7 @@ LIB_SRCS += communication/remote.c
 LIB_SRCS += communication/remote_telemetry.c
 LIB_SRCS += communication/state.c
 LIB_SRCS += communication/state_machine.c
+LIB_SRCS += communication/throw_recovery_state_machine.c
 LIB_SRCS += communication/state_telemetry.c
 
 LIB_SRCS += libs/fat_fs/diskio.c  

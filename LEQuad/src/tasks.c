@@ -52,6 +52,7 @@
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
 //#include "data_logging.h"
+#include "throw_recovery_state_machine.h"
 
 #include "pwm_servos.h"
 
@@ -96,8 +97,54 @@ void tasks_mix_to_servos(void)
 	// else if( stabilisation_copter->motor_layout == QUADCOPTER_MOTOR_LAYOUT_CROSS )
 	// {
 	// 	servos_mix_quadcopter_cross_update()
-
 	// }
+}
+
+task_return_t tasks_run_throw_recovery_update(void);
+task_return_t tasks_run_throw_recovery_update(void)
+{
+	throw_recovery_state_machine_update(&central_data->throw_recovery_state_machine, &central_data->controls);
+
+	bool switch_enabled = throw_recovery_state_machine_switch_enabled(&central_data->throw_recovery_state_machine);
+
+	if (switch_enabled)
+	{ // Recovery and stabilisation enabled
+
+		if (central_data->throw_recovery_state_machine.state != STATE_LAUNCH_DETECTION)
+		{
+			if (central_data->throw_recovery_state_machine.state == STATE_HEIGHT_CONTROL)
+			{
+				central_data->controls = central_data->controls_nav;
+			}
+
+			else if (central_data->throw_recovery_state_machine.state == STATE_HORIZONTAL_VELOCITY)
+			{
+				central_data->controls.tvel[Z] = central_data->controls_nav.tvel[Z];
+			}
+
+			else if (central_data->throw_recovery_state_machine.state == STATE_POSITION_LOCKING)
+			{
+				central_data->controls = central_data->controls_nav;
+				central_data->controls.control_mode = VELOCITY_COMMAND_MODE;
+				central_data->controls.velocity_control_mode = VELOCITY_MODE;
+			}
+
+			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+			tasks_mix_to_servos();
+		}
+	}
+	else
+	{ // Manual Control
+		remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+
+		central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
+		central_data->controls.yaw_mode = YAW_RELATIVE;
+
+		stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+		tasks_mix_to_servos();
+	}
+
+	return TASK_RUN_SUCCESS;
 }
 
 task_return_t tasks_run_stabilisation(void* arg) 
@@ -174,18 +221,30 @@ task_return_t tasks_run_stabilisation(void* arg)
 		{
 			if (central_data->state.remote_active == 1)
 			{
-				remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+				if (central_data->throw_recovery_state_machine.enabled == 1)
+				{
+					tasks_run_throw_recovery_update();
+				}
+				else
+				{
+					remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+
+					central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
+					central_data->controls.yaw_mode = YAW_RELATIVE;
+		
+					stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+					tasks_mix_to_servos();
+				}
 			}
 			else
 			{
 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
-			
-			central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
-			central_data->controls.yaw_mode=YAW_RELATIVE;
+				central_data->controls.control_mode = ATTITUDE_COMMAND_MODE;
+				central_data->controls.yaw_mode=YAW_RELATIVE;
 		
-			stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
-			tasks_mix_to_servos();
+				stabilisation_copter_cascade_stabilise(&central_data->stabilisation_copter);
+				tasks_mix_to_servos();
+			}
 		}
 		else
 		{
@@ -194,6 +253,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 	}
 	else
 	{
+		if (throw_recovery_state_machine_should_reset(&central_data->throw_recovery_state_machine))
+		{
+			throw_recovery_state_machine_reset(&central_data->throw_recovery_state_machine);
+		}
+
 		servos_set_value_failsafe( &central_data->servos );
 	}
 
@@ -206,7 +270,6 @@ task_return_t tasks_run_stabilisation(void* arg)
 	
 	return TASK_RUN_SUCCESS;
 }
-
 
 // new task to test P^2 attutude controller
 task_return_t tasks_run_stabilisation_quaternion(void* arg);
@@ -241,7 +304,6 @@ task_return_t tasks_run_stabilisation_quaternion(void* arg)
 	
 	return TASK_RUN_SUCCESS;
 } 
-
 
 
 task_return_t tasks_run_gps_update(void* arg) 
@@ -289,7 +351,7 @@ bool tasks_create_tasks()
 	
 	scheduler_t* scheduler = &central_data->scheduler;
 
-	init_success &= scheduler_add_task(scheduler, 4000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation												, 0                                                    , 0);
+	init_success &= scheduler_add_task(scheduler, 5000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation												, 0                                                    , 0);
 	//init_success &= scheduler_add_task(scheduler, 4000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_HIGHEST, &tasks_run_stabilisation_quaternion                               , 0 													, 0);
 
 	//init_success &= scheduler_add_task(scheduler, 20000, 	RUN_REGULAR, PERIODIC_RELATIVE, PRIORITY_HIGH   , (task_function_t)&remote_update                                   , 0 													, 1);
@@ -304,11 +366,11 @@ bool tasks_create_tasks()
 	init_success &= scheduler_add_task(scheduler, 300000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&analog_monitor_update                           , (task_argument_t)&central_data->analog_monitor 		, 7);
 	init_success &= scheduler_add_task(scheduler, 10000, 	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW    , (task_function_t)&waypoint_handler_control_time_out_waypoint_msg  , (task_argument_t)&central_data->waypoint_handler 		, 8);
 	
-	init_success &= scheduler_add_task(scheduler, 100000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
+	init_success &= scheduler_add_task(scheduler, 50000,   RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW		, (task_function_t)&data_logging_update								, (task_argument_t)&central_data->data_logging			, 10);
 	
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOWEST , &tasks_led_toggle													, 0														, 11);
 
-	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
+	init_success &= scheduler_add_task(scheduler, 100000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&sonar_i2cxl_update								, (task_argument_t)&central_data->sonar_i2cxl			, 12);
 	
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
 

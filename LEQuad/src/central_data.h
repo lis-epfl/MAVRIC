@@ -72,6 +72,7 @@ extern "C" {
 #include "simulation.h"
 #include "bmp085.h"
 #include "position_estimation.h"
+#include "throw_recovery_state_machine.h"
 
 #include "analog_monitor.h"
 #include "sonar_i2cxl.h"
@@ -120,7 +121,7 @@ typedef struct  {
 
 	joystick_parsing_t joystick_parsing;						///< The joystick parsing structure
 	
-	stabilisation_copter_t stabilisation_copter;					///< The stabilisation structure for copter
+	stabilisation_copter_t stabilisation_copter;				///< The stabilisation structure for copter
 
 	gps_t gps;													///< The GPS structure
 	
@@ -129,6 +130,8 @@ typedef struct  {
 	simulation_model_t sim_model;								///< The simulation model structure
 	
 	position_estimation_t position_estimation;					///< The position estimaton structure
+
+	throw_recovery_state_machine_t throw_recovery_state_machine;				///< The custom state machine for stabilisation algorithm
 	
 	// aliases
 	byte_stream_t *telemetry_down_stream;						///< The pointer to the downcoming telemetry byte stream

@@ -147,6 +147,17 @@ bool central_data_init()
 	
 	time_keeper_delay_ms(100);
 
+	// Init custom state machine
+	// init_success &= throw_recovery_state_machine_init(	&central_data.throw_recovery_state_machine,
+	// 													&central_data.remote, 
+	// 													&central_data.imu,
+	// 													&central_data.ahrs,
+	// 													&central_data.position_estimation,
+	// 													&central_data.stabilisation_copter,
+	// 													&central_data.navigation);
+	
+	time_keeper_delay_ms(100);
+
 	// Init navigation
 	init_success &= navigation_init(&central_data.navigation,
 									&navigation_default_config,
