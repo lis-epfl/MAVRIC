@@ -142,8 +142,8 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_mode_custom, "mode_custom");
 	
 	// Global output
-// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_RIGHT].value, "servo_r", 3);
-// 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_LEFT].value, "servo_l", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_RIGHT].value, "servo_r", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_LEFT].value, "servo_l", 3);
  	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_WING_THRUST].value, "servo_t", 3);
 	
 	
@@ -283,26 +283,26 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	////////////////////////
 	// PID: ROLL VELOCITY //
 	////////////////////////
-	//// Gains
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].p_gain, "GainP_velrol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.gain, "GainI_velrol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.gain, "GainD_velrol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_max, "CMax_velrol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_min, "CMin_velrol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip_pre, "CPreI_velrol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip, "CI_velrol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.clip, "CD_velrol", 3);
-	//
-	//// Error (==> possible to compute reference)
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].error, "Err_thr", 3);
-	//
-	//// Feedback
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.current_heading, "fee_head", 3);
-	//
-	//// Command
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.output.rpy[ROLL], "Out_rol", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutI_thr", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevD_thr", 3);
+	// Gains
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].p_gain, "GainP_velrol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.gain, "GainI_velrol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.gain, "GainD_velrol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_max, "CMax_velrol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_min, "CMin_velrol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip_pre, "CPreI_velrol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip, "CI_velrol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.clip, "CD_velrol", 3);
+	
+	// Error (==> possible to compute reference)
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].error, "Err_velrol", 3);
+	
+	// Feedback
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.current_heading, "fee_head", 3);
+	
+	// Command
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.output.rpy[ROLL], "Out_rol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutI_thr", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevD_thr", 3);
 	
 	
 	
@@ -336,23 +336,19 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// AIRSPEED //
 	//////////////
 	// Sensor
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_off", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
-//	init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.scaled_airspeed, "Ai_spd_sca", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.differential_pressure, "Ai_pres_dif", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.pressure_offset, "Ai_off", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.airspeed, "Ai_airspeed", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
 	
 	// GPS
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.ground_speed, "gps_grdspd", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_3d", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.course, "gps_course", 3);
 	
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[0], "vel_0", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[1], "vel_1", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[2], "vel_2", 3);
-	
-	
-	
-
 	
 	return init_success;
 };
