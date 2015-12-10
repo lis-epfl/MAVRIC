@@ -729,6 +729,12 @@
     <Compile Include="Library\control\control_command.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\control\dubin.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\control\dubin.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\control\joystick_parsing.c">
       <SubType>compile</SubType>
     </Compile>

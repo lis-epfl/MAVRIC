@@ -118,13 +118,13 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 7);
 	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude", 3);
 	
-	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
-	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x", 3);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
 	
-	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
-	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
-	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
 	
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
@@ -287,11 +287,11 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].p_gain, "GainP_velrol", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.gain, "GainI_velrol", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.gain, "GainD_velrol", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_max, "CMax_velrol", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_min, "CMin_velrol", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip_pre, "CPreI_velrol", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip, "CI_velrol", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.clip, "CD_velrol", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_max, "CMax_velrol", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].clip_min, "CMin_velrol", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip_pre, "CPreI_velrol", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.clip, "CI_velrol", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.clip, "CD_velrol", 3);
 	
 	// Error (==> possible to compute reference)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].error, "Err_velrol", 3);
@@ -300,7 +300,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.current_heading, "fee_head", 3);
 	
 	// Command
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.output.rpy[ROLL], "Out_rol", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.output.rpy[ROLL], "Out_rol", 3);		// --> turn rate !!!
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].integrator.accumulator, "OutI_thr", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[ROLL].differentiator.previous, "PrevD_thr", 3);
 	
@@ -309,26 +309,26 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	/////////////////////////
 	// PID: PITCH VELOCITY //
 	/////////////////////////
-	// Gains
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].p_gain, "GainP_velpit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.gain, "GainI_velpit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].differentiator.gain, "GainD_velpit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].clip_max, "CMax_velpit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].clip_min, "CMin_velpit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.clip_pre, "CPreI_velpit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.clip, "CI_velpit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].differentiator.clip, "CD_velpit", 3);
-	
-	// Error (==> possible to compute reference)
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].error, "Err_pit", 3);
-	
-	// Feedback
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.vertical_speed, "fee_vspeed", 3);
-	
-	// Command
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.output.rpy[PITCH], "Out_pit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.accumulator, "OutI_pit", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].differentiator.previous, "PrevD_pit", 3);
+	//// Gains
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].p_gain, "GainP_velpit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.gain, "GainI_velpit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].differentiator.gain, "GainD_velpit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].clip_max, "CMax_velpit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].clip_min, "CMin_velpit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.clip_pre, "CPreI_velpit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.clip, "CI_velpit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].differentiator.clip, "CD_velpit", 3);
+	//
+	//// Error (==> possible to compute reference)
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].error, "Err_pit", 3);
+	//
+	//// Feedback
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.vertical_speed, "fee_vspeed", 3);
+	//
+	//// Command
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.output.rpy[PITCH], "Out_pit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].integrator.accumulator, "OutI_pit", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->stabilisation_wing.stabiliser_stack.velocity_stabiliser.rpy_controller[PITCH].differentiator.previous, "PrevD_pit", 3);
 	
 	
 	
@@ -342,13 +342,28 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->airspeed_analog.raw_airspeed, "Ai_spd_raw", 3);
 	
 	// GPS
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.ground_speed, "gps_grdspd", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_3d", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.course, "gps_course", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.ground_speed, "gps_grdspd", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.speed, "gps_3d", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->gps.course, "gps_course", 3);
 	
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[0], "vel_0", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[1], "vel_1", 3);
-	init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[2], "vel_2", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[0], "vel_0", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[1], "vel_1", 3);
+	//init_success &= data_logging_add_parameter_float(data_logging, &central_data->position_estimation.vel[2], "vel_2", 3);
+	
+	
+	//vector field stuff
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->navigation.goal.waypoint.pos[0], "goal_x", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->navigation.goal.waypoint.pos[1], "goal_y", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->navigation.goal.waypoint.pos[2], "goal_z", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->navigation.goal.radius, "goal_radius", 3);
+	
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls_nav.tvel[X], "cont_nav_tvel_x", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls_nav.tvel[Y], "cont_nav_tvel_y", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls_nav.tvel[Z], "cont_nav_tvel_z", 3);
+	
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls.tvel[X], "cont_tvel_x", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls.rpy[YAW], "cont_yaw", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls.tvel[Z], "cont_tvel_z", 3);
 	
 	return init_success;
 };
@@ -636,9 +651,10 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	
 	
 	// Vector field
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.attractiveness,	"Nav_attra_rad");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.attractiveness2,	"Nav_attra_tan");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.attractiveness,	"Nav_attra_rad");
+// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.attractiveness2,	"Nav_attra_tan");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.cruise_speed,		"Nav_speed");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.one_over_scaling,	"Nav_over_sca");
 	
 	// A priori on the input
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori,		"Pit_ang_ap");
