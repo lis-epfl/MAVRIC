@@ -255,6 +255,7 @@ LIB_SRCS += control/stabilisation_telemetry.c
 LIB_SRCS += control/stabilisation_wing.c
 LIB_SRCS += control/vector_field_waypoint.c
 LIB_SRCS += control/velocity_controller_copter.c
+LIB_SRCS += control/dubin.c
 
 LIB_SRCS += sensing/ahrs.c            
 LIB_SRCS += sensing/ahrs_telemetry.c  
