@@ -66,20 +66,20 @@ void initialisation()
 	//onboard_parameters_write_parameters_to_flashc(&central_data->mavlink_communication.onboard_parameters);
 	bool read_from_flash_result = onboard_parameters_read_parameters_from_flashc(&central_data->mavlink_communication.onboard_parameters);
 
-	if (read_from_flash_result)
-	{
-		simulation_switch_from_reality_to_simulation(&central_data->sim_model);
-	}
+if (read_from_flash_result)
+{
+	simulation_switch_from_reality_to_simulation(&central_data->sim_model);
+}
 
-	init_success &= mavlink_telemetry_init();
+init_success &= mavlink_telemetry_init();
 
-	central_data->state.mav_state = MAV_STATE_STANDBY;	
-	
-	init_success &= tasks_create_tasks();	
+central_data->state.mav_state = MAV_STATE_STANDBY;
 
-	if (init_success)
-	{
-		piezo_speaker_quick_startup();
+init_success &= tasks_create_tasks();
+
+if (init_success)
+{
+	piezo_speaker_quick_startup();
 		
 		// Switch off red LED
 		LED_Off(LED2);

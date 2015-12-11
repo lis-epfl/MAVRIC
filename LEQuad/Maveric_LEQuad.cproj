@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>6.1</ProjectVersion>
+    <ProjectVersion>7.0</ProjectVersion>
     <ProjectGuid>{5c41308d-f714-42b2-8fea-988a47ee06ad}</ProjectGuid>
     <avrdevice>AT32UC3C1512C</avrdevice>
     <avrdeviceseries>uc3c</avrdeviceseries>
@@ -220,7 +220,7 @@
         <documentation help="" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.3.0" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.18.1" />
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
@@ -275,6 +275,8 @@
       <ToolNumber>J30200030913</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
+    <preserveEEPROM>true</preserveEEPROM>
+    <ExternalProgrammingToolCommand />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputFileName>MegaFly2</OutputFileName>
@@ -350,6 +352,7 @@
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
             <Value>../Library</Value>
+            <Value>%24(PackRepoDir)\atmel\UC3C_DFP\1.0.42\include</Value>
           </ListValues>
         </avr32gcc.compiler.directories.IncludePaths>
         <avr32gcc.compiler.optimization.level>Optimize (-O1)</avr32gcc.compiler.optimization.level>
@@ -423,6 +426,7 @@
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
             <Value>../Library</Value>
+            <Value>%24(PackRepoDir)\atmel\UC3C_DFP\1.0.42\include</Value>
           </ListValues>
         </avr32gcccpp.compiler.directories.IncludePaths>
         <avr32gcccpp.compiler.optimization.level>Optimize (-O1)</avr32gcccpp.compiler.optimization.level>
@@ -434,6 +438,11 @@
         <avr32gcccpp.linker.general.DoNotUseStandardStartFiles>True</avr32gcccpp.linker.general.DoNotUseStandardStartFiles>
         <avr32gcccpp.linker.optimization.EnableFastFloatingPointLibrary>True</avr32gcccpp.linker.optimization.EnableFastFloatingPointLibrary>
         <avr32gcccpp.linker.optimization.EnableFastMath>True</avr32gcccpp.linker.optimization.EnableFastMath>
+        <avr32gcccpp.preprocessingassembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3C_DFP\1.0.42\include</Value>
+          </ListValues>
+        </avr32gcccpp.preprocessingassembler.general.IncludePaths>
       </Avr32GccCpp>
     </ToolchainSettings>
   </PropertyGroup>
@@ -511,6 +520,7 @@
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
             <Value>../Library</Value>
+            <Value>%24(PackRepoDir)\atmel\UC3C_DFP\1.0.42\include</Value>
           </ListValues>
         </avr32gcc.compiler.directories.IncludePaths>
         <avr32gcc.compiler.optimization.level>Optimize most (-O3)</avr32gcc.compiler.optimization.level>
@@ -585,6 +595,7 @@
             <Value>../Library/sensing</Value>
             <Value>../Library/util</Value>
             <Value>../Library</Value>
+            <Value>%24(PackRepoDir)\atmel\UC3C_DFP\1.0.42\include</Value>
           </ListValues>
         </avr32gcccpp.compiler.directories.IncludePaths>
         <avr32gcccpp.compiler.optimization.level>Optimize most (-O3)</avr32gcccpp.compiler.optimization.level>
@@ -595,6 +606,11 @@
         <avr32gcccpp.compiler.optimization.GenerateProfInformation>True</avr32gcccpp.compiler.optimization.GenerateProfInformation>
         <avr32gcccpp.compiler.warnings.AllWarnings>True</avr32gcccpp.compiler.warnings.AllWarnings>
         <avr32gcccpp.linker.general.DoNotUseStandardStartFiles>True</avr32gcccpp.linker.general.DoNotUseStandardStartFiles>
+        <avr32gcccpp.preprocessingassembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\UC3C_DFP\1.0.42\include</Value>
+          </ListValues>
+        </avr32gcccpp.preprocessingassembler.general.IncludePaths>
       </Avr32GccCpp>
     </ToolchainSettings>
   </PropertyGroup>
@@ -791,7 +807,13 @@
     <Compile Include="Library\control\velocity_controller_copter_default_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Library\hal\avr32\airspeed_telemetry.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Library\hal\include\accelerometer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\include\airspeed_telemetry.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\hal\include\analog_monitor_default_config.h">
@@ -810,6 +832,15 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\hal\include\battery.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\avr32\airspeed_i2cxl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\include\airspeed_i2cxl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Library\hal\include\airspeed.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Library\hal\include\analog_monitor.h">
