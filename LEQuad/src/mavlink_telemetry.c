@@ -484,14 +484,15 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
  	//init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &central_data->stabilisation_wing.thrust_apriori				, "ThruVel_aprio");
 	 
 	 //// Roll velocity PID
-	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].p_gain					, "ThruRol_P_G");
-	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].integrator.gain			, "ThruRol_I_G");
-	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].integrator.clip_pre		, "ThruRol_I_CP");
-	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].integrator.clip			, "ThruRol_I_C");
-	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].differentiator.gain		, "ThruRol_D_G");
+	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].p_gain					, "VELRol_P_G");
+	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].integrator.gain			, "VELRol_I_G");
+	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].integrator.clip_pre		, "VELRol_I_CP");
+	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].integrator.clip			, "VELRol_I_C");
+	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].differentiator.gain		, "VELRol_D_G");
 	 //init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].differentiator.clip		, "ThruRol_D_C");
-	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].clip_max				, "ThruRol_C_Max");
-	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].clip_min				, "ThruRol_C_Min");
+	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].clip_max				, "VELRol_C_Max");
+	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[ROLL].clip_min				, "VELRol_C_Min");
+	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &central_data->stabilisation_wing.max_roll_angle					, "VEL_max_roll");
 	 
 	 //// Pitch velocity PID
 	 init_success &= onboard_parameters_add_parameter_float(onboard_parameters , &velocity_stabiliser->rpy_controller[PITCH].p_gain					, "ThruPit_P_G");
@@ -651,10 +652,9 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	
 	
 	// Vector field
-// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.attractiveness,	"Nav_attra_rad");
-// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.attractiveness2,	"Nav_attra_tan");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.cruise_speed,		"Nav_speed");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.one_over_scaling,	"Nav_over_sca");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.max_climb_rate,	"Nav_max_climb");
 	
 	// A priori on the input
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori,		"Pit_ang_ap");
