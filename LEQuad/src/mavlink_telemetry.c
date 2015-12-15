@@ -69,6 +69,7 @@
 #include "scheduler_telemetry.h"
 #include "sonar_telemetry.h"
 #include "airspeed_telemetry.h"
+#include "pitot_tube_analog_telemetry.h"
 #include "analog_monitor_telemetry.h"
 
 central_data_t *central_data;
@@ -158,6 +159,9 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 	&central_data->mavlink_communication.message_handler);
 	
 	init_success &= gps_ublox_telemetry_init( &central_data->gps,
+	&central_data->mavlink_communication.message_handler);
+	
+	init_success &= pitot_tube_analog_telemetry_init(	&central_data->pitot_tube_analog,
 	&central_data->mavlink_communication.message_handler);
 	
 	return init_success;
@@ -329,6 +333,10 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_pos_gps[1]                            , "Pos_kp_pos1"      );
 	init_success &= onboard_parameters_add_parameter_float  ( onboard_parameters , &central_data->position_estimation.kp_pos_gps[2]                            , "Pos_kp_pos2"      );
 	
+	// Airspeed
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->pitot_tube_analog.conversion_factor,	"Ai_conv_fact");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->pitot_tube_analog.correction_gain,	"Ai_corr_gain");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->pitot_tube_analog.correction_offset,	"Ai_corr_off");
 
 
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->navigation.dist2vel_gain								, "vel_dist2Vel"     );
@@ -386,11 +394,13 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,	 RUN_NEVER,	   PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&simulation_telemetry_send_quaternions,							&central_data->sim_model,				MAVLINK_MSG_ID_HIL_STATE_QUATERNION	);// ID 115
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,											&central_data->sonar_i2cxl.data, 		MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 119
 	
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&airspeed_telemetry_send,										&central_data->airspeed_i2cxl.data, 	MAVLINK_MSG_ID_DEBUG_VECT	);// ID 250
+	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&airspeed_telemetry_send,										&central_data->airspeed_i2cxl.data, 	MAVLINK_MSG_ID_DEBUG_VECT	);// ID 250
 	
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&stabilisation_telemetry_send_rpy_speed_thrust_setpoint,		stabiliser_show,						MAVLINK_MSG_ID_ROLL_PITCH_YAW_SPEED_THRUST_SETPOINT	);// ID 160
 	
-	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&analog_monitor_telemetry_send_airspeed,						&central_data->analog_monitor, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&pitot_tube_analog_telemetry_send,								&central_data->pitot_tube_analog, 		MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250
+
+	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&analog_monitor_telemetry_send_airspeed,						&central_data->analog_monitor, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&scheduler_telemetry_send_rt_stats,								&central_data->scheduler, 				MAVLINK_MSG_ID_NAMED_VALUE_FLOAT	);// ID 251
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&sonar_telemetry_send,							&central_data->sonar_i2cxl.data, 			MAVLINK_MSG_ID_DISTANCE_SENSOR	);// ID 132
 	//init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&acoustic_telemetry_send,										&central_data->audio_data, 				MAVLINK_MSG_ID_DEBUG_VECT			);// ID 250

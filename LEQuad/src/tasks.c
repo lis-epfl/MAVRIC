@@ -53,6 +53,7 @@
 #include "lsm330dlc.h"
 #include "hmc5883l.h"
 //#include "data_logging.h"
+#include "pitot_tube_analog.h"
 
 #include "pwm_servos.h"
 
@@ -314,6 +315,8 @@ bool tasks_create_tasks()
 	init_success &= scheduler_add_task(scheduler, 500000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&airspeed_i2cxl_update								, (task_argument_t)&central_data->airspeed_i2cxl			, 13);
 	
 	//init_success &= scheduler_add_task(scheduler, 20000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&acoustic_update									, (task_argument_t)&central_data->audio_data			, 13);
+
+	init_success &= scheduler_add_task(scheduler, 100000,	RUN_REGULAR, PERIODIC_ABSOLUTE, PRIORITY_LOW	, (task_function_t)&pitot_tube_analog_update							, (task_argument_t)&central_data->pitot_tube_analog		, 14);
 
 	scheduler_sort_tasks(scheduler);
 	

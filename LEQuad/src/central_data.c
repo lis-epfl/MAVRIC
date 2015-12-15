@@ -57,6 +57,7 @@
 #include "mavlink_communication_default_config.h"
 #include "attitude_controller_p2_default_config.h"
 #include "servos_mix_quadcopter_diag_default_config.h"
+#include "pitot_tube_analog_default_config.h"
 
 static central_data_t central_data;
 
@@ -206,6 +207,10 @@ bool central_data_init()
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
+	// Init pitot tube sensor
+	init_success &= pitot_tube_analog_init(	&central_data.pitot_tube_analog,
+											&central_data.analog_monitor,
+											&pitot_tube_analog_default_config);
 	// Init hud	
 	init_success &= hud_telemetry_init(	&central_data.hud_structure, 
 										&central_data.position_estimation,
