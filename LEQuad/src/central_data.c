@@ -244,13 +244,6 @@ bool central_data_init()
 	init_success &= fat_fs_mounting_init(	&central_data.fat_fs_mounting,
 											&data_logging_default_config,
 											&central_data.state);
-	
-	// if _USE_LFN == 0: Name: max 8 characters + 3 for extension; if _USE_LFN != 0: Name: max 255 characters + more flexible extension type
-	init_success &= data_logging_create_new_log_file(	&central_data.data_logging,
-														"Log_file",
-														true,
-														&central_data.fat_fs_mounting,
-														central_data.mavlink_communication.mavlink_stream.sysid);
 										
 	return init_success;
 }

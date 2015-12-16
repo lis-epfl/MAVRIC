@@ -101,6 +101,13 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 {
 	bool init_success = true;
 	
+	// if _USE_LFN == 0: Name: max 8 characters + 3 for extension; if _USE_LFN != 0: Name: max 255 characters + more flexible extension type
+	init_success &= data_logging_create_new_log_file(	data_logging,
+	"Log_file",
+	true,
+	&central_data->fat_fs_mounting,
+	central_data->mavlink_communication.mavlink_stream.sysid);
+	
 	// Add your logging parameters here, name length max = MAVLINK_MSG_PARAM_SET_FIELD_PARAM_ID_LEN = 16
 	// Supported type: all numeric types included in mavlink_message_type_t (i.e. all except MAVLINK_TYPE_CHAR)
 	
@@ -108,8 +115,8 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Y], "acc_y", 4);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->imu.scaled_accelero.data[Z], "acc_z", 4);
 	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 7);
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 7);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.latitude,	"origin_latitude", 10);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->position_estimation.local_position.origin.longitude, "origin_longitude", 10);
 	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.origin.altitude,	"origin_altitude", 3);
 	
 	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[0], "local_x", 3);
@@ -119,6 +126,12 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 10);
 	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 10);
 	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	init_success &= data_logging_add_parameter_int32(data_logging, &central_data->gps.dgps_relative.error_x_mm, "gps_error_x");
+	init_success &= data_logging_add_parameter_int32(data_logging, &central_data->gps.dgps_relative.error_y_mm, "gps_error_y");
+	init_success &= data_logging_add_parameter_uint32(data_logging, &central_data->gps.dgps_relative.mess_rec_counter, "msg_rcv");
+	init_success &= data_logging_add_parameter_uint32(data_logging, &central_data->gps.dgps_relative.mess_send_counter, "msg_send");
+	init_success &= data_logging_add_parameter_uint32(data_logging, &central_data->gps.dgps_relative.tow, "gps_error_time");
+	init_success &= data_logging_add_parameter_uint32(data_logging, &central_data->gps.time_gps, "gps_time");
 	
 	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.latitude, "latitude2", 10);
 	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.longitude, "longitude2", 10);
@@ -129,6 +142,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_state, "mav_state");
 	init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
+	init_success &= data_logging_add_parameter_uint8(data_logging, (uint8_t*)&central_data->state.mav_mode_custom, "mav_mode_custom");
 	
 	return init_success;
 };
@@ -348,6 +362,8 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters,(int32_t*)&central_data->fat_fs_mounting.log_data, "Log_continue");
 	
+	init_success &= onboard_parameters_add_parameter_uint32(onboard_parameters, &central_data->gps.dgps_relative.is_stationnary, "DGPS_stationary");
+	
 	return init_success;
 }
 
@@ -369,6 +385,7 @@ bool mavlink_telemetry_init(void)
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_heartbeat,								&central_data->state, 					MAVLINK_MSG_ID_HEARTBEAT			);// ID 0
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  1000000,	 RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&state_telemetry_send_status,									&central_data->state,					MAVLINK_MSG_ID_SYS_STATUS			);// ID 1
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  800000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&gps_ublox_telemetry_send_raw,									&central_data->gps,						MAVLINK_MSG_ID_GPS_RAW_INT			);// ID 24
+	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  200000,  RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&gps_ublox_telemetry_send_relative_error,						&central_data->gps,						MAVLINK_MSG_ID_GPS_RTK			);// ID 127
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  250000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&imu_telemetry_send_scaled,										&central_data->imu, 					MAVLINK_MSG_ID_SCALED_IMU			);// ID 26
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  100000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&imu_telemetry_send_raw,										&central_data->imu, 					MAVLINK_MSG_ID_RAW_IMU				);// ID 27
 	init_success &= mavlink_communication_add_msg_send(mavlink_communication,  500000,   RUN_REGULAR,  PERIODIC_ABSOLUTE, PRIORITY_NORMAL, (mavlink_send_msg_function_t)&bmp085_telemetry_send_pressure,								&central_data->pressure,				MAVLINK_MSG_ID_SCALED_PRESSURE		);// ID 29
