@@ -91,6 +91,12 @@ void tasks_rc_user_channels(uint8_t* chan_switch, signal_quality_t* rc_check, in
 
 
 /**
+ * \brief            Computes the servos command based on torques values
+ */
+void tasks_mix_to_servos(void);
+
+
+/**
  * \brief            Run the main stabilisation loop
  */
 task_return_t tasks_run_stabilisation(void* arg);

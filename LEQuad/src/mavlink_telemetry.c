@@ -116,9 +116,13 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
 	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
 	
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
-	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 10);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 10);
 	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	
+	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.latitude, "latitude2", 10);
+	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps2.longitude, "longitude2", 10);
+	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps2.altitude, "altitude2", 3);
 	
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
@@ -152,6 +156,9 @@ bool mavlink_telemetry_init_communication_module(central_data_t *central_data)
 	&central_data->mavlink_communication.message_handler);
 	
 	init_success &= fat_fs_mounting_telemetry_init(	&central_data->fat_fs_mounting,
+	&central_data->mavlink_communication.message_handler);
+	
+	init_success &= gps_ublox_telemetry_init( &central_data->gps,
 	&central_data->mavlink_communication.message_handler);
 	
 	return init_success;

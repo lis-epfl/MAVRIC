@@ -182,7 +182,8 @@ bool central_data_init()
 												&central_data.imu,
 												&central_data.ahrs,
 												&central_data.position_estimation,
-												&central_data.servos);
+												&central_data.command.torque,
+												&central_data.command.thrust);
 	
 	time_keeper_delay_ms(100);
 
@@ -200,8 +201,8 @@ bool central_data_init()
 									&central_data.gps,
 									&central_data.sonar_i2cxl.data,
 									&central_data.state,
-									&central_data.servos,
-									&central_data.state.nav_plan_active);
+									&central_data.state.nav_plan_active,
+									&central_data.servo_mix);
 
 	time_keeper_delay_ms(100);//add delay to be able to print on console init message for the following module
 	
