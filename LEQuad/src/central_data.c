@@ -162,7 +162,9 @@ bool central_data_init()
 	// Init navigation
 	navigation_config_t nav_config = navigation_default_config;
 	nav_config.cruise_speed = 12.0f;
-	nav_config.max_climb_rate = 3.0f;
+	nav_config.max_climb_rate = 5.0f;
+	nav_config.vertical_vel_gain = 0.35f;
+	nav_config.one_over_scaling = 0.075;
 	init_success &= navigation_init(&central_data.navigation,
 									&nav_config,
 									&central_data.controls_nav,

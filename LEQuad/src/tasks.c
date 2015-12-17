@@ -101,29 +101,35 @@ task_return_t tasks_run_stabilisation(void* arg)
 		{
 			if (mode.CUSTOM == CUSTOM_ON)
 			{
-				// Get command from remote/joystick
-				central_data->stabilisation_wing.controls->yaw_mode = YAW_RELATIVE;
-				if (central_data->state.remote_active == 1)
-				{
-					remote_get_velocity_vector_from_remote_wing(&central_data->remote, 0.02f, &central_data->controls);
-				}
-				else
-				{
-					joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
-					joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing, &central_data->controls);
-				}
-			}
-			else
-			{
 				remote_get_velocity_vector_from_remote_wing(&central_data->remote, 0.02f, &central_data->controls);
 				float pitch_value = central_data->controls.tvel[Z];
 				// Get command from the vector field
 				central_data->controls = central_data->controls_nav;
 				central_data->controls.tvel[Z] = pitch_value;
 				central_data->stabilisation_wing.controls->yaw_mode = YAW_ABSOLUTE;
+				//// Get command from remote/joystick
+				//central_data->stabilisation_wing.controls->yaw_mode = YAW_RELATIVE;
+				//if (central_data->state.remote_active == 1)
+				//{
+					//remote_get_velocity_vector_from_remote_wing(&central_data->remote, 0.02f, &central_data->controls);
+				//}
+				//else
+				//{
+					//joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+					//joystick_parsing_get_velocity_vector_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+				//}
 			}
-			//central_data->controls = central_data->controls_nav;
-			//central_data->stabilisation_wing.controls->yaw_mode = YAW_ABSOLUTE;
+			else
+			{
+				central_data->controls = central_data->controls_nav;
+				central_data->stabilisation_wing.controls->yaw_mode = YAW_ABSOLUTE;
+				//remote_get_velocity_vector_from_remote_wing(&central_data->remote, 0.02f, &central_data->controls);
+				//float pitch_value = central_data->controls.tvel[Z];
+				//// Get command from the vector field
+				//central_data->controls = central_data->controls_nav;
+				//central_data->controls.tvel[Z] = pitch_value;
+				//central_data->stabilisation_wing.controls->yaw_mode = YAW_ABSOLUTE;
+			}
  			
  			// Run controller cascade
  			central_data->controls.control_mode = VELOCITY_COMMAND_MODE;

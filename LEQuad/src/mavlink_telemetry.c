@@ -365,6 +365,10 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls.rpy[YAW], "cont_yaw", 3);
 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->controls.tvel[Z], "cont_tvel_z", 3);
 	
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->navigation.vertical_vel_gain, "nav_vel_gain", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->navigation.one_over_scaling, "nav_one_scale", 3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->navigation.cruise_speed, "nav_cruise_sp", 3);
+	
 	return init_success;
 };
 
