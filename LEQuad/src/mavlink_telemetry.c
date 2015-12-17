@@ -636,14 +636,6 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_roll		, "trim_roll"     );
 	init_success &= onboard_parameters_add_parameter_float    ( onboard_parameters , &central_data->servo_mix.config.trim_pitch		, "trim_pitch"     );
 	
-// 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning,		"tuning");
-// 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning_axis,	"tun_axis");
-// 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->stabilisation_wing.tuning_steps,	"tun_steps");
-// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_up,		"tun_p_up");
-// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_down,	"tun_p_down");
-// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.roll_right,	"tun_r_r");
-// 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.roll_left,		"tun_r_l");
-// 	
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->attitude_filter_madgwick.beta,							"Mad_beta");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->attitude_filter_madgwick.zeta,							"Mad_zeta");
 	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters,(int32_t*)&central_data->attitude_filter_madgwick.acceleration_correction, "Mad_cor_ena");

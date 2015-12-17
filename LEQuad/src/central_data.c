@@ -193,12 +193,8 @@ bool central_data_init()
 
 	
 	// Init stabilizers
-	stabilisation_wing_conf_t stabilisation_wing_config = stabilisation_wing_default_config;
-	stabilisation_wing_config.tuning = 0;
-	stabilisation_wing_config.tuning_axis = PITCH;
-	stabilisation_wing_config.tuning_steps = 0;
 	init_success &= stabilisation_wing_init(&central_data.stabilisation_wing,
-											&stabilisation_wing_config,
+											&stabilisation_wing_default_config,
 											&central_data.controls,
 											&central_data.imu,
 											&central_data.ahrs,
