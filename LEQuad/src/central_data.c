@@ -205,7 +205,8 @@ bool central_data_init()
 											&central_data.position_estimation,
 											&central_data.airspeed_analog,
 											&central_data.servos,
-											&central_data.servo_mix);
+											&central_data.servo_mix,
+											&central_data.navigation);
 											
 	// Init vector field navigation
 	vector_field_waypoint_init( &central_data.vector_field_waypoint,

@@ -655,15 +655,18 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_offset,	"Ai_corr_off");
 	
 	
-	// Vector field
+	// Navigation
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.cruise_speed,		"Nav_speed");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.one_over_scaling,	"Nav_over_sca");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.max_climb_rate,	"Nav_max_climb");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.vertical_vel_gain,	"Nav_velZ_gain");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->navigation.takeoff_altitude,	"Nav_t_off_alt");
 	
-	// A priori on the input
+	// Stabilisation
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori,		"Pit_ang_ap");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori_gain,	"Pit_ap_g");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.take_off_thrust,			"Takeoff_thr");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.take_off_pitch,			"Takeoff_pit");
 	
 	
 	return init_success;
