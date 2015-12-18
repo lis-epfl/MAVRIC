@@ -659,6 +659,7 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.pitch_angle_apriori_gain,	"Pit_ap_g");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.take_off_thrust,			"Takeoff_thr");
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.take_off_pitch,			"Takeoff_pit");
+	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->stabilisation_wing.landing_pitch,				"Landing_pit");
 	
 	
 	return init_success;
