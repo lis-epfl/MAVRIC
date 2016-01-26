@@ -29,3 +29,4 @@
 *.codelite
 *Debug_Linux
 *Release_Linux
+LEQuad/avr32_proj/build/

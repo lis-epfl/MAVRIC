@@ -13,3 +13,9 @@
 [submodule "Utilities/Epuck_interface/library/mavlink"]
 	path = Utilities/Epuck_interface/library/mavlink
 	url = git@github.com:mavlink/mavlink.git
+[submodule "mavlink"]
+	path = mavlink
+	url = git@github.com:lis-epfl/mavlink.git
+[submodule "mavlink_headers"]
+	path = mavlink_headers
+	url = git@github.com:lis-epfl/mavlink_headers.git
