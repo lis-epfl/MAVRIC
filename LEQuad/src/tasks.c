@@ -225,6 +225,11 @@ task_return_t tasks_run_stabilisation(void* arg)
 		}
 		else if ( mode.STABILISE == STABILISE_ON )		// Rate mode
 		{
+			remote_get_command_from_remote(&central_data->remote, &central_data->controls);
+			// Directly apply them to the mixer, no stabilisation
+			servos_mix_adaptive_morph_update_command(&central_data->servo_mix_adaptive_morph, &central_data->controls);
+			
+			/* WARNING this will be use later on 
 			// Read command
 			if (central_data->state.remote_active == 1)
 			{
@@ -291,6 +296,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			// Mix to servo outputs
 			servos_mix_adaptive_morph_update(central_data->stabilisation_adaptive_morph.servo_mix);
 			
+			*/
 		}
 		else if ( mode.MANUAL == MANUAL_ON )			// Complete manual mode
 		{

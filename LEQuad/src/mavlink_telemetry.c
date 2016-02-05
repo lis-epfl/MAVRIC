@@ -107,6 +107,13 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 {
 	bool init_success = true;
 	
+	// if _USE_LFN == 0: Name: max 8 characters + 3 for extension; if _USE_LFN != 0: Name: max 255 characters + more flexible extension type
+	init_success &= data_logging_create_new_log_file(	&central_data->data_logging,
+														"Log_file",
+														true,
+														&central_data->fat_fs_mounting,
+														central_data->mavlink_communication.mavlink_stream.sysid);
+		
 	// Add your logging parameters here, name length max = MAVLINK_MSG_PARAM_SET_FIELD_PARAM_ID_LEN = 16
 	// Supported type: all numeric types included in mavlink_message_type_t (i.e. all except MAVLINK_TYPE_CHAR)
 	
@@ -122,15 +129,18 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[1], "local_y", 3);
 	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->position_estimation.local_position.pos[2], "local_z", 3);
 	
-	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
-	//init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
-	//init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.latitude, "latitude", 7);
+	init_success &= data_logging_add_parameter_double(data_logging, &central_data->gps.longitude, "longitude", 7);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.altitude, "altitude", 3);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.ground_speed, "2D_speed", 3);
+	init_success &= data_logging_add_parameter_float(data_logging,	&central_data->gps.speed, "3D_speed", 3);
+	
 	
 	//init_success &= data_logging_add_parameter_int8(data_logging, &central_data->state_machine.rc_check, "rc_check");
 	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state_machine.rc_check, "rc_check");
 	
-	//init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_state, "mav_state");
-	//init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
+	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_state, "mav_state");
+	init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
 	
 	
 	
