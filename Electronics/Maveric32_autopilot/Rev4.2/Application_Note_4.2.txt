@@ -1,0 +1,3 @@
+Changes from 4.1.1 to 4.2
+- Inversion of TX and RX on GPS connector to allow the use of MOLEX PICOBLADE connector
+(this time this is fixed for real)
