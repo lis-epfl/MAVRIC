@@ -78,8 +78,8 @@
 
 #define M_ADAPTIVE_MORPH_THRUST 2		///< Define the index for the control
 #define M_ADAPTIVE_MORPH_PITCH 3		///< Define the index for the control
-#define M_ADAPTIVE_MORPH_ROLL_LEFT 4		///< Define the index for the control
-#define M_ADAPTIVE_MORPH_ROLL_RIGHT 0		///< Define the index for the control
+#define M_ADAPTIVE_MORPH_WING_LEFT 4		///< Define the index for the control
+#define M_ADAPTIVE_MORPH_WING_RIGHT 0		///< Define the index for the control
 #define M_ADAPTIVE_MORPH_TAIL 1		///< Define the index for the control
 
 #define M_COPTER_AIRCRAFT	0					///< Define flag for a copter
