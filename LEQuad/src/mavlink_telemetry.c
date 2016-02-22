@@ -142,7 +142,10 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_state, "mav_state");
 	init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
 	
-	
+	//to know the cmd vs the output
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_ROLL], "roll_channel",3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[central_data->servo_mix_adaptive_morph.config.servo_wing_left].value, "servo_wing_left",3);
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[central_data->servo_mix_adaptive_morph.config.servo_wing_right].value, "servo_wing_right",3);
 	
 	////////////
 	// TUNING //
@@ -152,12 +155,12 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_mode_custom, "mode_custom");
 	
 	// Global output
- 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_PITCH].value, "servo_p", 3);
- 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_ROLL_LEFT].value, "servo_r_l", 3);
- 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_ROLL_RIGHT].value, "servo_r_r", 3);
+ 	/*init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_PITCH].value, "servo_p", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_WING_LEFT].value, "servo_wing_l", 3);
+ 	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_WING_RIGHT].value, "servo_wing_r", 3);
  	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_TAIL].value, "servo_ta", 3);
  	init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_THRUST].value, "servo_th", 3);
- 	
+ 	*/
 	
 	
 	///////////////////////
@@ -569,10 +572,12 @@ bool mavlink_telemetry_add_onboard_parameters(onboard_parameters_t * onboard_par
 	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->attitude_filter_madgwick.zeta,		"Mad_zeta");
 	
 	// Airspeed
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.conversion_factor,	"Ai_conv_fact");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_gain,		"Ai_corr_gain");
-	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_offset,	"Ai_corr_off");
+//	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.conversion_factor,	"Ai_conv_fact");
+//	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_gain,		"Ai_corr_gain");
+//	init_success &= onboard_parameters_add_parameter_float(onboard_parameters, &central_data->airspeed_analog.correction_offset,	"Ai_corr_off");
 	
+	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->servo_mix_adaptive_morph.debug.is_pitch_control,		"pitch_control");
+	init_success &= onboard_parameters_add_parameter_int32(onboard_parameters, &central_data->servo_mix_adaptive_morph.debug.is_single_folding,		"single_folding");
 	
 	return init_success;
 }
