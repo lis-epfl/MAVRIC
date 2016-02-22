@@ -225,11 +225,6 @@ task_return_t tasks_run_stabilisation(void* arg)
 		}
 		else if ( mode.STABILISE == STABILISE_ON )		// Rate mode
 		{
-			remote_get_command_from_remote(&central_data->remote, &central_data->controls);
-			// Directly apply them to the mixer, no stabilisation
-			servos_mix_adaptive_morph_update_command(&central_data->servo_mix_adaptive_morph, &central_data->controls);
-			
-			/* WARNING this will be use later on 
 			// Read command
 			if (central_data->state.remote_active == 1)
 			{
@@ -239,41 +234,6 @@ task_return_t tasks_run_stabilisation(void* arg)
 			else
 			{
 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing,&central_data->controls);
-			}
-			
-			// Apply step in the reference, overwrite the remote input
-			if(central_data->stabilisation_adaptive_morph.tuning != 0 && central_data->stabilisation_adaptive_morph.tuning_steps != 0)
-			{
-				if(central_data->stabilisation_adaptive_morph.tuning_axis == 1)
-				{
-					if(unitary_remote_command.rpy[PITCH] >= 0.3f)
-					{
-						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = central_data->stabilisation_adaptive_morph.pitch_up;
-					}
-					else if(unitary_remote_command.rpy[PITCH] <= -0.3f)
-					{
-						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = central_data->stabilisation_adaptive_morph.pitch_down;
-					}
-					else
-					{
-						central_data->stabilisation_adaptive_morph.controls->rpy[PITCH] = 0.0f;
-					}
-				}
-				else if(central_data->stabilisation_adaptive_morph.tuning_axis == 2)
-				{
-					if(unitary_remote_command.rpy[ROLL] >= 0.3f)
-					{
-						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = central_data->stabilisation_adaptive_morph.roll_right;
-					}
-					else if(unitary_remote_command.rpy[ROLL] <= -0.3f)
-					{
-						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = central_data->stabilisation_adaptive_morph.roll_left;
-					}
-					else
-					{
-						central_data->stabilisation_adaptive_morph.controls->rpy[ROLL] = 0.0f;
-					}
-				}
 			}
 			
 			// Run controller cascade
@@ -296,7 +256,7 @@ task_return_t tasks_run_stabilisation(void* arg)
 			// Mix to servo outputs
 			servos_mix_adaptive_morph_update(central_data->stabilisation_adaptive_morph.servo_mix);
 			
-			*/
+			
 		}
 		else if ( mode.MANUAL == MANUAL_ON )			// Complete manual mode
 		{
@@ -308,6 +268,37 @@ task_return_t tasks_run_stabilisation(void* arg)
 			else
 			{
 				joystick_parsing_get_attitude_command_from_joystick(&central_data->joystick_parsing, &central_data->controls);
+			}
+			
+			if (central_data->servo_mix_adaptive_morph.debug.is_single_folding == 0)
+			{
+				if (central_data->servo_mix_adaptive_morph.debug.is_pitch_control == 1)
+				{
+					//then fold both side in symetric way for pitch control
+					central_data->servo_mix_adaptive_morph.config.servo_wing_left_dir = -1;
+					central_data->servo_mix_adaptive_morph.config.servo_wing_right_dir = -1;
+				}
+				else
+				{
+					//then fold both side in asymetric way for roll control
+					central_data->servo_mix_adaptive_morph.config.servo_wing_left_dir = -1;
+					central_data->servo_mix_adaptive_morph.config.servo_wing_right_dir = 1;
+				}
+			}	
+			else
+			{//then fold one side depending on the AUX1 channel state
+				if ((int32_t)(central_data->remote.channels[CHANNEL_AUX1] + 1.0f) > 0 )
+				{
+					//to Disable left part of the wing and enable the right part
+					central_data->servo_mix_adaptive_morph.config.servo_wing_left_dir = 0;
+					central_data->servo_mix_adaptive_morph.config.servo_wing_right_dir = -1;
+				}
+				else
+				{
+					//to Disable right part of the wing and enable the left part
+					central_data->servo_mix_adaptive_morph.config.servo_wing_left_dir = -1;
+					central_data->servo_mix_adaptive_morph.config.servo_wing_right_dir = 0;
+				}
 			}
 			
 			// Directly apply them to the mixer, no stabilisation
