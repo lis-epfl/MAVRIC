@@ -123,8 +123,14 @@ bool central_data_init()
 	time_keeper_delay_ms(100);
 
 	// Init imu
+	//since autopilot is upsidedown 
+	imu_conf_t imu_config2 = imu_config;
+	imu_config2.accelerometer.orientation[2] = 1.0f;
+	imu_config2.gyroscope.orientation[1] = 1.0f;
+	imu_config2.gyroscope.orientation[2] = 1.0f;
+	//imu_config2.magnetometer.orientation[1] = 1.0f;
 	init_success &= imu_init(   &central_data.imu,
-								&imu_config,
+								&imu_config2,
 								&central_data.state);
 	
 	time_keeper_delay_ms(100);
