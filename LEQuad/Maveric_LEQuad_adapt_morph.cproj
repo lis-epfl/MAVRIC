@@ -1631,6 +1631,9 @@
     <Compile Include="src\config\MAVcalib\MAV206_imu_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\config\MAVcalib\MAV208_imu_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\mavlink_telemetry.c">
       <SubType>compile</SubType>
     </Compile>

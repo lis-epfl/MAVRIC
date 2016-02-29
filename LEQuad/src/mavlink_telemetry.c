@@ -153,6 +153,7 @@ bool mavlink_telemetry_add_data_logging_parameters(data_logging_t* data_logging)
 	// Miscellaneous
 	init_success &= data_logging_add_parameter_uint8(data_logging, &central_data->state.mav_mode.byte, "mav_mode");
 	init_success &= data_logging_add_parameter_uint32(data_logging, (uint32_t*)&central_data->state.mav_mode_custom, "mode_custom");
+	init_success &= data_logging_add_parameter_float(data_logging, &central_data->remote.channels[CHANNEL_AUX1], "AUX1_channel",3);
 	
 	// Global output
  	/*init_success &= data_logging_add_parameter_float(data_logging, &central_data->servos.servo[M_ADAPTIVE_MORPH_PITCH].value, "servo_p", 3);

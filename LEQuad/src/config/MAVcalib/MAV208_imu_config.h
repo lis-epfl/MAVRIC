@@ -124,9 +124,9 @@ static imu_conf_t imu_config =
 		},
 		.scale_factor =
 		{
-			527.7697f,				//RAW_MAG_X_SCALE
-			544.6315f,				//RAW_MAG_Y_SCALE
-			474.1116f				//RAW_MAG_Z_SCALE
+			500.0f,				//RAW_MAG_X_SCALE
+			500.0f,				//RAW_MAG_Y_SCALE
+			500.0f				//RAW_MAG_Z_SCALE
 		}
 	}
 };
