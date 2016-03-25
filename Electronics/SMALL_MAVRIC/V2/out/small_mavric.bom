@@ -1,0 +1,44 @@
+Partlist exported from C:/Users/lis/Documents/eagle/SMALL_MAVRIC/V2/with_uSD/test/small_mavric.sch at 2/10/2016 1:34:54 PM
+
+Assembly variant: 
+
+Qty Value                                 Device                                Parts                                                
+4                                         SMALL_MAVRIC_POWER_DIODESOD           D3, D4, D9, D10                                      
+1   0.25R                                 SMALL_MAVRIC_RESISTOR_R0402           R24                                                  
+1   1.12M                                 SMALL_MAVRIC_RESISTOR_R0402           R15                                                  
+1   1M                                    SMALL_MAVRIC_RESISTOR_R0402           R23                                                  
+7   1k                                    SMALL_MAVRIC_RESISTOR_R0402           R1, R2, R3, R9, R11, R12, R22                        
+2   2.2uF                                 SMALL_MAVRIC_CAPACITOR_C0603          C6, C7                                               
+1   4.7k                                  SMALL_MAVRIC_RESISTOR_R0402           R4                                                   
+2   6k8                                   SMALL_MAVRIC_RESISTOR_R0402           R5, R6                                               
+1   10k                                   SMALL_MAVRIC_RESISTOR_R0402           R7                                                   
+1   10pF                                  SMALL_MAVRIC_CAPACITOR_C0402          C35                                                  
+2   10uF                                  C-EUC0805                             C41, C42                                             
+6   10uF                                  SMALL_MAVRIC_CAPACITOR_C0603          C17, C30, C31, C32, C33, C40                         
+1   10uF, 10V                             SMALL_MAVRIC_CAPACITOR_C0603          C54                                                  
+1   10uH                                  POWER_INDUCTOR1210                    L1                                                   
+1   12R                                   SMALL_MAVRIC_RESISTOR_R0402           R8                                                   
+4   22pF                                  SMALL_MAVRIC_CAPACITOR_C0402          C8, C9, C10, C11                                     
+3   22uF                                  SMALL_MAVRIC_CAPACITOR_C0603          C36, C37, C38                                        
+1   56k                                   SMALL_MAVRIC_RESISTOR_R0402           R13                                                  
+1   100k                                  SMALL_MAVRIC_RESISTOR_R0402           R14                                                  
+12  100nF                                 SMALL_MAVRIC_CAPACITOR_C0402          C1, C2, C3, C4, C5, C21, C22, C23, C25, C28, C29, C34
+1   200k                                  SMALL_MAVRIC_RESISTOR_R0402           R21                                                  
+1   ABM10                                 ABM10                                 Y1                                                   
+2   APHHS1005CGCK                         COMMON_LED                            D1, D2                                               
+1   CON-SPECIAL_PURPOSE_SPEKTRUM_RECEIVER CON-SPECIAL_PURPOSE_SPEKTRUM_RECEIVER P5                                                   
+1   CON-SPECIAL_PURPOSE_USD-SOCKETNEW     CON-SPECIAL_PURPOSE_USD-SOCKETNEW     U3                                                   
+4   N-CHANNEL_SOT23                       N-CHANNEL_SOT23                       Q1, Q2, Q3, Q4                                       
+4   POWERSMALL_SMD                        POWERSMALL_SMD                        P10, P11, P12, P13                                   
+1   POWER_LM2734                          POWER_LM2734                          U1                                                   
+1   SMALL_MAVRIC_BMP280                   SMALL_MAVRIC_BMP280                   U$4                                                  
+2   SMALL_MAVRIC_CONN_RAIL_X8             SMALL_MAVRIC_CONN_RAIL_X8             U$10, U$11                                           
+1   SMALL_MAVRIC_IMU_MPU-9250             SMALL_MAVRIC_IMU_MPU-9250             U2                                                   
+1   SMALL_MAVRIC_INDUCTOR_4.3X4.3         SMALL_MAVRIC_INDUCTOR_4.3X4.3         U$9                                                  
+1   SMALL_MAVRIC_MICRO_USB                SMALL_MAVRIC_MICRO_USB                U$2                                                  
+1   SMALL_MAVRIC_POWER_TPS63060           SMALL_MAVRIC_POWER_TPS63060           U$8                                                  
+2   SMALL_MAVRIC_SMALL_CONNECTOR          SMALL_MAVRIC_SMALL_CONNECTOR          U$15, U$16                                           
+1   SMALL_MAVRIC_STM32_STM32F415RGT       SMALL_MAVRIC_STM32_STM32F415RGT       U$1                                                  
+2   SMALL_MAVRIC_SWITCH                   SMALL_MAVRIC_SWITCH                   U$5, U$6                                             
+1   TRANSISTORS_MOSFET-PCHANNELSMD        TRANSISTORS_MOSFET-PCHANNELSMD        Q5                                                   
+1   V_REG_MIC5235-3.3                     V_REG_MIC5235                         U4                                                   
