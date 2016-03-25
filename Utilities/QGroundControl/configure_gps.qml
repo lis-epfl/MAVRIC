@@ -23,20 +23,8 @@ Item {
         // the standard Qml Button element which using the default QGC font and color palette.
 
         QGCButton {
-            text: "Start accelerometer bias calib"
-            onClicked: controller.sendCommand(241, 50, 0, 0, 0, 0, 0, 1, 0, 0)
-        }
-        QGCButton {
-            text: "Start gyroscope bias calib"
-            onClicked: controller.sendCommand(241, 50, 0, 1, 0, 0, 0, 0, 0, 0)
-        }
-        QGCButton {
-            text: "Start magnetometer bias calib"
-            onClicked: controller.sendCommand(241, 50, 0, 0, 1, 0, 0, 0, 0, 0)
-        }
-        QGCButton {
-            text: "Stop calib"
-            onClicked: controller.sendCommand(241, 50, 0, 0, 0, 0, 0, 0, 0, 0)
+            text: "Launch GPS configuration"
+            onClicked: controller.sendCommand(243, 0, 0, 1, 0, 0, 0, 0, 0, 0)
         }
 
         // The FactTextField control is provides by GroundControl.FactControls. It is a wrapper

@@ -30,7 +30,7 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * \file MAV061_imu_config.h
+ * \file MAV051_imu_config.h
  * 
  * \author MAV'RIC Team
  *   
@@ -44,91 +44,29 @@
 #ifndef CONF_IMU_REV4_H_
 #define CONF_IMU_REV4_H_
 
-#include "imu.h"
+#include "imu.hpp"
+#include "megafly_rev4.hpp"
 
-static imu_conf_t imu_config =
+static inline imu_conf_t imu_config(void)
 {
-	.accelerometer =
-	{
-		.axis =
-		{
-			0,					//ACC_AXIS_X
-			1,					//ACC_AXIS_Y
-			2					//ACC_AXIS_Z
-		},
-		.orientation =
-		{
-			1.0f,				//ACC_ORIENTATION_X
-			-1.0f,				//ACC_ORIENTATION_Y
-			-1.0f				//ACC_ORIENTATION_Z
-		},
-		.bias =
-		{
-			25.0f,				//ACC_BIAIS_X
-			-25.0f,				//ACC_BIAIS_Y
-			415.0f				//ACC_BIAIS_Z
-		},
-		.scale_factor =
-		{
-			3960.49f,			//RAW_ACC_X_SCALE
-			3986.12f,			//RAW_ACC_Y_SCALE
-			4075.72f			//RAW_ACC_Z_SCALE
-		}
-	},
-	.gyroscope =
-	{
-		.axis =
-		{
-			0,					//GYRO_AXIS_X
-			1,					//GYRO_AXIS_Y
-			2					//GYRO_AXIS_Z
-		},
-		.orientation =
-		{
-			1.0f,				//GYRO_ORIENTATION_X
-			-1.0f,				//GYRO_ORIENTATION_Y
-			-1.0f				//GYRO_ORIENTATION_Z
-		},
-		.bias =
-		{
-			0.0f,				//GYRO_BIAIS_X
-			0.0f,				//GYRO_BIAIS_Y
-			0.0f				//GYRO_BIAIS_Z
-		},
-		.scale_factor =
-		{
-			818.5111f,			//RAW_GYRO_X_SCALE
-			818.5111f,			//RAW_GYRO_Y_SCALE
-			818.5111f			//RAW_GYRO_Z_SCALE
-		}
-	},
-	.magnetometer =
-	{
-		.axis =
-		{
-			2,					//MAG_AXIS_X
-			0,					//MAG_AXIS_Y
-			1					//MAG_AXIS_Z
-		},
-		.orientation =
-		{
-			-1.0f,				//MAG_ORIENTATION_X
-			-1.0f,				//MAG_ORIENTATION_Y
-			-1.0f				//MAG_ORIENTATION_Z
-		},
-		.bias =
-		{
-			25.0f,				//MAG_BIAIS_X
-			22.0f,				//MAG_BIAIS_Y
-			  2.47f				//MAG_BIAIS_Z
-		},
-		.scale_factor =
-		{
-			415.31f,			//RAW_MAG_X_SCALE
-			394.57f,			//RAW_MAG_Y_SCALE
-			430.02f				//RAW_MAG_Z_SCALE
-		}
-	}
-};
+	imu_conf_t conf	= megafly_rev4_default_config().imu_config;
+
+	// Accelerometer Bias
+	conf.accelerometer.bias[0] = 83.0f 	 / 4000.0f;
+	conf.accelerometer.bias[1] =  152.0f / 4000.0f;
+	conf.accelerometer.bias[2] =  0.0f	 / 4000.0f;
+	
+	// Gyroscope Bias
+	conf.gyroscope.bias[0] = 0.0f / 818.5111f;
+	conf.gyroscope.bias[1] = 0.0f / 818.5111f;
+	conf.gyroscope.bias[2] = 0.0f / 818.5111f;
+	
+	// Magnetometer Bias
+	conf.magnetometer.bias[0] = 100.0f  / 600.0f;
+	conf.magnetometer.bias[1] = -350.0f / 600.0f;
+	conf.magnetometer.bias[2] =   2.47f / 600.0f;
+
+	return conf;
+}
 
 #endif /* CONF_IMU_REV4_H_ */

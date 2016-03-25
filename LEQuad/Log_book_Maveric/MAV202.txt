@@ -1,6 +1,0 @@
-*************************************************************
-***************** MAV202 Log book ***************************
-*************************************************************
-status: not fly ready, due to motor issues => strange heating and oscillations
-
-currently in Budapest
