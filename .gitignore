@@ -36,4 +36,5 @@
 *Release_Linux
 
 #Atmel Studio
-/LEQuad/Release/*
+/LEQuad/Release/
+/LEQuad/Debug/
