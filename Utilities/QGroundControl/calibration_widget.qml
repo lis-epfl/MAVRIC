@@ -35,6 +35,10 @@ Item {
             onClicked: controller.sendCommand(241, 50, 0, 0, 1, 0, 0, 0, 0, 0)
         }
         QGCButton {
+            text: "North vector calib"
+            onClicked: controller.sendCommand(242, 50, 0, 2, 0, 0, 0, 0, 0, 0)
+        }
+        QGCButton {
             text: "Stop calib"
             onClicked: controller.sendCommand(241, 50, 0, 0, 0, 0, 0, 0, 0, 0)
         }
