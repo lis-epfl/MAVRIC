@@ -35,12 +35,12 @@ Item {
             onClicked: controller.sendCommand(241, 50, 0, 0, 1, 0, 0, 0, 0, 0)
         }
         QGCButton {
-            text: "North vector calib"
-            onClicked: controller.sendCommand(242, 50, 0, 2, 0, 0, 0, 0, 0, 0)
+            text: "Start magnetic north calib"
+            onClicked: controller.sendCommand(241, 50, 0, 0, 0, 0, 0, 0, 1, 0)
         }
         QGCButton {
             text: "Stop calib"
-            onClicked: controller.sendCommand(241, 50, 0, 0, 0, 0, 0, 0, 0, 0)
+            onClicked: controller.sendCommand(241, 50, 0, 0, 0, 0, 0, 0, 0, 1)
         }
 
         // The FactTextField control is provides by GroundControl.FactControls. It is a wrapper
