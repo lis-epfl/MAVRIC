@@ -42,6 +42,10 @@ Item {
             text: "Stop calib"
             onClicked: controller.sendCommand(241, 50, 0, 0, 0, 0, 0, 0, 0, 1)
         }
+		QGCButton {
+            text: "Write calib to flash"
+            onClicked: controller.sendCommand(245, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+        }
 
         // The FactTextField control is provides by GroundControl.FactControls. It is a wrapper
         // around the Qml TextField element which allows you to bind it directly to any parameter.
