@@ -44,7 +44,7 @@ Item {
         }
 		QGCButton {
             text: "Write calib to flash"
-            onClicked: controller.sendCommand(245, 1, 0, 0, 0, 0, 0, 0, 0, 0)
+            onClicked: controller.sendCommand(245, 50, 1, 0, 0, 0, 0, 0, 0, 0)
         }
 
         // The FactTextField control is provides by GroundControl.FactControls. It is a wrapper
