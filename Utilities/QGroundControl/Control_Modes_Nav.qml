@@ -52,7 +52,7 @@ Item {
         //}
         QGCButton {
             text: "NAV: Land"
-            onClicked: controller.sendCommand(21, 50, 0, 1, 0, 0, 0, 0, 0, 0)
+            onClicked: controller.sendCommand(21, 50, 0, 0, 0, 0, 0, 0, 0, 0)
         }
         QGCButton {
             text: "NAV: Start"
