@@ -46,6 +46,14 @@ Item {
             text: "NAV: Take-off"
             onClicked: controller.sendCommand(22, 50, 0, 1, 0, 0, 0, 0, 0, 0)
         }
+        //QGCButton {
+        //    text: "NAV: Return Home"
+        //    onClicked: controller.sendCommand(20, 50, 0, 1, 0, 0, 0, 0, 0, 0)
+        //}
+        QGCButton {
+            text: "NAV: Land"
+            onClicked: controller.sendCommand(21, 50, 0, 1, 0, 0, 0, 0, 0, 0)
+        }
         QGCButton {
             text: "NAV: Start"
             onClicked: controller.sendCommand(252, 50, 0, 1, 0, 0, 0, 0, 0, 0)
@@ -54,10 +62,10 @@ Item {
             text: "NAV: Stop"
             onClicked: controller.sendCommand(252, 50, 0, 0, 2, 0, 0, 0, 0, 0)
         }
-        QGCButton {
-            text: "NAV: Stop There"
-            onClicked: controller.sendCommand(252, 50, 0, 0, 3, 1, 0, 0, 0, -15)
-        }
+        //QGCButton {
+        //    text: "NAV: Stop There"
+        //    onClicked: controller.sendCommand(252, 50, 0, 0, 3, 1, 0, 0, 0, -15)
+        //}
 
         // The FactTextField control is provides by GroundControl.FactControls. It is a wrapper
         // around the Qml TextField element which allows you to bind it directly to any parameter.
