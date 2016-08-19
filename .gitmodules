@@ -19,3 +19,6 @@
 [submodule "mavlink_headers"]
 	path = mavlink_headers
 	url = git@github.com:lis-epfl/mavlink_headers.git
+[submodule "projects/Pennuto"]
+	path = projects/Pennuto
+	url = https://github.com/lis-epfl/Pennuto.git
